@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.11.1 — Connector delivery through the hosted gateway
+
+- Identify scoped connector requests with the same Margen user agent as the existing publisher, so the hosted gateway accepts real device delivery.
+
 ## 0.11.0 — Creator decisions and scoped agent assignments
 
 - Add an owner workspace with project attention, evidence-backed decisions, review dates and append-only decision history.
