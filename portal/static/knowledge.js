@@ -48,6 +48,8 @@ window.BottifactKnowledge = (() => {
       collection: "Colección",
       company: "Empresa",
       project: "Proyecto",
+      decision: "Decisión",
+      session: "Sesión de trabajo",
     };
     const abort = new AbortController(),
       listen = (el, event, fn) =>

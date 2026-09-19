@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.11.0 — Creator decisions and scoped agent assignments
+
+- Add an owner workspace with project attention, evidence-backed decisions, review dates and append-only decision history.
+- Connect selected feedback to scoped local agents, delivery receipts, draft comparisons and per-thread outcomes; keep acceptance, publication and resolution separate.
+- Add approved personal writing rules, decision/session graph nodes and a shareable project review brief.
+- Query the library in SQLite with indexed review projections, materialized full-text matches and bounded keyset windows; add reproducible synthetic benchmarks and administrator timing metrics.
+- Preserve PDF/PPTX originals alongside page or slide previews, with version-aware authenticated downloads.
+- Verify managed release signatures, support independent stable/preview channels and document self-hosted signing, local MCP and contributor contracts.
+
+
 ## 0.10.1 — 2026-09-18
 
 - Treat articles and presentations as independently authored deliverables; remove the slide-to-article reader toggle and give the deck example dedicated slide content.

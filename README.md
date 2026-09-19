@@ -127,7 +127,7 @@ margen comments --artifact-id ARTIFACT_ID --open --kind all
 margen feedback --artifact-id ARTIFACT_ID --output /tmp/bottifact-feedback
 ```
 
-`feedback` creates a private `feedback.md` + `context.json` bundle. Open the original agent session and ask it to read those files. If the origin is missing or ambiguous, supply `--agent` and `--session` explicitly. **This release does not automatically inject messages into Claude, Codex or Hermes, edit conversation histories, or execute instructions from comments.** Review changes, publish a new version, then resolve the relevant threads. [Complete feedback/session workflow →](docs/feedback-and-sessions.md)
+`feedback` creates a private `feedback.md` + `context.json` bundle. Open the original agent session and ask it to read those files. If the origin is missing or ambiguous, supply `--agent` and `--session` explicitly. **Copying a bundle does not deliver it.** The optional [scoped connector](docs/agent-connectors.md) can receive selected assignments and explicitly run a locally installed agent, returning a draft and per-thread explanations. It never edits conversation-history files or publishes on its own. Review changes, publish a new version, then resolve the relevant threads. [Complete feedback/session workflow →](docs/feedback-and-sessions.md)
 
 ## Search and graph connections
 
@@ -214,7 +214,7 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md) for the complete checks, contribution bo
 
 ## Status and boundaries
 
-Margen is an early-stage project. The standalone generator, portal, skill and React layer have different runtime requirements. There is no npm release yet, multi-replica database support, automatic chat injection or semantic graph model. [Roadmap](ROADMAP.md) tracks future work; [changelog](CHANGELOG.md) records shipped changes.
+Margen is an early-stage project. The standalone generator, portal, skill and React layer have different runtime requirements. There is no npm release yet, multi-replica database support, automatic conversation-history import or an embedding-based graph model. [Roadmap](ROADMAP.md) tracks future work; [changelog](CHANGELOG.md) records shipped changes.
 
 MIT for project code. Fonts, approved reference sounds and geographic inputs retain their own terms in [NOTICE](NOTICE) and [licenses/](licenses). Brand names and logos do not imply endorsement or grant trademark rights. The editorial reference is credited in [design documentation](docs/editorial-reference.md).
 
@@ -227,3 +227,7 @@ After installation, `margen update --if-changed` updates from your configured se
 ## Unified workspace
 
 [Reader controls, advanced tables, private boards, entities, references and AI review bundles](docs/unified-workspace.md) · [Live synthetic table examples](examples/generated/workbench.html).
+
+## A creator workspace for decisions
+
+**Mi trabajo** connects project feedback, evidence-backed decisions, review dates, agent assignments and approved personal writing rules. A source changing marks dependent decisions for review. A returned proposal keeps its source session, base version and explanation per thread; accepting is separate from publishing. The contextual graph connects artifacts, companies, projects, topics, decisions and recorded sessions. [Creator workflow](docs/creator-workspace.md) · [Local agents and MCP](docs/agent-connectors.md) · [Release verification](docs/release-security.md) · [Performance measurements](docs/performance.md).
