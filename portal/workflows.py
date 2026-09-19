@@ -18,6 +18,10 @@ def migrate(db):
     migrate_knowledge(db)
     from portal.context_graph import migrate as migrate_context
     migrate_context(db)
+    from portal.formats import migrate as migrate_formats
+    migrate_formats(db)
+    from portal.creator import migrate as migrate_creator
+    migrate_creator(db)
     db.executescript('''
     CREATE TABLE IF NOT EXISTS version_meta(version TEXT PRIMARY KEY REFERENCES versions(id),state TEXT NOT NULL,title TEXT NOT NULL,space TEXT NOT NULL,source TEXT NOT NULL DEFAULT '{}');
     CREATE TABLE IF NOT EXISTS artifact_meta(artifact TEXT PRIMARY KEY REFERENCES artifacts(id),tags TEXT NOT NULL DEFAULT '[]',collections TEXT NOT NULL DEFAULT '[]',archived INTEGER NOT NULL DEFAULT 0);

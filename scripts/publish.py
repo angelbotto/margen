@@ -95,6 +95,8 @@ def main():
         if aid and (len(aid)!=32 or any(x not in '0123456789abcdef' for x in aid)):raise SystemExit('ID de artefacto inválido.')
         if aid and args.visibilidad:raise SystemExit('Las revisiones conservan permisos; usa Compartir en el portal para cambiarlos.')
         body={'title':args.titulo,'space':args.espacio,'html':content,'mode':args.modo or ('draft' if aid else 'published'),'source':{'agent':args.agente,'session':args.sesion,'device':args.dispositivo or os.environ.get('BOTTIFACT_DEVICE','') or socket.gethostname()}}
+        attachments=args.archivo.with_suffix('.attachments.json')
+        if attachments.is_file():body['attachments']=json.loads(attachments.read_text())
         if args.visibilidad:body['visibility']=args.visibilidad
         result=request(base,token,'/api/artifacts'+('/'+aid+'/versions' if aid else ''),body)
         receipts[key]={**result,'document_id':match[1],'saved_at':int(time.time())};private_json(receipt_file,receipts)

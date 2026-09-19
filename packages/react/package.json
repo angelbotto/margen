@@ -1,6 +1,6 @@
 {
   "name": "@bottifact/react",
-  "version": "0.10.1",
+  "version": "0.11.0",
   "description": "Typed React components for Bottifact artifacts",
   "license": "MIT",
   "type": "module",

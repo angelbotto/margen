@@ -22,6 +22,7 @@ def package():
     for folder in FOLDERS:
         files.extend(path for path in (ROOT / folder).rglob('*') if path.is_file() and not path.is_symlink()
                      and path.suffix in EXTENSIONS and '__pycache__' not in path.parts and 'node_modules' not in path.parts)
+    files.append(ROOT/'tests/fixtures/agent-evaluation/cases.json')
     for name in ['geography.json', 'sounds-cmrg.json', 'fonts.json', 'literata-fonts.json']:
         files.append(ROOT / 'tests/evidence' / name)
     blobs = {str(path.relative_to(ROOT)): path.read_bytes() for path in sorted(set(files))}

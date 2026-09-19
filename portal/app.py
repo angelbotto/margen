@@ -97,6 +97,8 @@ class Store:
             CREATE VIRTUAL TABLE IF NOT EXISTS artifact_fts USING fts5(artifact UNINDEXED,version UNINDEXED,title,space,body,tokenize='unicode61 remove_diacritics 2');
             ''')
             migrate(db)
+            from portal.library_query import migrate as migrate_library
+            migrate_library(db)
 
     def refresh_search(self):
         with self.db() as db:
@@ -123,7 +125,7 @@ class Store:
             for old in known:
                 if old['id'] == uid: continue
                 changed_before = db.total_changes
-                for table, column in [('sessions','user_id'), ('tokens','user_id'), ('logins','user_id'), ('artifacts','owner'), ('events','actor'), ('audit','actor')]:
+                for table, column in [('sessions','user_id'), ('tokens','user_id'), ('logins','user_id'), ('artifacts','owner'), ('events','actor'), ('audit','actor'), ('creator_jobs','owner'), ('creator_decisions','owner'), ('creator_rules','owner'), ('creator_connectors','owner'), ('creator_decision_history','actor'), ('review_threads','actor')]:
                     db.execute(f'UPDATE {table} SET {column}=? WHERE {column}=?', (uid, old['id']))
                 for table in ['review_reads','thread_reads','notifications','notification_settings']:
                     # Las claves únicas del usuario canónico prevalecen; el historial original queda auditable.
@@ -140,6 +142,8 @@ class Store:
             db = sqlite3.connect(self.root / 'bottifact.sqlite3', timeout=30)
             db.row_factory = sqlite3.Row
             db.execute('PRAGMA foreign_keys=ON')
+            from portal.search import normalized
+            db.create_function('norm',1,lambda v:normalized(str(v or '')),deterministic=True)
             try:
                 yield db
                 db.commit()
@@ -248,6 +252,8 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
     issuer = (issuer or os.environ.get('BOTTIFACT_ISSUER', '')).rstrip('/')
     audience = audience or os.environ.get('BOTTIFACT_AUDIENCE', '')
     jwks = jwt.PyJWKClient(issuer + '/cdn-cgi/access/certs', cache_keys=True, lifespan=300) if issuer and audience else None
+    from collections import deque
+    timings=deque(maxlen=2000)
     rate = {}
     rate_lock = threading.Lock()
 
@@ -298,7 +304,10 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
                 if count > 90 or len(rate) > 10000:
                     return JSONResponse({'detail':'Demasiados cambios. Espera un minuto.'}, status_code=429, headers={'Retry-After':'60'})
                 rate[key] = (now, count)
+        started=time.perf_counter()
         response = await call_next(request)
+        route=getattr(request.scope.get('route'),'path','other')
+        timings.append((route,round((time.perf_counter()-started)*1000,2),response.status_code))
         response.headers['Cache-Control'] = 'private, no-store'
         response.headers['X-Content-Type-Options'] = 'nosniff'
         response.headers['Referrer-Policy'] = 'no-referrer'
@@ -311,6 +320,18 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
 
     @app.get('/health')
     def health(): return {'service':'bottifact', 'status':'ok', 'storage':'nas-local'}
+
+    @app.get('/api/operations/performance')
+    def performance(request:Request):
+        u=account(request,True)
+        if not is_admin(u):raise HTTPException(403)
+        groups={}
+        for path,ms,status in list(timings):
+            group=groups.setdefault(path,{'times':[],'errors':0});group['times'].append(ms);group['errors']+=int(status>=500)
+        rows=[]
+        for path,g in groups.items():
+            values=sorted(g['times']);rows.append({'route':path,'samples':len(values),'p50_ms':values[len(values)//2],'p95_ms':values[min(len(values)-1,int(len(values)*.95))],'server_errors':g['errors']})
+        return {'window':'last 2000 requests in this process, resets on restart','routes':rows}
 
     @app.get('/api/session')
     def session(request: Request):
@@ -383,8 +404,17 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
         u = account(request);view = request.query_params.get('view');public = view == 'public'
         params=request.query_params;query=clean(params.get('q',''),300,True)
         with store.db() as db:
+            has_bookmarks=db.execute('SELECT 1 FROM bookmarks WHERE (owner=? OR ?) AND id NOT IN (SELECT bookmark FROM bookmark_migrations) LIMIT 1',(u['id'],is_admin(u))).fetchone()
+            if not has_bookmarks:
+                from portal.library_query import query as library_query
+                try: result=library_query(db,u,params,is_admin)
+                except (ValueError,TypeError,KeyError,UnicodeError):raise HTTPException(422,'Búsqueda o cursor inválido.') from None
+                if params.get('graph')=='1':
+                    nodes=result['artifacts'][:120]
+                    return {'nodes':nodes,'edges':connections(nodes),'total':result['total'],'truncated':result['total']>len(nodes),'network':context_network(db,nodes,u)}
+                return result
             rows = []
-            for a in db.execute('SELECT * FROM artifacts ORDER BY updated DESC'):
+            for a in db.execute('SELECT * FROM artifacts WHERE owner=? OR ? OR visibility IN (\'public\',\'unlisted\') OR id IN (SELECT artifact FROM grants WHERE email=?) ORDER BY updated DESC',(u['id'],is_admin(u),u.get('email') or '')):
                 r = role(db,a,u)
                 if permissions(db,a,u)['read'] and ((public and a['visibility']=='public') or (not public and r and (view!='mine' or r=='owner') and (view!='shared' or r!='owner'))):
                     p = permissions(db,a,u)
@@ -451,6 +481,16 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
         match = re.search(r'<meta\s+name=[\"\']nota-documento[\"\']\s+content=[\"\']([a-zA-Z0-9_-]{1,120})[\"\']',content)
         if not match: raise HTTPException(422,'Genera el archivo con Margen y un documento-id estable.')
         docid = match[1];title = clean(body.get('title'),200);space = clean(body.get('space','Personal'),60)
+        from portal.formats import attachments as validate_attachments
+        original_files=validate_attachments(body.get('attachments',[]))
+        if aid and 'attachments' not in body:
+            with store.db() as db:
+                prior_artifact=artifact_for(db,aid,u,'edit')
+                folder=store.files/'attachments'/prior_artifact['current_version']
+                if folder.is_dir():original_files={f.name:f.read_bytes() for f in folder.iterdir() if f.is_file() and not f.is_symlink()}
+        if original_files:
+            digest=hashlib.sha256(b''.join(name.encode()+hashlib.sha256(blob).digest() for name,blob in sorted(original_files.items()))).hexdigest()
+            content=re.sub(r'<!-- margen-originals:[a-f0-9]{64} -->','',content)+'<!-- margen-originals:'+digest+' -->'
         data = content.encode();sha = hashlib.sha256(data).hexdigest();version = uuid.uuid4().hex
         mode=body.get('mode','published')
         if mode not in ('draft','published'):raise HTTPException(422,'Estado de versión inválido.')
@@ -471,16 +511,20 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
                 if previous and previous['sha']==sha and (previous['saved_title'] or a['title'])==title and (previous['saved_space'] or a['space'])==space:
                     return {'id':aid,'version':previous['id'],'url':origin+'/a/'+aid,'visibility':visibility,'state':mode,'preview_url':origin+'/a/'+aid+('?version='+previous['id'] if mode=='draft' else '')}
             else:
-                if db.execute('SELECT count(*) FROM artifacts WHERE owner=?',(u['id'],)).fetchone()[0] >= 200:
-                    raise HTTPException(409,'El espacio alcanzó 200 documentos.')
+                if db.execute('SELECT count(*) FROM artifacts WHERE owner=?',(u['id'],)).fetchone()[0] >= int(os.environ.get('MARGEN_MAX_ARTIFACTS','10000')):
+                    raise HTTPException(409,'El espacio alcanzó el límite de documentos configurado.')
                 aid = uuid.uuid4().hex
                 db.execute('INSERT INTO artifacts(id,owner,title,space,document_id,updated,visibility) VALUES(?,?,?,?,?,?,?)',
                            (aid,u['id'],title,space,docid,int(time.time()),visibility))
             file = store.files/(sha+'.html')
             if not file.exists():
                 temporary = store.files/(uuid.uuid4().hex+'.tmp');temporary.write_bytes(data);temporary.replace(file)
+            for name,blob in original_files.items():
+                folder=store.files/'attachments'/version;folder.mkdir(parents=True,exist_ok=True,mode=0o700);(folder/name).write_bytes(blob)
             db.execute('INSERT INTO versions VALUES(?,?,?,?)',(version,aid,sha,int(time.time())))
             db.execute('INSERT INTO version_meta VALUES(?,?,?,?,?)',(version,mode,title,space,json.dumps(source)))
+            from portal.formats import describe
+            db.execute('INSERT INTO version_formats VALUES(?,?)',(version,json.dumps(describe(content))))
             if mode=='published' or not db.execute('SELECT current_version FROM artifacts WHERE id=?',(aid,)).fetchone()[0]:
                 db.execute('UPDATE artifacts SET title=?,space=?,current_version=?,updated=? WHERE id=?',(title,space,version,int(time.time()),aid))
                 index_document(db,{'id':aid,'title':title,'space':space,'current_version':version},content)
@@ -505,13 +549,19 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
             db.execute('INSERT INTO audit(actor,action,artifact,at) VALUES(?,?,?,?)',(u['id'],'rename',aid,int(time.time())))
         return {'id':aid,'title':title,'space':space,'url':origin+'/a/'+aid}
 
+    @app.get('/api/formats')
+    def formats():
+        from portal.formats import CAPABILITIES
+        return {'version':1,'formats':CAPABILITIES}
+
     @app.get('/api/artifacts/{aid}')
     def artifact(aid: str, request: Request):
         u = who(request)
         with store.db() as db:
             a = artifact_for(db,aid,u);p = permissions(db,a,u)
             owner=bool(u and u['id']==a['owner'])
-            return {**a,**metadata(db,aid),**enrich(db,a,u),'permissions':p,'versions':[{**dict(v),'source':v['source'] if owner else '{}'} for v in db.execute("SELECT v.id,v.created,COALESCE(m.state,'published') AS state,m.source FROM versions v LEFT JOIN version_meta m ON m.version=v.id WHERE v.artifact=? ORDER BY v.rowid DESC",(aid,)) if cited_version_readable(db,a,v['id'],u,permissions)],
+            fmt=db.execute('SELECT capabilities FROM version_formats WHERE version=?',(a['current_version'],)).fetchone()
+            return {**a,**metadata(db,aid),**enrich(db,a,u),'format':json.loads(fmt['capabilities']) if fmt else None,'permissions':p,'versions':[{**dict(v),'source':v['source'] if owner else '{}'} for v in db.execute("SELECT v.id,v.created,COALESCE(m.state,'published') AS state,m.source FROM versions v LEFT JOIN version_meta m ON m.version=v.id WHERE v.artifact=? ORDER BY v.rowid DESC",(aid,)) if cited_version_readable(db,a,v['id'],u,permissions)],
                     'grants':[dict(g) for g in db.execute('SELECT email,role FROM grants WHERE artifact=?',(aid,))] if p['manage'] else []}
 
     @app.put('/api/artifacts/{aid}/access')
@@ -601,6 +651,8 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
 
     mount_workspace(app,store,origin,who,account,payload,clean,artifact_for,permissions,threads,snapshot,is_admin)
     mount_context(app,store,origin,account,payload,clean,artifact_for,permissions)
+    from portal.creator import mount as mount_creator
+    mount_creator(app,store,origin,account,payload,clean,artifact_for,permissions,threads,snapshot)
 
     @lru_cache(maxsize=32)
     def static_preview(sha,title):
@@ -632,6 +684,8 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
             v=db.execute('SELECT * FROM versions WHERE id=? AND artifact=?',(vid,aid)).fetchone()
             if not v: raise HTTPException(404,'Versión no encontrada.')
             content=(store.files/(v['sha']+'.html')).read_text()
+        from urllib.parse import quote
+        content=re.sub(r'href="([^"]+)" data-margen-original="([^"]+)"',lambda m:'data-bottifact-link href="/api/artifacts/'+aid+'/attachments/'+vid+'/'+quote(m[2],safe='')+'"',content)
         # El iframe y la cabecera CSP fuerzan origen opaco, incluso al abrir esta URL fuera del portal.
         bridge=(ROOT/'static/bridge.js').read_text()
         # Actualiza sólo el adaptador de revisión de la vista; conserva el HTML fuente en disco.
@@ -663,7 +717,7 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
 
     @app.get('/downloads/{name}')
     def download(name: str):
-        if name not in ('bottifact-portable.zip','bottifact-portable.sha256'): raise HTTPException(404)
+        if name not in ('bottifact-portable.zip','bottifact-portable.sha256','stable.json','stable.json.sig','preview.json','preview.json.sig','bottifact-preview.zip','bottifact-preview.sha256'): raise HTTPException(404)
         path=Path(os.environ.get('BOTTIFACT_RELEASES','/releases'))/name
         if not path.is_file(): raise HTTPException(503,'Paquete pendiente de publicación.')
         return FileResponse(path, filename=name)

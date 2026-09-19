@@ -1355,7 +1355,14 @@
       const file = form.elements.file.files[0];
       if (!file || file.size > 20 * 1024 * 1024)
         throw Error("Selecciona un HTML de hasta 20 MB.");
+      const original=form.elements.original?.files[0];let attachments=[];
+      if(original){
+        if(original.size>12*1024*1024)throw Error('El original debe ocupar menos de 12 MB.');
+        const data=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result).split(',')[1]);reader.onerror=reject;reader.readAsDataURL(original);});
+        attachments=[{name:'original.'+original.name.split('.').pop().toLowerCase(),data}];
+      }
       const payload = {
+          attachments,
           title: form.elements.title.value,
           space: form.elements.space.value,
           html: await file.text(),
@@ -1624,9 +1631,11 @@
       load();
     },
   });
+  const creatorWorkspace = window.MargenCreator.create({api,copy,peek,bundle:aid=>readerWorkspace.bundle(aid)});
   const workbenchTools = make("div", undefined, "context-actions");
   workbenchTools.id = "context-tools";
   for (const [label, fn, icon] of [
+    ["Mi trabajo", creatorWorkspace.open, "note"],
     ["Buscar / ⌘ K", contextWorkbench.search, "search"],
     ["Condiciones", contextWorkbench.filters, "filter"],
     ["Mesas y vistas", contextWorkbench.views, "table"],
@@ -2328,6 +2337,11 @@
       metrics.append(card);
     }
     root.append(metrics);
+    const performance=make('details',undefined,'operation-card');performance.append(make('summary','Rendimiento del servicio'));
+    performance.addEventListener('toggle',async()=>{
+      if(!performance.open||performance.dataset.loaded)return;
+      try{const sample=await api('/api/operations/performance');const table=make('table'),head=make('tr');for(const label of ['Ruta','Muestras','p50 (ms)','p95 (ms)','Errores 5xx'])head.append(make('th',label));const thead=make('thead');thead.append(head);table.append(thead);const tbody=make('tbody');for(const r of sample.routes){const row=make('tr');for(const value of [r.route,r.samples,r.p50_ms,r.p95_ms,r.server_errors])row.append(make('td',String(value)));tbody.append(row);}table.append(tbody);const scroll=make('div',undefined,'tabla-caja');scroll.tabIndex=0;scroll.setAttribute('aria-label','Tiempos del servicio');scroll.append(table);performance.append(make('p','Últimas 2000 solicitudes de este proceso. La ventana se reinicia al desplegar. No incluye tiempos de red ni de dibujo del navegador.','muted'),scroll);performance.dataset.loaded='1';}catch(e){toast(e.message);}
+    });root.append(performance);
     const operations = make("div", undefined, "operations-grid");
     for (const [key, title] of [
       ["backup", "Respaldo automático"],

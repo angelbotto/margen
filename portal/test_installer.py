@@ -14,6 +14,12 @@ spec=importlib.util.spec_from_file_location('bottifact_updater',ROOT/'scripts/up
 updater=importlib.util.module_from_spec(spec);spec.loader.exec_module(updater)
 
 class InstallerTests(unittest.TestCase):
+    def setUp(self):
+        # Installation fixtures model an independent unsigned server. Signed
+        # official releases use real OpenSSL keys in scripts/test_release.py.
+        check=patch.object(updater,'ORIGIN','https://fixtures.example.org')
+        check.start();self.addCleanup(check.stop)
+
     def archive(self,version):
         files={'packages/core/registry/registry.json':b'{}','VERSION.json':json.dumps({'version':version}).encode(),'SKILL.md':b'---\nname: bottifact\ndescription: Test\n---\n'}
         for name in ['install.py','verify_package.py']:files['scripts/'+name]=(ROOT/'scripts'/name).read_bytes()

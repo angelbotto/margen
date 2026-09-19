@@ -1,5 +1,5 @@
 {
-  "version": "2026.09.18-formats.2",
+  "version": "2026.09.19-creator.1",
   "contrato": "4",
   "componentes": 88,
   "temas": [
@@ -32,5 +32,11 @@
   ],
   "paletas": 30,
   "nombre": "Margen",
-  "skill": "margen"
+  "skill": "margen",
+  "compatibility": {
+    "skill_contract": 4,
+    "assignment": 1,
+    "formats": 1,
+    "python": "3.10"
+  }
 }

@@ -117,3 +117,9 @@ python3 scripts/package.py
 ```
 
 React changes also require `npm run check`; portal changes require its unit and deployment checks. Follow [contribution guidance](docs/contributing-components.md). Public screenshots use reviewed synthetic fixtures and the asset manifest. Never package credentials, production screenshots, cookies, private comments or personal sessions. Keep compatibility aliases and deterministic generated resources synchronized.
+
+## Close the knowledge-to-action loop
+
+Read [creator workspace](docs/creator-workspace.md) for decisions, context, review dates and personal rules, and [agent connectors](docs/agent-connectors.md) when acting on a delivered assignment. Apply only approved rules for the selected project. Preserve the evidence's cited version; a newer document may warrant reviewing a decision, not silently replacing its rationale. Include alternatives, uncertainty, expected outcome and a check-in date when the task is a decision.
+
+Assignments require selected feedback and explicit inclusion of private notes. A connector saves drafts only and must report each selected thread as addressed, blocked or unchanged with an explanation. Do not publish, resolve comments, invent a session ID or claim delivery from a copied prompt. Inspect a changed base before publication. See [release security](docs/release-security.md) for authenticated managed updates and self-hosted trust.

@@ -62,7 +62,8 @@ def network(db, rows, user):
                     "kind": "membership",
                 }
             )
-    for link in db.execute("SELECT * FROM context_links WHERE state='confirmed'"):
+    placeholders=','.join('?' for _ in valid) or 'NULL'
+    for link in db.execute(f"SELECT * FROM context_links WHERE state='confirmed' AND source IN ({placeholders}) AND target IN ({placeholders})",(*valid,*valid)):
         if (
             link["source"] in valid
             and link["target"] in valid
@@ -108,9 +109,10 @@ def mount(app, store, origin, account, payload, clean, artifact_for, permissions
         return a
 
     def authorized(db, u):
+        from portal.app import is_admin
         return {
             r["id"]: dict(r)
-            for r in db.execute("SELECT * FROM artifacts")
+            for r in db.execute("SELECT * FROM artifacts WHERE owner=? OR ? OR visibility IN ('public','unlisted') OR id IN (SELECT artifact FROM grants WHERE email=?)",(u["id"],is_admin(u),u.get("email") or ""))
             if permissions(db, r, u)["read"]
         }
 
@@ -118,7 +120,7 @@ def mount(app, store, origin, account, payload, clean, artifact_for, permissions
         allowed = authorized(db, u)
         result = []
         for row in db.execute(
-            "SELECT * FROM context_links ORDER BY created DESC LIMIT 5000"
+            "SELECT * FROM context_links WHERE (? IS NULL OR source=? OR target=?) ORDER BY created DESC LIMIT 5000", (aid,aid,aid)
         ):
             if aid and aid not in (row["source"], row["target"]):
                 continue
@@ -480,7 +482,7 @@ def mount(app, store, origin, account, payload, clean, artifact_for, permissions
         groups = {}
         with store.db() as db:
             for row in db.execute(
-                "SELECT v.id,v.artifact,m.source,m.title FROM versions v JOIN version_meta m ON m.version=v.id JOIN artifacts a ON a.id=v.artifact WHERE a.owner=? ORDER BY v.created DESC",
+                "SELECT v.id,v.artifact,m.source,m.title FROM versions v JOIN version_meta m ON m.version=v.id JOIN artifacts a ON a.id=v.artifact WHERE a.owner=? ORDER BY v.created DESC LIMIT 2000",
                 (u["id"],),
             ):
                 source = json.loads(row["source"])
