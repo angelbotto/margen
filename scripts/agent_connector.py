@@ -36,6 +36,7 @@ def api(config, path, data=None):
         headers={
             "Authorization": "Bearer " + config["token"],
             "Content-Type": "application/json",
+            "User-Agent": "Margen/1.0",
         },
     )
     try:
