@@ -20,4 +20,11 @@ class AdapterTests(unittest.TestCase):
  def test_private_config_permissions(self):
   with tempfile.TemporaryDirectory() as folder:
    p=Path(folder)/'config';connector.private(p,'{}');self.assertEqual(p.stat().st_mode&0o777,0o600)
+ def test_http_identifies_the_connector_without_redirecting(self):
+  with patch.object(connector.urllib.request,'build_opener') as factory:
+   factory.return_value.open.return_value.__enter__.return_value=io.StringIO('{}')
+   connector.api({'server':'https://example.invalid','token':'synthetic'},'/api/connector/pending')
+   request=factory.return_value.open.call_args.args[0]
+   self.assertEqual(request.get_header('User-agent'),'Margen/1.0')
+   self.assertEqual(request.get_header('Authorization'),'Bearer synthetic')
 if __name__=='__main__':unittest.main()
