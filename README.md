@@ -243,3 +243,7 @@ After installation, `margen update --if-changed` updates from your configured se
 ## A creator workspace for decisions
 
 **Mi trabajo** connects project feedback, evidence-backed decisions, review dates, agent assignments and approved personal writing rules. A source changing marks dependent decisions for review. A returned proposal keeps its source session, base version and explanation per thread; accepting is separate from publishing. The contextual graph connects artifacts, companies, projects, topics, decisions and recorded sessions. [Creator workflow](docs/creator-workspace.md) · [Local agents and MCP](docs/agent-connectors.md) · [Release verification](docs/release-security.md) · [Performance measurements](docs/performance.md).
+
+### A connected creator workspace
+
+The administrator has dedicated [Knowledge graph, Visits and My work](docs/workspace-experience.md) destinations. Explore company/topic neighborhoods, inspect incoming references and recorded session provenance, save a graph lens, and prepare contextual feedback for an agent. Visit analytics shows recorded opens by document and day with optional self-hosted Umami; it never labels opens as unique people.

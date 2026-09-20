@@ -105,7 +105,9 @@ window.BottifactReaderWorkspace = {
         label = el("label", "Incluir mis notas personales"),
         list = el("div", null, "bundle-threads"),
         preview = el("textarea"),
-        actions = el("footer");
+        actions = el("footer"),
+        selectionCount = el("p", "0 hilos seleccionados", "bundle-count");
+      d.classList.add("context-composer");
       notes.type = "checkbox";
       label.prepend(notes);
       preview.readOnly = true;
@@ -119,7 +121,8 @@ window.BottifactReaderWorkspace = {
       const invalidate = () => {
         bundleData = null;
         preview.value = "";
-        copyButton.disabled = download.disabled = true;
+        download.disabled = true;
+        selectionCount.textContent = selected.size + " hilos seleccionados";
       };
       async function load() {
         const n = ++request;
@@ -137,6 +140,7 @@ window.BottifactReaderWorkspace = {
             .filter((i) => !i.thread.resolved && i.thread.entry_type !== "note")
             .map((i) => i.thread.thread),
         );
+        invalidate();
         render();
       }
       function render() {
@@ -177,7 +181,7 @@ window.BottifactReaderWorkspace = {
             ),
           );
       }
-      const build = button("Preparar vista previa", async () => {
+      async function buildContext() {
         bundleData = await api("/api/review/bundle", {
           method: "POST",
           body: JSON.stringify({
@@ -196,8 +200,13 @@ window.BottifactReaderWorkspace = {
         status.textContent =
           bundleData.count +
           " hilos incluidos. Revisa el texto antes de copiar.";
+      }
+      const build = button("Revisar prompt", async () => {
+        await buildContext();
+        disclosure.open = true;
       });
-      const copyButton = button("Copiar prompt", async () => {
+      const copyButton = button("Copiar para IA", async () => {
+          if (!bundleData) await buildContext();
           if (bundleData) {
             await copy(bundleData.text);
             status.textContent =
@@ -217,9 +226,38 @@ window.BottifactReaderWorkspace = {
           a.click();
           setTimeout(() => URL.revokeObjectURL(url), 1000);
         });
-      copyButton.disabled = download.disabled = true;
-      actions.append(build, copyButton, download);
-      body.append(hint, label, list, actions, preview);
+      download.disabled = true;
+      copyButton.classList.add("primary");
+      window.BottifactUI?.decorate(copyButton, "copy");
+      window.BottifactUI?.decorate(download, "download");
+      const disclosure = el("details", null, "bundle-preview");
+      disclosure.append(
+        el("summary", "Contenido del prompt"),
+        preview,
+        download,
+      );
+      const selection = el("div", null, "bundle-selection");
+      selection.append(
+        selectionCount,
+        button("Pendientes", () => {
+          selected = new Set(
+            items
+              .filter(
+                (i) => !i.thread.resolved && i.thread.entry_type !== "note",
+              )
+              .map((i) => i.thread.thread),
+          );
+          invalidate();
+          render();
+        }),
+        button("Limpiar", () => {
+          selected.clear();
+          invalidate();
+          render();
+        }),
+      );
+      actions.append(build, copyButton);
+      body.append(hint, label, selection, list, disclosure, actions);
       notes.onchange = () =>
         load().catch((e) => (status.textContent = e.message));
       await load();

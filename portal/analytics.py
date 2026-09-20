@@ -102,6 +102,64 @@ def mount(app, store, account, who, artifact_for, payload):
                 "retention_days": 365,
             }
 
+    @app.get("/api/creator/analytics/summary")
+    def summary(request: Request):
+        """Aggregate in SQL before limiting ranking rows; never sum a truncated feed."""
+        u = account(request)
+        try:
+            days = int(request.query_params.get("days", "30"))
+        except ValueError:
+            raise HTTPException(422, "Período inválido.") from None
+        if days not in (7, 30, 90, 365):
+            raise HTTPException(422, "Período inválido.")
+        project = request.query_params.get("project", "")
+        today = time.strftime("%Y-%m-%d", time.gmtime())
+        since = time.strftime("%Y-%m-%d", time.gmtime(time.time() - (days - 1) * 86400))
+        with store.db() as db:
+            where = "a.owner=? AND (?='' OR a.space=?) AND v.day>=? AND v.day<=?"
+            args = (u["id"], project, project, since, today)
+            daily = [
+                dict(r)
+                for r in db.execute(
+                    f"SELECT v.day,sum(v.views) AS views FROM artifact_visits v JOIN artifacts a ON a.id=v.artifact WHERE {where} GROUP BY v.day ORDER BY v.day",
+                    args,
+                )
+            ]
+            ranking = [
+                dict(r)
+                for r in db.execute(
+                    f"SELECT a.id,a.title,a.space,sum(v.views) AS views,max(v.day) AS last_day FROM artifact_visits v JOIN artifacts a ON a.id=v.artifact WHERE {where} GROUP BY a.id ORDER BY views DESC,a.title LIMIT 100",
+                    args,
+                )
+            ]
+            active = db.execute(
+                f"SELECT count(DISTINCT a.id) FROM artifact_visits v JOIN artifacts a ON a.id=v.artifact WHERE {where}",
+                args,
+            ).fetchone()[0]
+            spaces = [
+                dict(r)
+                for r in db.execute(
+                    "SELECT space,count(*) AS artifacts FROM artifacts WHERE owner=? GROUP BY space ORDER BY space",
+                    (u["id"],),
+                )
+            ]
+            return {
+                "enabled": enabled(db, u["id"]),
+                "umami": configuration(),
+                "days": days,
+                "since": since,
+                "until": today,
+                "timezone": "UTC",
+                "daily": daily,
+                "total": sum(r["views"] for r in daily),
+                "active_artifacts": active,
+                "ranking": ranking,
+                "ranking_limit": 100,
+                "spaces": spaces,
+                "unit": "page_opens",
+                "retention_days": 365,
+            }
+
     @app.put("/api/creator/analytics")
     async def preferences(request: Request):
         u = account(request, True)

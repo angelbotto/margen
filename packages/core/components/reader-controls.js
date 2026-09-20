@@ -58,6 +58,26 @@
     .bottifact-toolbar .bf-menu{bottom:calc(100% + 12px);padding:8px;border-radius:10px;border-color:var(--linea,#d9d1c8);background:var(--papel,#faf8f4)}
     .bottifact-toolbar .bf-menu-heading{font:500 11px/1.4 var(--mono,monospace);letter-spacing:.02em;border-bottom:1px dotted var(--linea,#d9d1c8);margin:0 5px 5px;padding:7px 5px 10px}
     @media(max-width:540px){nav.bottifact-toolbar{bottom:max(12px,env(safe-area-inset-bottom));padding:5px}.bottifact-toolbar>details>summary,.bottifact-toolbar .apariencia-menu>summary{position:relative;min-width:79px;height:48px;padding:5px 7px;flex-direction:column;gap:4px}.bf-tool-label{font-size:10px}.bottifact-toolbar [data-review-tool]>summary .bf-review-count{position:absolute;top:1px;right:14px;min-width:15px;height:15px;font-size:9px;box-shadow:0 0 0 2px var(--papel,#faf8f4)}}
+    .bottifact-toolbar .bf-menu{width:min(340px,calc(100vw - 24px));padding:8px;border-radius:14px;box-shadow:0 4px 12px #00000008,0 18px 60px #00000020}
+    .bottifact-toolbar .bf-menu button{min-height:44px;border-radius:8px;gap:12px;padding:11px 12px}
+    .bottifact-toolbar .bf-menu button svg{flex:none;align-self:center;width:18px;height:18px}
+    .bf-action-copy{display:flex;flex-direction:column;gap:3px;font-weight:500;line-height:1.4}
+    .bf-action-copy small{font:400 11px/1.45 var(--sans,system-ui);color:var(--tinta-2,#625f5a)}
+    .bottifact-toolbar .bf-menu-heading{font:600 10px/1.4 var(--sans,system-ui);letter-spacing:.04em;padding:9px 8px;border:0;margin:0;color:var(--tinta-2,#625f5a)}
+    .bottifact-toolbar .bf-menu-heading:not(:first-child){border-top:1px solid var(--linea,#ddd);margin-top:5px;padding-top:14px}
+    .bf-favorites-row{display:flex;justify-content:space-between;align-items:center;gap:6px;margin:4px 0}
+    .bf-favorites-row .bf-theme-favorite{margin:0!important;padding:6px 9px!important;border-radius:7px!important}
+    .bf-favorites-row [aria-pressed=true]{background:var(--panel)!important;color:var(--tinta)!important}
+    .bottifact-toolbar .apariencia-panel{width:min(400px,calc(100vw - 24px));padding:18px;border-radius:16px;box-shadow:0 4px 12px #00000008,0 18px 60px #00000020}
+    .bottifact-toolbar .apariencia-colores{max-height:min(38dvh,340px);gap:3px}
+    .bottifact-toolbar .apariencia-colores label{border:1px solid transparent!important;border-radius:9px;padding:9px!important;min-height:56px}
+    .bottifact-toolbar .apariencia-colores label:has(:checked){outline:0!important;border-color:var(--linea-fuerte,var(--linea))!important;background:var(--panel)!important}
+    .bottifact-toolbar .apariencia-colores label small{font-size:11px}
+    .bottifact-toolbar .apariencia-pestanas{padding:4px;border-radius:9px;margin-bottom:16px}
+    .bottifact-toolbar .apariencia-pestanas button{font-size:12px;min-height:35px;border-radius:6px}
+    .bottifact-toolbar .apariencia-filtros{grid-template-columns:minmax(0,1fr) 120px;gap:10px}
+    .bottifact-toolbar .apariencia-modos{margin-bottom:14px}
+    @media(max-width:540px){.bottifact-toolbar .apariencia-panel{padding:15px}.bottifact-toolbar .apariencia-colores{max-height:32dvh}}
     @media print{.bottifact-toolbar,.bf-controls-status,.bf-dock-tooltip{display:none!important}}
     `;
     document.head.append(style);
@@ -119,6 +139,24 @@
         Imprimir: "print",
       };
       window.BottifactUI?.decorate(b, actionIcons[label] || "arrow");
+      const hints = {
+        "Añadir comentario": "Señala cualquier punto del documento",
+        "Añadir nota personal": "Privada, sólo para ti",
+        "Ver comentarios y notas": "Hilos, respuestas y pendientes",
+        "Preparar contexto para IA":
+          "Selecciona hilos y copia un prompt con sus fuentes",
+        "Enlace y acceso": "Copia el enlace o elige quién puede entrar",
+        "Gestionar artefacto": "Versiones y datos del documento",
+      };
+      b.setAttribute("aria-label", label);
+      if (hints[label]) {
+        const text = make("span", null, "bf-action-copy");
+        for (const n of [...b.childNodes])
+          if (n.nodeType === 3 || n.classList?.contains("bf-control-label"))
+            text.append(n);
+        text.append(make("small", hints[label]));
+        b.append(text);
+      }
       b.type = "button";
       b.addEventListener(
         "click",
@@ -133,20 +171,26 @@
     const reviewMenu = menu("Comentarios", "comment");
     reviewMenu.d.dataset.reviewTool = "";
     document.addEventListener("bottifact:review-mode", (event) => {
-      reviewMenu.d.querySelector("summary").classList.toggle("bf-tool-active", event.detail.active);
+      reviewMenu.d
+        .querySelector("summary")
+        .classList.toggle("bf-tool-active", event.detail.active);
       if (!event.detail.active) say("");
     });
-    const reviewCount=make("span", "0", "bf-review-count");
+    const reviewCount = make("span", "0", "bf-review-count");
     reviewMenu.d.querySelector("summary").append(reviewCount);
-    function updateCount(count){
-      reviewCount.textContent=String(count);
+    function updateCount(count) {
+      reviewCount.textContent = String(count);
       reviewCount.hidden = count === 0;
-      const label="Comentarios · "+count+" abiertos";
-      reviewMenu.d.querySelector("summary").setAttribute("aria-label",label);
-      reviewMenu.d.querySelector("summary").dataset.tooltip=label;
+      const label = "Comentarios · " + count + " abiertos";
+      reviewMenu.d.querySelector("summary").setAttribute("aria-label", label);
+      reviewMenu.d.querySelector("summary").dataset.tooltip = label;
     }
-    updateCount(Number(review?.querySelector("button:last-child")?.textContent)||0);
-    document.addEventListener("bottifact:review-count",e=>updateCount(e.detail.open));
+    updateCount(
+      Number(review?.querySelector("button:last-child")?.textContent) || 0,
+    );
+    document.addEventListener("bottifact:review-count", (e) =>
+      updateCount(e.detail.open),
+    );
     const original = (label) =>
       review?.querySelector('[aria-label="' + label + '"]');
     const comment = action(reviewMenu, "Añadir comentario", () => {
@@ -163,6 +207,12 @@
       if (review) review.querySelector("button:last-child").click();
       else return bridge?.action("review");
     });
+    const contextHeading = make(
+      "div",
+      "Llevar la revisión a tu trabajo",
+      "bf-menu-heading",
+    );
+    reviewMenu.p.append(contextHeading);
     const bundle = action(reviewMenu, "Preparar contexto para IA", () => {
       if (bridge) return bridge.action("bundle");
       review?.querySelector("button:last-child")?.click();
@@ -176,7 +226,7 @@
           : "Revisión local en este navegador. Exporta para compartirla.",
       ),
     );
-    const shareMenu=menu("Compartir", "share");
+    const shareMenu = menu("Compartir", "share");
     action(shareMenu, "Enlace y acceso", async () => {
       if (bridge) return bridge.action("share");
       const canonical = document.querySelector("link[rel=canonical]")?.href;
@@ -208,11 +258,14 @@
         input.select();
       }
     });
-    const manage = action(shareMenu, "Gestionar artefacto", () => bridge?.action("manage"));
+    const manage = action(shareMenu, "Gestionar artefacto", () =>
+      bridge?.action("manage"),
+    );
     manage.hidden = true;
     if (bridge) {
-      action(reviewMenu, "Referencias y conexiones", () => bridge.action("related"));
-      action(reviewMenu, "Buscar en mi biblioteca", () => bridge.action("search"));
+      action(shareMenu, "Referencias y conexiones", () =>
+        bridge.action("related"),
+      );
     } else action(shareMenu, "Imprimir o guardar PDF", () => print());
     if (appearance) {
       bar.append(appearance);
@@ -223,12 +276,36 @@
       if (window.BottifactUI) trigger.replaceChildren(svg("appearance"));
     }
     for (const trigger of bar.querySelectorAll(":scope>details>summary")) {
-      trigger.append(make("span", trigger.getAttribute("aria-label").split(" · ")[0], "bf-tool-label"));
+      trigger.append(
+        make(
+          "span",
+          trigger.getAttribute("aria-label").split(" · ")[0],
+          "bf-tool-label",
+        ),
+      );
     }
     document.body.append(bar, status);
-    document.addEventListener("keydown", event => {
-      if (!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','PageUp','PageDown','Home','End',' '].includes(event.key)) return;
-      if (event.target.closest('.bottifact-toolbar,.revision-ui,[data-revision],dialog,input,textarea,[contenteditable="true"]')) event.stopPropagation();
+    document.addEventListener("keydown", (event) => {
+      if (
+        ![
+          "ArrowLeft",
+          "ArrowRight",
+          "ArrowUp",
+          "ArrowDown",
+          "PageUp",
+          "PageDown",
+          "Home",
+          "End",
+          " ",
+        ].includes(event.key)
+      )
+        return;
+      if (
+        event.target.closest(
+          '.bottifact-toolbar,.revision-ui,[data-revision],dialog,input,textarea,[contenteditable="true"]',
+        )
+      )
+        event.stopPropagation();
     });
     const tooltip = make("div", null, "bf-dock-tooltip");
     tooltip.id = "bf-dock-tooltip";
@@ -335,7 +412,9 @@
     let applied = false;
     function applyPreferences(p) {
       if (!p) return;
-      const projectAppearance=document.querySelector('meta[name="margen-theme-policy"]')?.content==="project";
+      const projectAppearance =
+        document.querySelector('meta[name="margen-theme-policy"]')?.content ===
+        "project";
       if (!projectAppearance && p.theme && p.mode)
         window.NotaTemas?.set({ family: p.theme, mode: p.mode });
       const type = document.querySelector(
@@ -397,7 +476,9 @@
       favoriteOnly = make("button", "Favoritos", "bf-theme-favorite");
       favoriteOnly.type = "button";
       favoriteOnly.setAttribute("aria-pressed", "false");
-      themePanel?.prepend(favoriteOnly);
+      const favoritesRow = make("div", null, "bf-favorites-row");
+      favoritesRow.append(favoriteOnly, favoriteButton);
+      themePanel?.querySelector(".apariencia-filtros")?.after(favoritesRow);
       favoriteOnly.addEventListener("click", () => {
         onlyFavorites = !onlyFavorites;
         favoriteOnly.setAttribute("aria-pressed", String(onlyFavorites));
@@ -435,10 +516,25 @@
         remote = value;
         // Legacy documents can use the host review panel without a local review module.
         if (Array.isArray(value.snapshot?.events)) {
-          const events=[...value.snapshot.events].sort((a,b)=>a.time-b.time||String(a.id).localeCompare(String(b.id)));
-          const threads=new Map(events.filter(e=>e.kind==="create").map(e=>[e.thread,{resolved:false,deleted:false}]));
-          for(const event of events){const thread=threads.get(event.thread);if(!thread)continue;if(event.kind==="resolve")thread.resolved=event.resolved;if(event.kind==="delete")thread.deleted=true;}
-          updateCount([...threads.values()].filter(t=>!t.resolved&&!t.deleted).length);
+          const events = [...value.snapshot.events].sort(
+            (a, b) =>
+              a.time - b.time || String(a.id).localeCompare(String(b.id)),
+          );
+          const threads = new Map(
+            events
+              .filter((e) => e.kind === "create")
+              .map((e) => [e.thread, { resolved: false, deleted: false }]),
+          );
+          for (const event of events) {
+            const thread = threads.get(event.thread);
+            if (!thread) continue;
+            if (event.kind === "resolve") thread.resolved = event.resolved;
+            if (event.kind === "delete") thread.deleted = true;
+          }
+          updateCount(
+            [...threads.values()].filter((t) => !t.resolved && !t.deleted)
+              .length,
+          );
         }
         manage.hidden = !value.reader?.manage;
         comment.disabled = !value.permissions.comment && !!value.author;

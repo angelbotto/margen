@@ -33,7 +33,7 @@
     listController = null;
   try {
     const saved = localStorage.getItem("bottifact-library-layout");
-    if (["grid", "list", "table", "graph"].includes(saved)) layout = saved;
+    if (["grid", "list", "table"].includes(saved)) layout = saved;
   } catch {}
   let advancedFilters = "";
   const selectedArtifacts = new Set();
@@ -874,6 +874,29 @@
     });
   }
   async function load(append = false) {
+    if (["brain", "insights", "work"].includes(view)) {
+      listController?.abort();
+      graphController?.abort();
+      graphInstance?.destroy();
+      previews.disconnect();
+      covers.disconnect();
+      for (const id of [
+        "feed-end",
+        "table-preferences",
+        "context-tools",
+        "browse-bar",
+        "library-filters",
+        "overview",
+      ])
+        $("#" + id).hidden = true;
+      $(".tools").hidden = true;
+      return workspace.render($("#results"), view);
+    }
+    workspace.destroy();
+    $(".tools").hidden = false;
+    $("#context-tools").hidden =
+      !user?.verified ||
+      ["admin", "connections", "notifications"].includes(view);
     const tableScroll = append ? $(".table-scroll")?.scrollTop || 0 : 0;
     if (["connections", "notifications", "admin"].includes(view)) {
       listController?.abort();
@@ -924,6 +947,16 @@
         $("#total-pending").textContent = summary.open_comments;
         $("#inbox-count").textContent = summary.open_comments || "";
         $("#total-shared").textContent = summary.shared;
+        if (!append)
+          api("/api/creator/analytics/summary?days=30")
+            .then((d) => {
+              $("#total-visits").textContent = Number(d.total).toLocaleString(
+                "es",
+              );
+            })
+            .catch(() => {
+              $("#total-visits").textContent = "—";
+            });
       }
       const filter = $("#space-filter"),
         selected = filter.value;
@@ -953,6 +986,7 @@
       }
       updateBrowse();
       updateCategories(data.categories || []);
+      updateCompanies(data.spaces || []);
       if ((append && layout === "grid") || (append && layout === "list")) {
         added.forEach(renderCard);
         $("#count").textContent = total + " artefactos";
@@ -979,13 +1013,32 @@
         selectedArtifacts.clear();
         renderBatch();
         view = button.dataset.view;
+        if (innerWidth <= 850)
+          button.scrollIntoView({
+            block: "nearest",
+            inline: "center",
+            behavior: "instant",
+          });
         document.body.dataset.view = view;
         history.replaceState(
           null,
           "",
-          view === "mine" ? "/" : "/?view=" + view,
+          view === "mine"
+            ? "/"
+            : "/?view=" +
+                view +
+                (view === "work" &&
+                new URLSearchParams(location.search).has("section")
+                  ? "&section=" +
+                    encodeURIComponent(
+                      new URLSearchParams(location.search).get("section"),
+                    )
+                  : ""),
         );
         $("#library-title").textContent = {
+          brain: "Grafo de conocimiento",
+          insights: "Visitas",
+          work: "Mi trabajo",
           mine: "Biblioteca",
           shared: "Compartidos con tu equipo.",
           inbox: "Conversaciones en contexto.",
@@ -995,6 +1048,13 @@
           public: "Biblioteca pública.",
           connections: "La misma cuenta, cualquier agente.",
         }[view];
+        $("#library-description").textContent =
+          {
+            brain: "Una memoria de ideas, fuentes y decisiones.",
+            insights: "Entiende qué se lee cuando compartes tu trabajo.",
+            work: "Revisa evidencia, retoma sesiones y decide el siguiente paso.",
+          }[view] ||
+          "Documentos, decisiones y conversaciones en un mismo lugar.";
         clearTimeout(searchTimer);
         $$("[data-view]").forEach(
           (b) => (
@@ -1073,6 +1133,10 @@
     );
   for (const name of ["grid", "list", "table", "graph"])
     $("#" + name + "-view").addEventListener("click", () => {
+      if (name === "graph") {
+        $('[data-view="brain"]').click();
+        return;
+      }
       layout = name;
       try {
         localStorage.setItem("bottifact-library-layout", name);
@@ -1104,6 +1168,9 @@
   ])
     decorate?.($(selector), icon, only);
   for (const [view, icon] of Object.entries({
+    brain: "graph",
+    insights: "chart",
+    work: "note",
     mine: "folder",
     shared: "share",
     inbox: "comment",
@@ -1121,6 +1188,26 @@
     $("#library-filters").hidden = hidden;
     $("#toggle-filters").setAttribute("aria-expanded", String(!hidden));
   });
+  function updateCompanies(spaces) {
+    let section = $("#company-nav");
+    if (!section) {
+      section = make("section", undefined, "category-nav company-nav");
+      section.id = "company-nav";
+      $(".tabs").append(section);
+    }
+    section.replaceChildren(make("h2", "Tus espacios"));
+    for (const space of spaces) {
+      const b = make("button", space);
+      b.classList.toggle("chosen", $("#space-filter").value === space);
+      const initial = make("span", space.slice(0, 2), "company-initial");
+      b.prepend(initial);
+      b.onclick = () => {
+        $("#space-filter").value = space;
+        load().catch((e) => toast(e.message));
+      };
+      section.append(b);
+    }
+  }
   function updateCategories(categories) {
     let section = $("#category-nav");
     if (!section) {
@@ -1355,11 +1442,23 @@
       const file = form.elements.file.files[0];
       if (!file || file.size > 20 * 1024 * 1024)
         throw Error("Selecciona un HTML de hasta 20 MB.");
-      const original=form.elements.original?.files[0];let attachments=[];
-      if(original){
-        if(original.size>12*1024*1024)throw Error('El original debe ocupar menos de 12 MB.');
-        const data=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result).split(',')[1]);reader.onerror=reject;reader.readAsDataURL(original);});
-        attachments=[{name:'original.'+original.name.split('.').pop().toLowerCase(),data}];
+      const original = form.elements.original?.files[0];
+      let attachments = [];
+      if (original) {
+        if (original.size > 12 * 1024 * 1024)
+          throw Error("El original debe ocupar menos de 12 MB.");
+        const data = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(String(reader.result).split(",")[1]);
+          reader.onerror = reject;
+          reader.readAsDataURL(original);
+        });
+        attachments = [
+          {
+            name: "original." + original.name.split(".").pop().toLowerCase(),
+            data,
+          },
+        ];
       }
       const payload = {
           attachments,
@@ -1631,16 +1730,26 @@
       load();
     },
   });
-  const creatorWorkspace = window.MargenCreator.create({api,copy,peek,bundle:aid=>readerWorkspace.bundle(aid)});
+  const creatorWorkspace = window.MargenCreator.create({
+    api,
+    copy,
+    peek,
+    bundle: (aid) => readerWorkspace.bundle(aid),
+  });
+  const workspace = window.MargenWorkspace.create({
+    api,
+    peek,
+    copy,
+    creator: creatorWorkspace,
+    related: contextWorkbench.related,
+    user: () => user,
+  });
   const workbenchTools = make("div", undefined, "context-actions");
   workbenchTools.id = "context-tools";
   for (const [label, fn, icon] of [
-    ["Mi trabajo", creatorWorkspace.open, "note"],
-    ["Buscar / ⌘ K", contextWorkbench.search, "search"],
     ["Condiciones", contextWorkbench.filters, "filter"],
     ["Mesas y vistas", contextWorkbench.views, "table"],
-    ["Empresas y temas", contextWorkbench.entities, "graph"],
-    ["Sesiones", contextWorkbench.sessions, "clock"],
+    ["Organizar conocimiento", contextWorkbench.entities, "graph"],
   ]) {
     const b = make("button", label);
     b.type = "button";
@@ -1907,9 +2016,15 @@
         location.hash;
     };
     select.addEventListener("change", mount);
-    $("#artifact-frame").addEventListener("load", () => {
-      window.MargenAnalytics?.visit(api, current, user, select.value).catch(() => {});
-    }, {once:true});
+    $("#artifact-frame").addEventListener(
+      "load",
+      () => {
+        window.MargenAnalytics?.visit(api, current, user, select.value).catch(
+          () => {},
+        );
+      },
+      { once: true },
+    );
     mount();
     poll = setInterval(() => {
       if (!document.hidden) refreshReview().catch(() => {});
@@ -2340,11 +2455,57 @@
       metrics.append(card);
     }
     root.append(metrics);
-    const performance=make('details',undefined,'operation-card');performance.append(make('summary','Rendimiento del servicio'));
-    performance.addEventListener('toggle',async()=>{
-      if(!performance.open||performance.dataset.loaded)return;
-      try{const sample=await api('/api/operations/performance');const table=make('table'),head=make('tr');for(const label of ['Ruta','Muestras','p50 (ms)','p95 (ms)','Errores 5xx'])head.append(make('th',label));const thead=make('thead');thead.append(head);table.append(thead);const tbody=make('tbody');for(const r of sample.routes){const row=make('tr');for(const value of [r.route,r.samples,r.p50_ms,r.p95_ms,r.server_errors])row.append(make('td',String(value)));tbody.append(row);}table.append(tbody);const scroll=make('div',undefined,'tabla-caja');scroll.tabIndex=0;scroll.setAttribute('aria-label','Tiempos del servicio');scroll.append(table);performance.append(make('p','Últimas 2000 solicitudes de este proceso. La ventana se reinicia al desplegar. No incluye tiempos de red ni de dibujo del navegador.','muted'),scroll);performance.dataset.loaded='1';}catch(e){toast(e.message);}
-    });root.append(performance);
+    const performance = make("details", undefined, "operation-card");
+    performance.append(make("summary", "Rendimiento del servicio"));
+    performance.addEventListener("toggle", async () => {
+      if (!performance.open || performance.dataset.loaded) return;
+      try {
+        const sample = await api("/api/operations/performance");
+        const table = make("table"),
+          head = make("tr");
+        for (const label of [
+          "Ruta",
+          "Muestras",
+          "p50 (ms)",
+          "p95 (ms)",
+          "Errores 5xx",
+        ])
+          head.append(make("th", label));
+        const thead = make("thead");
+        thead.append(head);
+        table.append(thead);
+        const tbody = make("tbody");
+        for (const r of sample.routes) {
+          const row = make("tr");
+          for (const value of [
+            r.route,
+            r.samples,
+            r.p50_ms,
+            r.p95_ms,
+            r.server_errors,
+          ])
+            row.append(make("td", String(value)));
+          tbody.append(row);
+        }
+        table.append(tbody);
+        const scroll = make("div", undefined, "tabla-caja");
+        scroll.tabIndex = 0;
+        scroll.setAttribute("aria-label", "Tiempos del servicio");
+        scroll.append(table);
+        performance.append(
+          make(
+            "p",
+            "Últimas 2000 solicitudes de este proceso. La ventana se reinicia al desplegar. No incluye tiempos de red ni de dibujo del navegador.",
+            "muted",
+          ),
+          scroll,
+        );
+        performance.dataset.loaded = "1";
+      } catch (e) {
+        toast(e.message);
+      }
+    });
+    root.append(performance);
     const operations = make("div", undefined, "operations-grid");
     for (const [key, title] of [
       ["backup", "Respaldo automático"],
