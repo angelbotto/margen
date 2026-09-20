@@ -1,7 +1,7 @@
 {
   "name": "bottifact-workspace",
   "private": true,
-  "version": "0.12.0",
+  "version": "0.12.1",
   "workspaces": [
     "packages/core",
     "packages/react"

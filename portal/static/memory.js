@@ -49,7 +49,7 @@ window.MargenMemory = {
         {key:'artifact',label:'Artefacto fuente',value:first?.artifact,options:artifacts.map(a=>[a.id,a.title])},
         {key:'version',label:'Versión exacta (vacía usa la publicada)',value:first?.version},
         {key:'quote',label:'Cita exacta de la fuente',value:first?.quote,multiline:true,required:true}
-      ],b=>request('/api/creator/claims',{...b,id:c.id,updated:c.updated,evidence:[{artifact:b.artifact,version:b.version,quote:b.quote}]}));
+      ],b=>request('/api/creator/claims',{...b,id:c.id,updated:c.updated,evidence:[{artifact:b.artifact,version:b.version,quote:b.quote},...(c.evidence||[]).slice(1)]}));
     }
     if(mode==='claims'){
       root.append(el('h2','Supuestos que podemos comprobar'),el('p','Registra alcance, periodo, valor y cita. Las fuentes nuevas no reescriben lo que sabíamos antes.'),action('Registrar supuesto',()=>editClaim(),'plus'));

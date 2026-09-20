@@ -1056,6 +1056,8 @@ th { background: var(--panel); color: var(--tinta-2); font: 12px/1.6 var(--mono)
 .grafica-caja { border-block: 1px dashed var(--grafica-linea); }
 .grafica-titulo { margin-block: 16px 20px; font-size: 28px; }
 .grafica-caja > svg { display: block; width: 100%; min-width: 800px; max-width: none; height: auto; }
+/* Measured bar layouts keep their plot visible on narrow screens. */
+figure[data-grafica="barras"] .grafica-caja > svg { min-width: 260px; }
 .grafica-caja text { fill: var(--grafica-tinta); font: 12px var(--mono); }
 .grafica-unidad { font-weight: 500; }
 .grafica-unidades { font: 13px/1.6 var(--mono); color: var(--grafica-tinta); margin-bottom: 12px; overflow-wrap: anywhere; }
@@ -5349,7 +5351,7 @@ Origen: sin sesión conectada; no inventar una referencia.&lt;/code&gt;&lt;/pre&
     </div>
   </details>
   <figcaption>Datos ilustrativos; corte 13-sep-2026.</figcaption>
-</figure><div class="receta-guia"><p><strong>Use and limits:</strong> Compare magnitudes in one unit. Zero stays in the domain; negatives and up to four grouped series are supported. Up to 500 rows; for many categories prefer a sortable table. The drawing keeps an 800 px local minimum and wraps long category labels. This is not a stacked or normalized percentage chart.</p></div><details class="receta-copia ancho"><summary>Copiar HTML · Barras</summary><p class="procedencia">Dependencias: packages/core/styles/fonts.css, packages/core/styles/artifact.css, packages/core/components/interface.js, packages/core/components/audio.js, packages/core/components/controls.js, packages/core/components/editorial-pieces.js, packages/core/components/reader.js, packages/core/components/charts.js</p><div class="codigo"><div class="cab"><span>Barras</span><button type="button" data-copiar="biblioteca-codigo-barras" aria-label="Copiar HTML de Barras">Copiar HTML</button><span role="status" class="copia-estado"></span></div><pre tabindex="0" aria-label="HTML de Barras, desplazable"><code id="biblioteca-codigo-barras">&lt;figure class=&quot;ancho&quot; id=&quot;barras-ejemplo&quot; data-grafica=&quot;barras&quot; data-unidad=&quot;Horas&quot;&gt;
+</figure><div class="receta-guia"><p><strong>Use and limits:</strong> Compare magnitudes in one unit. Zero stays in the domain; negatives and up to four grouped series are supported. Up to 500 rows; for many categories prefer a sortable table. The drawing keeps an 800 px local minimum and wraps long category labels. This is not a stacked or normalized percentage chart.</p><p>Bar charts measure their container, wrap category labels and redraw when a hidden chapter opens or the viewport changes. Numeric labels and the original table remain available; extremely narrow containers may scroll locally. The layout keeps a shared zero baseline for positive and negative values.</p></div><details class="receta-copia ancho"><summary>Copiar HTML · Barras</summary><p class="procedencia">Dependencias: packages/core/styles/fonts.css, packages/core/styles/artifact.css, packages/core/components/interface.js, packages/core/components/audio.js, packages/core/components/controls.js, packages/core/components/editorial-pieces.js, packages/core/components/reader.js, packages/core/components/charts.js</p><div class="codigo"><div class="cab"><span>Barras</span><button type="button" data-copiar="biblioteca-codigo-barras" aria-label="Copiar HTML de Barras">Copiar HTML</button><span role="status" class="copia-estado"></span></div><pre tabindex="0" aria-label="HTML de Barras, desplazable"><code id="biblioteca-codigo-barras">&lt;figure class=&quot;ancho&quot; id=&quot;barras-ejemplo&quot; data-grafica=&quot;barras&quot; data-unidad=&quot;Horas&quot;&gt;
   &lt;details open&gt;&lt;summary&gt;Ver los datos de balance de horas&lt;/summary&gt;
     &lt;div class=&quot;tabla-caja&quot; tabindex=&quot;0&quot; role=&quot;region&quot; aria-label=&quot;Balance de horas, tabla desplazable&quot;&gt;
       &lt;table&gt;&lt;caption&gt;Balance de horas&lt;/caption&gt;
@@ -8761,6 +8763,22 @@ window.NotaGeografia=Object.freeze({
       this.details=figure.querySelector('details'); this.wasOpen=this.details?.open;
       this.model=read(figure);
       try {this.render();instances.set(figure,this);} catch(error) {this.destroy();throw error;}
+      if (this.model.type === 'barras' && typeof ResizeObserver !== 'undefined') {
+        this.resizeObserver = new ResizeObserver(() => {
+          const width = this.measureWidth();
+          if (width <= 0 || Math.max(260, width) === this.renderWidth) return;
+          const open = this.details?.open;
+          this.parts.forEach(part => part.remove()); this.parts = [];
+          this.render();
+          if (this.details) this.details.open = open;
+        });
+        this.resizeObserver.observe(figure);
+      }
+    }
+    measureWidth() {
+      const style=getComputedStyle(this.figure);
+      const inset=['paddingLeft','paddingRight','borderLeftWidth','borderRightWidth'].reduce((sum,key)=>sum+(parseFloat(style[key])||0),0);
+      return Math.max(0,Math.round(this.figure.getBoundingClientRect().width-inset));
     }
     add(e) {this.parts.push(e);this.figure.insertBefore(e,this.figure.firstChild);return e;}
     render() {
@@ -8770,9 +8788,13 @@ window.NotaGeografia=Object.freeze({
         this.add(element('p','grafica-vacia','Sin datos disponibles.')); return;
       }
       if (type==='calor') {this.heatmap();this.add(element('h3','grafica-titulo',title));return;}
-      const lineCount = text => (text.match(/.{1,26}(?:\s|$)|.{1,26}/g)||['']).length;
+      const available = this.measureWidth();
+      this.renderWidth = type === 'barras' ? Math.max(260, available || 800) : 800;
+      this.labelLimit = Math.max(6, Math.min(26, Math.floor(this.renderWidth * .28 / 7)));
+      this.labelParts = text => text.match(new RegExp('.{1,'+this.labelLimit+'}(?:\\s|$)|.{1,'+this.labelLimit+'}', 'g')) || [''];
+      const lineCount = text => this.labelParts(text).length;
       this.rowSizes=data.map(r=>Math.max(r.values.length*42,lineCount(r.label)*16+16));
-      const width=800, height=type==='barras'?Math.max(240,this.rowSizes.reduce((a,b)=>a+b,0)+112):400;
+      const width=this.renderWidth, height=type==='barras'?Math.max(240,this.rowSizes.reduce((a,b)=>a+b,0)+112):400;
       const region=element('div','grafica-caja'); region.tabIndex=0;region.setAttribute('role','region');
       region.setAttribute('aria-label',title+'. Gráfica desplazable; datos completos a continuación.');
       const svg=svgNode('svg',{viewBox:`0 0 ${width} ${height}`,width,height,role:'img','aria-label':title});
@@ -8815,9 +8837,11 @@ window.NotaGeografia=Object.freeze({
     bars(svg,width,height) {
       const {heads,data}=this.model;
       const values=data.flatMap(r=>r.values).filter(v=>v!==null),xd=domain(values,true);
-      const left=320,right=width-110,top=60,bottom=height-52,sx=scale(...xd,left,right);
+      const longest = Math.max(...data.map(r => Math.min(this.labelLimit, r.label.length)));
+      const left=Math.min(320,Math.max(64,longest*7+28)),right=width-80,top=60,bottom=height-52,sx=scale(...xd,left,right);
       svg.dataset.xMin=xd[0];svg.dataset.xMax=xd[1];
-      for(let i=0;i<=4;i++) {const x=xd[0]+(xd[1]-xd[0])*i/4;svg.append(svgNode('line',{x1:sx(x),x2:sx(x),y1:top-10,y2:bottom,class:'grafica-rejilla','data-tick-x':x}));label(svg,sx(x),bottom+26,fmt(x),{'text-anchor':'middle'});}
+      const ticks = width < 480 ? 2 : 4;
+      for(let i=0;i<=ticks;i++) {const x=xd[0]+(xd[1]-xd[0])*i/ticks;svg.append(svgNode('line',{x1:sx(x),x2:sx(x),y1:top-10,y2:bottom,class:'grafica-rejilla','data-tick-x':x}));label(svg,sx(x),bottom+26,fmt(x),{'text-anchor':'middle'});}
       svg.append(svgNode('line',{x1:sx(0),x2:sx(0),y1:top-10,y2:bottom,class:'grafica-eje'}));
       const units=element('p','grafica-unidades','X: '+(this.figure.dataset.unidad||heads.slice(1).join(' / ')));this.svg.parentElement.before(units);this.parts.push(units);
       label(svg,left,28,'X');
@@ -8827,14 +8851,14 @@ window.NotaGeografia=Object.freeze({
         if(i===r.values.length-1)rowTop+=this.rowSizes[j];
         // Las etiquetas extensas se parten en líneas; la tabla conserva el texto íntegro.
         if(i===0) {
-          const words=r.label.match(/.{1,26}(?:\s|$)|.{1,26}/g)||[''];
+          const words=this.labelParts(r.label);
           const t=label(svg,12,y+16,'');
           words.forEach((w,k)=>t.append(svgNode('tspan',{x:12,dy:k?16:0},w.trim())));
         }
         if(v===null) {label(svg,left,y+16,'Sin dato');return;}
         const rect=svgNode('rect',{x:Math.min(sx(0),sx(v)),y,width:Math.abs(sx(v)-sx(0)),height:24,class:'grafica-barra serie-'+i,'data-value':v});
         rect.append(svgNode('title',{},`${r.label}, ${heads[i+1]}: ${fmt(v)}`));svg.append(rect);
-        label(svg,v<0?sx(v)-8:sx(v)+8,y+16,fmt(v),{'text-anchor':v<0?'end':'start'});
+        label(svg,right+8,y+16,fmt(v),{'text-anchor':'start'});
       }));
     }
     lines(svg,sx,sy,b) {
@@ -8900,6 +8924,7 @@ window.NotaGeografia=Object.freeze({
       if(this.details) this.details.open=true;
     }
     destroy() {
+      this.resizeObserver?.disconnect();
       this.parts.forEach(e=>e.remove());
       this.original.forEach(([cell,text,level])=>{cell.textContent=text;if(level===null)delete cell.dataset.nivel;else if(level!==undefined)cell.setAttribute('data-nivel',level);});
       this.model.table.classList.remove('tabla-calor');this.figure.classList.remove('nota-grafica');

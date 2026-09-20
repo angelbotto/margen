@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.12.1 — Reject stale execution deliveries
+
+- Bind leased draft uploads to the current unexpired assignment revision and verify idempotent retries. Preserve legacy unleased integration behavior.
+- Preserve additional citations when editing the first source of an assumption in the creator form.
+- Fit bar charts to their container, wrap labels and redraw after chapter/viewport changes so mobile readers can see the plot immediately.
+
 ## 0.12.0 — Evidence-backed working memory
 
 - Add cited project continuity briefs, versioned assumptions, explicit contrast reviews, real-session summaries and decision outcome views. Keep private notes out of automatic briefs.

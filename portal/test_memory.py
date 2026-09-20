@@ -188,11 +188,29 @@ class MemoryTests(unittest.TestCase):
                 "continue"
             ]
         )
+        draft_url = "/api/connector/jobs/" + key + "/draft"
+        for revision in (None, rev - 1):
+            stale = {"html": fixtures.HTML}
+            if revision is not None:
+                stale["revision"] = revision
+            self.assertEqual(
+                self.guest.post(draft_url, headers=headers, json=stale).status_code, 409
+            )
+        valid = {"html": fixtures.HTML, "revision": rev}
+        first = self.guest.post(draft_url, headers=headers, json=valid)
+        self.assertEqual(first.status_code, 200, first.text)
+        self.assertEqual(
+            first.json()["version"],
+            self.guest.post(draft_url, headers=headers, json=valid).json()["version"],
+        )
         with self.store.db() as db:
             db.execute(
                 "UPDATE job_leases SET expires=? WHERE job=?",
                 (int(time.time()) - 1, key),
             )
+        self.assertEqual(
+            self.guest.post(draft_url, headers=headers, json=valid).status_code, 409
+        )
         self.assertEqual(
             self.owner.get("/api/creator").json()["jobs"][0]["status"], "failed"
         )
