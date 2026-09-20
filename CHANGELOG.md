@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.13.1 — Focused graph neighborhoods
+
+- Restrict each knowledge lens to its matching entities and directly connected artifacts. Show an explicit empty state when no decisions, assumptions or sessions are recorded, instead of displaying unrelated documents.
+
 ## 0.13.0 — A connected creator workspace
 
 - Promote Knowledge graph, Visits and My work to dedicated navigation destinations; render creator work inline and surface 30-day recorded opens in the library.
