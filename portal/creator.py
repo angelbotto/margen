@@ -723,6 +723,20 @@ def mount(
             c, u, j = connector_job(db, request, key)
             if j["status"] != "working":
                 raise HTTPException(409, "El encargo debe estar en curso.")
+            lease = db.execute(
+                "SELECT * FROM job_leases WHERE job=?", (key,)
+            ).fetchone()
+            expected = b.get("revision", j["revision"] if lease is None else None)
+            if expected != j["revision"] or (
+                lease
+                and (
+                    lease["revision"] != j["revision"]
+                    or lease["expires"] < int(time.time())
+                )
+            ):
+                raise HTTPException(
+                    409, "El intento cambió o venció; vuelve a consultar el encargo."
+                )
             a = owned(db, j["artifact"], u)
             match = re.search(
                 r"<meta\s+name=[\"\']nota-documento[\"\']\s+content=[\"\']([a-zA-Z0-9_-]{1,120})[\"\']",

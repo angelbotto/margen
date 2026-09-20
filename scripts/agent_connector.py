@@ -212,7 +212,11 @@ def run(config, key, cwd):
         draft = api(
             config,
             "/api/connector/jobs/" + key + "/draft",
-            {"html": html, "session": result.get("session", "")},
+            {
+                "html": html,
+                "session": result.get("session", ""),
+                "revision": r["revision"],
+            },
         )
         return api(
             config,
@@ -279,6 +283,10 @@ TOOLS = [
             "properties": {
                 "job": {"type": "string"},
                 "html": {"type": "string"},
+                "revision": {
+                    "type": "integer",
+                    "description": "Current assignment revision; required for leased executions.",
+                },
                 "session": {"type": "string"},
             },
             "required": ["job", "html"],
