@@ -144,10 +144,29 @@ window.BottifactKnowledge = (() => {
     );
     svg.setAttribute("tabindex", "0");
     canvas.append(svg);
+    const defs = document.createElementNS(ns, "defs"),
+      marker = document.createElementNS(ns, "marker"),
+      arrow = document.createElementNS(ns, "path");
+    const markerId = "atlas-arrow-" + Math.random().toString(36).slice(2);
+    for (const [k, v] of Object.entries({
+      id: markerId,
+      viewBox: "0 0 10 10",
+      refX: "20",
+      refY: "5",
+      markerWidth: "5",
+      markerHeight: "5",
+      orient: "auto-start-reverse",
+    }))
+      marker.setAttribute(k, v);
+    arrow.setAttribute("d", "M0 0 10 5 0 10Z");
+    arrow.setAttribute("fill", "var(--muted)");
+    marker.append(arrow);
+    defs.append(marker);
+    svg.append(defs);
     const layer = document.createElementNS(ns, "g");
     svg.append(layer);
     let savedPositions = options.positions || {},
-      selected = null,
+      selected = options.preferences?.selected || null,
       history = [],
       zoom = 1,
       tx = 0,
@@ -156,7 +175,56 @@ window.BottifactKnowledge = (() => {
       shown = [],
       edges = [],
       positions = new Map(),
-      renderAbort = new AbortController();
+      renderAbort = new AbortController(),
+      layoutKey = "",
+      layoutCache = new Map();
+    const prefs = options.preferences || {};
+    if ([...lens.options].some((o) => o.value === prefs.lens))
+      lens.value = prefs.lens;
+    if ([...relation.options].some((o) => o.value === prefs.relation))
+      relation.value = prefs.relation;
+    if (selected && ["1", "2"].includes(prefs.scope)) scope.value = prefs.scope;
+    if (typeof prefs.labels === "boolean") labels.checked = prefs.labels;
+    const orphanWrap = make("label", undefined, "atlas-check"),
+      orphans = make("input");
+    orphans.type = "checkbox";
+    orphans.checked = !!prefs.orphans;
+    orphanWrap.append(
+      orphans,
+      document.createTextNode("Sólo piezas sin vínculo directo"),
+    );
+    controls.append(orphanWrap);
+    const optionsMenu = make("details", undefined, "atlas-options"),
+      optionsBody = make("div", undefined, "atlas-options-body");
+    optionsMenu.append(make("summary", "Filtros y disposición"), optionsBody);
+    lens.parentElement.dataset.graphLens = "";
+    for (const item of [
+      lens.parentElement,
+      relation.parentElement,
+      scope.parentElement,
+      labelsWrap,
+      orphanWrap,
+    ])
+      optionsBody.append(item);
+    controls.append(optionsMenu);
+    listen(document, "pointerdown", event => { if(!optionsMenu.contains(event.target)) optionsMenu.open=false; });
+    listen(optionsMenu, "keydown", event => { if(event.key === "Escape") { optionsMenu.open=false;optionsMenu.querySelector("summary").focus(); } });
+    const membershipKinds = new Set([
+      "space",
+      "topic",
+      "collection",
+      "membership",
+    ]);
+    function getPreferences() {
+      return {
+        lens: lens.value,
+        relation: relation.value,
+        scope: scope.value,
+        selected,
+        labels: labels.checked,
+        orphans: orphans.checked,
+      };
+    }
     function transform() {
       layer.setAttribute(
         "transform",
@@ -236,7 +304,8 @@ window.BottifactKnowledge = (() => {
           valid.has(e.source) &&
           valid.has(e.target) &&
           (relation.value === "all" ||
-            (e.kind || "membership") === relation.value),
+            (e.kind || "membership") === relation.value ||
+            (relation.value === "membership" && membershipKinds.has(e.kind))),
       );
       let visible = new Set(valid);
       if (selected && scope.value !== "all") {
@@ -251,6 +320,18 @@ window.BottifactKnowledge = (() => {
           next.forEach((id) => visible.add(id));
           frontier = next;
         }
+      }
+      if (orphans.checked) {
+        const linked = new Set(
+          allEdges
+            .filter((e) => !membershipKinds.has(e.kind))
+            .flatMap((e) => [e.source, e.target]),
+        );
+        visible = new Set(
+          allowed
+            .filter((n) => n.kind === "artifact" && !linked.has(n.id))
+            .map((n) => n.id),
+        );
       }
       shown = allowed.filter((n) => visible.has(n.id));
       edges = allEdges.filter(
@@ -293,7 +374,9 @@ window.BottifactKnowledge = (() => {
       status.textContent =
         `${shown.filter((n) => n.kind === "artifact").length} de ${data.total} artefactos · ${shown.filter((n) => n.kind !== "artifact").length} grupos · ${edges.length} conexiones visibles` +
         (data.truncated
-          ? " · conjunto limitado a los 120 artefactos más recientes; usa los filtros de biblioteca."
+          ? " · " +
+            (data.scope ||
+              "Conjunto limitado a los 120 artefactos más recientes; usa los filtros de biblioteca.")
           : ".") +
         (network.entity_truncated
           ? " Algunos grupos se omitieron por el límite de 300."
@@ -305,70 +388,85 @@ window.BottifactKnowledge = (() => {
         );
         return;
       }
-      // Deterministic bounded layout, calculated once per scope. No perpetual animation.
-      positions = new Map(
-        shown.map((n, i) => {
-          const a = i * 2.399963,
-            r = 35 * Math.sqrt(i);
-          return [n.id, { x: 500 + Math.cos(a) * r, y: 340 + Math.sin(a) * r }];
-        }),
-      );
-      for (let step = 0; step < 120; step++) {
-        const force = new Map(shown.map((n) => [n.id, { x: 0, y: 0 }]));
-        for (let i = 0; i < shown.length; i++)
-          for (let j = i + 1; j < shown.length; j++) {
-            const a = positions.get(shown[i].id),
-              b = positions.get(shown[j].id),
-              dx = a.x - b.x,
-              dy = a.y - b.y,
-              d = Math.max(16, Math.hypot(dx, dy)),
-              power =
-                (8500 *
-                  (shown[i].kind !== "artifact" && shown[j].kind !== "artifact"
-                    ? 6
-                    : 1)) /
-                (d * d * d);
-            force.get(shown[i].id).x += dx * power;
-            force.get(shown[i].id).y += dy * power;
-            force.get(shown[j].id).x -= dx * power;
-            force.get(shown[j].id).y -= dy * power;
-          }
-        for (const e of edges) {
-          const a = positions.get(e.source),
-            b = positions.get(e.target),
-            dx = b.x - a.x,
-            dy = b.y - a.y,
-            d = Math.max(1, Math.hypot(dx, dy)),
-            f = (d - 100) * 0.045;
-          force.get(e.source).x += (dx / d) * f;
-          force.get(e.source).y += (dy / d) * f;
-          force.get(e.target).x -= (dx / d) * f;
-          force.get(e.target).y -= (dy / d) * f;
-        }
-        for (const n of shown) {
-          const p = positions.get(n.id),
-            f = force.get(n.id);
-          p.x += Math.max(-12, Math.min(12, f.x)) + (500 - p.x) * 0.006;
-          p.y += Math.max(-12, Math.min(12, f.y)) + (320 - p.y) * 0.006;
-        }
-      }
-      const points = [...positions.values()],
-        minX = Math.min(...points.map((p) => p.x)),
-        maxX = Math.max(...points.map((p) => p.x)),
-        minY = Math.min(...points.map((p) => p.y)),
-        maxY = Math.max(...points.map((p) => p.y)),
-        fit = Math.min(
-          840 / Math.max(1, maxX - minX),
-          510 / Math.max(1, maxY - minY),
-          2,
+      // Cache topology: selecting/searching nodes must not recompute quadratic forces.
+      const nextKey = JSON.stringify([
+        shown.map((n) => n.id),
+        edges.map((e) => [e.source, e.target]),
+      ]);
+      const topologyChanged = nextKey !== layoutKey;
+      if (topologyChanged) {
+        layoutKey = nextKey;
+        // Deterministic bounded layout, calculated once per scope. No perpetual animation.
+        positions = new Map(
+          shown.map((n, i) => {
+            const a = i * 2.399963,
+              r = 35 * Math.sqrt(i);
+            return [
+              n.id,
+              { x: 500 + Math.cos(a) * r, y: 340 + Math.sin(a) * r },
+            ];
+          }),
         );
-      for (const p of points) {
-        p.x = 500 + (p.x - (minX + maxX) / 2) * fit;
-        p.y = 320 + (p.y - (minY + maxY) / 2) * fit;
-      }
-      for (const [id, p] of Object.entries(savedPositions))
-        if (positions.has(id) && Number.isFinite(p.x) && Number.isFinite(p.y))
-          positions.set(id, { x: p.x, y: p.y });
+        for (let step = 0; step < (shown.length > 300 ? 24 : 72); step++) {
+          const force = new Map(shown.map((n) => [n.id, { x: 0, y: 0 }]));
+          for (let i = 0; i < shown.length; i++)
+            for (let j = i + 1; j < shown.length; j++) {
+              const a = positions.get(shown[i].id),
+                b = positions.get(shown[j].id),
+                dx = a.x - b.x,
+                dy = a.y - b.y,
+                d = Math.max(16, Math.hypot(dx, dy)),
+                power =
+                  (8500 *
+                    (shown[i].kind !== "artifact" &&
+                    shown[j].kind !== "artifact"
+                      ? 6
+                      : 1)) /
+                  (d * d * d);
+              force.get(shown[i].id).x += dx * power;
+              force.get(shown[i].id).y += dy * power;
+              force.get(shown[j].id).x -= dx * power;
+              force.get(shown[j].id).y -= dy * power;
+            }
+          for (const e of edges) {
+            const a = positions.get(e.source),
+              b = positions.get(e.target),
+              dx = b.x - a.x,
+              dy = b.y - a.y,
+              d = Math.max(1, Math.hypot(dx, dy)),
+              f = (d - 100) * 0.045;
+            force.get(e.source).x += (dx / d) * f;
+            force.get(e.source).y += (dy / d) * f;
+            force.get(e.target).x -= (dx / d) * f;
+            force.get(e.target).y -= (dy / d) * f;
+          }
+          for (const n of shown) {
+            const p = positions.get(n.id),
+              f = force.get(n.id);
+            p.x += Math.max(-12, Math.min(12, f.x)) + (500 - p.x) * 0.006;
+            p.y += Math.max(-12, Math.min(12, f.y)) + (320 - p.y) * 0.006;
+          }
+        }
+        const points = [...positions.values()],
+          minX = Math.min(...points.map((p) => p.x)),
+          maxX = Math.max(...points.map((p) => p.x)),
+          minY = Math.min(...points.map((p) => p.y)),
+          maxY = Math.max(...points.map((p) => p.y)),
+          fit = Math.min(
+            840 / Math.max(1, maxX - minX),
+            510 / Math.max(1, maxY - minY),
+            2,
+          );
+        for (const p of points) {
+          p.x = 500 + (p.x - (minX + maxX) / 2) * fit;
+          p.y = 320 + (p.y - (minY + maxY) / 2) * fit;
+        }
+        for (const [id, p] of Object.entries(savedPositions))
+          if (positions.has(id) && Number.isFinite(p.x) && Number.isFinite(p.y))
+            positions.set(id, { x: p.x, y: p.y });
+        layoutCache = new Map([...positions].map(([id, p]) => [id, { ...p }]));
+      } else
+        positions = new Map([...layoutCache].map(([id, p]) => [id, { ...p }]));
       const near = new Set(
         selected
           ? [
@@ -383,6 +481,8 @@ window.BottifactKnowledge = (() => {
         const line = document.createElementNS(ns, "line");
         line.dataset.source = e.source;
         line.dataset.target = e.target;
+        if (!membershipKinds.has(e.kind))
+          line.setAttribute("marker-end", "url(#" + markerId + ")");
         line.setAttribute(
           "class",
           "atlas-edge" +
@@ -503,7 +603,8 @@ window.BottifactKnowledge = (() => {
         layer.append(g);
       }
       locate();
-      reset();
+      if (topologyChanged) reset();
+      root.dispatchEvent(new CustomEvent("margen:graph-change"));
       const node = nodes.get(selected);
       if (node) {
         const title = make("h2", node.title);
@@ -523,22 +624,92 @@ window.BottifactKnowledge = (() => {
               "muted",
             ),
           );
+        if (["claim", "decision", "session"].includes(node.kind)) {
+          const properties = make("dl", undefined, "atlas-properties");
+          for (const [key, label] of [
+            ["state", "Estado"],
+            ["subject", "Sobre"],
+            ["period", "Período"],
+            ["review_on", "Revisar el"],
+            ["expected", "Resultado esperado"],
+            ["agent", "Agente"],
+            ["device", "Dispositivo"],
+            ["session", "Sesión"],
+          ])
+            if (node[key])
+              properties.append(make("dt", label), make("dd", node[key]));
+          const open = make(
+            "a",
+            {
+              claim: "Revisar supuestos",
+              decision: "Revisar decisiones",
+              session: "Retomar sesiones",
+            }[node.kind],
+          );
+          open.href =
+            "/?view=work&section=" +
+            { claim: "claims", decision: "decisions", session: "sessions" }[
+              node.kind
+            ];
+          sidebar.append(properties, open);
+        }
         sidebar.append(
           action("Explorar conexiones", () => choose(node.id, true)),
-          make("h3", "Por qué están conectados"),
+          ...(node.kind === "artifact" && options.related
+            ? [
+                action("Ver referencias y sugerencias", () =>
+                  options.related(node.artifact),
+                ),
+              ]
+            : []),
         );
         const related = allEdges.filter(
           (e) => e.source === node.id || e.target === node.id,
         );
         if (!related.length)
           sidebar.append(make("p", "Sin conexiones para esta vista."));
-        for (const e of related) {
-          const other = nodes.get(e.source === node.id ? e.target : e.source),
-            b = action("", () => choose(other.id), "atlas-related");
-          b.append(make("strong", other.title), make("span", e.reason));
-          sidebar.append(b);
+        const groups = [
+          [
+            "Recibe referencias",
+            related.filter(
+              (e) => e.target === node.id && !membershipKinds.has(e.kind),
+            ),
+          ],
+          [
+            "Conecta con",
+            related.filter(
+              (e) => e.source === node.id && !membershipKinds.has(e.kind),
+            ),
+          ],
+          [
+            "Organización y temas",
+            related.filter((e) => membershipKinds.has(e.kind)),
+          ],
+        ];
+        for (const [label, links] of groups) {
+          if (!links.length) continue;
+          sidebar.append(make("h3", label + " · " + links.length));
+          for (const e of links) {
+            const other = nodes.get(e.source === node.id ? e.target : e.source),
+              b = action("", () => choose(other.id), "atlas-related");
+            b.append(make("strong", other.title), make("span", e.reason));
+            sidebar.append(b);
+            if (e.version) {
+              const source = records.get(e.source) || records.get(e.target);
+              if (source) {
+                const a = make("a", "Abrir la versión citada");
+                a.href =
+                  "/a/" +
+                  source.id +
+                  "?version=" +
+                  encodeURIComponent(e.version) +
+                  (e.anchor ? "#" + encodeURIComponent(e.anchor) : "");
+                sidebar.append(a);
+              }
+            }
+          }
         }
-      } else
+      } else {
         sidebar.append(
           make("p", "Tu mapa de conocimiento", "eyebrow"),
           make("h2", "Empresas, temas y trabajo conectado."),
@@ -553,6 +724,22 @@ window.BottifactKnowledge = (() => {
             "meta",
           ),
         );
+        const hubs = shown
+          .filter((n) => n.kind !== "artifact")
+          .sort((a, b) => (b.count || 0) - (a.count || 0))
+          .slice(0, 6);
+        if (hubs.length) {
+          sidebar.append(make("h3", "Puntos de entrada"));
+          for (const n of hubs)
+            sidebar.append(
+              action(
+                n.title + " · " + (n.count || 0),
+                () => choose(n.id, true),
+                "atlas-related",
+              ),
+            );
+        }
+      }
       const directory = make("details", undefined, "atlas-directory");
       directory.append(make("summary", "Explorar en lista · " + shown.length));
       for (const n of shown)
@@ -592,12 +779,13 @@ window.BottifactKnowledge = (() => {
       (node || svg).setPointerCapture(e.pointerId);
     });
     if (options.save)
-      controls.append(
-        button("Guardar disposición", async () => {
+      optionsBody.append(
+        button("Guardar esta vista", async () => {
           savedPositions = Object.fromEntries(positions);
           try {
-            await options.save(savedPositions);
-            status.textContent = "Disposición guardada en tu cuenta.";
+            await options.save(savedPositions, getPreferences());
+            status.textContent =
+              "Enfoque, selección y disposición guardados en tu cuenta.";
           } catch (e) {
             status.textContent = e.message;
           }
@@ -615,6 +803,7 @@ window.BottifactKnowledge = (() => {
         pos.y += dy / zoom;
         drag.x = e.clientX;
         drag.y = e.clientY;
+        layoutCache = new Map([...positions].map(([id, p]) => [id, { ...p }]));
         locate();
       } else {
         tx = drag.tx + dx;
@@ -652,10 +841,21 @@ window.BottifactKnowledge = (() => {
       scope.value = "all";
       render();
     });
-    for (const c of [scope, labels, relation]) listen(c, "change", render);
+    for (const c of [scope, labels, relation, orphans])
+      listen(c, "change", render);
     listen(search, "input", render);
     render();
     return {
+      setLens(value) {
+        lens.value = value;
+        selected = null;
+        scope.value = "all";
+        orphans.checked = false;
+        render();
+      },
+      getLens() {
+        return lens.value;
+      },
       destroy() {
         abort.abort();
         renderAbort.abort();

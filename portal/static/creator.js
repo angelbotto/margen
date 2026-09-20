@@ -107,10 +107,48 @@ window.MargenCreator = {
       body.append(el("p", text, "creator-empty"));
     }
     async function refresh() {
-      data = await api("/api/creator?project=" + encodeURIComponent(project));
-      render();
+      const target = dialog;
+      const next = await api(
+        "/api/creator?project=" + encodeURIComponent(project),
+      );
+      if (dialog === target && target?.isConnected) {
+        data = next;
+        render();
+      }
+    }
+    let embedded = false;
+    function unmount() {
+      if (embedded) {
+        graphView?.destroy();
+        dialog = null;
+        embedded = false;
+      }
+    }
+    async function mount(root) {
+      unmount();
+      embedded = true;
+      dialog = root;
+      const requested = new URLSearchParams(location.search).get("section");
+      if (
+        [
+          "attention",
+          "brief",
+          "evidence",
+          "claims",
+          "contradictions",
+          "decisions",
+          "outcomes",
+          "jobs",
+          "sessions",
+          "rules",
+          "connectors",
+        ].includes(requested)
+      )
+        tab = requested;
+      await refresh();
     }
     async function open() {
+      embedded = false;
       if (dialog?.open) return;
       dialog = el("dialog", undefined, "creator-workspace");
       dialog.setAttribute("aria-label", "Mi trabajo");
@@ -139,7 +177,7 @@ window.MargenCreator = {
         intro,
         btn("Cerrar", () => dialog.close(), "close"),
       );
-      dialog.append(head);
+      if (!embedded) dialog.append(head);
       const tools = el("div", undefined, "creator-projects"),
         scope = select(
           "Proyecto",
@@ -186,25 +224,93 @@ window.MargenCreator = {
       const tabs = el("nav", undefined, "creator-tabs");
       tabs.setAttribute("aria-label", "Secciones de Mi trabajo");
       const sections = [
-        ['Priorizar',[['attention','Atención'],['brief','Continuidad']]],
-        ['Comprender',[['evidence','Evidencia'],['context','Grafo'],['claims','Supuestos'],['contradictions','Contrastes']]],
-        ['Actuar',[['decisions','Decisiones'],['outcomes','Resultados'],['jobs','Encargos'],['sessions','Sesiones']]],
-        ['Administrar',[['analytics','Visitas'],['rules','Criterio personal'],['connectors','Agentes']]],
+        [
+          "Priorizar",
+          [
+            ["attention", "Atención"],
+            ["brief", "Continuidad"],
+          ],
+        ],
+        [
+          "Comprender",
+          [
+            ["evidence", "Evidencia"],
+            ["context", "Grafo"],
+            ["claims", "Supuestos"],
+            ["contradictions", "Contrastes"],
+          ],
+        ],
+        [
+          "Actuar",
+          [
+            ["decisions", "Decisiones"],
+            ["outcomes", "Resultados"],
+            ["jobs", "Encargos"],
+            ["sessions", "Sesiones"],
+          ],
+        ],
+        [
+          "Administrar",
+          [
+            ["analytics", "Visitas"],
+            ["rules", "Criterio personal"],
+            ["connectors", "Agentes"],
+          ],
+        ],
       ];
-      const mobile=el('label','Sección','creator-mobile-nav'),picker=el('select');
-      for(const [group,items] of sections){
-        const heading=el('p',group,'creator-nav-group');tabs.append(heading);
-        const optionGroup=document.createElement('optgroup');optionGroup.label=group;picker.append(optionGroup);
-        for(const [key,label] of items){
-          const b=btn(label,()=>{tab=key;render();});b.setAttribute('aria-pressed',String(tab===key));tabs.append(b);
-          optionGroup.append(new Option(label,key));
+      const mobile = el("label", "Sección", "creator-mobile-nav"),
+        picker = el("select");
+      for (const [group, groupItems] of sections) {
+        const items = groupItems.filter(
+          ([key]) => !embedded || !["context", "analytics"].includes(key),
+        );
+        const heading = el("p", group, "creator-nav-group");
+        tabs.append(heading);
+        const optionGroup = document.createElement("optgroup");
+        optionGroup.label = group;
+        picker.append(optionGroup);
+        for (const [key, label] of items) {
+          const b = btn(label, () => {
+            tab = key;
+            render();
+          });
+          b.setAttribute("aria-pressed", String(tab === key));
+          tabs.append(b);
+          optionGroup.append(new Option(label, key));
         }
       }
-      picker.value=tab;picker.onchange=()=>{tab=picker.value;render();};mobile.append(picker);dialog.append(mobile);
-      body=el('section',undefined,'creator-body');
-      const layout=el('div',undefined,'creator-layout');layout.append(tabs,body);dialog.append(layout,message);
-      if (["brief","claims","evidence","contradictions","sessions","outcomes","analytics"].includes(tab))
-        window.MargenMemory.render({api,root:body,mode:tab,project,artifacts:data.artifacts,copy,decisionForm,refresh}).catch(e=>message.textContent=e.message);
+      picker.value = tab;
+      picker.onchange = () => {
+        tab = picker.value;
+        render();
+      };
+      mobile.append(picker);
+      dialog.append(mobile);
+      body = el("section", undefined, "creator-body");
+      const layout = el("div", undefined, "creator-layout");
+      layout.append(tabs, body);
+      dialog.append(layout, message);
+      if (
+        [
+          "brief",
+          "claims",
+          "evidence",
+          "contradictions",
+          "sessions",
+          "outcomes",
+          "analytics",
+        ].includes(tab)
+      )
+        window.MargenMemory.render({
+          api,
+          root: body,
+          mode: tab,
+          project,
+          artifacts: data.artifacts,
+          copy,
+          decisionForm,
+          refresh,
+        }).catch((e) => (message.textContent = e.message));
       if (tab === "attention") attention();
       if (tab === "decisions") decisions();
       if (tab === "jobs") jobs();
@@ -583,7 +689,18 @@ window.MargenCreator = {
             " · El encargo no publica ni resuelve comentarios.",
         ),
       );
-      if (j.execution) m.content.append(el("p",j.execution.stopped ? "El receptor confirmó la detención del proceso." : j.status === "cancelled" ? "Detención local pendiente de confirmación; el portal ya bloqueó resultados." : "Última señal: "+new Date(j.execution.heartbeat*1000).toLocaleString()));
+      if (j.execution)
+        m.content.append(
+          el(
+            "p",
+            j.execution.stopped
+              ? "El receptor confirmó la detención del proceso."
+              : j.status === "cancelled"
+                ? "Detención local pendiente de confirmación; el portal ya bloqueó resultados."
+                : "Última señal: " +
+                  new Date(j.execution.heartbeat * 1000).toLocaleString(),
+          ),
+        );
       const packet = el("details");
       packet.append(
         el("summary", "Revisar contexto exacto"),
@@ -623,8 +740,34 @@ window.MargenCreator = {
               "La versión publicada cambió desde que se preparó este encargo. Revisa antes de publicar.",
             ),
           );
-        const visuals=el('details');visuals.append(el('summary','Comparar las dos versiones visualmente'));
-        visuals.addEventListener('toggle',()=>{if(!visuals.open||visuals.querySelector('iframe'))return;const grid=el('div',undefined,'creator-compare');for(const [label,vid] of [['Base',j.base_version],['Propuesta',j.result.version]]){const cell=el('section');cell.append(el('h4',label),link('Abrir '+label.toLowerCase(),'/a/'+j.artifact+'?version='+vid));const frame=el('iframe');frame.title=label+' del encargo';frame.setAttribute('sandbox','allow-scripts allow-downloads');frame.loading='lazy';frame.src='/api/artifacts/'+j.artifact+'/render?version='+vid;cell.append(frame);grid.append(cell);}visuals.append(grid);});
+        const visuals = el("details");
+        visuals.append(el("summary", "Comparar las dos versiones visualmente"));
+        visuals.addEventListener("toggle", () => {
+          if (!visuals.open || visuals.querySelector("iframe")) return;
+          const grid = el("div", undefined, "creator-compare");
+          for (const [label, vid] of [
+            ["Base", j.base_version],
+            ["Propuesta", j.result.version],
+          ]) {
+            const cell = el("section");
+            cell.append(
+              el("h4", label),
+              link(
+                "Abrir " + label.toLowerCase(),
+                "/a/" + j.artifact + "?version=" + vid,
+              ),
+            );
+            const frame = el("iframe");
+            frame.title = label + " del encargo";
+            frame.setAttribute("sandbox", "allow-scripts allow-downloads");
+            frame.loading = "lazy";
+            frame.src =
+              "/api/artifacts/" + j.artifact + "/render?version=" + vid;
+            cell.append(frame);
+            grid.append(cell);
+          }
+          visuals.append(grid);
+        });
         m.content.append(visuals);
         for (const t of diff.threads)
           m.content.append(el("p", t.status + " · " + t.explanation));
@@ -874,6 +1017,6 @@ window.MargenCreator = {
         ),
       );
     }
-    return { open, jobForm };
+    return { open, mount, unmount, jobForm };
   },
 };

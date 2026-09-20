@@ -30,7 +30,7 @@ it("renders one toolbar for hosted legacy markup and routes sharing to the host"
   document.dispatchEvent(new Event("DOMContentLoaded"));
   expect(document.querySelectorAll(".bottifact-toolbar")).toHaveLength(1);
   (document.querySelector('summary[aria-label="Compartir"]') as HTMLElement).click();
-  ([...document.querySelectorAll('.bf-menu button')].find(b=>b.textContent==='Enlace y acceso') as HTMLElement).click();
+  ([...document.querySelectorAll('.bf-menu button')].find(b=>b.getAttribute("aria-label") === 'Enlace y acceso') as HTMLElement).click();
   expect(action).toHaveBeenCalledWith("share");
   expect(ready).toHaveBeenCalledOnce();
 });
@@ -47,7 +47,7 @@ it("keeps the existing appearance and review controls as the action owners", () 
     document.querySelector(".bottifact-toolbar [data-apariencia-menu]"),
   ).toBe(appearance);
   const addNote = [...document.querySelectorAll(".bf-menu button")].find(
-    (b) => b.textContent === "Añadir nota personal",
+    (b) => b.getAttribute("aria-label") === 'Añadir nota personal',
   ) as HTMLButtonElement;
   addNote.click();
   expect(click).toHaveBeenCalledOnce();
@@ -70,8 +70,8 @@ it("keeps private notes available to a verified read-only reader", () => {
  window.eval(source);document.dispatchEvent(new Event('DOMContentLoaded'));
  receive({author:'Reader',verified:true,permissions:{comment:false,edit:false}});
  const buttons=[...document.querySelectorAll('.bf-menu button')] as HTMLButtonElement[];
- expect(buttons.find(b=>b.textContent==='Añadir comentario')?.disabled).toBe(true);
- expect(buttons.find(b=>b.textContent==='Añadir nota personal')?.disabled).toBe(false);
+ expect(buttons.find(b=>b.getAttribute("aria-label") === 'Añadir comentario')?.disabled).toBe(true);
+ expect(buttons.find(b=>b.getAttribute("aria-label") === 'Añadir nota personal')?.disabled).toBe(false);
 });
 it("moves between tools with arrow keys and exposes keyboard tooltip text", async () => {
   vi.useFakeTimers();

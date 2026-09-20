@@ -115,19 +115,40 @@ window.BottifactContextWorkbench = {
             );
             if (seq !== n || !list.isConnected) return;
             list.replaceChildren();
-            for (const a of r.artifacts.filter((a) => !a.external))
-              list.append(button(a.title + " · " + a.space, () => onPick(a)));
+            list.classList.add("command-results");
+            for (const a of r.artifacts.filter((a) => !a.external)) {
+              const item = button("", () => onPick(a));
+              item.append(
+                el("strong", a.title),
+                el("small", a.space + " · " + (a.category || "Artefacto")),
+              );
+              if (a.description)
+                item.append(el("span", a.description.slice(0, 180)));
+              list.append(item);
+            }
             if (!r.artifacts.length) list.append(el("p", "Sin coincidencias."));
           } catch (e) {
             if (seq === n) list.textContent = e.message;
           }
         }, 180);
       };
+      root.addEventListener("keydown", (e) => {
+        const controls = [field, ...list.querySelectorAll("button")],
+          index = controls.indexOf(document.activeElement);
+        if (index < 0 || !["ArrowDown", "ArrowUp"].includes(e.key)) return;
+        e.preventDefault();
+        controls[
+          (index + (e.key === "ArrowDown" ? 1 : -1) + controls.length) %
+            controls.length
+        ].focus();
+      });
+      field.placeholder = "Título, contenido, empresa…";
       field.oninput();
       return field;
     }
     async function search() {
       const { d, body } = dialog("Buscar y actuar · ⌘/Ctrl K");
+      d.classList.add("command-palette");
       const actions = el("div", undefined, "context-actions");
       actions.append(
         button("Empresas, proyectos y temas", () => {
@@ -178,19 +199,65 @@ window.BottifactContextWorkbench = {
       field.focus();
     }
     async function entities(focusId) {
-      const { body, status } = dialog("Empresas, proyectos y temas"),
+      const { d, body, status } = dialog("Empresas, proyectos y temas"),
         list = el("div"),
         actions = el("div");
       actions.append(button("Crear entidad", () => editEntity()));
       body.append(
         el(
           "p",
-          "Tus entidades organizan conocimiento sin fusionar nombres automáticamente. Los alias no otorgan acceso a documentos.",
+          "Tus espacios y temas ya organizan la biblioteca. Añade propiedades sólo cuando necesites más contexto.",
         ),
         actions,
         list,
       );
-      const r = await api("/api/context/entities");
+      const [r, known] = await Promise.all([
+        api("/api/context/entities"),
+        api("/api/creator/graph"),
+      ]);
+      const discovered = el("div", undefined, "known-entities");
+      body.insertBefore(discovered, actions);
+      for (const kind of ["space", "topic"]) {
+        const section = el("section");
+        section.append(
+          el(
+            "h3",
+            kind === "space"
+              ? "Empresas y espacios existentes"
+              : "Temas de tus documentos",
+          ),
+        );
+        for (const node of known.network.nodes
+          .filter((n) => n.kind === kind)
+          .sort((a, b) => b.count - a.count)) {
+          const row = el("details");
+          row.append(el("summary", node.title + " · " + node.count));
+          row.append(
+            el(
+              "p",
+              kind === "space"
+                ? "Espacio asignado a los documentos."
+                : "Tema manual o sugerido por reglas; no implica una relación causal.",
+            ),
+          );
+          const ids = new Set(
+            known.network.edges
+              .filter((e) => e.target === node.id)
+              .map((e) => e.source),
+          );
+          for (const artifact of known.nodes.filter((a) => ids.has(a.id)))
+            row.append(
+              button(artifact.title, () => {
+                d.close();
+                peek(artifact);
+              }),
+            );
+          section.append(row);
+        }
+        discovered.append(section);
+      }
+      if (known.truncated) discovered.append(el("p", known.scope));
+      actions.prepend(el("h3", "Propiedades adicionales"));
       for (const entity of r.items) {
         const row = el("section", undefined, "context-card");
         row.append(
@@ -211,7 +278,9 @@ window.BottifactContextWorkbench = {
           row.scrollIntoView({ block: "center" });
         }
       }
-      status.textContent = r.items.length + " entidades personales.";
+      status.textContent =
+        r.items.length +
+        " entidades con propiedades propias. Los espacios anteriores se mantienen desde los documentos.";
     }
     async function editEntity(entity) {
       const { d, body, status } = dialog(
@@ -462,8 +531,41 @@ window.BottifactContextWorkbench = {
             row.remove();
           }),
         );
-        if(v.kind==='table' && v.can_manage){row.append(button('Compartir filtros',()=>{const m=dialog('Compartir esta vista');const emails=input('Correos separados por coma',(v.grants||[]).join(', '));m.body.append(emails.wrap,el('p','Compartes el nombre y los filtros de búsqueda. No concede acceso a documentos ni comparte notas.'),button('Guardar acceso',async()=>{await post('/api/context/views/'+v.id+'/access',{emails:emails.field.value.split(',').map(x=>x.trim()).filter(Boolean)},'PUT');m.d.close();}));}));}
-        if(!v.can_manage)row.querySelectorAll('button').forEach(b=>{if(b.textContent==='Eliminar vista')b.remove();});
+        if (v.kind === "table" && v.can_manage) {
+          row.append(
+            button("Compartir filtros", () => {
+              const m = dialog("Compartir esta vista");
+              const emails = input(
+                "Correos separados por coma",
+                (v.grants || []).join(", "),
+              );
+              m.body.append(
+                emails.wrap,
+                el(
+                  "p",
+                  "Compartes el nombre y los filtros de búsqueda. No concede acceso a documentos ni comparte notas.",
+                ),
+                button("Guardar acceso", async () => {
+                  await post(
+                    "/api/context/views/" + v.id + "/access",
+                    {
+                      emails: emails.field.value
+                        .split(",")
+                        .map((x) => x.trim())
+                        .filter(Boolean),
+                    },
+                    "PUT",
+                  );
+                  m.d.close();
+                }),
+              );
+            }),
+          );
+        }
+        if (!v.can_manage)
+          row.querySelectorAll("button").forEach((b) => {
+            if (b.textContent === "Eliminar vista") b.remove();
+          });
         body.append(row);
       }
     }

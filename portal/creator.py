@@ -805,6 +805,8 @@ def mount(
     @app.get("/api/creator/graph")
     def creator_graph(request: Request):
         from portal.context_graph import network
+        from portal.knowledge import enrich
+        from portal.workflows import metadata
 
         u = account(request)
         project = request.query_params.get("project", "")
@@ -829,10 +831,8 @@ def mount(
             records = [
                 {
                     **r,
-                    "category": "Artefacto",
-                    "tags": [],
-                    "auto_tags": [],
-                    "collections": [],
+                    **metadata(db, r["id"]),
+                    **enrich(db, r, u),
                 }
                 for r in rows
             ]
@@ -854,6 +854,9 @@ def mount(
                         "id": node,
                         "title": d["title"],
                         "kind": "decision",
+                        "state": d["state"],
+                        "review_on": d["review_on"],
+                        "expected": json.loads(d["body"]).get("expected", ""),
                         "count": len(refs),
                     }
                 )
@@ -897,6 +900,9 @@ def mount(
                         "id": node,
                         "title": claim["statement"],
                         "kind": "claim",
+                        "state": claim["state"],
+                        "period": claim["period"],
+                        "subject": claim["subject"],
                         "count": len(refs),
                     }
                 )
@@ -954,6 +960,9 @@ def mount(
                         "id": node,
                         "title": agent + " · " + session[:22],
                         "kind": "session",
+                        "agent": agent,
+                        "session": session,
+                        "device": device,
                         "count": len(ids),
                     }
                 )

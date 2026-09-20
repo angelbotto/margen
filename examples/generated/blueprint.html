@@ -4955,6 +4955,8 @@ main.hoja[data-presentation]{margin-top:22px}
   "use strict";
   if (window.BottifactUI) return;
   const paths = {
+    chart: "M4 3v18h17M8 16v-5M13 16V6M18 16v-8",
+    refresh: "M20 7V3l-3 3a8 8 0 1 0 3 9M20 3v5h-5",
     appearance: "M4 5h16M4 12h16M4 19h16M8 3v4M16 10v4M10 17v4",
     comment:
       "M8 18H5l-3 3V6a3 3 0 0 1 3-3h14a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3H8M7 8h10M7 12h6",
@@ -5119,6 +5121,26 @@ main.hoja[data-presentation]{margin-top:22px}
     .bottifact-toolbar .bf-menu{bottom:calc(100% + 12px);padding:8px;border-radius:10px;border-color:var(--linea,#d9d1c8);background:var(--papel,#faf8f4)}
     .bottifact-toolbar .bf-menu-heading{font:500 11px/1.4 var(--mono,monospace);letter-spacing:.02em;border-bottom:1px dotted var(--linea,#d9d1c8);margin:0 5px 5px;padding:7px 5px 10px}
     @media(max-width:540px){nav.bottifact-toolbar{bottom:max(12px,env(safe-area-inset-bottom));padding:5px}.bottifact-toolbar>details>summary,.bottifact-toolbar .apariencia-menu>summary{position:relative;min-width:79px;height:48px;padding:5px 7px;flex-direction:column;gap:4px}.bf-tool-label{font-size:10px}.bottifact-toolbar [data-review-tool]>summary .bf-review-count{position:absolute;top:1px;right:14px;min-width:15px;height:15px;font-size:9px;box-shadow:0 0 0 2px var(--papel,#faf8f4)}}
+    .bottifact-toolbar .bf-menu{width:min(340px,calc(100vw - 24px));padding:8px;border-radius:14px;box-shadow:0 4px 12px #00000008,0 18px 60px #00000020}
+    .bottifact-toolbar .bf-menu button{min-height:44px;border-radius:8px;gap:12px;padding:11px 12px}
+    .bottifact-toolbar .bf-menu button svg{flex:none;align-self:center;width:18px;height:18px}
+    .bf-action-copy{display:flex;flex-direction:column;gap:3px;font-weight:500;line-height:1.4}
+    .bf-action-copy small{font:400 11px/1.45 var(--sans,system-ui);color:var(--tinta-2,#625f5a)}
+    .bottifact-toolbar .bf-menu-heading{font:600 10px/1.4 var(--sans,system-ui);letter-spacing:.04em;padding:9px 8px;border:0;margin:0;color:var(--tinta-2,#625f5a)}
+    .bottifact-toolbar .bf-menu-heading:not(:first-child){border-top:1px solid var(--linea,#ddd);margin-top:5px;padding-top:14px}
+    .bf-favorites-row{display:flex;justify-content:space-between;align-items:center;gap:6px;margin:4px 0}
+    .bf-favorites-row .bf-theme-favorite{margin:0!important;padding:6px 9px!important;border-radius:7px!important}
+    .bf-favorites-row [aria-pressed=true]{background:var(--panel)!important;color:var(--tinta)!important}
+    .bottifact-toolbar .apariencia-panel{width:min(400px,calc(100vw - 24px));padding:18px;border-radius:16px;box-shadow:0 4px 12px #00000008,0 18px 60px #00000020}
+    .bottifact-toolbar .apariencia-colores{max-height:min(38dvh,340px);gap:3px}
+    .bottifact-toolbar .apariencia-colores label{border:1px solid transparent!important;border-radius:9px;padding:9px!important;min-height:56px}
+    .bottifact-toolbar .apariencia-colores label:has(:checked){outline:0!important;border-color:var(--linea-fuerte,var(--linea))!important;background:var(--panel)!important}
+    .bottifact-toolbar .apariencia-colores label small{font-size:11px}
+    .bottifact-toolbar .apariencia-pestanas{padding:4px;border-radius:9px;margin-bottom:16px}
+    .bottifact-toolbar .apariencia-pestanas button{font-size:12px;min-height:35px;border-radius:6px}
+    .bottifact-toolbar .apariencia-filtros{grid-template-columns:minmax(0,1fr) 120px;gap:10px}
+    .bottifact-toolbar .apariencia-modos{margin-bottom:14px}
+    @media(max-width:540px){.bottifact-toolbar .apariencia-panel{padding:15px}.bottifact-toolbar .apariencia-colores{max-height:32dvh}}
     @media print{.bottifact-toolbar,.bf-controls-status,.bf-dock-tooltip{display:none!important}}
     `;
     document.head.append(style);
@@ -5180,6 +5202,24 @@ main.hoja[data-presentation]{margin-top:22px}
         Imprimir: "print",
       };
       window.BottifactUI?.decorate(b, actionIcons[label] || "arrow");
+      const hints = {
+        "Añadir comentario": "Señala cualquier punto del documento",
+        "Añadir nota personal": "Privada, sólo para ti",
+        "Ver comentarios y notas": "Hilos, respuestas y pendientes",
+        "Preparar contexto para IA":
+          "Selecciona hilos y copia un prompt con sus fuentes",
+        "Enlace y acceso": "Copia el enlace o elige quién puede entrar",
+        "Gestionar artefacto": "Versiones y datos del documento",
+      };
+      b.setAttribute("aria-label", label);
+      if (hints[label]) {
+        const text = make("span", null, "bf-action-copy");
+        for (const n of [...b.childNodes])
+          if (n.nodeType === 3 || n.classList?.contains("bf-control-label"))
+            text.append(n);
+        text.append(make("small", hints[label]));
+        b.append(text);
+      }
       b.type = "button";
       b.addEventListener(
         "click",
@@ -5194,20 +5234,26 @@ main.hoja[data-presentation]{margin-top:22px}
     const reviewMenu = menu("Comentarios", "comment");
     reviewMenu.d.dataset.reviewTool = "";
     document.addEventListener("bottifact:review-mode", (event) => {
-      reviewMenu.d.querySelector("summary").classList.toggle("bf-tool-active", event.detail.active);
+      reviewMenu.d
+        .querySelector("summary")
+        .classList.toggle("bf-tool-active", event.detail.active);
       if (!event.detail.active) say("");
     });
-    const reviewCount=make("span", "0", "bf-review-count");
+    const reviewCount = make("span", "0", "bf-review-count");
     reviewMenu.d.querySelector("summary").append(reviewCount);
-    function updateCount(count){
-      reviewCount.textContent=String(count);
+    function updateCount(count) {
+      reviewCount.textContent = String(count);
       reviewCount.hidden = count === 0;
-      const label="Comentarios · "+count+" abiertos";
-      reviewMenu.d.querySelector("summary").setAttribute("aria-label",label);
-      reviewMenu.d.querySelector("summary").dataset.tooltip=label;
+      const label = "Comentarios · " + count + " abiertos";
+      reviewMenu.d.querySelector("summary").setAttribute("aria-label", label);
+      reviewMenu.d.querySelector("summary").dataset.tooltip = label;
     }
-    updateCount(Number(review?.querySelector("button:last-child")?.textContent)||0);
-    document.addEventListener("bottifact:review-count",e=>updateCount(e.detail.open));
+    updateCount(
+      Number(review?.querySelector("button:last-child")?.textContent) || 0,
+    );
+    document.addEventListener("bottifact:review-count", (e) =>
+      updateCount(e.detail.open),
+    );
     const original = (label) =>
       review?.querySelector('[aria-label="' + label + '"]');
     const comment = action(reviewMenu, "Añadir comentario", () => {
@@ -5224,6 +5270,12 @@ main.hoja[data-presentation]{margin-top:22px}
       if (review) review.querySelector("button:last-child").click();
       else return bridge?.action("review");
     });
+    const contextHeading = make(
+      "div",
+      "Llevar la revisión a tu trabajo",
+      "bf-menu-heading",
+    );
+    reviewMenu.p.append(contextHeading);
     const bundle = action(reviewMenu, "Preparar contexto para IA", () => {
       if (bridge) return bridge.action("bundle");
       review?.querySelector("button:last-child")?.click();
@@ -5237,7 +5289,7 @@ main.hoja[data-presentation]{margin-top:22px}
           : "Revisión local en este navegador. Exporta para compartirla.",
       ),
     );
-    const shareMenu=menu("Compartir", "share");
+    const shareMenu = menu("Compartir", "share");
     action(shareMenu, "Enlace y acceso", async () => {
       if (bridge) return bridge.action("share");
       const canonical = document.querySelector("link[rel=canonical]")?.href;
@@ -5269,11 +5321,14 @@ main.hoja[data-presentation]{margin-top:22px}
         input.select();
       }
     });
-    const manage = action(shareMenu, "Gestionar artefacto", () => bridge?.action("manage"));
+    const manage = action(shareMenu, "Gestionar artefacto", () =>
+      bridge?.action("manage"),
+    );
     manage.hidden = true;
     if (bridge) {
-      action(reviewMenu, "Referencias y conexiones", () => bridge.action("related"));
-      action(reviewMenu, "Buscar en mi biblioteca", () => bridge.action("search"));
+      action(shareMenu, "Referencias y conexiones", () =>
+        bridge.action("related"),
+      );
     } else action(shareMenu, "Imprimir o guardar PDF", () => print());
     if (appearance) {
       bar.append(appearance);
@@ -5284,12 +5339,36 @@ main.hoja[data-presentation]{margin-top:22px}
       if (window.BottifactUI) trigger.replaceChildren(svg("appearance"));
     }
     for (const trigger of bar.querySelectorAll(":scope>details>summary")) {
-      trigger.append(make("span", trigger.getAttribute("aria-label").split(" · ")[0], "bf-tool-label"));
+      trigger.append(
+        make(
+          "span",
+          trigger.getAttribute("aria-label").split(" · ")[0],
+          "bf-tool-label",
+        ),
+      );
     }
     document.body.append(bar, status);
-    document.addEventListener("keydown", event => {
-      if (!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','PageUp','PageDown','Home','End',' '].includes(event.key)) return;
-      if (event.target.closest('.bottifact-toolbar,.revision-ui,[data-revision],dialog,input,textarea,[contenteditable="true"]')) event.stopPropagation();
+    document.addEventListener("keydown", (event) => {
+      if (
+        ![
+          "ArrowLeft",
+          "ArrowRight",
+          "ArrowUp",
+          "ArrowDown",
+          "PageUp",
+          "PageDown",
+          "Home",
+          "End",
+          " ",
+        ].includes(event.key)
+      )
+        return;
+      if (
+        event.target.closest(
+          '.bottifact-toolbar,.revision-ui,[data-revision],dialog,input,textarea,[contenteditable="true"]',
+        )
+      )
+        event.stopPropagation();
     });
     const tooltip = make("div", null, "bf-dock-tooltip");
     tooltip.id = "bf-dock-tooltip";
@@ -5396,7 +5475,9 @@ main.hoja[data-presentation]{margin-top:22px}
     let applied = false;
     function applyPreferences(p) {
       if (!p) return;
-      const projectAppearance=document.querySelector('meta[name="margen-theme-policy"]')?.content==="project";
+      const projectAppearance =
+        document.querySelector('meta[name="margen-theme-policy"]')?.content ===
+        "project";
       if (!projectAppearance && p.theme && p.mode)
         window.NotaTemas?.set({ family: p.theme, mode: p.mode });
       const type = document.querySelector(
@@ -5458,7 +5539,9 @@ main.hoja[data-presentation]{margin-top:22px}
       favoriteOnly = make("button", "Favoritos", "bf-theme-favorite");
       favoriteOnly.type = "button";
       favoriteOnly.setAttribute("aria-pressed", "false");
-      themePanel?.prepend(favoriteOnly);
+      const favoritesRow = make("div", null, "bf-favorites-row");
+      favoritesRow.append(favoriteOnly, favoriteButton);
+      themePanel?.querySelector(".apariencia-filtros")?.after(favoritesRow);
       favoriteOnly.addEventListener("click", () => {
         onlyFavorites = !onlyFavorites;
         favoriteOnly.setAttribute("aria-pressed", String(onlyFavorites));
@@ -5496,10 +5579,25 @@ main.hoja[data-presentation]{margin-top:22px}
         remote = value;
         // Legacy documents can use the host review panel without a local review module.
         if (Array.isArray(value.snapshot?.events)) {
-          const events=[...value.snapshot.events].sort((a,b)=>a.time-b.time||String(a.id).localeCompare(String(b.id)));
-          const threads=new Map(events.filter(e=>e.kind==="create").map(e=>[e.thread,{resolved:false,deleted:false}]));
-          for(const event of events){const thread=threads.get(event.thread);if(!thread)continue;if(event.kind==="resolve")thread.resolved=event.resolved;if(event.kind==="delete")thread.deleted=true;}
-          updateCount([...threads.values()].filter(t=>!t.resolved&&!t.deleted).length);
+          const events = [...value.snapshot.events].sort(
+            (a, b) =>
+              a.time - b.time || String(a.id).localeCompare(String(b.id)),
+          );
+          const threads = new Map(
+            events
+              .filter((e) => e.kind === "create")
+              .map((e) => [e.thread, { resolved: false, deleted: false }]),
+          );
+          for (const event of events) {
+            const thread = threads.get(event.thread);
+            if (!thread) continue;
+            if (event.kind === "resolve") thread.resolved = event.resolved;
+            if (event.kind === "delete") thread.deleted = true;
+          }
+          updateCount(
+            [...threads.values()].filter((t) => !t.resolved && !t.deleted)
+              .length,
+          );
         }
         manage.hidden = !value.reader?.manage;
         comment.disabled = !value.permissions.comment && !!value.author;
@@ -6317,4 +6415,4 @@ main.hoja[data-presentation]{margin-top:22px}
 })();
 
 </script>
-<script type="application/json" data-nota-manifiesto>{"version": "4", "paginas": ["contenido"], "modulos": ["packages/core/components/interface.js", "packages/core/components/reader-controls.js", "packages/core/components/audio.js", "packages/core/components/controls.js", "packages/core/components/editorial-pieces.js", "packages/core/components/reader.js", "packages/core/components/prototype.js", "packages/core/components/code.js", "packages/core/components/review.js"], "fuentes": {"packages/core/styles/fonts.css": "c496fb4f095a14cbb6a82503a4a828720c01a8120df3c73113495d832e5d40cb", "packages/core/styles/artifact.css": "0aab49e849356c92d3abf159b4d5ff0b205ea09f5c38507a6b72d4e97343cbb5", "packages/core/components/interface.js": "ff69cb2a6b493303c0b356beedd3de2ae97cfef990bc091221779564e394a064", "packages/core/components/reader-controls.js": "86146a15612033b89eb5e5261aec56e0ce8dd2c7bb3d21eaa71ffc377af6af2b", "packages/core/components/audio.js": "db6014d04e8710e87912c453eedbe9c24b7feb8bfb02934f5c0cca26da682232", "packages/core/components/controls.js": "b3881b4411e12ae56a1859a56dd14c2fb073712fa732874fce50e9c2061d0aa5", "packages/core/components/editorial-pieces.js": "8604004dfc2aacf7e51ae4a0e6184950fdaaa0187f64e956b562adb787cd5fe9", "packages/core/components/reader.js": "a517796cab8ed2d658e22cb5af2805d6c0a98de38985df411286217ae4a19b71", "packages/core/components/prototype.js": "f2bbaab86cf07ef8cd84583fc12f8a0b3bc93e4e20386f6a9c24b25008f22dff", "packages/core/components/code.js": "16e94c9d0be68b13a270bd57485c129e3fa7b071cfa4aa2ee9d52052363796a7", "packages/core/components/review.js": "ad144dd2cc37a70a2adb4898e6aaa96cd06d2974e895ac1943bf35cf43bd72d7"}}</script>
+<script type="application/json" data-nota-manifiesto>{"version": "4", "paginas": ["contenido"], "modulos": ["packages/core/components/interface.js", "packages/core/components/reader-controls.js", "packages/core/components/audio.js", "packages/core/components/controls.js", "packages/core/components/editorial-pieces.js", "packages/core/components/reader.js", "packages/core/components/prototype.js", "packages/core/components/code.js", "packages/core/components/review.js"], "fuentes": {"packages/core/styles/fonts.css": "c496fb4f095a14cbb6a82503a4a828720c01a8120df3c73113495d832e5d40cb", "packages/core/styles/artifact.css": "0aab49e849356c92d3abf159b4d5ff0b205ea09f5c38507a6b72d4e97343cbb5", "packages/core/components/interface.js": "ffd922850a2dd39f346f6615264b5522ccfc26ce17285fee36c79d026b3a0cce", "packages/core/components/reader-controls.js": "ddf55fbaba73452edb87ed6de67109c3f441591b0506657338a570607e2a03e0", "packages/core/components/audio.js": "db6014d04e8710e87912c453eedbe9c24b7feb8bfb02934f5c0cca26da682232", "packages/core/components/controls.js": "b3881b4411e12ae56a1859a56dd14c2fb073712fa732874fce50e9c2061d0aa5", "packages/core/components/editorial-pieces.js": "8604004dfc2aacf7e51ae4a0e6184950fdaaa0187f64e956b562adb787cd5fe9", "packages/core/components/reader.js": "a517796cab8ed2d658e22cb5af2805d6c0a98de38985df411286217ae4a19b71", "packages/core/components/prototype.js": "f2bbaab86cf07ef8cd84583fc12f8a0b3bc93e4e20386f6a9c24b25008f22dff", "packages/core/components/code.js": "16e94c9d0be68b13a270bd57485c129e3fa7b071cfa4aa2ee9d52052363796a7", "packages/core/components/review.js": "ad144dd2cc37a70a2adb4898e6aaa96cd06d2974e895ac1943bf35cf43bd72d7"}}</script>

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.13.0 — A connected creator workspace
+
+- Promote Knowledge graph, Visits and My work to dedicated navigation destinations; render creator work inline and surface 30-day recorded opens in the library.
+- Aggregate owner-scoped visit trends and rankings before row limits. Keep opens distinct from unique readers and measurement preferences explicit.
+- Preserve manual tags, collections and classification in the creator graph. Add directional inspection, recorded node properties, unconnected-artifact filtering, saved lenses and stable viewport exploration.
+- Discover existing spaces and topics in organization tools, enrich command-search results and support keyboard navigation.
+- Simplify reader menus, theme favorites and context preparation. Copy selected feedback with evidence in one action while keeping private-note selection explicit.
+- Cache graph layouts, discard stale navigation responses and adapt controls for narrow screens.
+
 ## 0.12.1 — Reject stale execution deliveries
 
 - Bind leased draft uploads to the current unexpired assignment revision and verify idempotent retries. Preserve legacy unleased integration behavior.
