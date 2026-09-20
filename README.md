@@ -135,6 +135,18 @@ The portal offers a searchable library with list/gallery/table views, previews, 
 
 This is an explainable local graph, not embedding search or automatic knowledge of your chat history. It does not upload conversations or train a model. [Graph model, limits and extension points →](docs/graphs.md)
 
+## A working memory for the creator
+
+Open **Mi trabajo** to recover a cited project brief, record assumptions with exact versioned sources, review contrasting values, annotate real agent sessions and compare expected versus observed decision outcomes. Evidence search returns attributable excerpts from your own published documents. Shared filter views never grant access to their underlying artifacts.
+
+```bash
+margen continuity --space 'Project name' --output /private/path/brief.md
+```
+
+This is a bounded, inspectable working memory. It does not invent conversation history, infer truth from a matching quote, or train a model on private notes. See [capabilities and limits](docs/working-memory.md).
+
+Creators can opt into aggregate artifact visits and connect their own [Umami instance](docs/analytics.md). Operational request timings persist separately with bounded retention and [reproducible performance measurements](docs/performance.md). Audience, server speed and decision quality are different measurements.
+
 ## Discover the components
 
 The [visual guide](examples/generated/guide.html) shows every recipe with live examples, usage limits and copyable HTML. Search by need and combine family and composition-journey filters. The [component playbook](docs/component-playbook.md) explains how to choose and combine pieces.

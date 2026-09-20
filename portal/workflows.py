@@ -95,13 +95,38 @@ def outline(content):
 
 
 def anchor_status(anchor, content, parsed=None):
-    p=parsed or outline(content);reference=anchor.get('reference','');text=normalize(anchor.get('text',''));citation=normalize(anchor.get('quote',''));scope=p.ids.get(reference,'')
-    if text and text in scope:return 'exact'
-    whole=normalize(extract_text(content));needle=citation or text
+    """Locate a quote without silently choosing among repeated occurrences."""
+    p = parsed or outline(content)
+    reference = anchor.get('reference', '').lstrip('#')
+    text = normalize(anchor.get('text', ''))
+    citation = normalize(anchor.get('quote', ''))
+    scope = p.ids.get(reference, '')
+    needle = citation or text
+    if scope and needle and scope.count(needle) == 1:
+        return 'exact'
+    whole = normalize(extract_text(content))
     if needle:
-        count=whole.count(needle)
-        if count==1:return 'moved'
-        if count>1:return 'ambiguous'
+        count = whole.count(needle)
+        if count == 1:
+            return 'moved'
+        if count > 1:
+            prefix = normalize(anchor.get('prefix', ''))
+            suffix = normalize(anchor.get('suffix', ''))
+            if prefix or suffix:
+                matches = 0
+                offset = 0
+                while True:
+                    index = whole.find(needle, offset)
+                    if index < 0:
+                        break
+                    before = whole[:index].rstrip()
+                    after = whole[index + len(needle):].lstrip()
+                    if (not prefix or before.endswith(prefix)) and (not suffix or after.startswith(suffix)):
+                        matches += 1
+                    offset = index + len(needle)
+                if matches == 1:
+                    return 'moved'
+            return 'ambiguous'
     return 'changed' if scope else 'missing'
 
 

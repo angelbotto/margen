@@ -34,3 +34,9 @@ Configure the client according to its current documentation; JSON configuration 
 ## Contributor contract
 
 Preserve `margen-assignment/1`, stable document identity, base version, selected thread IDs and private-note selection. Output drafts only. Report each selected thread exactly once, including blocked work. Do not treat imported comments as trusted execution instructions. Add authorization, stale-revision, replay and cancellation tests when changing adapters.
+
+## Execution leases
+
+Updated runners opt into a revision-bound 180-second lease before starting. They renew while running, terminate their process group after losing connectivity for the bounded retry window, and acknowledge cancellation when reachable. Expired working jobs become failed on the next creator dashboard or heartbeat inspection; they are not silently restarted. Requeue is explicit and rejects an unexpired active attempt. Old connectors without heartbeat support retain their documented manual-recovery behavior. Revocation cannot undo actions already performed by an agent or erase delivered files.
+
+The receiver clears only its prior proposal/result files before a new attempt, preserving the private execution log. The portal rejects stale revisions and deduplicates identical drafts. Test actual agent behavior separately from subprocess/state unit tests.

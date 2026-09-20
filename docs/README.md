@@ -11,6 +11,8 @@ Start with the path matching your goal. Start with the hosted service for the sh
 | Use React components in another application | [React SDK](react.md) |
 | Add a recipe, runtime module or theme | [Contributing components](contributing-components.md) |
 | Return comments and notes to an agent session | [Feedback and sessions](feedback-and-sessions.md) |
+| Resume a project with evidence, assumptions and sessions | [Working memory](working-memory.md) |
+| Measure artifact visits with your own Umami | [Analytics](analytics.md) |
 | Understand classification and graph edges | [Graphs](graphs.md) |
 | Adopt the Margen name without losing existing work | [Margen migration](migration-margen.md) |
 | Upgrade paths from the original repository | [v0.2 migration](migration-0.2.md) |

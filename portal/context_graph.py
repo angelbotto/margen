@@ -18,6 +18,7 @@ def migrate(db):
     CREATE INDEX IF NOT EXISTS context_links_target ON context_links(target);
     CREATE INDEX IF NOT EXISTS context_links_source ON context_links(source);
     CREATE TABLE IF NOT EXISTS context_views(id TEXT PRIMARY KEY,owner TEXT NOT NULL REFERENCES users(id),kind TEXT NOT NULL,name TEXT NOT NULL,body TEXT NOT NULL,updated INTEGER NOT NULL);
+    CREATE TABLE IF NOT EXISTS context_view_grants(view_id TEXT NOT NULL REFERENCES context_views(id),email TEXT NOT NULL,PRIMARY KEY(view_id,email));
     CREATE INDEX IF NOT EXISTS context_views_owner ON context_views(owner,kind);
     CREATE TABLE IF NOT EXISTS context_dismissals(owner TEXT NOT NULL REFERENCES users(id),source TEXT NOT NULL REFERENCES artifacts(id),target TEXT NOT NULL REFERENCES artifacts(id),PRIMARY KEY(owner,source,target));
     """)
@@ -392,8 +393,8 @@ def mount(app, store, origin, account, payload, clean, artifact_for, permissions
             allowed = authorized(db, u)
             items = []
             for row in db.execute(
-                "SELECT * FROM context_views WHERE owner=? ORDER BY updated DESC",
-                (u["id"],),
+                "SELECT v.* FROM context_views v WHERE owner=? OR (kind='table' AND EXISTS(SELECT 1 FROM context_view_grants g WHERE g.view_id=v.id AND g.email=?)) ORDER BY updated DESC",
+                (u["id"], u["email"]),
             ):
                 body = json.loads(row["body"])
                 body["items"] = [
@@ -404,7 +405,9 @@ def mount(app, store, origin, account, payload, clean, artifact_for, permissions
                 for item in body["items"]:
                     if item.get("artifact"):
                         item["title"] = allowed[item["artifact"]]["title"]
-                items.append({**dict(row), "body": body})
+                own=row['owner']==u['id']
+                if not own: body={"params":body.get("params",{}),"items":[]}
+                items.append({**dict(row), "body": body,"can_manage":own,"shared":not own,"grants":[r['email'] for r in db.execute('SELECT email FROM context_view_grants WHERE view_id=?',(row['id'],))] if own else []})
             return {"items": items}
 
     @app.put("/api/context/views/{key}")
@@ -467,10 +470,22 @@ def mount(app, store, origin, account, payload, clean, artifact_for, permissions
             )
         return {"id": key}
 
+    @app.put('/api/context/views/{key}/access')
+    async def share_view(key:str,request:Request):
+        u=account(request,True);b=await payload(request);emails=b.get('emails',[])
+        if not isinstance(emails,list) or len(emails)>30 or any(not isinstance(e,str) or not __import__('re').fullmatch(r'[^\s@]+@[^\s@]+\.[^\s@]+',e) or len(e)>254 for e in emails):raise HTTPException(422,'Correos inválidos.')
+        with store.db() as db:
+            view=db.execute("SELECT 1 FROM context_views WHERE id=? AND owner=? AND kind='table'",(key,u['id'])).fetchone()
+            if not view:raise HTTPException(404)
+            db.execute('DELETE FROM context_view_grants WHERE view_id=?',(key,))
+            db.executemany('INSERT INTO context_view_grants VALUES(?,?)',[(key,e.strip().lower()) for e in set(emails)])
+        return {'saved':True,'scope':'View definition only; artifact permissions are unchanged.'}
+
     @app.delete("/api/context/views/{key}")
     def delete_view(key: str, request: Request):
         u = account(request)
         with store.db() as db:
+            db.execute('DELETE FROM context_view_grants WHERE view_id=? AND EXISTS(SELECT 1 FROM context_views WHERE id=? AND owner=?)',(key,key,u['id']))
             db.execute(
                 "DELETE FROM context_views WHERE id=? AND owner=?", (key, u["id"])
             )

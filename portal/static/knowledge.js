@@ -49,6 +49,7 @@ window.BottifactKnowledge = (() => {
       company: "Empresa",
       project: "Proyecto",
       decision: "Decisión",
+      claim: "Afirmación / supuesto",
       session: "Sesión de trabajo",
     };
     const abort = new AbortController(),
@@ -87,6 +88,9 @@ window.BottifactKnowledge = (() => {
       ["collection", "Colecciones"],
       ["company", "Empresas explícitas"],
       ["project", "Proyectos"],
+      ["decision", "Decisiones"],
+      ["session", "Sesiones"],
+      ["claim", "Supuestos"],
     ]);
     const relation = select("Relación", [
       ["all", "Todas"],
@@ -96,6 +100,10 @@ window.BottifactKnowledge = (() => {
       ["contradicts", "Contradice"],
       ["depends_on", "Depende de"],
       ["resolves", "Resuelve"],
+      ["evidence", "Evidencia"],
+      ["created", "Origen"],
+      ["confirmed_contrast", "Contraste confirmado"],
+      ["suggestion", "Sugerencia"],
     ]);
     const scope = select("Alcance", [
       ["all", "Mapa completo"],

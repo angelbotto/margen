@@ -13,7 +13,8 @@ STATES = {
     "prepared": {"queued", "cancelled"},
     "queued": {"cancelled"},
     "received": {"working", "failed", "cancelled"},
-    "working": {"proposed", "failed", "cancelled"},
+    "working": {"proposed", "failed", "cancelled", "waiting"},
+    "waiting": {"working", "failed", "cancelled", "queued"},
     "failed": {"queued", "cancelled"},
     "proposed": {"accepted", "queued", "cancelled"},
     "accepted": set(),
@@ -22,6 +23,12 @@ STATES = {
 
 
 def migrate(db):
+    from portal.memory import migrate as migrate_memory
+
+    migrate_memory(db)
+    from portal.job_leases import migrate as migrate_leases
+
+    migrate_leases(db)
     db.executescript(
         """
     CREATE TABLE IF NOT EXISTS creator_decisions(id TEXT PRIMARY KEY,owner TEXT NOT NULL REFERENCES users(id),project TEXT NOT NULL,title TEXT NOT NULL,body TEXT NOT NULL,state TEXT NOT NULL,review_on TEXT NOT NULL,updated INTEGER NOT NULL);
@@ -101,17 +108,31 @@ def mount(
                     **e,
                     "current_version": a["current_version"],
                     "changed": a["current_version"] != e["version"],
+                    "materiality": __import__(
+                        "portal.memory", fromlist=["materiality"]
+                    ).materiality(store, db, e, a["current_version"]),
                     "url": origin + "/a/" + a["id"] + "?version=" + e["version"],
                 }
             )
         value["evidence"] = current
-        value["needs_review"] = any(e["changed"] for e in current) or bool(
-            value["review_on"] and value["review_on"] <= date.today().isoformat()
-        )
+        value["needs_review"] = any(
+            e["materiality"]
+            in (
+                "cited_text_changed",
+                "quoted_text_preserved",
+                "unassessed",
+                "unavailable",
+            )
+            for e in current
+        ) or bool(value["review_on"] and value["review_on"] <= date.today().isoformat())
         return value
 
     def inspect_job(db, r):
         j = dict(r)
+        lease = db.execute(
+            "SELECT heartbeat,expires,stopped FROM job_leases WHERE job=?", (j["id"],)
+        ).fetchone()
+        j["execution"] = dict(lease) if lease else None
         j["target"] = json.loads(j["target"])
         j["result"] = json.loads(j["result"])
         j.pop("packet", None)
@@ -129,6 +150,9 @@ def mount(
         u = account(request)
         project = request.query_params.get("project", "")
         with store.db() as db:
+            from portal.job_leases import expire
+
+            expire(db)
             artifacts = [
                 dict(r)
                 for r in db.execute(
@@ -419,6 +443,18 @@ def mount(
             if b.get("revision") != j["revision"]:
                 raise HTTPException(409, "El encargo cambió; vuelve a abrirlo.")
             if state == "queued":
+                lease = db.execute(
+                    "SELECT * FROM job_leases WHERE job=?", (key,)
+                ).fetchone()
+                if (
+                    lease
+                    and not lease["stopped"]
+                    and lease["expires"] > int(time.time())
+                ):
+                    raise HTTPException(
+                        409,
+                        "El intento anterior sigue activo; espera su detención o el vencimiento.",
+                    )
                 target = json.loads(j["target"])
                 if not db.execute(
                     "SELECT 1 FROM creator_connectors WHERE id=? AND owner=? AND revoked=0",
@@ -586,7 +622,7 @@ def mount(
                 raise HTTPException(404)
             state = b.get("status")
             if (
-                state not in ("working", "failed", "proposed")
+                state not in ("working", "waiting", "failed", "proposed")
                 or state not in STATES[j["status"]]
             ):
                 raise HTTPException(409, "Transición inválida.")
@@ -830,6 +866,53 @@ def mount(
                             "version": e["version"],
                         }
                     )
+            claim_ids = set()
+            for claim in db.execute(
+                "SELECT * FROM memory_claims WHERE owner=? AND (?='' OR project=?) ORDER BY updated DESC LIMIT 200",
+                (u["id"], project, project),
+            ):
+                refs = [
+                    e for e in json.loads(claim["evidence"]) if e["artifact"] in valid
+                ]
+                if not refs:
+                    continue
+                node = "claim:" + claim["id"]
+                claim_ids.add(claim["id"])
+                graph["nodes"].append(
+                    {
+                        "id": node,
+                        "title": claim["statement"],
+                        "kind": "claim",
+                        "count": len(refs),
+                    }
+                )
+                for e in refs:
+                    graph["edges"].append(
+                        {
+                            "source": e["artifact"],
+                            "target": node,
+                            "kind": "evidence",
+                            "reason": e["quote"],
+                            "version": e["version"],
+                        }
+                    )
+            for contrast in db.execute(
+                "SELECT * FROM memory_links WHERE owner=? AND state!='dismissed'",
+                (u["id"],),
+            ):
+                if {contrast["left_id"], contrast["right_id"]} <= claim_ids:
+                    graph["edges"].append(
+                        {
+                            "source": "claim:" + contrast["left_id"],
+                            "target": "claim:" + contrast["right_id"],
+                            "kind": (
+                                "confirmed_contrast"
+                                if contrast["state"] == "confirmed"
+                                else "suggestion"
+                            ),
+                            "reason": contrast["reason"],
+                        }
+                    )
             groups = {}
             for v in db.execute(
                 "SELECT v.artifact,m.source FROM versions v JOIN version_meta m ON m.version=v.id JOIN artifacts a ON a.id=v.artifact WHERE a.owner=? AND (?='' OR a.space=?) ORDER BY v.created DESC LIMIT 2000",
@@ -877,3 +960,23 @@ def mount(
             "truncated": total > 150,
             "scope": "Hasta 150 artefactos recientes y 2000 versiones de este proyecto. Las relaciones muestran su evidencia.",
         }
+
+    from portal.memory import mount as mount_memory
+
+    mount_memory(
+        app,
+        store,
+        origin,
+        account,
+        payload,
+        clean,
+        owned,
+        evidence,
+        inspect_decision,
+        threads,
+        snapshot,
+    )
+
+    from portal.job_leases import mount as mount_leases
+
+    mount_leases(app, store, payload, connector, job_for)

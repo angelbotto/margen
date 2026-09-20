@@ -187,3 +187,7 @@ Use the command without the HTTPS overlay if you use your own proxy. Volumes and
 | Backup status is stale | Worker health, disk capacity and permissions on `/backups` |
 
 When sharing logs, redact credentials, email addresses, private titles, access links and document bodies. Report security issues through [SECURITY.md](../SECURITY.md).
+
+## Optional analytics
+
+See [analytics](analytics.md) for owner-controlled page-open measurement and your own Umami instance. Collection is disabled by default and requires no Umami authentication secret in the artifact.

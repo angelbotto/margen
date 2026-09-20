@@ -11,11 +11,13 @@ def sign(package, key, channel="stable"):
     import zipfile
 
     with zipfile.ZipFile(package) as z:
-        version = json.loads(z.read("bottifact/VERSION.json"))["version"]
+        metadata = json.loads(z.read("bottifact/VERSION.json"))
+        version = metadata["version"]
     manifest = {
         "schema": 1,
         "channel": channel,
         "version": version,
+        "sequence": metadata.get("release_sequence",0),
         "sha256": hashlib.sha256(package.read_bytes()).hexdigest(),
         "package": (
             "bottifact-preview.zip"

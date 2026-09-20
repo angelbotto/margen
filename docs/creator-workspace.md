@@ -21,4 +21,6 @@ The current view is bounded to 150 artifacts, 200 decisions and the latest 2,000
 
 The creator workspace is owner-specific even when an administrator can inspect the broader library. Other people cannot read personal rules, decisions or assignments. Private notes enter a packet only when selected and explicitly included. Connector credentials are hashed at rest, shown once, revocable, and separate from publishing tokens. They cannot list the library or publish a version. Existing broad personal publishing tokens remain a separate compatibility interface.
 
-Cancellation stops further portal state changes; it does not terminate an already-running local agent process. A changed published base is flagged during comparison. A text diff does not assess visual differences; open the proposed artifact before publication.
+Cancellation stops further portal state changes. Updated leased receivers terminate and acknowledge their local process group; older or offline receivers may remain unconfirmed. A changed published base is flagged during comparison. A text diff does not assess visual differences; an optional side-by-side sandboxed preview lets the creator inspect both versions. There is no automatic pixel comparison.
+
+The [working-memory surfaces](working-memory.md) add cited assumptions, contrast candidates, continuity, session summaries, expected/observed outcomes and [analytics](analytics.md).

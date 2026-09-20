@@ -60,6 +60,7 @@ def main():
     c=sub.add_parser('comparar',aliases=['compare']);c.add_argument('--artifact-id','--artefacto-id',dest='artefacto_id',required=True);c.add_argument('--from','--desde',dest='desde',required=True);c.add_argument('--to','--hasta',dest='hasta',required=True)
     c=sub.add_parser('liberar',aliases=['release']);c.add_argument('--artifact-id','--artefacto-id',dest='artefacto_id',required=True);c.add_argument('--version',required=True);c.add_argument('--expected-current','--actual-esperada',dest='actual_esperada',required=True)
     c=sub.add_parser('feedback',help='Prepare a private feedback bundle for an existing session.');c.add_argument('--artifact-id',required=True);c.add_argument('--output',type=Path,required=True);c.add_argument('--agent',default='');c.add_argument('--session',default='');c.add_argument('--kind',choices=['all','comment','note'],default='all')
+    c=sub.add_parser('continuity',help='Read a cited project brief; excludes private notes.');c.add_argument('--space',default='');c.add_argument('--output',type=Path)
     args=p.parse_args()
     args.command={'connect': 'conectar', 'publish': 'publicar', 'comments': 'comentarios', 'status': 'estado', 'list': 'listar', 'preferences': 'preferencias', 'rename': 'renombrar', 'versions': 'versiones', 'compare': 'comparar', 'release': 'liberar'}.get(args.command,args.command)
     if args.command=='conectar':
@@ -110,6 +111,14 @@ def main():
     elif args.command=='renombrar':
         if not re.fullmatch('[a-f0-9]{32}',args.artefacto_id):raise SystemExit('ID de artefacto inválido.')
         result=request(base,token,'/api/artifacts/'+args.artefacto_id,{'title':args.titulo,'space':args.espacio},method='PATCH')
+    elif args.command=='continuity':
+        text=request(base,token,'/api/creator/brief?'+urllib.parse.urlencode({'project':args.space}))['text']
+        if args.output:
+            fd=os.open(args.output,os.O_WRONLY|os.O_CREAT|os.O_TRUNC,0o600)
+            with os.fdopen(fd,'w') as out:out.write(text+'\n')
+            args.output.chmod(0o600);print(args.output)
+        else:print(text)
+        return
     elif args.command=='feedback':
         if not re.fullmatch('[a-f0-9]{32}',args.artifact_id):raise SystemExit('Invalid artifact ID.')
         try:

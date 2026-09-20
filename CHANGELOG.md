@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.12.0 — Evidence-backed working memory
+
+- Add cited project continuity briefs, versioned assumptions, explicit contrast reviews, real-session summaries and decision outcome views. Keep private notes out of automatic briefs.
+- Add owner-scoped evidence search and shared filter definitions without granting document access. Extend graph evidence and distinguish presentation-only changes from changed source context.
+- Persist bounded operational timings, add concurrent-request benchmarks and optional owner-enabled Umami pageview collection without private titles or conversation content.
+- Add opt-in execution leases, process-group cancellation acknowledgements and explicit recovery; preserve draft-only connector delivery.
+- Compare artifact versions side by side, disambiguate repeated quotes with surrounding text, and organize the creator workspace for desktop and mobile with shared light/dark tokens.
+- Sign monotonic release sequences and include telemetry in consistent backups. These capabilities do not claim completed real-agent or observed decision-quality evaluations.
+
 ## 0.11.1 — Connector delivery through the hosted gateway
 
 - Identify scoped connector requests with the same Margen user agent as the existing publisher, so the hosted gateway accepts real device delivery.
