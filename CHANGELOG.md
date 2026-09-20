@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.13.2 — A considered entry experience
+
+- Redesign the library sign-in and protected-document entry with shared light/dark surfaces and a mobile-first access form.
+- Give email verification its own step, delivery feedback, resend cooldown and account recovery. Discard stale delivery responses.
+- Preserve safe document, thread and version return destinations through email sign-in and cancelled Google authorization.
+- Distinguish network failures from denied access, keep protected metadata private, and show the active account when it cannot open a document.
+
 ## 0.13.1 — Focused graph neighborhoods
 
 - Restrict each knowledge lens to its matching entities and directly connected artifacts. Show an explicit empty state when no decisions, assumptions or sessions are recorded, instead of displaying unrelated documents.

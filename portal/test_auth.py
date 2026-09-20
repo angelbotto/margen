@@ -11,7 +11,7 @@ import jwt
 from cryptography.hazmat.primitives.asymmetric import rsa
 from fastapi.testclient import TestClient
 from portal.app import create_app, COOKIE
-from portal.auth import AUTH_COOKIE
+from portal.auth import AUTH_COOKIE, target
 from portal.test_app import HTML, ORIGIN
 
 
@@ -28,6 +28,29 @@ class AuthTests(unittest.TestCase):
             response=self.c.post('/api/auth/email',json={'email':email,'next':'//evil.test'})
             self.assertEqual(response.status_code,200,response.text)
             return response.json()['challenge'],send.call_args.args[1]
+
+    def test_return_context_and_untrusted_destinations(self):
+        path = '/a/' + 'a' * 32
+        self.assertEqual(target(path + '?thread=review-1&version=v_2&email=private@example.com'), path + '?thread=review-1&version=v_2')
+        for view in ['brain', 'insights', 'work']:
+            self.assertEqual(target('/?view=' + view), '/?view=' + view)
+        for value in ['https://evil.test', '//evil.test', '/\\evil.test', '/%2f%2fevil.test', '/a/invalid', '/\n?view=brain', 'http://[', None]:
+            self.assertEqual(target(value), '/')
+        destination = path + '?thread=review-1&version=v_2'
+        with patch('portal.auth.send_code', return_value={'id': 'message-test'}) as send:
+            response = self.c.post('/api/auth/email', json={'email': 'reader@example.com', 'next': destination})
+            code = send.call_args.args[1]
+        verified = self.c.post('/api/auth/email/verify', json={'challenge': response.json()['challenge'], 'code': code})
+        self.assertEqual(verified.json()['next'], destination)
+
+    def test_cancelled_google_preserves_validated_return_context(self):
+        destination = '/a/' + 'a' * 32 + '?thread=review-1'
+        response = self.c.get('/auth/google', params={'next': destination}, follow_redirects=False)
+        state = parse_qs(urlsplit(response.headers['location']).query)['state'][0]
+        cancelled = self.c.get('/auth/google/callback', params={'state': state, 'error': 'access_denied'}, follow_redirects=False)
+        params = parse_qs(urlsplit(cancelled.headers['location']).query)
+        self.assertEqual(params['next'], [destination])
+        self.assertEqual(params['error'], ['google_session'])
 
     def test_email_bound_single_use_and_admin_aliases(self):
         canonical=self.store.user('owner@example.com','Owner')
