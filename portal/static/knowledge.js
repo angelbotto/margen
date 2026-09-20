@@ -288,11 +288,10 @@ window.BottifactKnowledge = (() => {
       scope.options[1].disabled = scope.options[2].disabled = !selected;
       layer.replaceChildren();
       sidebar.replaceChildren();
+      const focused = new Set(network.nodes.filter(n=>n.kind===lens.value).map(n=>n.id));
+      const connected = new Set(network.edges.filter(e=>focused.has(e.source)||focused.has(e.target)).flatMap(e=>[e.source,e.target]));
       const allowed = network.nodes.filter(
-          (n) =>
-            n.kind === "artifact" ||
-            lens.value === "all" ||
-            n.kind === lens.value,
+          (n) => lens.value === "all" || focused.has(n.id) || (n.kind === "artifact" && connected.has(n.id)),
         ),
         valid = new Set(allowed.map((n) => n.id));
       if (selected && !valid.has(selected)) {
@@ -384,8 +383,9 @@ window.BottifactKnowledge = (() => {
       if (!shown.length) {
         sidebar.append(
           make("h2", "No hay piezas para este mapa."),
-          make("p", "Ajusta los filtros de la biblioteca."),
+          make("p", lens.value === "all" ? "Ajusta el proyecto o los filtros del grafo." : "No hay " + ({decision:"decisiones",claim:"supuestos",session:"sesiones",topic:"temas",space:"espacios",collection:"colecciones",company:"empresas",project:"proyectos"}[lens.value] || "conexiones") + " registrados para este enfoque."),
         );
+        root.dispatchEvent(new CustomEvent("margen:graph-change"));
         return;
       }
       // Cache topology: selecting/searching nodes must not recompute quadratic forces.

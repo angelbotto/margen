@@ -113,3 +113,11 @@ it("discards stale workspace responses after navigation", async () => {
   await pending;
   expect(root.textContent).toBe("New page");
 });
+
+it('does not fill an empty knowledge lens with unrelated artifacts',()=>{
+ instance=(window as any).BottifactKnowledge.graph(root,data,vi.fn());
+ instance.setLens('session');
+ expect(root.querySelectorAll('[data-node]')).toHaveLength(0);
+ expect(root.querySelector('.atlas-inspector')!.textContent).toContain('No hay sesiones');
+ instance.setLens('all');expect(root.querySelectorAll('[data-node]')).toHaveLength(3);
+});
