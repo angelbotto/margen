@@ -439,7 +439,7 @@ window.BottifactContextWorkbench = {
       body.append(
         el(
           "p",
-          "Son privadas de tu cuenta. Un tablero no cambia los permisos de los documentos.",
+          "Las mesas y tableros son privados. Puedes compartir una vista de filtros por correo; cada persona sólo verá los documentos que ya puede leer.",
         ),
         button("Nueva mesa de trabajo", () => editView()),
         button("Nuevo tablero", () =>
@@ -462,6 +462,8 @@ window.BottifactContextWorkbench = {
             row.remove();
           }),
         );
+        if(v.kind==='table' && v.can_manage){row.append(button('Compartir filtros',()=>{const m=dialog('Compartir esta vista');const emails=input('Correos separados por coma',(v.grants||[]).join(', '));m.body.append(emails.wrap,el('p','Compartes el nombre y los filtros de búsqueda. No concede acceso a documentos ni comparte notas.'),button('Guardar acceso',async()=>{await post('/api/context/views/'+v.id+'/access',{emails:emails.field.value.split(',').map(x=>x.trim()).filter(Boolean)},'PUT');m.d.close();}));}));}
+        if(!v.can_manage)row.querySelectorAll('button').forEach(b=>{if(b.textContent==='Eliminar vista')b.remove();});
         body.append(row);
       }
     }

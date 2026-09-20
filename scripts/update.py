@@ -101,6 +101,7 @@ def main():
                 raw=fetch('/downloads/'+channel+'.json',32768);signature=fetch('/downloads/'+channel+'.json.sig',4096)
                 manifest=verify_release(raw,signature,trusted_key or TRUSTED_RELEASE_KEY,expected,channel)
                 installed=json.loads((destination/'VERSION.json').read_text()) if (destination/'VERSION.json').exists() else {}
+                if installed.get('release_sequence',0)>manifest.get('sequence',0):raise ValueError('Release sequence is older than the installed release. Use a reviewed local package for intentional rollback.')
                 if manifest and installed.get('version','')[:10]>manifest['version'][:10]:raise ValueError('Release is older than the installed version. Use a reviewed local package for an intentional rollback.')
             elif not args.paquete:
                 print('Self-hosted checksum verification. Pin --trusted-key to require signed releases.')
@@ -110,6 +111,7 @@ def main():
                 print('Margen ya está actualizado.');return
             extract(args.paquete.read_bytes() if args.paquete else fetch('/downloads/'+package_name+'.zip', 50*1024*1024), expected, root)
             source = root/'bottifact'
+            if manifest and json.loads((source/'VERSION.json').read_text()).get('release_sequence',0)!=manifest.get('sequence',0):raise ValueError('Package sequence differs from signed manifest.')
             if manifest and json.loads((source/'VERSION.json').read_text())['version']!=manifest['version']:raise ValueError('Package version differs from signed manifest.')
             subprocess.run([sys.executable, str(source/'scripts/install.py'), '--destino', str(destination), '--actualizar'], check=True)
         setting.write_text(json.dumps({'local':bool(args.paquete) and not args.servidor,'servidor':ORIGIN if not args.paquete or args.servidor else None,'sha256':expected,'channel':channel,'trusted_key':trusted_key})+'\n')

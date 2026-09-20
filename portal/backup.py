@@ -52,6 +52,9 @@ def backup(root,destination,config=None):
     started=time.time();stage=Path(tempfile.mkdtemp(prefix='.pending-',dir=destination));os.chmod(stage,0o700)
     try:
         with closing(sqlite3.connect(root/'bottifact.sqlite3',timeout=30)) as src,closing(sqlite3.connect(stage/'bottifact.sqlite3')) as out:src.backup(out)
+        telemetry=root/'telemetry.sqlite3'
+        if telemetry.exists():
+            with closing(sqlite3.connect(telemetry)) as src,closing(sqlite3.connect(stage/'telemetry.sqlite3')) as out:src.backup(out)
         files=stage/'files';files.mkdir()
         with closing(sqlite3.connect(stage/'bottifact.sqlite3')) as db:
             versions=list(db.execute('SELECT id,sha FROM versions'))

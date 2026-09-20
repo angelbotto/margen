@@ -6,6 +6,7 @@ import json
 import os
 import re
 import shutil
+import signal
 import subprocess
 import sys
 import time
@@ -104,6 +105,9 @@ def receive(config):
     return key
 
 
+HEARTBEAT_INTERVAL = 15
+
+
 def run(config, key, cwd):
     key = job_id(key)
     value = api(config, "/api/connector/jobs/" + key)
@@ -139,14 +143,64 @@ def run(config, key, cwd):
     try:
         private(folder / "agent.log", "")
         with (folder / "agent.log").open("w") as log:
-            process = subprocess.run(
+            # A lease is tied to this revision. Losing it stops the local process.
+            for name in ("proposal.html", "result.json"):
+                (folder / name).unlink(missing_ok=True)
+            heartbeat = lambda stopped=False: api(
+                config,
+                "/api/connector/jobs/" + key + "/heartbeat",
+                {"revision": r["revision"], "stopped": stopped},
+            )
+            if not heartbeat()["continue"]:
+                raise ValueError("Assignment no longer available")
+            process = subprocess.Popen(
                 args,
                 cwd=cwd,
                 stdout=log,
                 stderr=subprocess.STDOUT,
-                timeout=3600,
-                check=False,
+                start_new_session=True,
             )
+            deadline = time.monotonic() + 3600
+            last_ok = time.monotonic()
+
+            def stop():
+                if process.poll() is None:
+                    os.killpg(process.pid, signal.SIGTERM)
+                    try:
+                        process.wait(timeout=5)
+                    except subprocess.TimeoutExpired:
+                        os.killpg(process.pid, signal.SIGKILL)
+                        process.wait()
+                try:
+                    heartbeat(True)
+                except Exception:
+                    pass
+
+            try:
+                while process.poll() is None:
+                    try:
+                        process.wait(timeout=HEARTBEAT_INTERVAL)
+                    except subprocess.TimeoutExpired:
+                        pass
+                    if process.poll() is not None:
+                        break
+                    if time.monotonic() > deadline:
+                        raise ValueError("Local execution timeout")
+                    try:
+                        lease = heartbeat()
+                        last_ok = time.monotonic()
+                    except Exception:
+                        if time.monotonic() - last_ok > 90:
+                            raise ValueError("Lost connection to assignment lease")
+                        continue
+                    if not lease["continue"]:
+                        raise ValueError("Assignment cancelled or changed")
+            except BaseException:
+                stop()
+                raise
+            if not heartbeat()["continue"]:
+                raise ValueError("Assignment changed before delivery")
+            heartbeat(True)
         if process.returncode:
             raise ValueError(
                 "Agent exited with code "

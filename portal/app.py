@@ -28,6 +28,7 @@ from portal.auth import mount_auth
 from portal.preview import preview_html
 from portal.search import index_document, match_query, normalized, window
 from fastapi.staticfiles import StaticFiles
+from starlette.concurrency import run_in_threadpool
 
 ROOT = Path(__file__).parent
 COOKIE = '__Host-bottifact'
@@ -253,7 +254,8 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
     audience = audience or os.environ.get('BOTTIFACT_AUDIENCE', '')
     jwks = jwt.PyJWKClient(issuer + '/cdn-cgi/access/certs', cache_keys=True, lifespan=300) if issuer and audience else None
     from collections import deque
-    timings=deque(maxlen=2000)
+    from portal.telemetry import Metrics
+    metrics=Metrics(store.root)
     rate = {}
     rate_lock = threading.Lock()
 
@@ -305,17 +307,30 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
                     return JSONResponse({'detail':'Demasiados cambios. Espera un minuto.'}, status_code=429, headers={'Retry-After':'60'})
                 rate[key] = (now, count)
         started=time.perf_counter()
-        response = await call_next(request)
-        route=getattr(request.scope.get('route'),'path','other')
-        timings.append((route,round((time.perf_counter()-started)*1000,2),response.status_code))
+        status=500
+        try:
+            response = await call_next(request)
+            status=response.status_code
+        finally:
+            route=getattr(request.scope.get('route'),'path','other')
+            try:
+                await run_in_threadpool(metrics.record,route,(time.perf_counter()-started)*1000,status)
+            except sqlite3.Error:
+                pass  # Telemetry must not prevent reading or publishing.
         response.headers['Cache-Control'] = 'private, no-store'
         response.headers['X-Content-Type-Options'] = 'nosniff'
         response.headers['Referrer-Policy'] = 'no-referrer'
         response.headers['X-Robots-Tag'] = 'noindex, nofollow'
         if 'Content-Security-Policy' not in response.headers:
             response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'"
+        analytics = analytics_configuration()
+        if analytics and "sandbox" not in response.headers.get('Content-Security-Policy',''):
+            policy = response.headers.get('Content-Security-Policy','')
+            response.headers['Content-Security-Policy'] = policy.replace("script-src 'self';", "script-src 'self' " + analytics['origin'] + ";").replace("connect-src 'self';", "connect-src 'self' " + analytics['origin'] + ";")
         return response
 
+    from portal.analytics import mount as mount_analytics, configuration as analytics_configuration
+    mount_analytics(app, store, account, who, artifact_for, payload)
     mount_auth(app, store, origin, set_session, payload, clean, EMAIL)
 
     @app.get('/health')
@@ -325,13 +340,7 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
     def performance(request:Request):
         u=account(request,True)
         if not is_admin(u):raise HTTPException(403)
-        groups={}
-        for path,ms,status in list(timings):
-            group=groups.setdefault(path,{'times':[],'errors':0});group['times'].append(ms);group['errors']+=int(status>=500)
-        rows=[]
-        for path,g in groups.items():
-            values=sorted(g['times']);rows.append({'route':path,'samples':len(values),'p50_ms':values[len(values)//2],'p95_ms':values[min(len(values)-1,int(len(values)*.95))],'server_errors':g['errors']})
-        return {'window':'last 2000 requests in this process, resets on restart','routes':rows}
+        return metrics.report()
 
     @app.get('/api/session')
     def session(request: Request):

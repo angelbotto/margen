@@ -3,6 +3,8 @@
 import hashlib, json, subprocess, tempfile, unittest
 from pathlib import Path
 from update import verify_release
+import update
+from unittest.mock import patch
 
 
 class SignatureTests(unittest.TestCase):
@@ -67,6 +69,17 @@ class SignatureTests(unittest.TestCase):
             ]:
                 with self.assertRaises(ValueError):
                     verify_release(content, sig, pub.read_text(), expected, channel)
+
+    def test_signed_same_day_rollback_does_not_change_installation(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder)/'library';root.mkdir()
+            version={'version':'2026.09.20-current','release_sequence':12}
+            (root/'VERSION.json').write_text(json.dumps(version))
+            manifest={'version':'2026.09.20-new-name','sequence':11}
+            with patch.object(update.sys,'argv',['update.py','--destination',str(root),'--server','https://artifacts.botto.is','--no-links']),patch.object(update,'fetch',return_value=b'a'*64),patch.object(update,'verify_release',return_value=manifest),patch.object(update,'extract') as extract:
+                with self.assertRaisesRegex(ValueError,'sequence is older'):update.main()
+            extract.assert_not_called()
+            self.assertEqual(json.loads((root/'VERSION.json').read_text()),version)
 
 
 if __name__ == "__main__":

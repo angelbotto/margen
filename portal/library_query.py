@@ -29,6 +29,9 @@ def migrate(db):
     CREATE TRIGGER IF NOT EXISTS review_thread_delete AFTER INSERT ON events WHEN json_extract(NEW.event,'$.kind')='delete' BEGIN UPDATE review_threads SET deleted=1 WHERE thread=json_extract(NEW.event,'$.thread') AND artifact=NEW.artifact;END;
     """
     )
+    if not db.execute("SELECT 1 FROM operation_status WHERE key='classification_v2'").fetchone():
+        db.execute('INSERT OR IGNORE INTO library_dirty SELECT id FROM artifacts')
+        db.execute("INSERT INTO operation_status VALUES('classification_v2','true')")
     if not db.execute(
         "SELECT 1 FROM operation_status WHERE key='library_projection_v1'"
     ).fetchone():

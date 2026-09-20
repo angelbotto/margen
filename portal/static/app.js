@@ -1907,6 +1907,9 @@
         location.hash;
     };
     select.addEventListener("change", mount);
+    $("#artifact-frame").addEventListener("load", () => {
+      window.MargenAnalytics?.visit(api, current, user, select.value).catch(() => {});
+    }, {once:true});
     mount();
     poll = setInterval(() => {
       if (!document.hidden) refreshReview().catch(() => {});

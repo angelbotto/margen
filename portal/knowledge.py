@@ -10,7 +10,7 @@ from portal.search import normalized
 
 RULES = {
     'logística': ('Operaciones', ('logistica','entregas','flota','despacho','ultima milla','rutas')),
-    'finanzas': ('Finanzas', ('finanzas','ingresos','margen','costos','flujo de caja','presupuesto','facturacion')),
+    'finanzas': ('Finanzas', ('finanzas','ingresos','margen bruto','margen neto','costos','flujo de caja','presupuesto','facturacion')),
     'ingeniería': ('Tecnología', ('arquitectura','ingenieria','repositorio','despliegue','api','backend','frontend')),
     'producto': ('Producto', ('producto','prototipo','experiencia de usuario','usabilidad','roadmap')),
     'estrategia': ('Dirección', ('estrategia','prioridades','objetivos','decision','decisiones','plan de trabajo')),
