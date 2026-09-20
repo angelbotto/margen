@@ -50,7 +50,7 @@ jobs:
       - run: pip install httpx==0.28.1
       - run: python -m unittest discover -s portal -t . -p 'test_*.py' -v
       - run: bash -n scripts/install.sh
-      - run: node --check portal/static/creator.js && node --check portal/static/interface.js && node --check portal/static/context-workbench.js && node --check portal/static/reader-workspace.js && node --check portal/static/reader-controls.js && node --check portal/static/library-controls.js && node --check portal/static/knowledge.js && node --check portal/static/app.js && node --check portal/static/bridge.js && node --check portal/static/login.js && node --check portal/static/install.js
+      - run: node --check portal/static/memory.js && node --check portal/static/analytics.js && node --check portal/static/creator.js && node --check portal/static/interface.js && node --check portal/static/context-workbench.js && node --check portal/static/reader-workspace.js && node --check portal/static/reader-controls.js && node --check portal/static/library-controls.js && node --check portal/static/knowledge.js && node --check portal/static/app.js && node --check portal/static/bridge.js && node --check portal/static/login.js && node --check portal/static/install.js
 
   react:
     runs-on: ubuntu-latest
