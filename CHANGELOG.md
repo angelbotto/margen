@@ -4,6 +4,7 @@
 
 - Bind leased draft uploads to the current unexpired assignment revision and verify idempotent retries. Preserve legacy unleased integration behavior.
 - Preserve additional citations when editing the first source of an assumption in the creator form.
+- Fit bar charts to their container, wrap labels and redraw after chapter/viewport changes so mobile readers can see the plot immediately.
 
 ## 0.12.0 — Evidence-backed working memory
 

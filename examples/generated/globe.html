@@ -1056,6 +1056,8 @@ th { background: var(--panel); color: var(--tinta-2); font: 12px/1.6 var(--mono)
 .grafica-caja { border-block: 1px dashed var(--grafica-linea); }
 .grafica-titulo { margin-block: 16px 20px; font-size: 28px; }
 .grafica-caja > svg { display: block; width: 100%; min-width: 800px; max-width: none; height: auto; }
+/* Measured bar layouts keep their plot visible on narrow screens. */
+figure[data-grafica="barras"] .grafica-caja > svg { min-width: 260px; }
 .grafica-caja text { fill: var(--grafica-tinta); font: 12px var(--mono); }
 .grafica-unidad { font-weight: 500; }
 .grafica-unidades { font: 13px/1.6 var(--mono); color: var(--grafica-tinta); margin-bottom: 12px; overflow-wrap: anywhere; }
