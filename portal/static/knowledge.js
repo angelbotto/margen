@@ -207,6 +207,8 @@ window.BottifactKnowledge = (() => {
     ])
       optionsBody.append(item);
     controls.append(optionsMenu);
+    listen(document, "pointerdown", event => { if(!optionsMenu.contains(event.target)) optionsMenu.open=false; });
+    listen(optionsMenu, "keydown", event => { if(event.key === "Escape") { optionsMenu.open=false;optionsMenu.querySelector("summary").focus(); } });
     const membershipKinds = new Set([
       "space",
       "topic",
