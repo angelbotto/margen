@@ -1943,40 +1943,18 @@
     try {
       current = await api("/api/artifacts/" + aid);
     } catch (error) {
-      $("#reader").replaceChildren();
-      const box = make("div", undefined, "empty reader-gate");
-      box.append(
-        make("h2", "Este artefacto necesita acceso."),
-        make(
-          "p",
-          user?.verified
-            ? "Entra con el correo al que compartieron el documento o pide acceso al creador."
-            : "Entra para abrir el documento.",
-        ),
-      );
-      if (user?.verified) {
-        const change = make("button", "Entrar con otra cuenta", "button");
-        change.addEventListener(
-          "click",
-          safe(async () => {
-            await api("/api/logout", { method: "POST", body: "{}" });
-            location.assign(loginURL());
-          }),
-        );
-        box.append(change);
-      } else {
-        if (authOptions.google) {
-          const google = make("a", "Continuar con Google", "button");
-          google.href =
-            "/auth/google?next=" +
-            encodeURIComponent(location.pathname + location.search);
-          box.append(google);
-        }
-        const email = make("a", "Entrar con correo", "button primary");
-        email.href = loginURL();
-        box.append(email);
-      }
-      $("#reader").append(box);
+      document.title = "Acceso al documento · Margen";
+      $("#reader").replaceChildren(window.MargenAccess.gate({
+        user,
+        options: authOptions,
+        status: error.status,
+        next: location.pathname + location.search,
+        changeAccount: async () => {
+          await api("/api/logout", { method: "POST", body: "{}" });
+          location.assign(loginURL());
+        },
+        retry: () => location.reload(),
+      }));
       return;
     }
     const owner = user?.id === current.owner;

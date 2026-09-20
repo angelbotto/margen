@@ -20,14 +20,24 @@ AUTH_COOKIE = '__Host-bottifact-auth'
 
 
 def target(value):
-    if not isinstance(value,str):return '/'
-    parts=urllib.parse.urlsplit(value)
-    if parts.scheme or parts.netloc or not __import__('re').fullmatch(r'/(?:a/[a-f0-9]{32})?',parts.path):return '/'
-    fields=urllib.parse.parse_qs(parts.query);query={}
-    for key in ['thread','version']:
-        if key in fields and __import__('re').fullmatch(r'[a-zA-Z0-9_-]{1,120}',fields[key][0]):query[key]=fields[key][0]
-    if parts.path=='/' and fields.get('view',[''])[0] in ['mine','shared','inbox','notifications','admin','archived','public','connections']:query['view']=fields['view'][0]
-    return parts.path+('?' + urllib.parse.urlencode(query) if query else '')
+    """Preserve supported review destinations without accepting external redirects."""
+    if not isinstance(value, str) or "\\" in value or any(ord(char) < 32 for char in value):
+        return "/"
+    try:
+        parts = urllib.parse.urlsplit(value)
+    except ValueError:
+        return "/"
+    if parts.scheme or parts.netloc or not re.fullmatch(r"/(?:a/[a-f0-9]{32})?", parts.path):
+        return "/"
+    fields = urllib.parse.parse_qs(parts.query)
+    query = {}
+    for key in ["thread", "version"]:
+        if key in fields and re.fullmatch(r"[a-zA-Z0-9_-]{1,120}", fields[key][0]):
+            query[key] = fields[key][0]
+    views = {"mine", "shared", "inbox", "notifications", "admin", "archived", "public", "connections", "brain", "insights", "work"}
+    if parts.path == "/" and fields.get("view", [""])[0] in views:
+        query["view"] = fields["view"][0]
+    return parts.path + ("?" + urllib.parse.urlencode(query) if query else "")
 
 
 def remote_json(url, data=None, headers=None, form=False):
@@ -189,5 +199,6 @@ def mount_auth(app, store, origin, set_session, payload, clean, email_pattern):
             if claims.get('azp', os.environ['BOTTIFACT_GOOGLE_ID']) != os.environ['BOTTIFACT_GOOGLE_ID']: raise ValueError('Wrong client')
             u = store.user(claims['email'], claims.get('name') or claims['email'].split('@')[0])
         except Exception:
-            return RedirectResponse('/login?error=google_session', status_code=303)
+            query = urllib.parse.urlencode({'error': 'google_session', 'next': target(row['next'])})
+            return RedirectResponse('/login?' + query, status_code=303)
         return finish(u['id'], row['next'])

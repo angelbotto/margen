@@ -43,6 +43,14 @@ Menu rows combine an icon, a short action and a brief consequence. Accessible na
 
 The context composer lets a reader select pending shared comments, clear the selection, opt into personal notes and preview the resulting prompt. **Copy for AI** builds the authorized bundle when needed and copies it in one action. It does not send anything to an agent, reopen a session or resolve a thread. JSON download and the full prompt remain available as progressive disclosures. Every selection change invalidates the prepared preview.
 
+## Access experience
+
+The library sign-in and shared-document gate use the same entry surfaces, with different copy for each task. On small screens, the form comes first. Available providers come from `/api/auth/options`; deployments can enable Google, email codes or both. There is no shared-document password flow.
+
+Email verification replaces the provider choices with a six-digit code input, delivery feedback and a resend cooldown. Browser autofill and paste work in one field. Switching email discards stale delivery polling. Google and email retain allowlisted artifact, thread and version destinations; failed Google consent retains the validated return context.
+
+Denied access reveals no protected title or preview. An authenticated reader sees their current email and can change accounts or return to the library. Missing and unauthorized artifacts share the same gate; connection failures instead offer retry. Authentication does not grant document permissions.
+
 ## Research and next boundaries
 
 This implementation adopts local neighborhoods, inspectable incoming links and property-driven organization from the official [Obsidian graph](https://help.obsidian.md/plugins/graph), [backlinks](https://help.obsidian.md/plugins/backlinks), [properties](https://help.obsidian.md/properties) and [Bases](https://help.obsidian.md/bases) documentation. Margen preserves its own permission model and evidence/version contracts; it does not implement an Obsidian vault or plugin API.
