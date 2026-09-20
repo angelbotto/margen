@@ -117,15 +117,19 @@ window.BottifactReaderWorkspace = {
         selectedEvidence = new Set(),
         items = [],
         bundleData = null,
-        request = 0;
+        request = 0,
+        selectionRevision = 0;
       const invalidate = () => {
+        selectionRevision++;
         bundleData = null;
         preview.value = "";
         download.disabled = true;
-        selectionCount.textContent = selected.size + " hilos seleccionados";
+        selectionCount.textContent = selected.size + (selected.size === 1 ? " hilo seleccionado" : " hilos seleccionados");
       };
       async function load() {
         const n = ++request;
+        selected.clear();
+        copyButton.disabled = true;
         invalidate();
         list.replaceChildren(el("p", "Cargando revisión…"));
         const q = new URLSearchParams({
@@ -141,6 +145,7 @@ window.BottifactReaderWorkspace = {
             .map((i) => i.thread.thread),
         );
         invalidate();
+        copyButton.disabled = false;
         render();
       }
       function render() {
@@ -182,7 +187,8 @@ window.BottifactReaderWorkspace = {
           );
       }
       async function buildContext() {
-        bundleData = await api("/api/review/bundle", {
+        const revision = selectionRevision;
+        const result = await api("/api/review/bundle", {
           method: "POST",
           body: JSON.stringify({
             artifact: aid || null,
@@ -195,6 +201,9 @@ window.BottifactReaderWorkspace = {
                 : undefined,
           }),
         });
+        if (revision !== selectionRevision || !d.isConnected || !d.open)
+          throw Error("La selección cambió. Revisa los hilos y vuelve a copiar.");
+        bundleData = result;
         preview.value = bundleData.text;
         copyButton.disabled = download.disabled = false;
         status.textContent =
