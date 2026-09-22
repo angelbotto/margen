@@ -42,12 +42,12 @@
     $("#login-description").textContent = verifying
       ? "Escribe el código que te enviamos. Es válido durante 10 minutos."
       : shared
-        ? "Usa el correo al que compartieron el documento. Volverás aquí después de entrar."
+        ? "Entra con un correo invitado o del dominio autorizado. Volverás aquí después de entrar."
         : "Entra para continuar con tus ideas y las de tu equipo.";
     $("#access-fine").textContent = verifying
       ? "Si no encuentras el mensaje, revisa también spam."
       : shared
-        ? "El acceso depende de la invitación del creador."
+        ? "El creador elige qué personas y dominios pueden entrar."
         : "Sin contraseña. Tu biblioteca es privada.";
     $("#google").hidden = verifying || !authOptions.google;
     $("#divider").hidden =

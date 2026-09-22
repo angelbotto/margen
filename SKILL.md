@@ -98,6 +98,10 @@ Revisions preserve URL, audience and comments. New revisions default to draft; r
 
 Deliver the returned `/a/ID` URL. For a draft, deliver `preview_url` and explain that the shared link retains its published revision. Readers see the artifact; creator-only management lives in the toolbar. Keep NAS/storage details out of reader copy. Personal settings and publishing receipts remain outside the skill and HTML. [Connected library](docs/connected-library.md) explains organization, provenance and exported context. Shared tags alone do not establish dependencies or AI-derived conclusions.
 
+## Share with a team
+
+Read [domain sharing](docs/domain-sharing.md) and the [team trial](docs/team-trial.md) when the user asks to share with a company. After publishing privately, an explicitly authorized domain audience can be set with `scripts/publish.py share --artifact-id ID --domain example.com --role commenter --visibility invited`. Verify the saved audience. Domain sharing does not follow from `publish_on_create`, project identity or a theme; it requires the user to choose the audience. Never apply it to unrelated existing artifacts. Accounts must have a verified matching email; editing remains an individual grant.
+
 ## Maintain and distribute
 
 After changing recipes or runtime modules, run the relevant checks:

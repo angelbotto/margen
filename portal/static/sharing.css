@@ -1,0 +1,127 @@
+/* Team access uses the existing reader sharing dialog and portal appearance. */
+#share-dialog {
+  width: min(600px, calc(100vw - 24px));
+  max-height: calc(100dvh - 32px);
+  padding: 0;
+  overflow: auto;
+  border-radius: 18px;
+}
+#share-form {
+  padding: 24px;
+}
+#share-form .dialog-head {
+  margin-bottom: 24px;
+}
+#share-form h2 {
+  font: 500 22px/1.2 var(--sans);
+  letter-spacing: -0.04em;
+}
+#share-form fieldset {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 20px 0;
+  min-width: 0;
+  background: var(--panel);
+}
+#share-form legend {
+  padding: 0 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+#share-form .muted {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+#share-form .grant {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 8px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+#share-form .grant > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 13px;
+}
+#share-form .invite {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 8px;
+  margin-top: 12px;
+}
+#share-form input:not([type="checkbox"]),
+#share-form select {
+  min-width: 0;
+  min-height: 40px;
+  border-radius: 8px;
+  background: var(--bg);
+}
+#share-form .domain-remove {
+  width: 36px;
+  min-height: 36px;
+  padding: 8px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+}
+#share-form .form-error:empty {
+  display: none;
+}
+#share-form .access-summary {
+  font-size: 12px;
+  line-height: 1.6;
+}
+#share-form .dialog-actions {
+  position: sticky;
+  bottom: 0;
+  padding: 16px 0;
+  margin-bottom: 0;
+  background: var(--panel);
+  border-top: 1px solid var(--line);
+  z-index: 1;
+}
+@media (max-width: 520px) {
+  #share-form {
+    padding: 20px 16px;
+  }
+  #share-form .invite {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  #share-form .invite input {
+    grid-column: 1 / -1;
+    width: 100%;
+    font-size: 16px;
+  }
+  #share-form button,
+  #share-form select {
+    min-height: 44px;
+  }
+  #share-form .domain-remove {
+    width: 44px;
+  }
+  #share-form .dialog-actions {
+    bottom: 0;
+    margin-bottom: 0;
+  }
+}
+
+#share-form .sharing-review-options {
+  margin: 20px 0;
+  font-size: 12px;
+}
+#share-form .sharing-review-options summary {
+  cursor: pointer;
+  padding: 8px 0;
+  color: var(--muted);
+}
+#share-form .sharing-review-options[open] summary {
+  margin-bottom: 12px;
+}
+#share-form .grant button,
+#share-form .invite button {
+  grid-column: auto;
+}

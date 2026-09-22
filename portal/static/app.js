@@ -95,7 +95,7 @@
   };
   const labels = {
     private: "Privado",
-    invited: "Invitados",
+    invited: "Acceso restringido",
     unlisted: "Con enlace",
     public: "Público",
     external: "Sitio anterior",
@@ -1494,9 +1494,9 @@
       mode = form.elements.visibility.value;
     $("#access-summary").textContent = {
       private:
-        "Tu cuenta y la administración del portal pueden abrirlo. Guardar este modo retira los accesos de invitados.",
+        "Tu cuenta y la administración del portal pueden abrirlo. Guardar este modo retira los accesos de personas y dominios.",
       invited:
-        "Tu cuenta, estos correos y la administración del portal pueden abrirlo. Reenviar el enlace no concede acceso.",
+        "Tu cuenta, las personas y dominios autorizados y la administración pueden abrirlo. Reenviar el enlace no concede acceso.",
       unlisted:
         "Cualquiera con el enlace puede abrirlo. No aparece en la biblioteca pública.",
       public:
@@ -1508,6 +1508,11 @@
     form.elements.guests.disabled = !allowed;
     if (!allowed) form.elements.guests.checked = false;
   }
+  const domainSharing = window.MargenDomainSharing.create($("#domain-sharing"), () => {
+    const visibility = $("#share-form").elements.visibility;
+    if (domainSharing.get().length && visibility.value === "private") visibility.value = "invited";
+    shareSummary();
+  });
   function showGrants() {
     const root = $("#grants");
     root.replaceChildren();
@@ -1559,6 +1564,7 @@
     form.elements.guests.checked = !!sharing.guests;
     form.querySelector(".form-error").textContent = "";
     grants = sharing.grants.map((g) => ({ ...g }));
+    domainSharing.set(sharing.domain_grants);
     showGrants();
     shareSummary();
     $("#share-dialog").showModal();
@@ -1580,6 +1586,8 @@
           comments: f.elements.comments.value,
           guests: f.elements.guests.checked,
           grants,
+          domain_grants: domainSharing.get(),
+          expected_access: sharing.access_revision,
         }),
       });
       if (current?.id === sharing.id) {

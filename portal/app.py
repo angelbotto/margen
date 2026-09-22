@@ -70,6 +70,9 @@ async def payload(request):
     return value
 
 
+from portal.domain_access import verified_domain, access_revision, parse_grants as parse_domain_grants
+
+
 class Store:
     def __init__(self, root):
         self.root = Path(root)
@@ -89,6 +92,8 @@ class Store:
               comments TEXT NOT NULL DEFAULT 'reviewers',guests INTEGER NOT NULL DEFAULT 0,current_version TEXT,updated INTEGER NOT NULL);
             CREATE TABLE IF NOT EXISTS versions(id TEXT PRIMARY KEY,artifact TEXT NOT NULL REFERENCES artifacts(id),sha TEXT NOT NULL,created INTEGER NOT NULL);
             CREATE TABLE IF NOT EXISTS grants(artifact TEXT NOT NULL REFERENCES artifacts(id),email TEXT NOT NULL,role TEXT NOT NULL,PRIMARY KEY(artifact,email));
+            CREATE TABLE IF NOT EXISTS domain_grants(artifact TEXT NOT NULL REFERENCES artifacts(id),domain TEXT NOT NULL,role TEXT NOT NULL CHECK(role IN ('viewer','commenter')),PRIMARY KEY(artifact,domain));
+            CREATE INDEX IF NOT EXISTS domain_grants_domain_artifact ON domain_grants(domain,artifact);
             CREATE TABLE IF NOT EXISTS events(id TEXT PRIMARY KEY,artifact TEXT NOT NULL REFERENCES artifacts(id),version TEXT NOT NULL REFERENCES versions(id),
               actor TEXT NOT NULL REFERENCES users(id),request_hash TEXT NOT NULL,event TEXT NOT NULL,time INTEGER NOT NULL);
             CREATE INDEX IF NOT EXISTS events_artifact ON events(artifact,time);
@@ -197,6 +202,10 @@ def role(db, artifact, user):
         return 'owner'
     grant = db.execute('SELECT role FROM grants WHERE artifact=? AND email=?',
                        (artifact['id'], user.get('email') or '')).fetchone() if user['verified'] else None
+    if grant:
+        return grant['role']
+    domain = verified_domain(user)
+    grant = db.execute('SELECT role FROM domain_grants WHERE artifact=? AND domain=?', (artifact['id'], domain)).fetchone() if domain else None
     return grant['role'] if grant else None
 
 
@@ -423,7 +432,7 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
                     return {'nodes':nodes,'edges':connections(nodes),'total':result['total'],'truncated':result['total']>len(nodes),'network':context_network(db,nodes,u)}
                 return result
             rows = []
-            for a in db.execute('SELECT * FROM artifacts WHERE owner=? OR ? OR visibility IN (\'public\',\'unlisted\') OR id IN (SELECT artifact FROM grants WHERE email=?) ORDER BY updated DESC',(u['id'],is_admin(u),u.get('email') or '')):
+            for a in db.execute('SELECT * FROM artifacts WHERE owner=? OR ? OR visibility IN (\'public\',\'unlisted\') OR id IN (SELECT artifact FROM grants WHERE email=?) OR id IN (SELECT artifact FROM domain_grants WHERE domain=?) ORDER BY updated DESC',(u['id'],is_admin(u),u.get('email') or '',verified_domain(u))):
                 r = role(db,a,u)
                 if permissions(db,a,u)['read'] and ((public and a['visibility']=='public') or (not public and r and (view!='mine' or r=='owner') and (view!='shared' or r!='owner'))):
                     p = permissions(db,a,u)
@@ -571,7 +580,9 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
             owner=bool(u and u['id']==a['owner'])
             fmt=db.execute('SELECT capabilities FROM version_formats WHERE version=?',(a['current_version'],)).fetchone()
             return {**a,**metadata(db,aid),**enrich(db,a,u),'format':json.loads(fmt['capabilities']) if fmt else None,'permissions':p,'versions':[{**dict(v),'source':v['source'] if owner else '{}'} for v in db.execute("SELECT v.id,v.created,COALESCE(m.state,'published') AS state,m.source FROM versions v LEFT JOIN version_meta m ON m.version=v.id WHERE v.artifact=? ORDER BY v.rowid DESC",(aid,)) if cited_version_readable(db,a,v['id'],u,permissions)],
-                    'grants':[dict(g) for g in db.execute('SELECT email,role FROM grants WHERE artifact=?',(aid,))] if p['manage'] else []}
+                    'grants':[dict(g) for g in db.execute('SELECT email,role FROM grants WHERE artifact=?',(aid,))] if p['manage'] else [],
+                    'access_revision':access_revision(db,a) if p['manage'] else None,
+                    'domain_grants':[dict(g) for g in db.execute('SELECT domain,role FROM domain_grants WHERE artifact=? ORDER BY domain',(aid,))] if p['manage'] else []}
 
     @app.put('/api/artifacts/{aid}/access')
     async def access(aid: str, request: Request):
@@ -581,6 +592,10 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
             raise HTTPException(422,'Configuración de acceso inválida.')
         grants = body.get('grants',[])
         if not isinstance(grants,list) or len(grants)>100: raise HTTPException(422,'Máximo 100 invitados.')
+        try:
+            domains = parse_domain_grants(body['domain_grants']) if 'domain_grants' in body else None
+        except ValueError as error:
+            raise HTTPException(422,str(error)) from None
         unique = {}
         for g in grants:
             if not isinstance(g,dict): raise HTTPException(422,'Invitado inválido.')
@@ -588,11 +603,19 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
             if not EMAIL.fullmatch(email) or r not in ['viewer','commenter','editor']: raise HTTPException(422,'Invitado o permiso inválido.')
             unique[email] = r
         with store.db() as db:
-            artifact_for(db,aid,u,'manage')
+            db.execute('BEGIN IMMEDIATE')
+            a = artifact_for(db,aid,u,'manage')
+            if 'expected_access' in body and body['expected_access'] != access_revision(db,a):
+                raise HTTPException(409,'Los permisos cambiaron. Cierra y vuelve a abrir Compartir antes de guardar.')
             # Privado significa sólo propietario, aunque antes tuviera invitados.
             db.execute('DELETE FROM grants WHERE artifact=?',(aid,))
             if visibility != 'private':
                 db.executemany('INSERT INTO grants VALUES(?,?,?)',[(aid,e,r) for e,r in unique.items()])
+            # Older clients omit domain_grants; preserve that audience unless explicitly private.
+            if domains is not None or visibility == 'private':
+                db.execute('DELETE FROM domain_grants WHERE artifact=?',(aid,))
+                if visibility != 'private':
+                    db.executemany('INSERT INTO domain_grants VALUES(?,?,?)',[(aid,d,r) for d,r in domains.items()])
             db.execute('UPDATE artifacts SET visibility=?,comments=?,guests=? WHERE id=?',(visibility,scope,int(guests),aid))
             db.execute('INSERT INTO audit(actor,action,artifact,at) VALUES(?,?,?,?)',(u['id'],'access:'+visibility,aid,int(time.time())))
         return {'ok':True}

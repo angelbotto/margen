@@ -5,6 +5,7 @@ import hashlib
 import json
 import time
 from portal.search import normalized, match_query
+from portal.domain_access import verified_domain
 from portal.knowledge import enrich
 from portal.table_query import parse
 
@@ -91,21 +92,23 @@ def query(db, u, params, is_admin):
     p = {
         "uid": uid,
         "email": u.get("email") or "",
+        "domain": verified_domain(u),
         "admin": int(is_admin(u)),
         "verified": int(bool(u.get("verified"))),
     }
     view = params.get("view", "")
     public = view == "public"
     sql = """WITH authorized AS (
-    SELECT a.*,CASE WHEN a.owner=:uid OR :admin THEN 'owner' ELSE g.role END AS access_role,
+    SELECT a.*,CASE WHEN a.owner=:uid OR :admin THEN 'owner' ELSE COALESCE(g.role,dg.role) END AS access_role,
     COALESCE(vm.state,'published') AS version_state,CASE WHEN a.owner=:uid THEN COALESCE(vm.source,'{}') ELSE '{}' END AS source,
     COALESCE(m.tags,'[]') AS tags,COALESCE(m.collections,'[]') AS collections,COALESCE(m.archived,0) AS archived,
     COALESCE(k.category,'Sin clasificar') AS category,COALESCE(k.auto_tags,'[]') AS auto_tags,COALESCE(k.classification,'[]') AS classification,
     COALESCE(k.automatic,1) AS automatic,COALESCE(k.category_manual,0) AS category_manual,COALESCE(k.description,'') AS description,COALESCE(k.reading_minutes,1) AS reading_minutes
     FROM artifacts a LEFT JOIN grants g ON g.artifact=a.id AND g.email=:email AND :verified
+    LEFT JOIN domain_grants dg ON dg.artifact=a.id AND dg.domain=:domain AND :verified
     LEFT JOIN version_meta vm ON vm.version=a.current_version LEFT JOIN artifact_meta m ON m.artifact=a.id
     LEFT JOIN library_projection k ON k.artifact=a.id
-    WHERE (a.owner=:uid OR :admin OR g.role IS NOT NULL OR a.visibility IN ('public','unlisted'))
+    WHERE (a.owner=:uid OR :admin OR g.role IS NOT NULL OR dg.role IS NOT NULL OR a.visibility IN ('public','unlisted'))
     ), visible AS (SELECT * FROM authorized WHERE (version_state<>'draft' OR access_role IN ('owner','editor')) AND """
     sql += "visibility='public'" if public else "access_role IS NOT NULL"
     if view == "mine":

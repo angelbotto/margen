@@ -66,6 +66,8 @@ Use real source metadata. Omit unknown session IDs; the CLI may infer a real ses
 
 Open the returned link and manage sharing in the portal. `private`, `unlisted` and `public` express different audiences. A hidden listing is not the same as access control. Administrators operate the instance and can access its artifacts; private visibility is not end-to-end encryption against the service operator.
 
+For a whole team, use [domain sharing](domain-sharing.md) instead of entering every email. [The team trial](team-trial.md) provides a first exercise and a reusable prompt for Claude Code, Codex or Hermes.
+
 ## 5. Collect review and return to work
 
 ```bash

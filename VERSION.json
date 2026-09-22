@@ -1,5 +1,5 @@
 {
-  "version": "2026.09.20-access.1",
+  "version": "2026.09.21-domain.1",
   "contrato": "4",
   "componentes": 88,
   "temas": [
@@ -39,5 +39,5 @@
     "formats": 1,
     "python": "3.10"
   },
-  "release_sequence": 2026092005
+  "release_sequence": 2026092101
 }
