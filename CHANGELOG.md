@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.14.1 — Readable narrative tables
+
+- Preserve ordinary word boundaries in table cells so short category and priority columns do not collapse around long prose.
+- Accept the dense-width marker on both the scroll container and the table for compatibility with authored documents.
+- Document deliberate column proportions and vertical paragraph wrapping for narrative comparisons; retain local horizontal scrolling on narrow screens.
+
 ## 0.14.0 — Verified team domains
 
 - Share individual artifacts with exact verified email domains, with viewer or commenter roles. Make team documents discoverable in Shared, search and authorized context links.

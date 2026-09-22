@@ -10,6 +10,12 @@ The document is a reading surface, including on a phone. Do not shrink a desktop
 
 Portable tables retain pagination (10/25/50/100); cards do not render an unbounded feed. React `DataTable` supports `presentation="auto" | "table" | "cards"`; automatic is the default. React renders the supplied rows and has no pagination/virtualization. Bound its input to an appropriate dataset.
 
+## Readable narrative columns
+
+Long prose should grow rows vertically, not compress category or status labels into fragments. Base table cells use normal word boundaries (`overflow-wrap: break-word`), preserving the intrinsic width of ordinary words. Links and code may still wrap long tokens. Keep local horizontal scrolling when the content needs more width; do not shrink fonts or hide overflow.
+
+For five or more prose columns, put `densa` on `.tabla-caja` (the legacy `table.densa` placement also works). When text lengths differ greatly, declare a `colgroup` with deliberate widths. For a five-column capability comparison, a starting split is 12% identifier, 38% description, 24% explanation, 16% current state and 10% priority. Inspect actual text and adjust; this is not a universal five-column rule. Keep headings and short labels intact, allow paragraphs to wrap, and retain the 58rem dense minimum for local scrolling on mobile. Avoid `overflow-wrap:anywhere` or `word-break:break-all` on every table cell.
+
 ## Portable controls
 
 Search stays visible. **Filtros** groups distinct text values (up to 12 per column, excluding the record identifier) with source-dataset counts, plus advanced AND/OR conditions. Selected values within a facet are alternatives. The selected AND/OR mode applies to the conditions, including facets. Remove individual conditions using the chips below the toolbar; clearing filters keeps selected records.
