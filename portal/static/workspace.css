@@ -911,3 +911,38 @@ body[data-view="work"] :is(#context-tools, #browse-bar, .category-nav) {
 .workbench-dialog.activity-dialog .workbench-body>label{display:flex;flex-direction:row;align-items:center;justify-content:space-between}
 .workbench-dialog.activity-dialog .workbench-body label.activity-sharing{display:flex;flex-direction:row;align-items:center;justify-content:flex-start}
 @media(max-width:440px){.workbench-dialog.activity-dialog .workbench-body>label{align-items:flex-start;flex-direction:column}}
+
+/* One navigation hierarchy; organization filters stay distinct from destinations. */
+.portal-app .tabs[data-organized] { gap: 18px; padding: 20px 12px; }
+.portal-app .tabs[data-organized]::before { content: none; }
+.portal-app .nav-group { display: grid; gap: 3px; }
+.portal-app .nav-group h2, .portal-app .nav-group summary,
+.portal-app .sidebar-facets summary {
+  font: 500 11px/1.5 var(--sans); color: var(--muted); letter-spacing: .025em;
+  padding: 6px 10px; margin: 0; min-height: 30px;
+}
+.portal-app .nav-group summary, .portal-app .sidebar-facets summary { cursor: pointer; border-radius: 6px; }
+.portal-app .nav-group summary:hover, .portal-app .sidebar-facets summary:hover { background: var(--wash); color: var(--ink); }
+.portal-app .tabs[data-organized] [data-view] { margin: 0; border: 0; border-radius: 8px; padding: 9px 10px; width: 100%; }
+.portal-app .tabs[data-organized] [data-view].active { box-shadow: inset 0 0 0 1px var(--line), 0 1px 3px #00000008; }
+.portal-app .tabs[data-organized] .sidebar-facets { order: 0; margin: 0; padding: 0; border: 0; }
+.portal-app .sidebar-facets .nav-count { float: right; font-variant-numeric: tabular-nums; opacity: .7; }
+.portal-app .sidebar-facets input { width: calc(100% - 12px); margin: 6px; font-size: 12px; background: transparent; padding: 7px 9px; }
+.sidebar-facet-list { max-height: 260px; overflow-y: auto; scrollbar-width: thin; padding: 3px; }
+.portal-app .sidebar-facets button { padding: 6px 7px; gap: 8px; }
+.portal-app .sidebar-facets button::before { content: none; }
+.portal-app .tabs .sidebar-facets .nav-label { flex: 1; margin: 0; padding: 0; background: transparent; overflow-wrap: break-word; }
+.portal-app .tabs .sidebar-facets .company-initial { margin: 0; padding: 0; width: 23px; height: 23px; background: var(--panel); }
+.portal-app .sidebar-facets button.chosen { box-shadow: inset 2px 0 var(--accent); border-radius: 4px; }
+.sidebar-no-matches { padding: 0 10px; font-size: 12px; color: var(--muted); }
+.portal-app .nav-account { display: block; border-top: 1px solid var(--line); padding-top: 10px; }
+@media(max-width:850px) {
+  .portal-app .tabs[data-organized] { gap: 8px; padding: 8px 0; }
+  .portal-app .nav-group { display: flex; flex: 0 0 auto; gap: 4px; align-items: start; }
+  .portal-app .nav-group h2 { display: none; }
+  .portal-app .tabs[data-organized] [data-view] { width: auto; min-height: 44px; }
+  .portal-app .nav-account { display: flex; border: 0; padding: 0; }
+  .portal-app .nav-account summary { min-height: 44px; display: list-item; white-space: nowrap; padding: 12px; }
+  .portal-app .nav-account[open] { display: block; }
+  .portal-app .nav-account[open] [data-view] { display: inline-flex; }
+}

@@ -64,3 +64,9 @@ Further work should be evaluated through observed use, not assumed adoption:
 5. Sessions can become a richer timeline after end-to-end agent delivery has been measured. A copied prompt is not an executed assignment.
 
 No usage impact, user satisfaction or concurrency SLA is claimed by this visual revision.
+
+## Sidebar navigation
+
+The sidebar groups Library (own documents, shared with me, conversations) and Knowledge (graph, work, visits). A collapsed More tools group holds account and secondary destinations. Administration remains visible only to administrators. Space and category filters use collapsible sections, search for longer lists, bounded scrolling, and toggles that can clear their selection. Existing navigation nodes and handlers are preserved. Mobile retains horizontal destination navigation and the main searchable filters.
+
+Space names remain user data. Consolidating a creator's legacy project labels is an explicit metadata operation; no global brand aliases or maintainer company defaults are applied to other accounts. It preserves document IDs, URLs, content, versions, feedback and audience.

@@ -2,7 +2,7 @@
 
 An artifact owner can authorize a whole team without maintaining an email list. In **Share → People and authorized domains → A whole team**, add an exact email domain, choose **View** or **Comment**, then save permissions. In the Spanish interface these controls are **Compartir → Personas y dominios autorizados → Todo un equipo**.
 
-Members sign in with Google or an email code. Their verified account email must match the domain exactly. New members qualify automatically; they can open the link and find the document in **Shared**. Receiving a link alone does not grant access. Domain grants do not create administrators or editors, and the feature sends no invitation emails.
+Members sign in with Google or an email code. A verified account email must match the domain exactly; operator-configured aliases of that same identity also qualify. New members qualify automatically; they can open the link and find the document in **Shared**. Receiving a link alone does not grant access. Domain grants do not create administrators or editors, and the feature sends no invitation emails.
 
 ## Scope and precedence
 
@@ -14,7 +14,7 @@ Members sign in with Google or an email code. Their verified account email must 
 - Drafts and other people's private notes remain excluded. Domain access does not share agent transcripts, tokens or session credentials.
 - Removing a domain removes that path to access immediately on subsequent requests. An independent personal grant, ownership, administrator status or public/unlisted visibility can still allow access. Previously downloaded content cannot be withdrawn.
 - Choosing Private removes both personal and domain grants. Public and unlisted visibility allow readers outside the domain; choose Invited for a team-only document.
-- Domain eligibility uses the verified email recorded on the Margen account. It is not live Google Workspace directory membership or employee offboarding. Existing sign-in sessions remain valid under the portal session policy; revoking all sessions for a departed employee requires account/session administration.
+- Domain eligibility uses the verified email recorded on the Margen account and any linked addresses in the operator-controlled `BOTTIFACT_OWNER_ALIASES` group. It is not live Google Workspace directory membership or employee offboarding. Existing sign-in sessions remain valid under the portal session policy; revoking all sessions for a departed employee requires account/session administration.
 
 ## From an agent or terminal
 
@@ -48,3 +48,9 @@ The updated UI and CLI include `expected_access`, the manager-only access revisi
 An explicit `domain_grants: []` revokes domain grants. Omission preserves the domain audience for older clients, except when changing to Private, which clears all grants. Invalid input is rejected atomically. Duplicate normalized domains are rejected. The SQLite migration adds an indexed `domain_grants` table without changing existing audiences; normal database backups include it.
 
 Authorization is enforced on direct reads, rendered versions, review, library/search and context links. Matching is computed from the verified identity, never from a query parameter, guest display name, project label or theme. The shared library reports the effective role using the same precedence as direct reads.
+
+## Linked identity discovery
+
+An alias group represents one person, not a list of administrators or a company. Shared-with-me queries match both individual and exact-domain grants across that group, while excluding the reader's own artifacts and unrelated documents an administrator can access. Browser/query-provided email lists never expand identity. Other accounts match only their own verified email.
+
+Multiple matching grants yield one artifact and one count. Any personal invitation overrides domain roles. If personal roles conflict across linked addresses, the most restrictive explicit role wins; among domain grants, commenter wins over viewer. Direct reads, search, legacy bookmark queries and context links use the same grant resolution. Removing a grant or configured alias takes effect on subsequent authorization checks; existing administrator access remains separate.

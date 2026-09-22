@@ -724,12 +724,14 @@
         empty(
           view === "inbox"
             ? "La conversación está al día."
-            : "No encontramos artefactos.",
+            : view === "shared" ? "Todavía no hay documentos compartidos contigo." : "No encontramos artefactos.",
           $("#search").value
             ? "Prueba otras palabras o ajusta los filtros."
             : view === "inbox"
               ? "Las revisiones aparecerán aquí, con su contexto."
-              : "Publica tu primer documento para empezar.",
+              : view === "shared"
+                ? "Aparecerán aquí cuando alguien autorice uno de los correos o dominios de tu cuenta. Recibir un enlace por sí solo no concede acceso."
+                : "Publica tu primer documento para empezar.",
         );
       return;
     }
@@ -988,8 +990,8 @@
         select.value = value;
       }
       updateBrowse();
-      updateCategories(data.categories || []);
       updateCompanies(data.spaces || []);
+      updateCategories(data.categories || []);
       if ((append && layout === "grid") || (append && layout === "list")) {
         added.forEach(renderCard);
         $("#count").textContent = total + " artefactos";
@@ -1044,7 +1046,7 @@
           work: "Mi trabajo",
           mine: "Mis artefactos",
           all: "Todos los artefactos",
-          shared: "Compartidos con tu equipo.",
+          shared: "Compartidos conmigo",
           inbox: "Conversaciones en contexto.",
           notifications: "Lo que necesita tu atención.",
           admin: "Tu biblioteca, bajo control.",
@@ -1056,6 +1058,7 @@
           {
             mine: "Solo documentos de tu cuenta. Los de otras personas están en Compartidos conmigo.",
             all: "Vista de administración. Cada documento conserva su propietario y sus permisos.",
+            shared: "Documentos que otras personas comparten contigo o con los dominios de tu cuenta.",
             brain: "Una memoria de ideas, fuentes y decisiones.",
             insights: "Entiende qué se lee cuando compartes tu trabajo.",
             work: "Revisa evidencia, retoma sesiones y decide el siguiente paso.",
@@ -1195,44 +1198,21 @@
     $("#library-filters").hidden = hidden;
     $("#toggle-filters").setAttribute("aria-expanded", String(!hidden));
   });
+  window.MargenSidebar.init($(".tabs"));
+  function sidebarFacet(id, label, values, filter, open = false) {
+    window.MargenSidebar.facets($(".tabs"), {
+      id, label, values, selected: $(filter).value, open,
+      onSelect(value) {
+        $(filter).value = value;
+        $(filter).dispatchEvent(new Event("change", { bubbles: true }));
+      },
+    });
+  }
   function updateCompanies(spaces) {
-    let section = $("#company-nav");
-    if (!section) {
-      section = make("section", undefined, "category-nav company-nav");
-      section.id = "company-nav";
-      $(".tabs").append(section);
-    }
-    section.replaceChildren(make("h2", "Tus espacios"));
-    for (const space of spaces) {
-      const b = make("button", space);
-      b.classList.toggle("chosen", $("#space-filter").value === space);
-      const initial = make("span", space.slice(0, 2), "company-initial");
-      b.prepend(initial);
-      b.onclick = () => {
-        $("#space-filter").value = space;
-        load().catch((e) => toast(e.message));
-      };
-      section.append(b);
-    }
+    sidebarFacet("company-nav", "Espacios", spaces, "#space-filter", true);
   }
   function updateCategories(categories) {
-    let section = $("#category-nav");
-    if (!section) {
-      section = make("section", undefined, "category-nav");
-      section.id = "category-nav";
-      $(".tabs").append(section);
-    }
-    section.replaceChildren(make("h2", "Temas de tu biblioteca"));
-    for (const category of categories) {
-      const b = make("button", category);
-      b.classList.toggle("chosen", $("#category-filter").value === category);
-      b.addEventListener("click", () => {
-        $("#category-filter").value =
-          $("#category-filter").value === category ? "" : category;
-        load().catch((e) => toast(e.message));
-      });
-      section.append(b);
-    }
+    sidebarFacet("category-nav", "Categorías", categories, "#category-filter");
   }
   function restoreBrowse() {
     try {
