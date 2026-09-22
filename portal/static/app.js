@@ -1661,11 +1661,18 @@
       f.querySelector(".form-error").textContent = error.message;
     }
   });
+  let activityPreview = null, activityChecked = 0;
   async function refreshReview() {
     if (!current) return;
     try {
       const data = await api("/api/artifacts/" + current.id + "/review");
       data.reader = readerWorkspace.settings();
+      if (Date.now() - activityChecked > 60000) {
+        activityChecked = Date.now();
+        try { activityPreview = await api("/api/artifacts/" + current.id + "/activity"); }
+        catch { activityPreview = null; }
+      }
+      data.reader.activity = activityPreview;
       $("#artifact-frame").contentWindow.postMessage(
         { bottifact: 1, op: "snapshot", data },
         "*",
@@ -1786,7 +1793,7 @@
       requestedEntryType = kind;
       $("#comment-document").click();
     },
-    refresh: refreshReview,
+    refresh: () => { activityChecked = 0; return refreshReview(); },
   });
   addEventListener("message", async (event) => {
     if (

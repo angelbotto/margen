@@ -339,7 +339,7 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
         return response
 
     from portal.analytics import mount as mount_analytics, configuration as analytics_configuration
-    mount_analytics(app, store, account, who, artifact_for, payload)
+    mount_analytics(app, store, account, who, artifact_for, payload, snapshot, threads)
     mount_auth(app, store, origin, set_session, payload, clean, EMAIL)
 
     @app.get('/health')

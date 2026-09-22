@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.14.3 — Reader activity
+
+- Add creator-controlled per-artifact activity with period-scoped Umami pageviews and estimated uniques.
+- Show participants from authorized comments and replies; exclude private notes, drafts and deleted conversations.
+- Keep reporting credentials server-side, filter by exact artifact path, and label unavailable unique counts explicitly.
+- Add Share → Artifact activity without changing the three-action reader dock.
+
+
 ## 0.14.2 — Personal account ownership
 
 - Fix My artifacts and Archive matching administrator privileges instead of actual ownership, including the legacy bookmarks query. Shared with me now requires an explicit personal or domain grant.

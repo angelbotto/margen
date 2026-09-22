@@ -258,6 +258,8 @@
         input.select();
       }
     });
+    const activity = bridge ? action(shareMenu, "Actividad del artefacto", () => bridge.action("activity")) : null;
+    if (activity) activity.hidden = true;
     const manage = action(shareMenu, "Gestionar artefacto", () =>
       bridge?.action("manage"),
     );
@@ -537,6 +539,14 @@
           );
         }
         manage.hidden = !value.reader?.manage;
+        if (activity) {
+          const stats = value.reader?.activity;
+          activity.hidden = !value.reader?.manage && !stats?.visible;
+          const label = Number.isSafeInteger(stats?.views) ? `Actividad · ${stats.views.toLocaleString("es")} visitas` : "Actividad del artefacto";
+          const copy = activity.querySelector(".bf-action-copy");
+          if (copy) copy.firstChild.textContent = label;
+          else activity.textContent = label;
+        }
         comment.disabled = !value.permissions.comment && !!value.author;
         note.disabled = !value.verified;
         bundle.disabled = !value.verified;
