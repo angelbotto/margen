@@ -39,7 +39,7 @@ Add the equivalent line to your own shell profile if you want it to persist. Rel
 In the signed-in portal, open **Conectar un agente** and create a personal token with a recognizable label, for example the agent and device. Then run:
 
 ```bash
-margen connect --server https://artifacts.botto.is
+margen connect --server https://artifacts.botto.is --email you@company.com
 margen status
 ```
 
@@ -99,3 +99,20 @@ Updates use the server recorded by the installer. If you later self-host, instal
 | A revision is not visible to readers | Check whether it is still a draft and release it after review |
 
 For service access problems, use the support contact offered by the service or the repository maintainer. Do not post tokens, private titles, source-session IDs or screenshots of confidential documents in public issues.
+
+## Account ownership and team installations
+
+Each operating-system user installs the library in their own home directory. Claude, Codex and Hermes can share that library; people must not share `~/.config/bottifact/portal.json` or personal tokens. The public installer and portable ZIP contain no account credentials.
+
+`connect --email you@company.com` checks the token against the server-verified account before saving anything. Choose the email yourself; an agent must not infer your identity from a saved token. Configured verified aliases can resolve to one account; a matching company domain never merges accounts. Changing accounts resets `publish_on_create` rather than inheriting another person's publishing preference.
+
+Existing connections need a one-time explicit confirmation before writes after this update:
+
+```bash
+margen status
+margen confirm-account --email you@company.com
+```
+
+If the email does not match, the command stops without changing the connection. Sign in to the portal as yourself, create a fresh personal token and run `connect` again. Never paste a token into agent chat. This check prevents accidental account reuse; it does not make bearer tokens safe to share. Revoke a token if it was disclosed.
+
+**My artifacts** matches the stored creator ID even for administrators. **Shared with me** contains explicit personal or domain grants. Administrators use **All artifacts** for their global view; seeing an artifact there does not transfer ownership. The owner's name, and email for administrators, distinguish other people's documents in list, gallery and table layouts. Separate Google email accounts remain separate unless an explicit verified alias mapping exists.

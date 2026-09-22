@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.14.2 — Personal account ownership
+
+- Fix My artifacts and Archive matching administrator privileges instead of actual ownership, including the legacy bookmarks query. Shared with me now requires an explicit personal or domain grant.
+- Add an explicit All artifacts administration view and owner labels in the gallery, list and table. Preserve artifact owners, links, versions and audiences.
+- Require an explicitly chosen email when connecting a personal token, pin the verified account ID and reject changed identities before CLI writes. Legacy connections need one-time `margen confirm-account --email YOUR_EMAIL`; changing accounts no longer inherits publishing preferences.
+- Clarify per-user installation and provide a Liftit-specific team trial brief.
+
 ## 0.14.1 — Readable narrative tables
 
 - Preserve ordinary word boundaries in table cells so short category and priority columns do not collapse around long prose.

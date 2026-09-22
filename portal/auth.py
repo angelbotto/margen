@@ -34,7 +34,7 @@ def target(value):
     for key in ["thread", "version"]:
         if key in fields and re.fullmatch(r"[a-zA-Z0-9_-]{1,120}", fields[key][0]):
             query[key] = fields[key][0]
-    views = {"mine", "shared", "inbox", "notifications", "admin", "archived", "public", "connections", "brain", "insights", "work"}
+    views = {"all", "mine", "shared", "inbox", "notifications", "admin", "archived", "public", "connections", "brain", "insights", "work"}
     if parts.path == "/" and fields.get("view", [""])[0] in views:
         query["view"] = fields["view"][0]
     return parts.path + ("?" + urllib.parse.urlencode(query) if query else "")

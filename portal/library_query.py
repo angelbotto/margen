@@ -99,22 +99,24 @@ def query(db, u, params, is_admin):
     view = params.get("view", "")
     public = view == "public"
     sql = """WITH authorized AS (
-    SELECT a.*,CASE WHEN a.owner=:uid OR :admin THEN 'owner' ELSE COALESCE(g.role,dg.role) END AS access_role,
+    SELECT a.*,ou.name AS owner_name,CASE WHEN :admin OR a.owner=:uid THEN ou.email ELSE NULL END AS owner_email,
+    COALESCE(g.role,dg.role) AS explicit_role,
+    CASE WHEN a.owner=:uid OR :admin THEN 'owner' ELSE COALESCE(g.role,dg.role) END AS access_role,
     COALESCE(vm.state,'published') AS version_state,CASE WHEN a.owner=:uid THEN COALESCE(vm.source,'{}') ELSE '{}' END AS source,
     COALESCE(m.tags,'[]') AS tags,COALESCE(m.collections,'[]') AS collections,COALESCE(m.archived,0) AS archived,
     COALESCE(k.category,'Sin clasificar') AS category,COALESCE(k.auto_tags,'[]') AS auto_tags,COALESCE(k.classification,'[]') AS classification,
     COALESCE(k.automatic,1) AS automatic,COALESCE(k.category_manual,0) AS category_manual,COALESCE(k.description,'') AS description,COALESCE(k.reading_minutes,1) AS reading_minutes
-    FROM artifacts a LEFT JOIN grants g ON g.artifact=a.id AND g.email=:email AND :verified
+    FROM artifacts a JOIN users ou ON ou.id=a.owner LEFT JOIN grants g ON g.artifact=a.id AND g.email=:email AND :verified
     LEFT JOIN domain_grants dg ON dg.artifact=a.id AND dg.domain=:domain AND :verified
     LEFT JOIN version_meta vm ON vm.version=a.current_version LEFT JOIN artifact_meta m ON m.artifact=a.id
     LEFT JOIN library_projection k ON k.artifact=a.id
     WHERE (a.owner=:uid OR :admin OR g.role IS NOT NULL OR dg.role IS NOT NULL OR a.visibility IN ('public','unlisted'))
     ), visible AS (SELECT * FROM authorized WHERE (version_state<>'draft' OR access_role IN ('owner','editor')) AND """
     sql += "visibility='public'" if public else "access_role IS NOT NULL"
-    if view == "mine":
-        sql += " AND access_role='owner'"
+    if view in ("mine", "archived"):
+        sql += " AND owner=:uid"
     if view == "shared":
-        sql += " AND access_role<>'owner'"
+        sql += " AND owner<>:uid AND explicit_role IS NOT NULL"
     if not params.get("document_id"):
         sql += " AND archived=" + ("1" if view == "archived" else "0")
     sql += """), counted AS (SELECT v.*,
@@ -390,6 +392,7 @@ def query(db, u, params, is_admin):
         for name in ("archived", "automatic", "category_manual"):
             row[name] = bool(row[name])
         role = row.pop("access_role")
+        row.pop("explicit_role")
         row.pop("version_state")
         row["permissions"] = {
             "read": True,

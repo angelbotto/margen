@@ -23,3 +23,11 @@ For a company theme, name it explicitly; the theme does not grant access. See [d
 ## What to observe
 
 Record actual trial findings: time to first artifact, sign-in or install friction, whether colleagues can find it in Shared, mobile readability, quality of contextual comments and how easily feedback reaches a useful revision. These are evaluation questions, not measured results. A copied prompt is not automatic agent execution or proof that a historical session was reopened.
+
+## Liftit trial message
+
+Share the installer URL and the following brief, never a personal token or configuration folder. Every teammate must sign in using their own `@liftit.co` address.
+
+> I want to document how I use Claude, Codex and/or Hermes in my work at Liftit. Use Margen to produce a practical artifact for the team. Inspect only the sessions and projects available to me; distinguish verified examples from suggestions. Include my workflow, effective prompts, context management, validation, failures and lessons, security precautions, and three practices teammates can reproduce. Do not include credentials, private conversations or customer data.
+>
+> Before publishing, verify that Margen is connected to my own Liftit email. Ask me for my email if it is not known from this conversation; never infer it from an existing token or use a colleague's connection. If needed, guide me through the hosted installer and personal connection without asking for a token in chat. Publish in my account and share this specific artifact with `liftit.co` as commenters using invited access. Return the link and a short summary for the team. Do not send messages automatically.
