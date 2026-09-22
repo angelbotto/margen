@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
-# Entrada sencilla; el motor verificado y el generador utilizan Python 3.10+.
+# Shell entrypoint; verified installer and generator require Python 3.10+.
 set -euo pipefail
 main() {
   printf '\nMargen · instalar o actualizar\n\n'
   printf 'Se preparará una biblioteca compartida para:\n  • Codex\n  • Claude Code\n  • Hermes\n\n'
   printf 'Este instalador configura agentes locales; no instala extensiones en la web de ChatGPT.\n'
-  printf 'Las instalaciones existentes se respaldan. Tu token no cambia.\n\n'
+  printf 'Se instala para tu usuario del sistema. No incluye una cuenta ni un token.\n'
+  printf 'Cada persona debe entrar al portal con su correo y crear su propia conexión.\n'
+  printf 'Las actualizaciones conservan tus credenciales; publicar requiere confirmar su cuenta.\n\n'
   if ! command -v curl >/dev/null 2>&1; then
     printf 'Falta curl. Instálalo con el gestor de paquetes de tu sistema.\n' >&2; return 1
   fi

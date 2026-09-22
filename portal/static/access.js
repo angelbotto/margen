@@ -24,6 +24,7 @@
       match[1] === "/" &&
       [
         "mine",
+        "all",
         "shared",
         "inbox",
         "notifications",

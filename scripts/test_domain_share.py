@@ -25,6 +25,8 @@ class ShareTests(unittest.TestCase):
         calls = []
 
         def request(base, token, path, data=None, method=None):
+            if path == "/api/session":
+                return {"user": {"id": "owner", "email": "owner@example.com", "verified": True}}
             if data is not None:
                 calls.append(copy.deepcopy(data))
                 current.update(data)
@@ -37,7 +39,7 @@ class ShareTests(unittest.TestCase):
             config = Path(folder) / "portal.json"
             config.write_text(
                 json.dumps(
-                    {"server": "https://portal.example", "token": "fixture-only"}
+                    {"server": "https://portal.example", "token": "fixture-only", "account": {"id": "owner", "email": "owner@example.com"}}
                 )
             )
             config.chmod(0o600)

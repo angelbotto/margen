@@ -87,7 +87,8 @@ class AuthTests(unittest.TestCase):
         self.assertEqual(browser.get('/api/artifacts/'+public['id']).status_code,200)
         self.assertEqual(browser.get('/api/artifacts/'+artifact['id']).status_code,404)
         admin=self.store.user('alias@example.com','Owner');browser.cookies.set(COOKIE,self.store.session(admin['id']))
-        self.assertEqual(len(browser.get('/api/artifacts?view=mine').json()['artifacts']),2)
+        self.assertEqual(browser.get('/api/artifacts?view=mine').json()['artifacts'],[])
+        self.assertEqual(len(browser.get('/api/artifacts?view=all').json()['artifacts']),2)
         self.assertTrue(browser.get('/api/artifacts/'+artifact['id']).json()['permissions']['manage'])
         token=self.c.post('/api/tokens',json={}).json()['token']
         agent=TestClient(self.app,base_url=ORIGIN,headers={'Authorization':'Bearer '+token})

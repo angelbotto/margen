@@ -156,6 +156,9 @@ def main():
                     print('Preserved existing command: '+str(margen_binary))
         version = json.loads((destination/'VERSION.json').read_text())['version']
         print('Margen ' + version + '. Generar HTML no requiere cuenta ni token.')
+        print('Instalación personal en: ' + str(Path.home()))
+        print('La biblioteca se comparte entre tus agentes, no entre cuentas de personas distintas.')
+        print('Comprueba tu cuenta con margen status. Una conexión anterior requiere margen confirm-account --email TU_CORREO antes de publicar.')
         if not args.paquete or args.servidor:print('Para publicar: entra en ' + ORIGIN + ' → Conectar un agente. Nunca pegues el token en un artefacto.')
         else:print('Instalación local independiente. Conecta tu propio portal solo cuando quieras publicar.')
         print('Actualizar después: python3 ' + str(destination/'scripts/update.py'))

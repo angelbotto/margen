@@ -147,8 +147,9 @@
   async function identity() {
     ({ user } = await api("/api/session"));
     $("#admin-tab").hidden = !user?.admin;
+    $("#all-tab").hidden = !user?.admin;
     $("#identity").textContent = user
-      ? user.name +
+      ? (user.email || user.name) +
         (user.admin ? " · administrador" : user.verified ? "" : " · invitado")
       : "Sin sesión";
     $("#logout").hidden = !user;
@@ -156,7 +157,7 @@
     $("#publish").hidden = !user?.verified;
     if ($("#context-tools")) $("#context-tools").hidden = !user?.verified;
     $("#library-description").textContent = user?.verified
-      ? "Encuentra una idea, conecta sus temas y retoma el trabajo."
+      ? "Solo documentos de tu cuenta. Los de otras personas están en Compartidos conmigo."
       : "Entra con tu correo para ver tus documentos privados y los que compartieron contigo.";
   }
   const loginURL = () =>
@@ -201,6 +202,7 @@
     link.href = a.external ? a.url : "/a/" + a.id;
     heading.append(link);
     body.append(meta, heading);
+    if (a.owner !== user?.id) body.append(make("p", "Propietario: " + (a.owner_email || a.owner_name || "Otra cuenta"), "meta"));
     const description = a.excerpt || a.description;
     if (description) {
       const p = make("p", undefined, "search-excerpt");
@@ -437,6 +439,7 @@
         ),
       );
       if (!a.external) doc.append(cover(a));
+      if (a.owner !== user?.id) title.append(make("small", "Propietario: " + (a.owner_email || a.owner_name || "Otra cuenta")));
       doc.append(title);
       row.append(
         doc,
@@ -1039,7 +1042,8 @@
           brain: "Grafo de conocimiento",
           insights: "Visitas",
           work: "Mi trabajo",
-          mine: "Biblioteca",
+          mine: "Mis artefactos",
+          all: "Todos los artefactos",
           shared: "Compartidos con tu equipo.",
           inbox: "Conversaciones en contexto.",
           notifications: "Lo que necesita tu atención.",
@@ -1050,6 +1054,8 @@
         }[view];
         $("#library-description").textContent =
           {
+            mine: "Solo documentos de tu cuenta. Los de otras personas están en Compartidos conmigo.",
+            all: "Vista de administración. Cada documento conserva su propietario y sus permisos.",
             brain: "Una memoria de ideas, fuentes y decisiones.",
             insights: "Entiende qué se lee cuando compartes tu trabajo.",
             work: "Revisa evidencia, retoma sesiones y decide el siguiente paso.",
@@ -1178,6 +1184,7 @@
     notifications: "bell",
     archived: "archive",
     admin: "settings",
+    all: "folder",
     connections: "agent",
   }))
     decorate?.($('[data-view="' + view + '"]'), icon);
@@ -2030,7 +2037,8 @@
     }
     const section = make("section", undefined, "connection");
     section.append(
-      make("h2", "La misma cuenta, cualquier agente."),
+      make("h2", "Conectar tu cuenta a un agente"),
+      make("p", "Cuenta que publicará: " + user.email, "eyebrow"),
       make(
         "p",
         "Crea una conexión personal y guárdala en el equipo del agente. Puede publicar documentos y consultar tus revisiones. Cada publicación es privada salvo que indiques --visibilidad public o unlisted. Revoca la conexión cuando quieras.",
@@ -2039,7 +2047,7 @@
     const list = make("ol");
     [
       "Instala o actualiza el skill con el comando de abajo. Funciona con Claude Code, Codex y Hermes.",
-      "Crea una conexión y guarda el token fuera del documento y del repositorio.",
+      "Cada persona entra con su correo y crea su propia conexión. Comparte el instalador, nunca el token.",
       "Usa margen connect y margen publish para enviar el HTML.",
     ].forEach((t) => list.append(make("li", t)));
     section.append(list);
@@ -2069,11 +2077,12 @@
           body: JSON.stringify({ label: label.value || "Agente" }),
         });
         output.textContent =
-          "Token personal (se muestra una sola vez):\n" +
+          "Conexión exclusiva de " + user.email + ". No la compartas con el equipo.\nToken personal (se muestra una sola vez):\n" +
           result.token +
           "\n\nmargen connect --servidor " +
           location.origin +
-          "\nPega el token cuando el comando lo pida.";
+          " --email " + user.email +
+          "\nPega el token solo en la terminal. El comando comprobará que pertenece a este correo.";
         create.disabled = true;
       }),
     );

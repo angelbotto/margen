@@ -11,7 +11,7 @@ Generation requires Python 3.10+ and the standard library. Interactive artifacts
 
 ## Choose a service
 
-For the existing service, follow [artifacts.botto.is](docs/hosted-service.md): install, sign in and connect a personal token. Do not require Docker, environment files or Google Cloud credentials for this route. [Self-hosting](docs/self-hosting.md) is independent. Preserve the user's selected server, account and token. Sharing the skill does not share an account or authorize public publishing.
+For the existing service, follow [artifacts.botto.is](docs/hosted-service.md): install, sign in and connect a personal token. Do not require Docker, environment files or Google Cloud credentials for this route. [Self-hosting](docs/self-hosting.md) is independent. Preserve the user's selected server, account and token. Sharing the skill does not share an account or authorize public publishing. Every teammate connects their own token with `connect --email THEIR_EMAIL`. Read `status`; older connections require `confirm-account --email THEIR_EMAIL` before writes. Use only an email supplied by the user or already established in the conversation, never infer the intended person from saved credentials. Stop on an account mismatch.
 
 ## Keep installations current
 

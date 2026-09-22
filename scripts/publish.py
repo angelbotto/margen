@@ -16,6 +16,24 @@ from pathlib import Path
 
 CONFIG=Path.home()/'.config/bottifact/portal.json'
 
+def checked_identity(user, email):
+    """Match an explicitly chosen account against the server-verified identity."""
+    email=(email or '').strip().lower()
+    if not email or not user or not user.get('verified'):
+        raise SystemExit('Indica tu propio correo con --email y utiliza una cuenta verificada.')
+    known={str(v).lower() for v in user.get('emails', []) if v}
+    known.add(str(user.get('email','')).lower())
+    if email not in known:
+        raise SystemExit('El token pertenece a '+str(user.get('email'))+', no a '+email+'. Entra al portal con tu cuenta y crea tu propia conexión. No se cambió la configuración.')
+    return {'id':user['id'],'email':user['email']}
+
+def check_account(config, user, require=False):
+    saved=config.get('account')
+    if saved and (not user or saved.get('id')!=user.get('id')):
+        raise SystemExit('La conexión ya no corresponde a la cuenta confirmada. Ejecuta margen connect con tu propio --email antes de continuar.')
+    if require and not saved:
+        raise SystemExit('Confirma primero a quién pertenece esta conexión: margen confirm-account --email TU_CORREO. No uses el correo de otra persona ni lo deduzcas del token.')
+
 def private_json(path, value):
     path.parent.mkdir(parents=True,exist_ok=True,mode=0o700)
     fd,name=tempfile.mkstemp(prefix='.bottifact-',dir=path.parent)
@@ -50,7 +68,8 @@ def source_defaults(agent, session):
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--config',type=Path,default=CONFIG)
     sub=p.add_subparsers(dest='command',required=True)
-    c=sub.add_parser('conectar',aliases=['connect']);c.add_argument('--server','--servidor',dest='servidor',required=True);c.add_argument('--token-file','--token-archivo',dest='token_archivo',type=Path)
+    c=sub.add_parser('conectar',aliases=['connect']);c.add_argument('--server','--servidor',dest='servidor',required=True);c.add_argument('--token-file','--token-archivo',dest='token_archivo',type=Path);c.add_argument('--email',help='Your own verified account email, never copied from someone else’s token.')
+    c=sub.add_parser('confirm-account',help='Confirm the owner of an existing personal connection without revealing its token.');c.add_argument('--email',required=True)
     c=sub.add_parser('publicar',aliases=['publish']);c.add_argument('--file','--archivo',dest='archivo',type=Path,required=True);c.add_argument('--title','--titulo',dest='titulo',required=True);c.add_argument('--space','--espacio',dest='espacio',default='Personal');c.add_argument('--artifact-id','--artefacto-id',dest='artefacto_id');c.add_argument('--visibility','--visibilidad',dest='visibilidad',choices=['private','unlisted','public']);c.add_argument('--mode','--modo',dest='modo',choices=['draft','published']);c.add_argument('--agent','--agente',dest='agente',default='');c.add_argument('--session','--sesion',dest='sesion',default='');c.add_argument('--device','--dispositivo',dest='dispositivo',default='');c.add_argument('--new','--nuevo',dest='nuevo',action='store_true',help='Crear otro enlace aun si el documento ya fue publicado desde este equipo.')
     c=sub.add_parser('comentarios',aliases=['comments']);c.add_argument('--artifact-id','--artefacto-id',dest='artefacto_id');c.add_argument('--open','--abiertos',dest='abiertos',action='store_true');c.add_argument('--kind','--tipo',dest='tipo',choices=['all','comment','note'],default='all');c.add_argument('--output','--salida',dest='salida',type=Path)
     sub.add_parser('estado',aliases=['status']);c=sub.add_parser('listar',aliases=['list']);c.add_argument('--search','--buscar',dest='buscar',default='')
@@ -67,15 +86,29 @@ def main():
     if args.command=='conectar':
         base=args.servidor.rstrip('/');url=urllib.parse.urlparse(base)
         if url.scheme!='https' or not url.netloc or url.path or url.query or url.fragment or url.username:raise SystemExit('Usa el origen HTTPS del portal, sin rutas ni credenciales.')
+        email=args.email
+        if not email and sys.stdin.isatty():email=input('Tu correo de Margen: ').strip()
+        if not email:raise SystemExit('Indica tu propio correo con --email. Cada persona necesita su conexión; el instalador no comparte cuentas.')
         token=args.token_archivo.read_text().strip() if args.token_archivo else getpass.getpass('Token personal (oculto): ')
         user=request(base,token,'/api/session')['user']
-        if not user or not user['verified']:raise SystemExit('La conexión requiere una cuenta verificada.')
+        identity=checked_identity(user,email)
         old=json.loads(args.config.read_text()) if args.config.exists() else {}
-        private_json(args.config,{'server':base,'token':token,'publish_on_create':bool(old.get('publish_on_create')) if old.get('server')==base else False})
+        same_account=old.get('server')==base and (old.get('account',{}).get('id')==identity['id'] or old.get('token')==token)
+        private_json(args.config,{'server':base,'token':token,'account':identity,'publish_on_create':bool(old.get('publish_on_create')) if same_account else False})
         print('Conexión guardada para '+user['email']+'. No se incluye en el skill ni en los artefactos.');return
     if not args.config.exists():raise SystemExit('Primero conecta tu cuenta con: publicar.py conectar --servidor https://artifacts.example.com')
     if args.config.stat().st_mode&0o077:raise SystemExit('La conexión debe ser privada: chmod 600 '+str(args.config))
     config=json.loads(args.config.read_text());base=config['server'];token=config['token']
+    if args.command=='confirm-account':
+        user=request(base,token,'/api/session')['user']
+        identity=checked_identity(user,args.email)
+        check_account(config,user)
+        config['account']=identity;private_json(args.config,config)
+        print('Cuenta confirmada: '+identity['email']+'. Esta conexión es personal; no la compartas.');return
+    writes={'publicar','share','renombrar','liberar','preferencias'}
+    if args.command in writes:
+        user=request(base,token,'/api/session')['user']
+        check_account(config,user,require=True)
     if args.command=='preferencias':
         config['publish_on_create']=args.publicar_al_crear in ('yes','si');private_json(args.config,config)
         print('Publicar artefactos nuevos como privados al terminar: '+('sí' if config['publish_on_create'] else 'no'));return
@@ -108,7 +141,7 @@ def main():
         if args.archivo.stat().st_size>20*1024*1024:raise SystemExit('El HTML supera 20 MB.')
         content=args.archivo.read_text();match=re.search(r'<meta\s+name=[\"\']nota-documento[\"\']\s+content=[\"\']([a-zA-Z0-9_-]{1,120})[\"\']',content)
         if not match:raise SystemExit('Genera el HTML con un documento-id estable antes de publicar.')
-        user=request(base,token,'/api/session')['user'];receipt_file=args.config.parent/'publications.json'
+        receipt_file=args.config.parent/'publications.json'
         receipts=json.loads(receipt_file.read_text()) if receipt_file.exists() else {}
         key=base+'|'+user['id']+'|'+match[1]
         aid=args.artefacto_id or (None if args.nuevo else receipts.get(key,{}).get('id'))
@@ -127,6 +160,7 @@ def main():
         result=request(base,token,'/api/artifacts'+('/'+aid+'/versions' if aid else ''),body)
         receipts[key]={**result,'document_id':match[1],'saved_at':int(time.time())};private_json(receipt_file,receipts)
         result['operation']='revision' if aid else 'created'
+        result['account']={'id':user['id'],'email':user.get('email')}
     elif args.command in ('versiones','comparar','liberar'):
         if not re.fullmatch('[a-f0-9]{32}',args.artefacto_id):raise SystemExit('ID de artefacto inválido.')
         path='/api/artifacts/'+args.artefacto_id
@@ -162,7 +196,9 @@ def main():
         return
     else:
         result=request(base,token,'/api/session' if args.command=='estado' else '/api/artifacts?'+urllib.parse.urlencode({'q':args.buscar}))
-        if args.command=='estado':result['publish_on_create']=bool(config.get('publish_on_create'));result['server']=base
+        if args.command=='estado':
+            check_account(config,result.get('user'))
+            result['account_confirmed']=bool(config.get('account'));result['publish_on_create']=bool(config.get('publish_on_create'));result['server']=base
     print(json.dumps(result,ensure_ascii=False,indent=2))
 
 if __name__=='__main__':main()
