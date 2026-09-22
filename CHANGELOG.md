@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.14.0 — Verified team domains
+
+- Share individual artifacts with exact verified email domains, with viewer or commenter roles. Make team documents discoverable in Shared, search and authorized context links.
+- Preserve personal-grant precedence, private notes, drafts and management boundaries. Revoking domains takes effect on subsequent requests; Private clears all grants.
+- Add domain controls to the sharing dialog and an explicit `margen share` command for agent workflows.
+- Document hosted team onboarding, a reusable trial prompt, backward-compatible API behavior and session/offboarding limits.
+
 ## 0.13.2 — A considered entry experience
 
 - Redesign the library sign-in and protected-document entry with shared light/dark surfaces and a mobile-first access form.

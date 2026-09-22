@@ -61,6 +61,7 @@ def main():
     c=sub.add_parser('liberar',aliases=['release']);c.add_argument('--artifact-id','--artefacto-id',dest='artefacto_id',required=True);c.add_argument('--version',required=True);c.add_argument('--expected-current','--actual-esperada',dest='actual_esperada',required=True)
     c=sub.add_parser('feedback',help='Prepare a private feedback bundle for an existing session.');c.add_argument('--artifact-id',required=True);c.add_argument('--output',type=Path,required=True);c.add_argument('--agent',default='');c.add_argument('--session',default='');c.add_argument('--kind',choices=['all','comment','note'],default='all')
     c=sub.add_parser('continuity',help='Read a cited project brief; excludes private notes.');c.add_argument('--space',default='');c.add_argument('--output',type=Path)
+    c=sub.add_parser('share',help='Grant verified domains access to an artifact. Requires explicit sharing authorization.');c.add_argument('--artifact-id',required=True);c.add_argument('--domain',action='append',default=[]);c.add_argument('--remove-domain',action='append',default=[]);c.add_argument('--role',choices=['viewer','commenter'],default='commenter');c.add_argument('--visibility',choices=['private','invited'])
     args=p.parse_args()
     args.command={'connect': 'conectar', 'publish': 'publicar', 'comments': 'comentarios', 'status': 'estado', 'list': 'listar', 'preferences': 'preferencias', 'rename': 'renombrar', 'versions': 'versiones', 'compare': 'comparar', 'release': 'liberar'}.get(args.command,args.command)
     if args.command=='conectar':
@@ -78,6 +79,30 @@ def main():
     if args.command=='preferencias':
         config['publish_on_create']=args.publicar_al_crear in ('yes','si');private_json(args.config,config)
         print('Publicar artefactos nuevos como privados al terminar: '+('sí' if config['publish_on_create'] else 'no'));return
+    if args.command=='share':
+        if not re.fullmatch('[a-f0-9]{32}',args.artifact_id):raise SystemExit('Invalid artifact ID.')
+        if not (args.domain or args.remove_domain or args.visibility):raise SystemExit('Choose --domain, --remove-domain or --visibility.')
+        if args.visibility=='private' and args.domain:raise SystemExit('Private access cannot include a domain.')
+        # The portable CLI intentionally has no portal runtime dependency.
+        def domain(value):
+            value=value.strip().lower().removeprefix('@')
+            if len(value)>253 or not re.fullmatch(r'(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z](?:[a-z0-9-]{0,61}[a-z0-9])?',value):raise SystemExit('Use an exact email domain without URLs or wildcards.')
+            return value
+        added=[domain(d) for d in args.domain];removed=[domain(d) for d in args.remove_domain]
+        if set(added)&set(removed):raise SystemExit('Do not add and remove the same domain.')
+        path='/api/artifacts/'+args.artifact_id
+        current=request(base,token,path)
+        if not current.get('permissions',{}).get('manage'):raise SystemExit('Only the owner or portal administrator can change access.')
+        if 'domain_grants' not in current:raise SystemExit('This server does not support domain sharing yet. Update the portal first.')
+        domains={g['domain']:g['role'] for g in current['domain_grants']}
+        for d in removed:domains.pop(d,None)
+        for d in added:domains[d]=args.role
+        visibility=args.visibility or ('invited' if added and current['visibility']=='private' else current['visibility'])
+        body={'visibility':visibility,'comments':current['comments'],'guests':bool(current['guests']),'grants':current['grants'],'domain_grants':[{'domain':d,'role':r} for d,r in sorted(domains.items())]}
+        if current.get('access_revision'):body['expected_access']=current['access_revision']
+        request(base,token,path+'/access',body,method='PUT')
+        saved=request(base,token,path)
+        print(json.dumps({'url':base+'/a/'+args.artifact_id,'visibility':saved['visibility'],'domain_grants':saved['domain_grants'],'notice':'Existing personal grants are preserved unless private visibility is selected. No invitation email is sent.'},ensure_ascii=False,indent=2));return
     if args.command=='publicar':
         args.agente,args.sesion=source_defaults(args.agente,args.sesion)
         if args.archivo.stat().st_size>20*1024*1024:raise SystemExit('El HTML supera 20 MB.')

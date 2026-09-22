@@ -41,6 +41,7 @@
   }
   function icon(name) {
     const paths = {
+      close: '<path d="m6 6 12 12M6 18 18 6"/>',
       lock: '<rect x="5" y="10" width="14" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 5v2"/>',
       mail: '<rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/>',
       arrow: '<path d="M5 12h14m-6-6 6 6-6 6"/>',
@@ -103,8 +104,8 @@
         "p",
         denied
           ? user?.verified
-            ? "Usa el correo al que enviaron la invitación. Si es esta cuenta, pide al creador que revise tu acceso y el enlace."
-            : "Identifícate con el correo al que compartieron el documento. Al entrar, volverás a este enlace."
+            ? "Usa un correo invitado o del dominio autorizado. Si es esta cuenta, pide al creador que revise tu acceso y el enlace."
+            : "Entra con una cuenta que tenga acceso al documento. Al entrar, volverás a este enlace."
           : "Comprueba tu conexión y vuelve a intentarlo en un momento.",
         "muted",
       ),

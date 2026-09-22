@@ -111,9 +111,10 @@ def mount(app, store, origin, account, payload, clean, artifact_for, permissions
 
     def authorized(db, u):
         from portal.app import is_admin
+        from portal.domain_access import verified_domain
         return {
             r["id"]: dict(r)
-            for r in db.execute("SELECT * FROM artifacts WHERE owner=? OR ? OR visibility IN ('public','unlisted') OR id IN (SELECT artifact FROM grants WHERE email=?)",(u["id"],is_admin(u),u.get("email") or ""))
+            for r in db.execute("SELECT * FROM artifacts WHERE owner=? OR ? OR visibility IN ('public','unlisted') OR id IN (SELECT artifact FROM grants WHERE email=?) OR id IN (SELECT artifact FROM domain_grants WHERE domain=?)",(u["id"],is_admin(u),u.get("email") or "",verified_domain(u)))
             if permissions(db, r, u)["read"]
         }
 
