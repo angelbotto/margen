@@ -1101,6 +1101,30 @@ th { background: var(--panel); color: var(--tinta-2); font: 12px/1.6 var(--mono)
 .tabla-caja [data-ordenar] { font: inherit; text-align: left; background: transparent; border: 0; padding: 6px; min-height: 44px; }
 .tabla-caja th[aria-sort='ascending'] [data-ordenar]::after { content: ' ↑'; }
 .tabla-caja th[aria-sort='descending'] [data-ordenar]::after { content: ' ↓'; }
+/* Tabla jerárquica: una fila de resumen despliega su detalle sin salir de la tabla.
+   Las columnas siguen alineadas entre resumen y detalle: es lo que la vuelve legible. */
+.tabla-jerarquica .jerarquia-toggle { display: flex; align-items: center; gap: 8px; width: 100%;
+  font: inherit; color: inherit; text-align: left; background: transparent; border: 0;
+  padding: 10px 4px; min-height: 44px; cursor: pointer; }
+.tabla-jerarquica .jerarquia-flecha { flex-shrink: 0; transition: transform .18s ease; color: var(--tinta-2); }
+@media (prefers-reduced-motion: reduce) { .tabla-jerarquica .jerarquia-flecha { transition: none; } }
+.tabla-jerarquica .jerarquia-toggle[aria-expanded='true'] .jerarquia-flecha { transform: rotate(90deg); }
+.tabla-jerarquica .jerarquia-titulo { font-weight: 600; }
+.tabla-jerarquica .fila-grupo > * { background: var(--tabla-total); border-top: 1px solid var(--linea-fuerte); }
+.tabla-jerarquica .fila-grupo:hover > * { background: var(--tabla-elegida); }
+.tabla-jerarquica .fila-grupo > th:first-child { padding: 0; }
+.tabla-jerarquica .fila-grupo.abierta > * { border-bottom: 0; }
+.tabla-jerarquica .fila-hija > * { font-size: 13px; color: var(--tinta-2); border-top: 0;
+  border-bottom: 1px solid var(--linea); }
+.tabla-jerarquica .fila-hija > :first-child { padding-left: 30px; font-weight: 400; color: var(--tinta); }
+.tabla-jerarquica .fila-hija:last-of-type > * { border-bottom: 0; }
+.jerarquia-filtros { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 12px; }
+.jerarquia-filtros button { font: 13px/1 var(--sans); color: var(--tinta-2); background: transparent;
+  border: 1px solid var(--linea-fuerte); border-radius: 999px; padding: 9px 14px; min-height: 44px; cursor: pointer; }
+.jerarquia-filtros button:hover { border-color: var(--tinta-3); color: var(--tinta); }
+.jerarquia-filtros button[aria-pressed='true'] { background: var(--tinta); color: var(--papel);
+  border-color: var(--tinta); font-weight: 600; }
+.jerarquia-cuenta { font: 12px/1.6 var(--mono); color: var(--pieza-secundaria); margin-bottom: 10px; }
 .sparkline { display: block; width: 160px; height: 44px; max-width: none; }
 .sparkline path { fill: none; stroke: var(--grafica-1); stroke-width: 2; }
 .sparkline circle { fill: var(--grafica-1); }
@@ -5625,4 +5649,4 @@ window.NotaGeografia=Object.freeze({
 })();
 
 </script>
-<script type="application/json" data-nota-manifiesto>{"version": "4", "paginas": ["contenido"], "modulos": ["audio.js", "controles.js", "piezas-editoriales.js", "interacciones.js", "geografia.js", "analitica.js", "mano.js", "codigo.js", "evidencia.js", "revision.js"], "fuentes": {"fuentes.css": "03ac4b770dd47f79468c01c6b0f8b0ce44ae865331d6d5b46472c80bb41fe1d4", "estilo.css": "e009fd23d06ef6922653070da77731da8ace770c00edaa111e3eb7520186ce85", "audio.js": "9247e4e95f65d44339316ba4f6941f06039b04b5e9c247ff6749314240a06713", "controles.js": "1404b8abb8ce5534bbfccae6fc38ca7db4d4d29c399538fafe19c625dc203532", "piezas-editoriales.js": "8604004dfc2aacf7e51ae4a0e6184950fdaaa0187f64e956b562adb787cd5fe9", "interacciones.js": "83418c16d519224bd92d95d5a571c27efca76868f3d024e1ae270f11444e1802", "geografia.js": "ab22b9e5a09917e034cb58fd089b2ea2fce01976d5c41d4090bfe8eb75ba4dea", "analitica.js": "24608ff145273de54a48309346e4efcef0d8fe766917491de56cc01e95e44332", "mano.js": "7acebd9e2de58ae8daa141d47a3fe23d33d257fd30fd707268b83d3f1a88140e", "codigo.js": "16e94c9d0be68b13a270bd57485c129e3fa7b071cfa4aa2ee9d52052363796a7", "evidencia.js": "725f0178939c6995c3ff0a9de37ddf67dbddf089af4560b58eaf14c418306aaa", "revision.js": "310c8438b89056088b8ab9b6e436eb58e34918cfd91f71d8c2319a6395c2b4f8"}}</script>
+<script type="application/json" data-nota-manifiesto>{"version": "4", "paginas": ["contenido"], "modulos": ["audio.js", "controles.js", "piezas-editoriales.js", "interacciones.js", "geografia.js", "analitica.js", "mano.js", "codigo.js", "evidencia.js", "revision.js"], "fuentes": {"fuentes.css": "03ac4b770dd47f79468c01c6b0f8b0ce44ae865331d6d5b46472c80bb41fe1d4", "estilo.css": "8ba6eb4ff19f2a780c09d41e4592fad68b35094269036595b9d42c780bff4f45", "audio.js": "9247e4e95f65d44339316ba4f6941f06039b04b5e9c247ff6749314240a06713", "controles.js": "1404b8abb8ce5534bbfccae6fc38ca7db4d4d29c399538fafe19c625dc203532", "piezas-editoriales.js": "8604004dfc2aacf7e51ae4a0e6184950fdaaa0187f64e956b562adb787cd5fe9", "interacciones.js": "83418c16d519224bd92d95d5a571c27efca76868f3d024e1ae270f11444e1802", "geografia.js": "ab22b9e5a09917e034cb58fd089b2ea2fce01976d5c41d4090bfe8eb75ba4dea", "analitica.js": "24608ff145273de54a48309346e4efcef0d8fe766917491de56cc01e95e44332", "mano.js": "7acebd9e2de58ae8daa141d47a3fe23d33d257fd30fd707268b83d3f1a88140e", "codigo.js": "16e94c9d0be68b13a270bd57485c129e3fa7b071cfa4aa2ee9d52052363796a7", "evidencia.js": "725f0178939c6995c3ff0a9de37ddf67dbddf089af4560b58eaf14c418306aaa", "revision.js": "310c8438b89056088b8ab9b6e436eb58e34918cfd91f71d8c2319a6395c2b4f8"}}</script>

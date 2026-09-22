@@ -5,7 +5,7 @@ CHAPTERS=[
  ('lectura','Artículos','Leer con contexto.','Anotaciones, fuentes, definiciones y cambios editoriales.',['articulo','referencias','glosario','metodologia','revisiones','manuscrita','apuntes','lista-estados','lista-proyectos','conversacion','relato-visual','enlaces-icono','avisos-animados']),
  ('reportes','Reportes','De la evidencia a la decisión.','Afirmaciones, compensaciones, riesgos y escenarios explícitos.',['ficha-entrega','hallazgo','decision','cronologia','criterios','riesgos','escenario','conciliacion','trayectoria','gantt','sensibilidad']),
  ('graficas','Gráficas','La escala también es una afirmación.','Valores alcanzables, fuentes visibles y alternativas en tabla.',['barras','lineas','temporal','dispersion','distribucion','calor','cascada','multiples','calendario','torta','areas','caja','velas','mapa-rutas','mapa-burbujas','atencion','sankey','cohortes','embudo','incertidumbre']),
- ('tablas','Tablas','Cada dato conserva su lugar.','Comparación, totales, series y densidad sin cortar información.',['cola-novedades','tabla-densa','comparacion','totales','sparkline','explorador']),
+ ('tablas','Tablas','Cada dato conserva su lugar.','Comparación, totales, series y densidad sin cortar información.',['cola-novedades','tabla-densa','comparacion','totales','sparkline','explorador','tabla-jerarquica']),
  ('prototipos','Prototipos','La propuesta se puede recorrer.','Interfaz local, estados, vistas alternativas y explicaciones.',['visor','pestanas','antes-despues','anotaciones','evidencia-ampliable']),
  ('expresion','Espacio y gesto','Hay ideas que necesitan otra dimensión.','Geografía, composiciones con Three y sonido optativo.',['globo-flota','recorrido','xyz','etapas','columnas-mapa','arcos-mapa','almacen','sonido']),
  ('configuracion','Edición','Una voz, muchas maneras de editar.','Nueve papeles, escritura animada, sonido, código y comentarios.',['apariencia','escritura','configuracion','codigo-poliglota','terminal','revision','marco','navegacion','codigo-lineas'])]
@@ -34,7 +34,7 @@ def build(root,start,script,appearance,recipes,labels,three):
   if key in ['cascada','multiples','conciliacion','escenario']:return ['reportes.js']
   if key=='recorrido':return [three,'globo.js','reportes.js']
   if key in ['xyz','etapas']:return [three,'escena.js']
-  return {'visor':['visor.js'],'pestanas':['pestanas.js'],'sonido':['sonido.js'],'escritura':['sonido.js','escritura.js'],'explorador':['explorador.js'],'codigo-poliglota':['codigo.js','pestanas.js'],'revision':['revision.js'],'archivo':['editorial.js'],'configuracion':['editorial.js']}.get(key,[])
+  return {'visor':['visor.js'],'pestanas':['pestanas.js'],'sonido':['sonido.js'],'escritura':['sonido.js','escritura.js'],'explorador':['explorador.js'],'tabla-jerarquica':['jerarquia.js'],'codigo-poliglota':['codigo.js','pestanas.js'],'revision':['revision.js'],'archivo':['editorial.js'],'configuracion':['editorial.js']}.get(key,[])
  def recipe(key,page):
   source=all_recipes[key];anchor='receta-'+key
   # Una envoltura sólo para el título; el componente ancho sigue siendo hijo directo de .pagina.

@@ -1100,6 +1100,30 @@ th { background: var(--panel); color: var(--tinta-2); font: 12px/1.6 var(--mono)
 .tabla-caja [data-ordenar] { font: inherit; text-align: left; background: transparent; border: 0; padding: 6px; min-height: 44px; }
 .tabla-caja th[aria-sort='ascending'] [data-ordenar]::after { content: ' ↑'; }
 .tabla-caja th[aria-sort='descending'] [data-ordenar]::after { content: ' ↓'; }
+/* Tabla jerárquica: una fila de resumen despliega su detalle sin salir de la tabla.
+   Las columnas siguen alineadas entre resumen y detalle: es lo que la vuelve legible. */
+.tabla-jerarquica .jerarquia-toggle { display: flex; align-items: center; gap: 8px; width: 100%;
+  font: inherit; color: inherit; text-align: left; background: transparent; border: 0;
+  padding: 10px 4px; min-height: 44px; cursor: pointer; }
+.tabla-jerarquica .jerarquia-flecha { flex-shrink: 0; transition: transform .18s ease; color: var(--tinta-2); }
+@media (prefers-reduced-motion: reduce) { .tabla-jerarquica .jerarquia-flecha { transition: none; } }
+.tabla-jerarquica .jerarquia-toggle[aria-expanded='true'] .jerarquia-flecha { transform: rotate(90deg); }
+.tabla-jerarquica .jerarquia-titulo { font-weight: 600; }
+.tabla-jerarquica .fila-grupo > * { background: var(--tabla-total); border-top: 1px solid var(--linea-fuerte); }
+.tabla-jerarquica .fila-grupo:hover > * { background: var(--tabla-elegida); }
+.tabla-jerarquica .fila-grupo > th:first-child { padding: 0; }
+.tabla-jerarquica .fila-grupo.abierta > * { border-bottom: 0; }
+.tabla-jerarquica .fila-hija > * { font-size: 13px; color: var(--tinta-2); border-top: 0;
+  border-bottom: 1px solid var(--linea); }
+.tabla-jerarquica .fila-hija > :first-child { padding-left: 30px; font-weight: 400; color: var(--tinta); }
+.tabla-jerarquica .fila-hija:last-of-type > * { border-bottom: 0; }
+.jerarquia-filtros { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 12px; }
+.jerarquia-filtros button { font: 13px/1 var(--sans); color: var(--tinta-2); background: transparent;
+  border: 1px solid var(--linea-fuerte); border-radius: 999px; padding: 9px 14px; min-height: 44px; cursor: pointer; }
+.jerarquia-filtros button:hover { border-color: var(--tinta-3); color: var(--tinta); }
+.jerarquia-filtros button[aria-pressed='true'] { background: var(--tinta); color: var(--papel);
+  border-color: var(--tinta); font-weight: 600; }
+.jerarquia-cuenta { font: 12px/1.6 var(--mono); color: var(--pieza-secundaria); margin-bottom: 10px; }
 .sparkline { display: block; width: 160px; height: 44px; max-width: none; }
 .sparkline path { fill: none; stroke: var(--grafica-1); stroke-width: 2; }
 .sparkline circle { fill: var(--grafica-1); }
@@ -4485,15 +4509,15 @@ body:has(.revision-barra) { padding-bottom:0; }
       <p role="status" data-audio-estado>Sonido habilitado. Se activa después del primer clic. Puedes apagarlo abajo.</p>
     </fieldset><p class="apariencia-nota">Clics, lápiz y pequeños gestos. Sin música de fondo. Tu elección de silencio se recuerda en este navegador.</p><div class="apariencia-pie"><button type="button" data-audio-global aria-pressed="true"><span data-audio-etiqueta>Sonidos activados</span><span class="interruptor" aria-hidden="true"></span></button></div></section>
   </div>
-</details></header><main class="hoja lectura-guiada nota-estandar marcos-editoriales multipagina edicion" data-lectura data-progreso-pagina data-historial data-enlaces-internos lang="es"><article class="pagina viva" id="memo" data-pagina><header class="cabecera"><h1>Mi lectura</h1><p class="bajada">Voz ejecutiva, evidencia y una biblioteca al servicio del argumento.</p></header><nav class="indice" tabindex="0" aria-label="En esta página"><p class="ceja">En esta página</p><ol><li><a href="#lectura-ejecutiva">Una base común para compartir criterio.</a></li><li><a href="#balance">Highlights y lowlights</a></li><li><a href="#catalogo-visual">La evidencia tiene más de una forma.</a></li><li><a href="#peso-evidencia">37 de 82 recetas para explorar evidencia.</a></li><li><a href="#propuesta">Propongo estandarizar la voz y comprobar el resultado.</a></li><li><a href="#pasos">La siguiente comprobación</a></li><li><a href="#metodo">Alcance de esta lectura</a></li></ol></nav><section id="lectura-ejecutiva"><p class="ceja">Bottifact / memo de trabajo / 15 sep 2026</p>
+</details></header><main class="hoja lectura-guiada nota-estandar marcos-editoriales multipagina edicion" data-lectura data-progreso-pagina data-historial data-enlaces-internos lang="es"><article class="pagina viva" id="memo" data-pagina><header class="cabecera"><h1>Mi lectura</h1><p class="bajada">Voz ejecutiva, evidencia y una biblioteca al servicio del argumento.</p></header><nav class="indice" tabindex="0" aria-label="En esta página"><p class="ceja">En esta página</p><ol><li><a href="#lectura-ejecutiva">Una base común para compartir criterio.</a></li><li><a href="#balance">Highlights y lowlights</a></li><li><a href="#catalogo-visual">La evidencia tiene más de una forma.</a></li><li><a href="#peso-evidencia">38 de 83 recetas para explorar evidencia.</a></li><li><a href="#propuesta">Propongo estandarizar la voz y comprobar el resultado.</a></li><li><a href="#pasos">La siguiente comprobación</a></li><li><a href="#metodo">Alcance de esta lectura</a></li></ol></nav><section id="lectura-ejecutiva"><p class="ceja">Bottifact / memo de trabajo / 15 sep 2026</p>
 <h2>Una base común para compartir criterio.</h2>
 <p class="bajada">Propongo que cada artefacto permita entender qué cambió, contrastar la evidencia y decidir qué sigue.</p>
-<p>Bottifact reúne 82 recetas y 15 familias visuales. Mi prioridad es aprovechar esa biblioteca con una voz consistente: una lectura ejecutiva al inicio, profundidad disponible y una propuesta que se pueda discutir.</p>
+<p>Bottifact reúne 83 recetas y 15 familias visuales. Mi prioridad es aprovechar esa biblioteca con una voz consistente: una lectura ejecutiva al inicio, profundidad disponible y una propuesta que se pueda discutir.</p>
 <p>El catálogo describe capacidad disponible. Todavía falta demostrar, con encargos comparables por agente, la calidad editorial y el ahorro de trabajo. Esa es la siguiente prueba que propongo.</p>
 <p class="procedencia">Corte del catálogo: versión 2026.09.16-tikin.1. Fuentes: <a href="registro.json">registro de componentes</a> y <a href="VERSION.json">versión del sistema</a>. Propuesta de trabajo; no registra aprobación ni asignaciones.</p></section>
 <section class="ancho" id="balance"><h2>Highlights y lowlights</h2>
 <div class="cards-trazadas cards-abiertas">
-<a href="#evidencia" data-audio-hover><h3>82 recetas disponibles</h3><p>El registro reúne piezas de lectura, evidencia y revisión. La guía permite consultar su HTML y sus límites.</p><span class="procedencia">HIGHLIGHT · inventario verificable</span></a>
+<a href="#evidencia" data-audio-hover><h3>83 recetas disponibles</h3><p>El registro reúne piezas de lectura, evidencia y revisión. La guía permite consultar su HTML y sus límites.</p><span class="procedencia">HIGHLIGHT · inventario verificable</span></a>
 <a href="temas.html" data-audio-hover><h3>15 familias, 30 paletas</h3><p>La identidad visual y el modo claro, oscuro o sistema se eligen por separado.</p><span class="procedencia">HIGHLIGHT · VERSION.json</span></a>
 <a href="instalacion.md" data-audio-hover><h3>Una entrada para tres agentes</h3><p>Claude, Codex y Hermes pueden usar el mismo paquete y las mismas instrucciones.</p><span class="procedencia">HIGHLIGHT · compatibilidad de formato</span></a>
 <a href="colaboracion.md" data-audio-hover><h3>Revisión todavía local</h3><p>Los comentarios se intercambian por archivo. No hay sincronización entre equipos ni identidad autenticada.</p><span class="procedencia">LOWLIGHT · límite de colaboración</span></a>
@@ -4513,19 +4537,19 @@ body:has(.revision-barra) { padding-bottom:0; }
     <div class="tabla-caja" tabindex="0" role="region" aria-label="Datos del catálogo, tabla desplazable">
       <table><caption>Recetas por capítulo</caption>
         <thead><tr><th scope="col">Categoría</th><th scope="col">Recetas</th></tr></thead>
-        <tbody><tr><th scope="row">Gráficas</th><td data-valor="20">20</td></tr><tr><th scope="row">Lectura</th><td data-valor="13">13</td></tr><tr><th scope="row">Reportes</th><td data-valor="11">11</td></tr><tr><th scope="row">Publicaciones</th><td data-valor="10">10</td></tr><tr><th scope="row">Configuración</th><td data-valor="9">9</td></tr><tr><th scope="row">Expresión</th><td data-valor="8">8</td></tr><tr><th scope="row">Tablas</th><td data-valor="6">6</td></tr><tr><th scope="row">Prototipos</th><td data-valor="5">5</td></tr></tbody>
+        <tbody><tr><th scope="row">Gráficas</th><td data-valor="20">20</td></tr><tr><th scope="row">Lectura</th><td data-valor="13">13</td></tr><tr><th scope="row">Reportes</th><td data-valor="11">11</td></tr><tr><th scope="row">Publicaciones</th><td data-valor="10">10</td></tr><tr><th scope="row">Configuración</th><td data-valor="9">9</td></tr><tr><th scope="row">Expresión</th><td data-valor="8">8</td></tr><tr><th scope="row">Tablas</th><td data-valor="7">7</td></tr><tr><th scope="row">Prototipos</th><td data-valor="5">5</td></tr></tbody>
       </table>
     </div>
   </details>
-  <figcaption>Fuente: <a href="registro.json">registro.json</a>. 82 recetas, una entrada por ID; corte de esta versión. Unidad: recetas. La longitud compara cantidades por capítulo.</figcaption>
-</figure><section id="peso-evidencia"><h2>37 de 82 recetas para explorar evidencia.</h2><p>Gráficas, reportes y tablas suman 37 entradas: 45,1 % del inventario. Es una agrupación editorial de tres capítulos; cada receta se cuenta una sola vez. Las piezas de lectura y expresión ayudan a conectar esa evidencia con el argumento.</p></section><figure class="ancho" id="ejecutivo-composicion" data-analitica="torta" data-unidad="recetas">
+  <figcaption>Fuente: <a href="registro.json">registro.json</a>. 83 recetas, una entrada por ID; corte de esta versión. Unidad: recetas. La longitud compara cantidades por capítulo.</figcaption>
+</figure><section id="peso-evidencia"><h2>38 de 83 recetas para explorar evidencia.</h2><p>Gráficas, reportes y tablas suman 38 entradas: 45,8 % del inventario. Es una agrupación editorial de tres capítulos; cada receta se cuenta una sola vez. Las piezas de lectura y expresión ayudan a conectar esa evidencia con el argumento.</p></section><figure class="ancho" id="ejecutivo-composicion" data-analitica="torta" data-unidad="recetas">
   <div class="tabla-caja" tabindex="0" role="region" aria-label="Datos del catálogo, tabla desplazable">
     <table><caption>Composición del catálogo</caption>
       <thead><tr><th scope="col">Categoría</th><th scope="col">Recetas</th></tr></thead>
-      <tbody><tr><th scope="row">Gráficas, reportes y tablas</th><td data-valor="37">37</td></tr><tr><th scope="row">Lectura y expresión</th><td data-valor="21">21</td></tr><tr><th scope="row">Publicaciones</th><td data-valor="10">10</td></tr><tr><th scope="row">Configuración</th><td data-valor="9">9</td></tr><tr><th scope="row">Prototipos</th><td data-valor="5">5</td></tr></tbody>
+      <tbody><tr><th scope="row">Gráficas, reportes y tablas</th><td data-valor="38">38</td></tr><tr><th scope="row">Lectura y expresión</th><td data-valor="21">21</td></tr><tr><th scope="row">Publicaciones</th><td data-valor="10">10</td></tr><tr><th scope="row">Configuración</th><td data-valor="9">9</td></tr><tr><th scope="row">Prototipos</th><td data-valor="5">5</td></tr></tbody>
     </table>
   </div>
-  <figcaption>Fuente: <a href="registro.json">registro.json</a>. Denominador: 82 recetas. Agrupación: gráficas + reportes + tablas; lectura + expresión; los demás capítulos conservan su categoría. Cambia entre torta y donut para consultar las mismas cantidades.</figcaption>
+  <figcaption>Fuente: <a href="registro.json">registro.json</a>. Denominador: 83 recetas. Agrupación: gráficas + reportes + tablas; lectura + expresión; los demás capítulos conservan su categoría. Cambia entre torta y donut para consultar las mismas cantidades.</figcaption>
 </figure><div class="apuntes ancho" id="ejecutivo-datos-apuntes-ejemplo">
   <section class="apunte izquierda">
     <div class="apunte-cuerpo"><h3>Comparar antes de concluir.</h3><p>Las barras me permiten comparar capítulos. La torta responde cuánto representa una agrupación dentro del <span data-subrayar="referencia">mismo total</span>. Ambas parten del registro; la pregunta cambia.</p></div>
@@ -5929,4 +5953,4 @@ window.NotaGeografia=Object.freeze({
 })();
 
 </script>
-<script type="application/json" data-nota-manifiesto>{"version": "4", "paginas": ["memo", "perfil", "fuentes"], "modulos": ["audio.js", "controles.js", "piezas-editoriales.js", "interacciones.js", "multipagina.js", "geografia.js", "graficas.js", "analitica.js", "mano.js", "codigo.js", "explorador.js", "revision.js"], "fuentes": {"fuentes.css": "03ac4b770dd47f79468c01c6b0f8b0ce44ae865331d6d5b46472c80bb41fe1d4", "estilo.css": "e009fd23d06ef6922653070da77731da8ace770c00edaa111e3eb7520186ce85", "audio.js": "9247e4e95f65d44339316ba4f6941f06039b04b5e9c247ff6749314240a06713", "controles.js": "1404b8abb8ce5534bbfccae6fc38ca7db4d4d29c399538fafe19c625dc203532", "piezas-editoriales.js": "8604004dfc2aacf7e51ae4a0e6184950fdaaa0187f64e956b562adb787cd5fe9", "interacciones.js": "83418c16d519224bd92d95d5a571c27efca76868f3d024e1ae270f11444e1802", "multipagina.js": "ca6f20dcd7c0c9037aafe3797465146be89117307df328ec84242119442ec03a", "geografia.js": "ab22b9e5a09917e034cb58fd089b2ea2fce01976d5c41d4090bfe8eb75ba4dea", "graficas.js": "542985201e1077b185bb5e5677065cab79d921a0236ff2cb7af77ad8cb6adcec", "analitica.js": "24608ff145273de54a48309346e4efcef0d8fe766917491de56cc01e95e44332", "mano.js": "7acebd9e2de58ae8daa141d47a3fe23d33d257fd30fd707268b83d3f1a88140e", "codigo.js": "16e94c9d0be68b13a270bd57485c129e3fa7b071cfa4aa2ee9d52052363796a7", "explorador.js": "ea3af41276996d2a3ce532176dd253266716b46cdfc6de7620ef6c218d1b3187", "revision.js": "310c8438b89056088b8ab9b6e436eb58e34918cfd91f71d8c2319a6395c2b4f8"}}</script>
+<script type="application/json" data-nota-manifiesto>{"version": "4", "paginas": ["memo", "perfil", "fuentes"], "modulos": ["audio.js", "controles.js", "piezas-editoriales.js", "interacciones.js", "multipagina.js", "geografia.js", "graficas.js", "analitica.js", "mano.js", "codigo.js", "explorador.js", "revision.js"], "fuentes": {"fuentes.css": "03ac4b770dd47f79468c01c6b0f8b0ce44ae865331d6d5b46472c80bb41fe1d4", "estilo.css": "8ba6eb4ff19f2a780c09d41e4592fad68b35094269036595b9d42c780bff4f45", "audio.js": "9247e4e95f65d44339316ba4f6941f06039b04b5e9c247ff6749314240a06713", "controles.js": "1404b8abb8ce5534bbfccae6fc38ca7db4d4d29c399538fafe19c625dc203532", "piezas-editoriales.js": "8604004dfc2aacf7e51ae4a0e6184950fdaaa0187f64e956b562adb787cd5fe9", "interacciones.js": "83418c16d519224bd92d95d5a571c27efca76868f3d024e1ae270f11444e1802", "multipagina.js": "ca6f20dcd7c0c9037aafe3797465146be89117307df328ec84242119442ec03a", "geografia.js": "ab22b9e5a09917e034cb58fd089b2ea2fce01976d5c41d4090bfe8eb75ba4dea", "graficas.js": "542985201e1077b185bb5e5677065cab79d921a0236ff2cb7af77ad8cb6adcec", "analitica.js": "24608ff145273de54a48309346e4efcef0d8fe766917491de56cc01e95e44332", "mano.js": "7acebd9e2de58ae8daa141d47a3fe23d33d257fd30fd707268b83d3f1a88140e", "codigo.js": "16e94c9d0be68b13a270bd57485c129e3fa7b071cfa4aa2ee9d52052363796a7", "explorador.js": "ea3af41276996d2a3ce532176dd253266716b46cdfc6de7620ef6c218d1b3187", "revision.js": "310c8438b89056088b8ab9b6e436eb58e34918cfd91f71d8c2319a6395c2b4f8"}}</script>

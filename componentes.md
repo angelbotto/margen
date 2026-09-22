@@ -1920,6 +1920,37 @@ GScan; copiar este HTML no cumple ese contrato. La comparación y sus fuentes es
 
 Incluye filtro por columna (texto, rango numérico o fecha), búsqueda, grupos plegables de la página, columnas visibles, selección de filas entre páginas, paginación 10/25/50/100, espaciado y encabezado fijo. Mayús al elegir otro orden agrega un criterio. El total corresponde a la vista filtrada completa; el contador de grupo corresponde a la página. Exportar selección incluye filas seleccionadas aunque estén fuera del filtro, usando columnas visibles; sin selección exporta toda la vista filtrada. CSV neutraliza fórmulas. Impresión muestra la fuente completa. No hay edición de celdas ni virtualización. `NotaExplorador.init/get/destroy`, `instance.visible`, `instance.selected` e `instance.exportCSV()` conservan los valores originales.
 
+## Tabla jerárquica desplegable
+
+<!-- nota:ejemplo tabla-jerarquica -->
+```html
+<figure class="amplio" id="jerarquia-ejemplo" data-jerarquia>
+<div class="jerarquia-filtros" role="group" data-jerarquia-filtros aria-label="Filtrar por estado">
+<button type="button" data-filtro="" aria-pressed="true">Todos</button>
+<button type="button" data-filtro="Usado" aria-pressed="false">Usado</button>
+<button type="button" data-filtro="Sin usar" aria-pressed="false">Sin usar</button>
+</div>
+<p class="jerarquia-cuenta" data-jerarquia-cuenta role="status"></p>
+<div class="tabla-caja densa" tabindex="0" role="region" aria-label="Entregas por fecha, tabla desplazable">
+<table data-columna-filtro="3"><caption>Entregas por fecha · ejemplo</caption>
+<thead><tr><th scope="col">Fecha / destinatario</th><th scope="col">Detalle</th><th scope="col">Monto</th><th scope="col">Estado</th></tr></thead>
+<tbody>
+<tr data-grupo="g1"><th scope="row">14 ago 2026</th><td>2 personas</td><td class="numero">$300</td><td>50 % usado</td></tr>
+<tr data-de="g1"><th scope="row">Persona de ejemplo</th><td>$etiqueta</td><td class="numero">$200</td><td>Usado</td></tr>
+<tr data-de="g1"><th scope="row">Otra persona</th><td>$etiqueta2</td><td class="numero">$100</td><td>Sin usar</td></tr>
+<tr data-grupo="g2"><th scope="row">6 ago 2026</th><td>1 persona</td><td class="numero">$500</td><td>100 % usado</td></tr>
+<tr data-de="g2"><th scope="row">Tercera persona</th><td>$etiqueta3</td><td class="numero">$500</td><td>Usado</td></tr>
+</tbody></table></div>
+<figcaption>Datos ilustrativos. Las filas de resumen llevan <code>data-grupo</code>; sus hijas, <code>data-de</code> con el mismo identificador.</figcaption>
+</figure>
+```
+
+**Cuándo:** un resumen por grupo que se despliega a su detalle sin salir de la tabla — fechas con sus destinatarios, lotes con sus filas, categorías con sus partidas. Incluye `jerarquia.js`. Las columnas se mantienen alineadas entre el resumen y su detalle, que es lo que lo vuelve legible: el monto del grupo cae sobre los montos de sus hijas. Empieza plegado y cada fila de resumen es un botón con `aria-expanded`; la flecha gira y el detalle aparece debajo, indentado.
+
+**Filtro optativo:** declara `data-jerarquia-filtros` con pastillas `data-filtro` dentro de la figura y, si quieres un contador vivo, `data-jerarquia-cuenta`. `data-columna-filtro` elige la columna comparada (por defecto, la última). Al filtrar, los grupos con coincidencias se abren solos y los que no tienen desaparecen: buscar un estado no debería obligar a abrir todos los grupos a mano. La comparación es por texto exacto de la celda.
+
+**Cuándo no / límite:** no reemplaza `explorador` cuando hace falta búsqueda libre, orden por columna o exportación. Todo el contenido existe en el HTML, así que sin JavaScript la tabla se lee completa —plegar es una mejora, no un requisito—. Cada `data-grupo` necesita un identificador único y sus hijas el mismo valor en `data-de`; un grupo sin hijas no se convierte en botón. No pagina, no ordena ni carga datos por demanda: con centenares de grupos conviene una tabla filtrable. `NotaJerarquia.init/get`, más `abrirTodo()`, `cerrarTodo()`, `filtrar(valor)` y `destroy()` por instancia.
+
 ## Familia de cards
 
 <!-- nota:ejemplo cards -->
