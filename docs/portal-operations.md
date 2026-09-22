@@ -45,3 +45,7 @@ python -m portal.backup create --data /data --output /backups --config /path/pri
 Use immutable image tags, a pre-upgrade backup and health checks. Preserve UID/GID, mounts, read-only filesystem, capability restrictions and the existing public origin. Update the portable ZIP/checksum pair consistently. The portal and agent skill have separate release lifecycles; installed agents must reread the skill.
 
 References: [SQLite backup API](https://www.sqlite.org/backup.html), [Resend idempotency](https://resend.com/docs/dashboard/emails/idempotency-keys), [W3C Web Annotation](https://www.w3.org/TR/annotation-model/). Margen uses its own selectors and does not claim full Web Annotation conformance.
+
+## Reader activity
+
+See [reader activity](reader-activity.md) for creator-controlled aggregate visibility, Umami reporting credentials, unique-visitor semantics and participant privacy.

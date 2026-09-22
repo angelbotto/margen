@@ -350,6 +350,71 @@ window.BottifactReaderWorkspace = {
         );
       status.textContent = "";
     }
+    async function activity() {
+      const { d, body, status } = dialog("Actividad del artefacto");
+      d.classList.add("activity-dialog");
+      const period = el("select"), label = el("label", "Período de visitas");
+      for (const days of [7, 30, 90, 365]) {
+        const option = el("option", `Últimos ${days} días`);
+        option.value = String(days); period.append(option);
+      }
+      period.value = "30"; label.append(period);
+      const content = el("div"); body.append(label, content);
+      let request = 0;
+      async function load() {
+        const ticket = ++request;
+        status.textContent = "Consultando actividad…";
+        try {
+          const data = await api(`/api/artifacts/${current().id}/activity?days=${period.value}`);
+          if (ticket !== request || !d.isConnected) return;
+          content.replaceChildren();
+          if (!data.visible) { status.textContent = "El creador no ha compartido la actividad de este artefacto."; return; }
+          const counts = el("dl", null, "activity-metrics");
+          const count = value => Number.isSafeInteger(value) && value >= 0 ? value.toLocaleString("es") : "—";
+          for (const [name, value, hint] of [
+            ["Visitas", data.views, "Aperturas registradas"],
+            ["Visitantes únicos", data.visitors, "Estimación de Umami"],
+            ["Participantes", data.participant_count, "Conversación visible · total"],
+          ]) {
+            const item = el("div"); item.append(el("dt", name), el("dd", count(value)), el("small", hint)); counts.append(item);
+          }
+          content.append(counts, el("p", `${data.since} → ${data.until} · UTC`, "activity-period"));
+          content.append(el("p", data.source === "umami"
+            ? "Visitas y únicos provienen de Umami, filtrados por este artefacto. Los únicos son una estimación técnica, no identidades verificadas. Actualización hasta cada cinco minutos."
+            : data.enabled ? "Visitas registradas por Margen. Los únicos no están disponibles ahora; no los calculamos a partir de las aperturas."
+            : "El creador tiene desactivado el registro de visitas.", "activity-explanation"));
+          content.append(el("p", "Se excluyen las lecturas identificadas del creador, agentes, borradores y navegadores que solicitan no ser medidos.", "activity-explanation"));
+          content.append(el("h3", "Quiénes han comentado"));
+          const people = el("ul", null, "activity-people");
+          for (const person of data.participants || []) {
+            const row = el("li"), initials = person.name.trim().split(/\s+/).slice(0, 2).map(s => [...s][0] || "").join("");
+            const avatar = el("span", initials || "?", "activity-avatar"); avatar.setAttribute("aria-hidden", "true");
+            row.append(avatar, el("span", person.name), el("small", person.verified ? "Cuenta verificada" : "Invitado")); people.append(row);
+          }
+          content.append(people);
+          if (!data.participant_count) content.append(el("p", "Todavía no hay participantes en los comentarios que puedes ver."));
+          if (data.participant_count > (data.participants || []).length) content.append(el("p", `Mostrando ${data.participants.length} de ${data.participant_count} participantes.`));
+          content.append(el("p", `${count(data.comments)} hilos · ${count(data.messages)} comentarios y respuestas. Se excluyen notas privadas y conversaciones eliminadas.`, "activity-explanation"));
+          if (data.owner) {
+            const sharing = el("label", null, "activity-sharing"), input = el("input"); input.type = "checkbox"; input.checked = data.shared;
+            sharing.append(input, el("span", "Mostrar esta actividad a quienes pueden leer el artefacto"));
+            input.onchange = async () => {
+              input.disabled = true;
+              try {
+                await api(`/api/artifacts/${current().id}/activity`, {method:"PUT", body:JSON.stringify({shared:input.checked})});
+                status.textContent = input.checked ? "Actividad visible para los lectores autorizados." : "Actividad visible sólo para ti.";
+                await refresh();
+              } catch (error) { input.checked = !input.checked; status.textContent = error.message; }
+              finally { input.disabled = false; }
+            };
+            content.append(sharing);
+          }
+          status.textContent = "";
+        } catch (error) { if (ticket === request) status.textContent = error.message; }
+      }
+      period.onchange = load;
+      await load();
+    }
     async function handle(op, data) {
       if (op === "controls-ready") {
         document.querySelector("#reader-dock").hidden = true;
@@ -374,6 +439,9 @@ window.BottifactReaderWorkspace = {
               }),
             );
           }
+          break;
+        case "activity":
+          await activity();
           break;
         case "manage":
           if (user()?.id !== current().owner)

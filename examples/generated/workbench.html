@@ -5256,6 +5256,8 @@ main.hoja[data-presentation]{margin-top:22px}
         input.select();
       }
     });
+    const activity = bridge ? action(shareMenu, "Actividad del artefacto", () => bridge.action("activity")) : null;
+    if (activity) activity.hidden = true;
     const manage = action(shareMenu, "Gestionar artefacto", () =>
       bridge?.action("manage"),
     );
@@ -5535,6 +5537,14 @@ main.hoja[data-presentation]{margin-top:22px}
           );
         }
         manage.hidden = !value.reader?.manage;
+        if (activity) {
+          const stats = value.reader?.activity;
+          activity.hidden = !value.reader?.manage && !stats?.visible;
+          const label = Number.isSafeInteger(stats?.views) ? `Actividad · ${stats.views.toLocaleString("es")} visitas` : "Actividad del artefacto";
+          const copy = activity.querySelector(".bf-action-copy");
+          if (copy) copy.firstChild.textContent = label;
+          else activity.textContent = label;
+        }
         comment.disabled = !value.permissions.comment && !!value.author;
         note.disabled = !value.verified;
         bundle.disabled = !value.verified;
@@ -7672,4 +7682,4 @@ globalThis.BottifactTableModel=TableModel;
 })();
 
 </script>
-<script type="application/json" data-nota-manifiesto>{"version": "4", "paginas": ["guia"], "modulos": ["packages/core/components/interface.js", "packages/core/components/reader-controls.js", "packages/core/components/audio.js", "packages/core/components/controls.js", "packages/core/components/editorial-pieces.js", "packages/core/components/reader.js", "packages/core/components/code.js", "packages/core/components/table-model.js", "packages/core/components/data-explorer.js", "packages/core/components/review.js"], "fuentes": {"packages/core/styles/fonts.css": "c496fb4f095a14cbb6a82503a4a828720c01a8120df3c73113495d832e5d40cb", "packages/core/styles/artifact.css": "f36493a6719170e154c42ebc8aa63308eb57fff6220adffc4a272fe0eb661953", "packages/core/components/interface.js": "ffd922850a2dd39f346f6615264b5522ccfc26ce17285fee36c79d026b3a0cce", "packages/core/components/reader-controls.js": "ddf55fbaba73452edb87ed6de67109c3f441591b0506657338a570607e2a03e0", "packages/core/components/audio.js": "db6014d04e8710e87912c453eedbe9c24b7feb8bfb02934f5c0cca26da682232", "packages/core/components/controls.js": "b3881b4411e12ae56a1859a56dd14c2fb073712fa732874fce50e9c2061d0aa5", "packages/core/components/editorial-pieces.js": "8604004dfc2aacf7e51ae4a0e6184950fdaaa0187f64e956b562adb787cd5fe9", "packages/core/components/reader.js": "a517796cab8ed2d658e22cb5af2805d6c0a98de38985df411286217ae4a19b71", "packages/core/components/code.js": "16e94c9d0be68b13a270bd57485c129e3fa7b071cfa4aa2ee9d52052363796a7", "packages/core/components/table-model.js": "efcfff7d7240cf9355d3809df35c9e0b35fe8903e4164cfbb316e2e4e64f6fff", "packages/core/components/data-explorer.js": "0ce3a0f95bddc4fc0b7db858dbcddbb1c30b4021d90ee76f8ac45015883d583f", "packages/core/components/review.js": "ad144dd2cc37a70a2adb4898e6aaa96cd06d2974e895ac1943bf35cf43bd72d7"}}</script>
+<script type="application/json" data-nota-manifiesto>{"version": "4", "paginas": ["guia"], "modulos": ["packages/core/components/interface.js", "packages/core/components/reader-controls.js", "packages/core/components/audio.js", "packages/core/components/controls.js", "packages/core/components/editorial-pieces.js", "packages/core/components/reader.js", "packages/core/components/code.js", "packages/core/components/table-model.js", "packages/core/components/data-explorer.js", "packages/core/components/review.js"], "fuentes": {"packages/core/styles/fonts.css": "c496fb4f095a14cbb6a82503a4a828720c01a8120df3c73113495d832e5d40cb", "packages/core/styles/artifact.css": "f36493a6719170e154c42ebc8aa63308eb57fff6220adffc4a272fe0eb661953", "packages/core/components/interface.js": "ffd922850a2dd39f346f6615264b5522ccfc26ce17285fee36c79d026b3a0cce", "packages/core/components/reader-controls.js": "ab818968a46e54841fe92c170820c8f040d9fc5ab43ffa8df1e7302c1f6fc852", "packages/core/components/audio.js": "db6014d04e8710e87912c453eedbe9c24b7feb8bfb02934f5c0cca26da682232", "packages/core/components/controls.js": "b3881b4411e12ae56a1859a56dd14c2fb073712fa732874fce50e9c2061d0aa5", "packages/core/components/editorial-pieces.js": "8604004dfc2aacf7e51ae4a0e6184950fdaaa0187f64e956b562adb787cd5fe9", "packages/core/components/reader.js": "a517796cab8ed2d658e22cb5af2805d6c0a98de38985df411286217ae4a19b71", "packages/core/components/code.js": "16e94c9d0be68b13a270bd57485c129e3fa7b071cfa4aa2ee9d52052363796a7", "packages/core/components/table-model.js": "efcfff7d7240cf9355d3809df35c9e0b35fe8903e4164cfbb316e2e4e64f6fff", "packages/core/components/data-explorer.js": "0ce3a0f95bddc4fc0b7db858dbcddbb1c30b4021d90ee76f8ac45015883d583f", "packages/core/components/review.js": "ad144dd2cc37a70a2adb4898e6aaa96cd06d2974e895ac1943bf35cf43bd72d7"}}</script>

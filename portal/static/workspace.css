@@ -885,3 +885,29 @@ body[data-view="work"] :is(#context-tools, #browse-bar, .category-nav) {
     flex: none;
   }
 }
+
+/* Reader activity: aggregate metrics and the already-visible conversation. */
+.activity-dialog{width:min(640px,calc(100vw - 24px));border-radius:20px}
+.activity-dialog .workbench-body>label{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.activity-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:24px 0 10px}
+.activity-metrics>div{border:1px solid var(--line);border-radius:12px;padding:16px;background:var(--panel)}
+.activity-metrics dt{font-size:12px;color:var(--muted)}
+.activity-metrics dd{margin:8px 0;font-size:30px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.04em}
+.activity-metrics small,.activity-period,.activity-explanation{font-size:12px;line-height:1.55;color:var(--muted)}
+.activity-people{list-style:none;padding:0;display:grid;gap:8px}
+.activity-people li{display:flex;align-items:center;gap:10px;min-width:0;padding:5px 0}
+.activity-people li>span:nth-child(2){overflow-wrap:anywhere}
+.activity-people small{margin-left:auto;color:var(--muted);font-size:11px;flex-shrink:0}
+.activity-avatar{display:grid;place-items:center;flex:none;width:32px;height:32px;border:1px solid var(--line);border-radius:50%;font-size:11px;background:var(--panel)}
+.activity-sharing{display:flex;align-items:center;gap:10px;padding:16px 0;border-top:1px solid var(--line);font-size:13px}
+.activity-sharing input{width:18px;height:18px;flex:none}
+@media(max-width:440px){.activity-metrics{gap:6px}.activity-metrics>div{padding:10px}.activity-metrics dd{font-size:26px}.activity-metrics dt{font-size:11px}.activity-metrics small{font-size:10px}.activity-dialog .workbench-body{padding:16px}.activity-dialog .workbench-body>label{align-items:flex-start;flex-direction:column;gap:6px}}
+.activity-dialog>header h2{font:600 20px/1.3 var(--sans);letter-spacing:-.025em}
+.activity-dialog .activity-metrics dt{min-height:34px}
+.activity-dialog .activity-metrics small{display:block;line-height:1.5}
+.activity-dialog h3{font:600 15px/1.4 var(--sans);margin-top:24px}
+.activity-dialog>header{gap:12px}
+.activity-dialog>header button{min-width:40px;min-height:40px}
+.workbench-dialog.activity-dialog .workbench-body>label{display:flex;flex-direction:row;align-items:center;justify-content:space-between}
+.workbench-dialog.activity-dialog .workbench-body label.activity-sharing{display:flex;flex-direction:row;align-items:center;justify-content:flex-start}
+@media(max-width:440px){.workbench-dialog.activity-dialog .workbench-body>label{align-items:flex-start;flex-direction:column}}
