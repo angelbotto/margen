@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.15.1 — Guided personal installation
+
+- Add accessible OS icon choices, explicit WSL mode, multi-agent selection, destination previews and shell-specific copy actions.
+- Persist selected integrations across manual and scheduled updates on Windows, macOS and Linux.
+- Separate skill installation from account linking; refine personal connection inputs and hidden-token guidance.
+- Verify selection persistence and expansion on the native platform matrix.
+
 ## 0.15.0 — Native Windows installation
 
 - Add PowerShell bootstrap and OS-specific commands in installation and account connection screens.
