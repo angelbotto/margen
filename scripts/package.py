@@ -26,7 +26,7 @@ def package():
     files.append(ROOT/'tests/fixtures/release-signature.json')
     for name in ['geography.json', 'sounds-cmrg.json', 'fonts.json', 'literata-fonts.json']:
         files.append(ROOT / 'tests/evidence' / name)
-    blobs = {str(path.relative_to(ROOT)): path.read_bytes() for path in sorted(set(files))}
+    blobs = {path.relative_to(ROOT).as_posix(): path.read_bytes() for path in sorted(set(files))}
     # Only individually reviewed documentation captures may enter the skill ZIP.
     manifest = json.loads((ROOT / 'docs/assets/manifest.json').read_text())
     for item in manifest['images']:

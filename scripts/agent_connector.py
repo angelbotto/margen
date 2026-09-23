@@ -134,8 +134,12 @@ def run(config, key, cwd):
         + " with summary, session (actual ID only), and threads [{id,status:addressed|blocked|unchanged,explanation}]. Do not publish or resolve comments. Do not read connector credentials. Return when the proposal is ready."
     )
     args = command(target["agent"], target.get("session", ""), prompt)
-    if not shutil.which(args[0]):
+    executable = shutil.which(args[0])
+    if not executable:
         raise ValueError(args[0] + " is not installed")
+    if os.name == "nt" and Path(executable).suffix.lower() != ".exe":
+        raise ValueError("Automated assignment execution on Windows requires a native .exe agent. Use WSL for shell-based agents, or open the assignment manually in your agent.")
+    args[0] = executable
     cwd = Path(cwd).expanduser().resolve(strict=True)
     if not cwd.is_dir():
         raise ValueError("Choose a working directory")

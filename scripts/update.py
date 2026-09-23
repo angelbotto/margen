@@ -185,7 +185,6 @@ def main():
             if manifest and json.loads((source/'VERSION.json').read_text(encoding='utf-8')).get('release_sequence',0)!=manifest.get('sequence',0):raise ValueError('Package sequence differs from signed manifest.')
             if manifest and json.loads((source/'VERSION.json').read_text(encoding='utf-8'))['version']!=manifest['version']:raise ValueError('Package version differs from signed manifest.')
             subprocess.run([sys.executable, str(source/'scripts/install.py'), '--destino', str(destination), '--actualizar'], check=True)
-        setting.write_text(json.dumps({'local':bool(args.paquete) and not args.servidor,'servidor':ORIGIN if not args.paquete or args.servidor else None,'sha256':expected,'channel':channel,'trusted_key':trusted_key})+'\n',encoding='utf-8')
         if not args.sin_enlaces and os.name == 'nt':
             sys.path.insert(0,str(destination/'scripts'))
             from windows_install import integrate
@@ -229,6 +228,7 @@ def main():
                     pass
                 else:
                     print('Preserved existing command: '+str(margen_binary))
+        setting.write_text(json.dumps({'local':bool(args.paquete) and not args.servidor,'servidor':ORIGIN if not args.paquete or args.servidor else None,'sha256':expected,'channel':channel,'trusted_key':trusted_key})+'\n',encoding='utf-8')
         version = json.loads((destination/'VERSION.json').read_text(encoding='utf-8'))['version']
         print('Margen ' + version + '. Generar HTML no requiere cuenta ni token.')
         print('Instalación personal en: ' + str(Path.home()))

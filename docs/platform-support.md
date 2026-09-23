@@ -45,6 +45,8 @@ An agent should identify its shell and interpreter before running commands. Use 
 
 Install inside the same environment as the agent. A Windows-native agent does not automatically load WSL's home directory; a WSL agent does not automatically load Windows user skills. Discovery in ChatGPT's website or another hosted agent is separate from a local filesystem installation.
 
+Automated assignment execution with `margen-agent run` on native Windows requires an agent executable ending in `.exe`. Shell shims (`.cmd`, `.bat`, `.ps1`) are intentionally rejected so assignment text is never evaluated by a command shell. Agents installed through those shims can still use the skill interactively; use WSL for automated execution or open the assignment manually.
+
 ## Evidence boundary
 
 The `portable-platforms` CI matrix exercises installation/update, generation/validation, managed integrations, commands with spaces/Unicode, signing/tamper rejection and credential storage on macOS, Ubuntu and Windows. Windows PowerShell syntax is parsed by Windows PowerShell itself. CI results establish the tested runtime paths, not compatibility with every agent release, enterprise policy, architecture or Linux distribution. Scheduler definitions are tested without installing background tasks on CI. Browser-only reading and the containerized Linux portal do not require a local skill.
