@@ -3,6 +3,7 @@
 import re
 import hashlib
 import json
+import os
 
 DOMAIN = re.compile(
     r"(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z](?:[a-z0-9-]{0,61}[a-z0-9])?"
@@ -31,6 +32,56 @@ def verified_domain(user):
     except ValueError:
         return ""
 
+
+
+def owner_aliases():
+    """Operator-configured addresses for one identity, never client claims."""
+    return list(dict.fromkeys(e.strip().lower() for e in
+        os.environ.get("BOTTIFACT_OWNER_ALIASES", "").split(",") if e.strip()))
+
+
+def verified_emails(user):
+    if not user or not user.get("verified"):
+        return []
+    email = (user.get("email") or "").strip().lower()
+    aliases = owner_aliases()
+    return aliases if email and email in aliases else ([email] if email else [])
+
+
+def identity_bindings(user):
+    emails = verified_emails(user)
+    domains = sorted({verified_domain({"verified": True, "email": e}) for e in emails} - {""})
+    return {"identity_emails": json.dumps(emails), "identity_domains": json.dumps(domains)}
+
+
+# Collapse grants before joining artifacts: multiple matching addresses/domains
+# must not duplicate rows, counts or keyset cursors. Any personal grant takes
+# precedence; conflicting personal roles use the most restrictive explicit role.
+_IDENTITY_GRANTS_TEMPLATE = """
+identity_personal AS (
+    SELECT artifact, CASE MIN(CASE role WHEN 'viewer' THEN 1 WHEN 'commenter' THEN 2 ELSE 3 END)
+        WHEN 1 THEN 'viewer' WHEN 2 THEN 'commenter' ELSE 'editor' END AS role
+    FROM grants WHERE {scope}email IN (SELECT value FROM json_each(:identity_emails)) GROUP BY artifact
+), identity_domains AS (
+    SELECT artifact, CASE MAX(CASE role WHEN 'commenter' THEN 2 ELSE 1 END)
+        WHEN 2 THEN 'commenter' ELSE 'viewer' END AS role
+    FROM domain_grants WHERE {scope}domain IN (SELECT value FROM json_each(:identity_domains)) GROUP BY artifact
+), identity_grants AS (
+    SELECT artifact,role FROM identity_personal
+    UNION ALL
+    SELECT d.artifact,d.role FROM identity_domains d
+    WHERE NOT EXISTS(SELECT 1 FROM identity_personal p WHERE p.artifact=d.artifact)
+)
+"""
+
+
+IDENTITY_GRANTS_CTE = _IDENTITY_GRANTS_TEMPLATE.format(scope="")
+
+def explicit_role(db, artifact_id, user):
+    bindings = {**identity_bindings(user), "artifact": artifact_id}
+    row = db.execute("WITH " + _IDENTITY_GRANTS_TEMPLATE.format(scope="artifact=:artifact AND ") +
+        " SELECT role FROM identity_grants WHERE artifact=:artifact", bindings).fetchone()
+    return row["role"] if row else None
 
 def parse_grants(value):
     if not isinstance(value, list) or len(value) > 25:

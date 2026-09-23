@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.14.4 — Shared identities and focused authoring
+
+- Match personal and domain invitations across operator-linked identity aliases in shared discovery, direct authorization, search and context links. Collapse duplicate grants and preserve personal role precedence.
+- Group sidebar navigation, add searchable collapsible space/category filters and retain permission-aware account tools.
+- Reduce the default skill entrypoint and route specialist guidance on demand; add ranked component search and bounded recipe summaries.
+- Preserve artifact content, audience, ownership and stable URLs.
+
 ## 0.14.3 — Reader activity
 
 - Add creator-controlled per-artifact activity with period-scoped Umami pageviews and estimated uniques.

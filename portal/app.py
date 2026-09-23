@@ -41,11 +41,6 @@ def admin_emails():
     return [e.strip().lower() for e in os.environ.get("BOTTIFACT_ADMIN_EMAILS", "").split(",") if e.strip()]
 
 
-def owner_aliases():
-    """Alias de la misma persona, separados de la lista de administradores."""
-    return [e.strip().lower() for e in os.environ.get('BOTTIFACT_OWNER_ALIASES','').split(',') if e.strip()]
-
-
 def is_admin(user):
     return bool(user and user["verified"] and user.get("email") in admin_emails())
 
@@ -70,7 +65,8 @@ async def payload(request):
     return value
 
 
-from portal.domain_access import verified_domain, access_revision, parse_grants as parse_domain_grants
+from portal.domain_access import (owner_aliases, verified_emails, identity_bindings,
+    IDENTITY_GRANTS_CTE, explicit_role, access_revision, parse_grants as parse_domain_grants)
 
 
 class Store:
@@ -200,13 +196,7 @@ def role(db, artifact, user):
         return None
     if artifact['owner'] == user['id'] or is_admin(user):
         return 'owner'
-    grant = db.execute('SELECT role FROM grants WHERE artifact=? AND email=?',
-                       (artifact['id'], user.get('email') or '')).fetchone() if user['verified'] else None
-    if grant:
-        return grant['role']
-    domain = verified_domain(user)
-    grant = db.execute('SELECT role FROM domain_grants WHERE artifact=? AND domain=?', (artifact['id'], domain)).fetchone() if domain else None
-    return grant['role'] if grant else None
+    return explicit_role(db, artifact['id'], user)
 
 
 def permissions(db, artifact, user):
@@ -355,7 +345,7 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
     def session(request: Request):
         u = who(request)
         return {'user': {**{k:u[k] for k in ('id','email','name','verified')}, 'admin':is_admin(u),
-                         'emails':owner_aliases() if u['verified'] and u['email'] in owner_aliases() else [u['email']]} if u else None}
+                         'emails':verified_emails(u)} if u else None}
 
     @app.post('/api/guest')
     async def guest(request: Request):
@@ -433,9 +423,13 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
                     return {'nodes':nodes,'edges':connections(nodes),'total':result['total'],'truncated':result['total']>len(nodes),'network':context_network(db,nodes,u)}
                 return result
             rows = []
-            for a in db.execute('SELECT * FROM artifacts WHERE owner=? OR ? OR visibility IN (\'public\',\'unlisted\') OR id IN (SELECT artifact FROM grants WHERE email=?) OR id IN (SELECT artifact FROM domain_grants WHERE domain=?) ORDER BY updated DESC',(u['id'],is_admin(u),u.get('email') or '',verified_domain(u))):
+            bindings = {**identity_bindings(u), "uid": u['id'], "admin": int(is_admin(u))}
+            for a in db.execute("WITH " + IDENTITY_GRANTS_CTE + """
+                SELECT a.* FROM artifacts a LEFT JOIN identity_grants g ON g.artifact=a.id
+                WHERE a.owner=:uid OR :admin OR a.visibility IN ('public','unlisted') OR g.role IS NOT NULL
+                ORDER BY a.updated DESC""", bindings):
                 r = role(db,a,u)
-                explicit = db.execute('SELECT 1 FROM grants WHERE artifact=? AND email=? UNION SELECT 1 FROM domain_grants WHERE artifact=? AND domain=?', (a['id'],u.get('email') or '',a['id'],verified_domain(u))).fetchone()
+                explicit = explicit_role(db, a['id'], u)
                 in_view = (view not in ('mine','archived') or a['owner']==u['id']) and (view!='shared' or (a['owner']!=u['id'] and explicit))
                 if permissions(db,a,u)['read'] and ((public and a['visibility']=='public') or (not public and r and in_view)):
                     p = permissions(db,a,u)
