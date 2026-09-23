@@ -1,11 +1,11 @@
 # Native PowerShell entrypoint. Review before executing; no administrator required.
 [CmdletBinding()]
-param([string]$Server = 'https://artifacts.botto.is', [switch]$NoPath)
+param([string]$Server = 'https://artifacts.botto.is', [switch]$NoPath, [string]$Agents)
 $ErrorActionPreference = 'Stop'
 $uri = [Uri]$Server
 if ($uri.Scheme -ne 'https' -or $uri.UserInfo -or $uri.AbsolutePath -ne '/' -or $uri.Query -or $uri.Fragment) { throw 'Use an HTTPS server origin without a path or credentials.' }
 $Server = $Server.TrimEnd('/')
-Write-Host 'Margen - install/update for your Windows account: Codex, Claude Code, Hermes.'
+Write-Host 'Margen - install/update the skill for your selected agents in this Windows account.'
 Write-Host 'Each person connects their own account. No token is included or requested here.'
 $pythonCommand = $null
 $pythonArgs = @()
@@ -26,7 +26,9 @@ try {
   [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
   $installer = Join-Path $temp 'install.py'
   Invoke-WebRequest -UseBasicParsing -Uri "$Server/install.py" -OutFile $installer -TimeoutSec 60
-  & $pythonCommand @pythonArgs -X utf8 $installer --server $Server
+  $selectionArgs = @()
+  if ($PSBoundParameters.ContainsKey('Agents')) { $selectionArgs = @('--agents', $Agents) }
+  & $pythonCommand @pythonArgs -X utf8 $installer --server $Server @selectionArgs
   if ($LASTEXITCODE -ne 0) { throw "Margen installation failed (exit $LASTEXITCODE)." }
   $bin = Join-Path $HOME '.local\bin'
   if (-not $NoPath) {

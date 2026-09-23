@@ -16,6 +16,15 @@ import zipfile
 from urllib.parse import urlsplit
 
 ORIGIN = 'https://artifacts.botto.is'
+AGENT_TARGETS = {'codex': ('.agents', 'Codex'), 'claude': ('.claude', 'Claude Code'), 'hermes': ('.hermes', 'Hermes')}
+
+
+def parse_agents(value):
+    if value == 'all': return list(AGENT_TARGETS)
+    selected = [part.strip().lower() for part in value.split(',')]
+    if not selected or any(part not in AGENT_TARGETS for part in selected):
+        raise ValueError('Choose --agents codex,claude,hermes (one or more), or all.')
+    return [name for name in AGENT_TARGETS if name in selected]
 TRUSTED_RELEASE_KEY = '-----BEGIN PUBLIC KEY-----\nMIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEA3ClxdiyMbuMX4b6GwSRp\n1ZFFlHtRzoSuqCKWYJ8Dv45z3BUvHTtJV/cjxoBOA6dJR8CbkN+bdValTRZCgdQr\n+42Diu/rt4AFzJsF229+NDZLPA3FN43hPV3YApBNqulsJYGKtN/+jJOixMuWhxzz\nqgD1OfJkc9yXdRmt0ZXLGchUR5mprPYQOB6zWcAGswUyEDwZBiHLw9fvZnMYYDqs\n/ensu1QobwCj2CIZaxzI0SVvdWD6DQzejEyLceNMVmNkRymrBKR8JtWC0eSPIDBJ\nQ6wlg3M4NgwkBpB8EBBcA0fmHYGT5XXIHMVv5GJPNo2Si/3LWNJmEz5jayeJRksK\nTU7HF1wit30NQV0cS227jcAquI4bAjsO29mfk1R1h2CEoLoJYEZeSleIXcdh9djR\n0evuv0HGuHwxFQ3SMUHqluzECrCW6HQ+3D/PyACL4D42P4WtHRuU0J69dmVdcNN/\nw2kUrUpVenAT4ea+OXQ94L2xELlGdnqX1Vr71xehGVPDAgMBAAE=\n-----END PUBLIC KEY-----\n'
 
 
@@ -140,11 +149,14 @@ def main():
     parser.add_argument('--package','--paquete',dest='paquete', type=Path, help='ZIP local; no usa ningún servidor. Requiere archivo .sha256 contiguo.')
     parser.add_argument('--destination','--destino',dest='destino', type=Path, default=Path.home()/'.local/share/bottifact/library')
     parser.add_argument('--no-links','--sin-enlaces',dest='sin_enlaces', action='store_true', help='Actualiza solo la biblioteca; no modifica carpetas de agentes ni instala el comando.')
+    parser.add_argument('--agents', help='Install for codex,claude,hermes or all. Omit to keep the saved selection; first installation defaults to all.')
     args = parser.parse_args()
     destination = args.destino.expanduser().absolute()
     if (destination/'.git').exists(): raise ValueError('El destino es un checkout Git. Conserva ese desarrollo y elige otra carpeta con --destino.')
     setting=destination.parent/('.'+destination.name+'-update.json')
     saved=json.loads(setting.read_text(encoding='utf-8')) if setting.exists() else {}
+    if args.agents is not None and args.sin_enlaces: raise ValueError('--agents cannot be combined with --no-links.')
+    agents = parse_agents(args.agents if args.agents is not None else ','.join(saved.get('agents', list(AGENT_TARGETS))))
     if args.servidor:
         parsed=urlsplit(args.servidor)
         if parsed.scheme!='https' or not parsed.hostname or parsed.username or parsed.password or parsed.path not in ('','/') or parsed.query or parsed.fragment:raise ValueError('Usa un servidor HTTPS sin ruta ni credenciales.')
@@ -178,7 +190,7 @@ def main():
                 print('Self-hosted checksum verification. Pin --trusted-key to require signed releases.')
             if args.check:
                 print(json.dumps({'installed':(destination/'VERSION.json').exists(),'update_available':saved.get('sha256')!=expected,'server':ORIGIN if not args.paquete else None},ensure_ascii=False));return
-            if args.if_changed and saved.get('sha256')==expected and (destination/'VERSION.json').exists():
+            if args.if_changed and saved.get('sha256')==expected and agents==saved.get('agents', list(AGENT_TARGETS)) and (destination/'VERSION.json').exists():
                 print('Margen ya está actualizado.');return
             extract(args.paquete.read_bytes() if args.paquete else fetch('/downloads/'+package_name+'.zip', 50*1024*1024), expected, root)
             source = root/'bottifact'
@@ -188,9 +200,9 @@ def main():
         if not args.sin_enlaces and os.name == 'nt':
             sys.path.insert(0,str(destination/'scripts'))
             from windows_install import integrate
-            integrate(destination)
+            integrate(destination, agents=agents)
         elif not args.sin_enlaces:
-            for agent,label in [('.agents','Codex'),('.claude','Claude Code'),('.hermes','Hermes')]:
+            for agent,label in [AGENT_TARGETS[name] for name in agents]:
                 link = Path.home()/agent/'skills/margen'
                 link.parent.mkdir(parents=True, exist_ok=True)
                 if link.exists() and not link.is_symlink():
@@ -202,7 +214,7 @@ def main():
                 link.symlink_to(destination, target_is_directory=True)
                 print(label + ': instalado · ' + str(link))
             # Keep the old skill name as an explicit compatibility entry, not a second canonical skill.
-            for agent in ['.agents','.claude','.hermes']:
+            for agent in [AGENT_TARGETS[name][0] for name in agents]:
                 legacy=Path.home()/agent/'skills/bottifact'
                 alias=destination/'compat/bottifact'
                 if legacy.is_symlink() and legacy.resolve()==destination.resolve():
@@ -228,10 +240,11 @@ def main():
                     pass
                 else:
                     print('Preserved existing command: '+str(margen_binary))
-        setting.write_text(json.dumps({'local':bool(args.paquete) and not args.servidor,'servidor':ORIGIN if not args.paquete or args.servidor else None,'sha256':expected,'channel':channel,'trusted_key':trusted_key})+'\n',encoding='utf-8')
+        setting.write_text(json.dumps({'local':bool(args.paquete) and not args.servidor,'servidor':ORIGIN if not args.paquete or args.servidor else None,'sha256':expected,'channel':channel,'trusted_key':trusted_key,'agents':agents})+'\n',encoding='utf-8')
         version = json.loads((destination/'VERSION.json').read_text(encoding='utf-8'))['version']
         print('Margen ' + version + '. Generar HTML no requiere cuenta ni token.')
         print('Instalación personal en: ' + str(Path.home()))
+        print('Agentes seleccionados: ' + ', '.join(AGENT_TARGETS[name][1] for name in agents))
         print('La biblioteca se comparte entre tus agentes, no entre cuentas de personas distintas.')
         print('Comprueba tu cuenta con margen status. Una conexión anterior requiere margen confirm-account --email TU_CORREO antes de publicar.')
         if not args.paquete or args.servidor:print('Para publicar: entra en ' + ORIGIN + ' → Conectar un agente. Nunca pegues el token en un artefacto.')

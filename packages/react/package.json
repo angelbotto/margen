@@ -1,6 +1,6 @@
 {
   "name": "@bottifact/react",
-  "version": "0.15.0",
+  "version": "0.15.1",
   "description": "Typed React components for Bottifact artifacts",
   "license": "MIT",
   "type": "module",
@@ -25,7 +25,7 @@
     "react-dom": "^18.3.0 || ^19.0.0"
   },
   "dependencies": {
-    "@bottifact/core": "0.15.0",
+    "@bottifact/core": "0.15.1",
     "@radix-ui/react-avatar": "1.2.6",
     "@radix-ui/react-dialog": "1.1.23",
     "@radix-ui/react-popover": "1.1.23",

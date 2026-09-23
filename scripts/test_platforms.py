@@ -79,6 +79,27 @@ class PlatformTests(unittest.TestCase):
                 self.assertEqual(result.returncode,0,result.stderr)
             self.assertIn('información',output.read_text(encoding='utf-8'))
 
+    def test_agent_selection_persists_and_can_expand_with_unchanged_package(self):
+        archive=package()
+        with tempfile.TemporaryDirectory() as d:
+            home=Path(d)/'personal';home.mkdir();dest=home/'.local/share/bottifact/library'
+            args=['update.py','--package',str(archive),'--destination',str(dest)]
+            with patch.object(Path,'home',return_value=home):
+                with patch.object(sys,'argv',args+['--agents','hermes']): update.main()
+                self.assertTrue((home/'.hermes/skills/margen/SKILL.md').exists())
+                self.assertFalse((home/'.agents').exists());self.assertFalse((home/'.claude').exists())
+                with patch.object(sys,'argv',args): update.main()
+                settings=dest.parent/'.library-update.json'
+                self.assertEqual(json.loads(settings.read_text())['agents'],['hermes'])
+                self.assertFalse((home/'.claude').exists())
+                with patch.object(sys,'argv',args+['--if-changed','--agents','codex,hermes']): update.main()
+                self.assertTrue((home/'.agents/skills/margen/SKILL.md').exists())
+                self.assertFalse((home/'.claude').exists())
+                self.assertEqual(json.loads(settings.read_text())['agents'],['codex','hermes'])
+            self.assertEqual(update.parse_agents('all'),['codex','claude','hermes'])
+            for invalid in ('','unknown','hermes,','../claude'):
+                with self.assertRaises(ValueError): update.parse_agents(invalid)
+
     def test_windows_scheduler_uses_current_user_and_argument_quoting(self):
         with tempfile.TemporaryDirectory() as d:
             calls=[]
@@ -92,6 +113,22 @@ class PlatformTests(unittest.TestCase):
             self.assertEqual(tree.find('.//t:RunLevel',ns).text,'LeastPrivilege')
             self.assertIn('--if-changed',tree.find('.//t:Arguments',ns).text)
             self.assertTrue(any('/Create' in c for c in calls))
+
+    @unittest.skipUnless(os.name=='nt','Native PowerShell argument forwarding')
+    def test_powershell_forwards_agent_selection_and_propagates_failure(self):
+        # Replace only the download with a synthetic Python stub; run the real bootstrap.
+        program = r"""
+function Invoke-WebRequest {
+    param([switch]$UseBasicParsing,[string]$Uri,[string]$OutFile,[int]$TimeoutSec)
+    $stub = "import os,sys; assert sys.argv[sys.argv.index('--agents')+1]=='codex,hermes'; raise SystemExit(int(os.environ['MARGEN_TEST_EXIT']))"
+    [IO.File]::WriteAllText($OutFile,$stub)
+}
+& $env:MARGEN_PS_TEST -Agents 'codex,hermes' -NoPath
+"""
+        for exit_code in (0,7):
+            result=subprocess.run(['powershell.exe','-NoProfile','-NonInteractive','-ExecutionPolicy','Bypass','-Command',program],env={**os.environ,'MARGEN_PS_TEST':str(ROOT/'scripts/install.ps1'),'MARGEN_TEST_EXIT':str(exit_code)},capture_output=True,text=True,timeout=60)
+            if exit_code==0: self.assertEqual(result.returncode,0,result.stderr)
+            else: self.assertNotEqual(result.returncode,0)
 
     @unittest.skipUnless(os.name=='nt','Native Windows PowerShell syntax check')
     def test_powershell_entrypoint_parses(self):

@@ -3,7 +3,8 @@
 set -euo pipefail
 main() {
   printf '\nMargen · instalar o actualizar\n\n'
-  printf 'Se preparará una biblioteca compartida para:\n  • Codex\n  • Claude Code\n  • Hermes\n\n'
+  printf 'Se preparará el skill para los agentes seleccionados.\nLa actualización conserva tu selección anterior.\n\n'
+  printf 'Agentes disponibles: Codex, Claude Code y Hermes.\n'
   printf 'Este instalador configura agentes locales; no instala extensiones en la web de ChatGPT.\n'
   printf 'Se instala para tu usuario del sistema. No incluye una cuenta ni un token.\n'
   printf 'Cada persona debe entrar al portal con su correo y crear su propia conexión.\n'
