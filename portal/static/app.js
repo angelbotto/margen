@@ -2038,10 +2038,8 @@
       "Usa margen connect y margen publish para enviar el HTML.",
     ].forEach((t) => list.append(make("li", t)));
     section.append(list);
-    const install = make(
-      "pre",
-      "curl -fsSL " + location.origin + "/install.sh | bash",
-    );
+    const install = make("pre");
+    window.MargenInstall.selector(section, install);
     section.append(
       install,
       make(

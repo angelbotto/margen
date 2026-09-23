@@ -1,6 +1,6 @@
 # Release channels, verification and compatibility
 
-Managed downloads from artifacts.botto.is use a signed manifest in addition to the ZIP's SHA-256. The updater pins the release public key and verifies RSA/SHA-256 through OpenSSL before extracting or executing package code. Manifests declare the channel, package digest, version and contract compatibility. `stable` is the default; `--channel preview` is explicit and persists. A channel with no published manifest fails closed.
+Managed downloads from artifacts.botto.is use a signed manifest in addition to the ZIP's SHA-256. The updater pins the release public key and verifies RSA/SHA-256 through OpenSSL on Unix or native .NET on Windows before extracting or executing package code. Manifests declare the channel, package digest, version and contract compatibility. `stable` is the default; `--channel preview` is explicit and persists. A channel with no published manifest fails closed.
 
 ```bash
 margen update --check

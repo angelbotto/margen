@@ -5,7 +5,7 @@ Use the existing Margen service without operating a server. This guide covers th
 ## What you need
 
 - A browser and an account you can sign in with at [artifacts.botto.is](https://artifacts.botto.is).
-- For agent creation/publication: macOS or Linux, Bash/curl and Python 3.10+. The installer checks Python and explains how to install it if missing.
+- For agent creation/publication: macOS/Linux with Bash/curl, or Windows with PowerShell 5.1+, and Python 3.10+. The installer checks Python and explains how to install it if missing.
 - Claude Code, Codex or Hermes, if you want that agent to use the skill.
 
 You do **not** configure Docker, a NAS, DNS, `.env`, Google OAuth credentials or an email provider. Those are service-operator responsibilities. Installing the open-source skill does not give anyone your account or access to your private documents.
@@ -18,13 +18,15 @@ Readers need only the shared artifact link. Public/unlisted reading and authenti
 
 ## 2. Install the skill
 
+**Windows:** follow the [native PowerShell installation](platform-support.md#windows). The commands below are for macOS/Linux; do not paste them into PowerShell or CMD.
+
 ```bash
 curl -fsSL https://artifacts.botto.is/install.sh -o /tmp/bottifact-install.sh
 # Inspect the script, then run it.
 bash /tmp/bottifact-install.sh
 ```
 
-The installer downloads a checksum-verified package, keeps a shared library in `~/.local/share/bottifact/library`, and creates links for Claude Code, Codex and Hermes. Existing independent skill directories are preserved; read the output if there is a conflict. The CLI launcher is `~/.local/bin/margen`.
+The installer downloads a checksum-verified package, keeps a shared library in `~/.local/share/bottifact/library`, and integrates Claude Code, Codex and Hermes (links on Unix; managed copies on Windows). Existing independent skill directories are preserved; read the output if there is a conflict. The CLI launcher is `~/.local/bin/margen`.
 
 If your shell cannot find it, add the directory for the current shell:
 
