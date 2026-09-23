@@ -10,7 +10,7 @@ def verify(root):
  if not isinstance(files,dict) or 'SKILL.md' not in files or 'packages/core/registry/registry.json' not in files:raise ValueError('Manifiesto incompleto')
  for name,digest in files.items():
   path=PurePosixPath(name)
-  if path.is_absolute() or '..' in path.parts or '\\' in name:raise ValueError('Ruta no portable: '+name)
+  if path.is_absolute() or '..' in path.parts or '\\' in name or any(':' in p or p.endswith((' ','.')) or p.split('.')[0].upper() in {'CON','PRN','AUX','NUL',*[f'COM{i}' for i in range(1,10)],*[f'LPT{i}' for i in range(1,10)]} for p in path.parts):raise ValueError('Ruta no portable: '+name)
   target=root.joinpath(*path.parts)
   if not target.is_file() or target.is_symlink() or not target.resolve().is_relative_to(root):raise ValueError('Archivo ausente o enlace: '+name)
   if hashlib.sha256(target.read_bytes()).hexdigest()!=digest:raise ValueError('SHA-256 distinto: '+name)

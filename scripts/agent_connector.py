@@ -14,6 +14,11 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
+try:
+    from .private_storage import read_json, write_json
+except ImportError:
+    from private_storage import read_json, write_json
+
 CONFIG = Path.home() / ".config/margen/connector.json"
 STATE = Path.home() / ".local/state/margen/assignments"
 
@@ -158,18 +163,23 @@ def run(config, key, cwd):
                 cwd=cwd,
                 stdout=log,
                 stderr=subprocess.STDOUT,
-                start_new_session=True,
+                start_new_session=os.name != "nt",
+                creationflags=subprocess.CREATE_NEW_PROCESS_GROUP if os.name == "nt" else 0,
             )
             deadline = time.monotonic() + 3600
             last_ok = time.monotonic()
 
             def stop():
                 if process.poll() is None:
-                    os.killpg(process.pid, signal.SIGTERM)
+                    if os.name == "nt":
+                        subprocess.run(["taskkill.exe", "/PID", str(process.pid), "/T", "/F"], capture_output=True, check=False)
+                    else:
+                        os.killpg(process.pid, signal.SIGTERM)
                     try:
                         process.wait(timeout=5)
                     except subprocess.TimeoutExpired:
-                        os.killpg(process.pid, signal.SIGKILL)
+                        if os.name == "nt": process.kill()
+                        else: os.killpg(process.pid, signal.SIGKILL)
                         process.wait()
                 try:
                     heartbeat(True)
@@ -394,12 +404,12 @@ def main():
         ):
             raise ValueError("Choose an HTTPS server origin")
         token = getpass.getpass("Scoped connector token: ").strip()
-        private(a.config, json.dumps({"server": server, "token": token}))
+        write_json(a.config, {"server": server, "token": token})
         print(
             "Connection saved privately. Run receive or listen; use --run only for explicit execution."
         )
         return
-    config = json.loads(a.config.read_text())
+    config = read_json(a.config)
     if a.action == "mcp":
         mcp(config)
         return

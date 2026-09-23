@@ -10,7 +10,7 @@ The first trial should create useful team knowledge while exercising artifact cr
 
 ## Prompt template
 
-> Use the current Margen skill. Analyze how I actually use Claude Code, Codex and Hermes using only the workspace, conversations and examples I have authorized you to inspect. Start by reporting which sources you can access; do not claim access to tools or histories you cannot inspect. Ask me for the few examples needed to fill important gaps.
+> Identify my operating system, shell and available Python first. Follow the matching installation instructions; use native PowerShell on Windows, not Bash commands. Install in the same environment as my agent (Windows and WSL are separate). Use the current Margen skill. Analyze how I actually use Claude Code, Codex and Hermes using only the workspace, conversations and examples I have authorized you to inspect. Start by reporting which sources you can access; do not claim access to tools or histories you cannot inspect. Ask me for the few examples needed to fill important gaps.
 >
 > Create a shareable artifact in my voice, addressed to my team: how I work with agents, which tasks I delegate, repeatable workflows, useful prompts, context and verification practices, what has worked, what has failed, and three concrete practices colleagues can try. Include evidence for claims. Distinguish observations from recommendations; do not invent time savings, usage counts or results.
 >
@@ -28,6 +28,6 @@ Record actual trial findings: time to first artifact, sign-in or install frictio
 
 Share the installer URL and the following brief, never a personal token or configuration folder. Every teammate must sign in using their own `@liftit.co` address.
 
-> I want to document how I use Claude, Codex and/or Hermes in my work at Liftit. Use Margen to produce a practical artifact for the team. Inspect only the sessions and projects available to me; distinguish verified examples from suggestions. Include my workflow, effective prompts, context management, validation, failures and lessons, security precautions, and three practices teammates can reproduce. Do not include credentials, private conversations or customer data.
+> First identify my OS/shell and follow Margen's matching installer; Windows PowerShell and WSL need different commands. I want to document how I use Claude, Codex and/or Hermes in my work at Liftit. Use Margen to produce a practical artifact for the team. Inspect only the sessions and projects available to me; distinguish verified examples from suggestions. Include my workflow, effective prompts, context management, validation, failures and lessons, security precautions, and three practices teammates can reproduce. Do not include credentials, private conversations or customer data.
 >
 > Before publishing, verify that Margen is connected to my own Liftit email. Ask me for my email if it is not known from this conversation; never infer it from an existing token or use a colleague's connection. If needed, guide me through the hosted installer and personal connection without asking for a token in chat. Publish in my account and share this specific artifact with `liftit.co` as commenters using invited access. Return the link and a short summary for the team. Do not send messages automatically.

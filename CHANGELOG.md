@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.15.0 — Native Windows installation
+
+- Add PowerShell bootstrap and OS-specific commands in installation and account connection screens.
+- Support Windows locking, managed skill copies, CMD launchers, per-user scheduled updates and UTF-8 paths.
+- Verify signatures through native .NET on Windows and protect local tokens with per-user DPAPI; retain OpenSSL/POSIX behavior on Unix.
+- Reject Windows-specific unsafe archive/manifest paths and preserve personal identity checks.
+- Add native Windows/macOS/Linux CI installation, update, generation and integrity checks. Keep agent-host discovery and execution policy limits explicit.
+
 ## 0.14.4 — Shared identities and focused authoring
 
 - Match personal and domain invitations across operator-linked identity aliases in shared discovery, direct authorization, search and context links. Collapse duplicate grants and preserve personal role precedence.

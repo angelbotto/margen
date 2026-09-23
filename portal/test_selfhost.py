@@ -43,7 +43,7 @@ class SelfHostTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary,patch.dict(os.environ,{'BOTTIFACT_ISSUER':'','BOTTIFACT_AUDIENCE':''}):
             client=TestClient(create_app(temporary,origin='https://docs.example.org'),base_url='https://docs.example.org')
             self.assertEqual(client.get('/health').status_code,200)
-            for route in ['/install','/install.sh','/install.py']:
+            for route in ['/install','/install.sh','/install.ps1','/install.py']:
                 response=client.get(route)
                 self.assertEqual(response.status_code,200)
                 self.assertIn('https://docs.example.org',response.text)

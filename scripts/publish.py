@@ -14,6 +14,11 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
+try:
+    from .private_storage import read_json as read_private_json, write_json as private_json
+except ImportError:
+    from private_storage import read_json as read_private_json, write_json as private_json
+
 CONFIG=Path.home()/'.config/bottifact/portal.json'
 
 def checked_identity(user, email):
@@ -33,15 +38,6 @@ def check_account(config, user, require=False):
         raise SystemExit('La conexión ya no corresponde a la cuenta confirmada. Ejecuta margen connect con tu propio --email antes de continuar.')
     if require and not saved:
         raise SystemExit('Confirma primero a quién pertenece esta conexión: margen confirm-account --email TU_CORREO. No uses el correo de otra persona ni lo deduzcas del token.')
-
-def private_json(path, value):
-    path.parent.mkdir(parents=True,exist_ok=True,mode=0o700)
-    fd,name=tempfile.mkstemp(prefix='.bottifact-',dir=path.parent)
-    try:
-        with os.fdopen(fd,'w') as f:json.dump(value,f,ensure_ascii=False,indent=2)
-        os.replace(name,path)
-    finally:
-        if os.path.exists(name):os.unlink(name)
 
 def request(base, token, path, data=None, method=None):
     req=urllib.request.Request(base+path,data=json.dumps(data).encode() if data is not None else None,
@@ -92,13 +88,13 @@ def main():
         token=args.token_archivo.read_text().strip() if args.token_archivo else getpass.getpass('Token personal (oculto): ')
         user=request(base,token,'/api/session')['user']
         identity=checked_identity(user,email)
-        old=json.loads(args.config.read_text()) if args.config.exists() else {}
+        old=read_private_json(args.config, allow_plain=True) if args.config.exists() else {}
         same_account=old.get('server')==base and (old.get('account',{}).get('id')==identity['id'] or old.get('token')==token)
         private_json(args.config,{'server':base,'token':token,'account':identity,'publish_on_create':bool(old.get('publish_on_create')) if same_account else False})
         print('Conexión guardada para '+user['email']+'. No se incluye en el skill ni en los artefactos.');return
     if not args.config.exists():raise SystemExit('Primero conecta tu cuenta con: publicar.py conectar --servidor https://artifacts.example.com')
-    if args.config.stat().st_mode&0o077:raise SystemExit('La conexión debe ser privada: chmod 600 '+str(args.config))
-    config=json.loads(args.config.read_text());base=config['server'];token=config['token']
+    if os.name != 'nt' and args.config.stat().st_mode&0o077:raise SystemExit('La conexión debe ser privada: chmod 600 '+str(args.config))
+    config=read_private_json(args.config);base=config['server'];token=config['token']
     if args.command=='confirm-account':
         user=request(base,token,'/api/session')['user']
         identity=checked_identity(user,args.email)

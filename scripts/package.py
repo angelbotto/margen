@@ -6,7 +6,7 @@ from pathlib import Path
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-EXTENSIONS = {'.md', '.css', '.js', '.cjs', '.json', '.html', '.py', '.sh', '.yaml', '.woff2', '.mp3', '.svg', '.txt'}
+EXTENSIONS = {'.md', '.css', '.js', '.cjs', '.json', '.html', '.py', '.sh', '.ps1', '.yaml', '.woff2', '.mp3', '.svg', '.txt'}
 ROOT_FILES = ['SKILL.md', 'VERSION.json', 'README.md', 'README.es.md', 'LICENSE', 'NOTICE',
               'CONTRIBUTING.md', 'SECURITY.md', 'CODE_OF_CONDUCT.md', 'CHANGELOG.md', 'ROADMAP.md']
 FOLDERS = ['compat', 'scripts', 'docs', 'examples/content', 'examples/generated', 'agents', 'licenses',
@@ -23,6 +23,7 @@ def package():
         files.extend(path for path in (ROOT / folder).rglob('*') if path.is_file() and not path.is_symlink()
                      and path.suffix in EXTENSIONS and '__pycache__' not in path.parts and 'node_modules' not in path.parts)
     files.append(ROOT/'tests/fixtures/agent-evaluation/cases.json')
+    files.append(ROOT/'tests/fixtures/release-signature.json')
     for name in ['geography.json', 'sounds-cmrg.json', 'fonts.json', 'literata-fonts.json']:
         files.append(ROOT / 'tests/evidence' / name)
     blobs = {str(path.relative_to(ROOT)): path.read_bytes() for path in sorted(set(files))}

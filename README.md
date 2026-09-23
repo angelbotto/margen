@@ -45,6 +45,8 @@ This is the shortest route to an existing library with accounts, shared review a
 1. Open [artifacts.botto.is](https://artifacts.botto.is), sign in, and open **Conectar un agente** to create a personal token. Readers can use a shared artifact link without installing the skill; the document's access policy determines whether sign-in is required.
 2. Install the shared skill for Claude Code, Codex and Hermes:
 
+Windows users: use the [native PowerShell installer](docs/platform-support.md#windows). The following commands use Bash on macOS/Linux.
+
 ```bash
 curl -fsSL https://artifacts.botto.is/install.sh -o /tmp/bottifact-install.sh
 # Review the downloaded script before running it.

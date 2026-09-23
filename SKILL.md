@@ -7,6 +7,8 @@ description: Create, revise, validate and publish editorial HTML artifacts, exec
 
 Margen is a portable library and skill for Claude, Codex and Hermes, formerly Bottifact. Resolve paths from this file. Python 3.10+ generates standalone HTML; the configured portal adds shared review. Keep compatibility commands (`bottifact`), IDs and saved connections intact.
 
+Use the agent's actual OS and shell. On Windows use the [native PowerShell instructions](docs/platform-support.md), `py -3 -X utf8` or a verified Python executable; never paste Bash commands into PowerShell/CMD. WSL and Windows installations are separate.
+
 ## Load only what the task needs
 
 Read this entry once per session. Keep a short working note of document ID, source files, chosen recipes and checks. Reuse it on follow-up edits; do not reread the whole library or generated HTML with embedded assets.

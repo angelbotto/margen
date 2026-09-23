@@ -1,5 +1,5 @@
 """Instalación real en temporal, actualización, integridad y generación fuera del skill."""
-import tempfile,zipfile,json,subprocess,unittest
+import tempfile,zipfile,json,subprocess,unittest,sys
 from pathlib import Path
 from package import package
 from install import install
@@ -19,15 +19,15 @@ class PortableTests(unittest.TestCase):
    _,backup=install(source,dest,True)
    self.assertEqual((backup/'marca-usuario.txt').read_text(),'conservar');self.assertFalse((dest/'marca-usuario.txt').exists())
    output=root/'examples/generated/report.html'
-   subprocess.run(['python3',str(dest/'scripts/create_artifact.py'),'--contenido',str(dest/'examples/content/standard-content.html'),'--titulo','Prueba portable','--tema','blueprint','--estilo','tecnico','--salida',str(output)],cwd=root,check=True,capture_output=True)
-   subprocess.run(['python3',str(dest/'scripts/validate_artifact.py'),str(output)],cwd=root,check=True,capture_output=True)
+   subprocess.run([sys.executable,'-X','utf8',str(dest/'scripts/create_artifact.py'),'--contenido',str(dest/'examples/content/standard-content.html'),'--titulo','Prueba portable','--tema','blueprint','--estilo','tecnico','--salida',str(output)],cwd=root,check=True,capture_output=True)
+   subprocess.run([sys.executable,'-X','utf8',str(dest/'scripts/validate_artifact.py'),str(output)],cwd=root,check=True,capture_output=True)
    self.assertIn('nota-tema-inicial',output.read_text())
    self.assertIn('Margen',output.read_text())
    self.assertIn('name: margen', (dest/'SKILL.md').read_text())
    self.assertEqual(dest.name,'bottifact')
    from new_component import scaffold
    scaffold(dest, 'test-release-brief', 'Release brief', 'reports')
-   subprocess.run(['python3',str(dest/'scripts/build.py')],cwd=root,check=True,capture_output=True)
+   subprocess.run([sys.executable,'-X','utf8',str(dest/'scripts/build.py')],cwd=root,check=True,capture_output=True)
    registry=json.loads((dest/'packages/core/registry/registry.json').read_text())['componentes']
    added=next(item for item in registry if item['id']=='test-release-brief')
    self.assertEqual(added['nombre'],'Release brief')

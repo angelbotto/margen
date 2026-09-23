@@ -12,6 +12,7 @@ RUN pip install --no-cache-dir --require-hashes -r requirements.lock
 COPY portal /app/portal
 COPY scripts/update.py /app/portal/install.py
 COPY scripts/install.sh /app/portal/install.sh
+COPY scripts/install.ps1 /app/portal/install.ps1
 COPY --from=package /src/dist /releases
 RUN mkdir -p /data /backups && chown -R ${APP_UID}:${APP_GID} /data /backups /releases
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 BOTTIFACT_DATA=/data

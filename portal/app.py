@@ -741,6 +741,11 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
         path=ROOT/'install.sh' if (ROOT/'install.sh').exists() else ROOT.parent/'scripts/install.sh'
         return Response(path.read_text().replace('https://artifacts.botto.is',origin),media_type='text/plain')
 
+    @app.get('/install.ps1')
+    def powershell_installer():
+        path=ROOT/'install.ps1' if (ROOT/'install.ps1').exists() else ROOT.parent/'scripts/install.ps1'
+        return Response(path.read_text(encoding='utf-8').replace('https://artifacts.botto.is',origin),media_type='text/plain')
+
     @app.get('/install.py')
     def installer():
         path=ROOT/'install.py' if (ROOT/'install.py').exists() else ROOT.parent/'scripts/update.py'
