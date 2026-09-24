@@ -797,109 +797,68 @@ window.BottifactContextWorkbench = {
       );
     }
     async function filters() {
-      const { body } = dialog("Filtros avanzados"),
-        q = JSON.parse(params().get("filters") || '{"join":"and","rules":[]}'),
-        join = select("Combinar", [
-          ["and", "Todas las condiciones"],
-          ["or", "Cualquier condición"],
-        ]),
-        list = el("div");
-      join.field.value = q.join;
-      body.append(join.wrap, list);
-      const columns = [
-        ["title", "Título"],
-        ["space", "Empresa"],
-        ["category", "Categoría"],
-        ["visibility", "Acceso"],
-        ["comments", "Comentarios pendientes"],
-        ["updated", "Fecha UTC"],
-        ["agent", "Agente"],
-      ];
-      function render() {
-        list.replaceChildren();
-        q.rules.forEach((rule, i) => {
-          const row = el("div", undefined, "context-rule"),
-            col = select("Campo", columns),
-            op = select("Condición", [
-              ["contains", "Contiene"],
-              ["eq", "Igual a"],
-              ["in", "Uno de"],
-              ["gte", "Desde"],
-              ["lte", "Hasta"],
-              ["between", "Entre"],
-              ["empty", "Sin valor"],
-            ]),
-            value = input(
-              "Valor",
-              Array.isArray(rule.value)
-                ? rule.value.join(",")
-                : rule.value || "",
-            ),
-            upper = input("Hasta", rule.upper || "");
-          col.field.value = rule.column;
-          op.field.value = rule.operator;
-          value.field.type =
-            rule.operator === "in"
-              ? "text"
-              : rule.column === "comments"
-                ? "number"
-                : rule.column === "updated"
-                  ? "date"
-                  : "text";
-          upper.field.type = value.field.type;
-          value.wrap.hidden = rule.operator === "empty";
-          upper.wrap.hidden = rule.operator !== "between";
-          col.field.onchange = () => {
-            rule.column = col.field.value;
-            rule.value = "";
-            render();
-          };
-          op.field.onchange = () => {
-            rule.operator = op.field.value;
-            rule.value = "";
-            render();
-          };
-          value.field.oninput = () =>
-            (rule.value =
-              rule.operator === "in"
-                ? value.field.value.split(",").map((v) => v.trim())
-                : value.field.value);
-          upper.field.oninput = () => (rule.upper = upper.field.value);
-          row.append(
-            col.wrap,
-            op.wrap,
-            value.wrap,
-            upper.wrap,
-            button("Quitar", () => {
-              q.rules.splice(i, 1);
-              render();
-            }),
-          );
-          list.append(row);
+      const { d, body, status } = dialog("Filtros avanzados");
+      d.classList.add("filter-dialog");
+      const q = JSON.parse(params().get("filters") || '{"join":"and","rules":[]}');
+      const form = el("form", undefined, "filter-form");
+      const join = select("Mostrar artefactos que cumplan", [["and", "Todas las condiciones"],["or", "Cualquiera de las condiciones"]]);
+      join.field.value = q.join; join.wrap.className = "filter-join";
+      const list = el("div", undefined, "filter-rules");
+      const columns = [["title","Título"],["space","Empresa"],["category","Categoría"],["visibility","Acceso"],["comments","Comentarios pendientes"],["updated","Fecha UTC"],["agent","Agente"]];
+      const ops = [["contains","Contiene"],["eq","Es igual a"],["in","Es uno de"],["gte","Mayor o igual"],["lte","Menor o igual"],["between","Está entre"],["empty","Está vacío"]];
+      const add = button("Añadir condición", () => {
+        if(q.rules.length >= 12) return;
+        q.rules.push({column:"title",operator:"contains",value:""}); render();
+        list.lastElementChild.querySelector("select").focus();
+      });
+      add.className = "filter-add";
+      const footer = el("footer",undefined,"filter-actions"), actions = el("div",undefined,"filter-confirm");
+      const clear = button("Restablecer", () => { q.rules=[];render();add.focus(); }); clear.className="filter-reset";
+      const cancel = button("Cancelar",()=>d.close()), apply = el("button","Aplicar filtros","primary");
+      apply.type="submit"; actions.append(cancel,apply);footer.append(clear,actions);
+      function render(focusIndex, focusField) {
+        list.replaceChildren(); status.textContent="";
+        add.disabled=q.rules.length>=12; clear.disabled=!q.rules.length;
+        if(!q.rules.length) list.append(el("p","Sin condiciones adicionales. Añade una para afinar los resultados.","filter-empty"));
+        q.rules.forEach((rule,i)=>{
+          const row=el("div",undefined,"context-rule"), col=select("Campo",columns);
+          const ordered=["comments","updated"].includes(rule.column);
+          let choices=ops.filter(([op])=>ordered ? op!=="contains" : !["gte","lte","between"].includes(op));
+          if(!choices.some(([op])=>op===rule.operator)) choices=[...choices,ops.find(([op])=>op===rule.operator)||ops[0]];
+          if(rule.column==="updated") choices=choices.map(([op,label])=>[op,op==="gte"?"Desde":op==="lte"?"Hasta":label]);
+          const op=select("Condición",choices), value=input(rule.operator==="between"?"Desde":"Valor",Array.isArray(rule.value)?rule.value.join(", "):(rule.value??"")), upper=input("Hasta",rule.upper??"");
+          col.field.value=rule.column;op.field.value=rule.operator;
+          value.field.type=rule.operator==="in"?"text":rule.column==="comments"?"number":rule.column==="updated"?"date":"text";
+          upper.field.type=value.field.type;
+          value.field.required=rule.operator!=="empty";upper.field.required=rule.operator==="between";
+          value.field.disabled=rule.operator==="empty";upper.field.disabled=rule.operator!=="between";
+          value.wrap.hidden=rule.operator==="empty";upper.wrap.hidden=rule.operator!=="between";
+          if(rule.column==="comments"){value.field.min=upper.field.min="0";}
+          value.field.placeholder=rule.operator==="in"?"Separa valores con comas":"Escribe un valor…";
+          value.field.oninput=()=>{ rule.value=rule.operator==="in"?value.field.value.split(",").map(v=>v.trim()).filter(Boolean):value.field.value;value.field.setCustomValidity(""); };
+          upper.field.oninput=()=>{rule.upper=upper.field.value;upper.field.setCustomValidity("");};
+          col.field.onchange=()=>{rule.column=col.field.value;rule.operator=["comments","updated"].includes(rule.column)?"eq":"contains";rule.value="";delete rule.upper;render(i,0);};
+          op.field.onchange=()=>{rule.operator=op.field.value;rule.value="";delete rule.upper;render(i,1);};
+          const remove=button("Quitar condición "+(i+1),()=>{q.rules.splice(i,1);render();(list.children[Math.min(i,q.rules.length-1)]?.querySelector("select")||add).focus();});
+          window.BottifactUI?.decorate(remove,"close",true);remove.classList.add("filter-remove");
+          const values=el("div",undefined,"filter-values");values.append(value.wrap,upper.wrap);
+          row.append(col.wrap,op.wrap,values,remove);list.append(row);
         });
+        if(focusIndex!==undefined) list.children[focusIndex]?.querySelectorAll("select")[focusField]?.focus();
       }
-      render();
-      body.append(
-        button("Añadir condición", () => {
-          if (q.rules.length < 12) {
-            q.rules.push({ column: "title", operator: "contains", value: "" });
-            render();
-          }
-        }),
-        button("Aplicar al conjunto completo", () => {
-          q.join = join.field.value;
-          const p = Object.fromEntries(params());
-          p.filters = JSON.stringify(q);
-          applyParams(p);
-          body.closest("dialog").close();
-        }),
-        button("Limpiar condiciones", () => {
-          const p = Object.fromEntries(params());
-          p.filters = "";
-          applyParams(p);
-          body.closest("dialog").close();
-        }),
-      );
+      form.onsubmit = async (event) => {
+        event.preventDefault();status.textContent="";
+        for(let i=0;i<q.rules.length;i++) {
+          const rule=q.rules[i], fields=list.children[i].querySelectorAll("input");
+          if(rule.operator!=="empty" && (Array.isArray(rule.value)?!rule.value.length:!String(rule.value??"").trim())) {fields[0].setCustomValidity("Escribe un valor para esta condición.");fields[0].reportValidity();return;}
+          if(rule.operator==="between" && (rule.column==="comments"?Number(rule.value)>Number(rule.upper):String(rule.value)>String(rule.upper))) {fields[1].setCustomValidity("El límite final debe ser igual o mayor al inicial.");fields[1].reportValidity();return;}
+        }
+        apply.disabled=true;
+        try { const p=Object.fromEntries(params());p.filters=q.rules.length?JSON.stringify({...q,join:join.field.value}):"";await applyParams(p);d.close(); }
+        catch(error){status.textContent=error.message;}finally{apply.disabled=false;}
+      };
+      form.append(join.wrap,list,add,el("p","Se aplica a toda la biblioteca de esta vista, incluidos los resultados aún no cargados.","filter-scope"),footer);
+      body.append(form);render();
     }
     addEventListener("keydown", (e) => {
       if (

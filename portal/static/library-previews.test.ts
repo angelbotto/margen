@@ -1,0 +1,21 @@
+import {it,expect,vi,afterEach} from 'vitest';
+import {readFileSync} from 'node:fs';
+afterEach(()=>{vi.unstubAllGlobals();document.body.replaceChildren();});
+it('caps live previews, releases offscreen frames and ignores callbacks after disconnect',()=>{
+ let notify:any;let callbacks:Function[]=[];
+ vi.stubGlobal('IntersectionObserver',class{constructor(fn:any){notify=fn;}observe(){}disconnect(){}});
+ vi.stubGlobal('requestAnimationFrame',(fn:Function)=>{callbacks.push(fn);});
+ window.eval(readFileSync('portal/static/library-previews.js','utf8'));
+ const pool=(window as any).MargenPreviews.create({limit:8});
+ const cards=Array.from({length:40},()=>{const n=document.createElement('button');n.dataset.src='/synthetic-preview';n.dataset.title='Synthetic';document.body.append(n);pool.observe(n);return n;});
+ const flush=()=>{const jobs=callbacks;callbacks=[];jobs.forEach(fn=>fn());};
+ notify(cards.map(target=>({target,isIntersecting:true})));flush();
+ expect(document.querySelectorAll('iframe')).toHaveLength(8);
+ expect(document.querySelector('iframe')!.getAttribute('sandbox')).toBe('');
+ notify(cards.slice(0,8).map(target=>({target,isIntersecting:false})));flush();
+ expect(cards.slice(0,8).some(n=>n.querySelector('iframe'))).toBe(false);
+ expect(document.querySelectorAll('iframe')).toHaveLength(8);
+ notify([{target:cards[0],isIntersecting:true}]);pool.disconnect();flush();
+ expect(document.querySelectorAll('iframe')).toHaveLength(0);
+ notify([{target:cards[0],isIntersecting:true}]);flush();expect(document.querySelectorAll('iframe')).toHaveLength(0);
+});

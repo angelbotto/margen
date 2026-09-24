@@ -47,28 +47,7 @@
     for (const e of entries)
       e.target.style.setProperty("--preview-scale", e.contentRect.width / 1000);
   });
-  const covers = new IntersectionObserver(
-    (entries) => {
-      for (const { target, isIntersecting } of entries) {
-        if (!isIntersecting) {
-          target.querySelector("iframe")?.remove();
-          continue;
-        }
-        if (target.querySelector("iframe")) continue;
-        const frame = make("iframe");
-        frame.title = "Vista previa de " + target.dataset.title;
-        frame.setAttribute("sandbox", "");
-        frame.tabIndex = -1;
-        frame.setAttribute("aria-hidden", "true");
-        frame.addEventListener("load", () => frame.classList.add("ready"), {
-          once: true,
-        });
-        frame.src = target.dataset.src;
-        target.prepend(frame);
-      }
-    },
-    { rootMargin: "650px 0px" },
-  );
+  const covers = window.MargenPreviews.create({limit: 8});
   const more = new IntersectionObserver(
     (entries) => {
       if (
@@ -360,8 +339,9 @@
     };
     bar.append(clear);
   }
-  function renderTable() {
+  function renderTable(added = null) {
     renderBatch();
+    const existing = added && $(".artifact-table tbody");
     const wrap = make("div", undefined, "table-scroll");
     wrap.tabIndex = 0;
     wrap.setAttribute("role", "region");
@@ -411,7 +391,7 @@
     head.append(tr);
     table.append(head);
     const tbody = make("tbody");
-    for (const a of items) {
+    for (const a of added || items) {
       const row = make("tr"),
         doc = make("td"),
         title = make("div"),
@@ -462,6 +442,7 @@
       row.append(action);
       tbody.append(row);
     }
+    if (existing) { existing.append(...tbody.children); applyTablePreferences(); return; }
     table.append(tbody);
     wrap.append(table);
     wrap.addEventListener("scroll", () => {
@@ -963,6 +944,7 @@
               $("#total-visits").textContent = "—";
             });
       }
+      if (!append) {
       const filter = $("#space-filter"),
         selected = filter.value;
       filter.replaceChildren();
@@ -992,8 +974,12 @@
       updateBrowse();
       updateCompanies(data.spaces || []);
       updateCategories(data.categories || []);
+      }
       if ((append && layout === "grid") || (append && layout === "list")) {
         added.forEach(renderCard);
+        $("#count").textContent = total + " artefactos";
+      } else if (append && layout === "table" && $(".artifact-table")) {
+        renderTable(added);
         $("#count").textContent = total + " artefactos";
       } else {
         renderList();
@@ -1729,7 +1715,7 @@
         review: "pending-filter",
       }))
         if (p[key] !== undefined) $("#" + id).value = p[key];
-      load();
+      return load();
     },
   });
   const creatorWorkspace = window.MargenCreator.create({
