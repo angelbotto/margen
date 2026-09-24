@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.15.2 — Library filters and rendering
+
+- Separate query-builder actions, align compact removal controls and adapt conditions to narrow screens. Keep edits local until apply; validate values and ranges.
+- Refine library facets, table spacing, selection states and gallery hierarchy.
+- Append table rows without rebuilding prior rows or frames. Preserve facet controls while loading additional results.
+- Limit active preview frames to eight and release off-screen documents. Preserve sandbox isolation.
+- Add query interaction and preview lifecycle regressions; verify incremental rendering against a synthetic 60-document library.
+
 ## 0.15.1 — Guided personal installation
 
 - Add accessible OS icon choices, explicit WSL mode, multi-agent selection, destination previews and shell-specific copy actions.
