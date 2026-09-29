@@ -57,9 +57,9 @@ The native Initiative object requires an authenticated Linear browser session; t
 
 ## Verification receipts
 
-- Portal backend suite passed: 145 tests before the final assignment-context regression; all 17 dedicated source/editor tests then passed, including the added assignment test.
-- Portal frontend suite passed: 38 tests before the final recovery/bridge regressions; the 12 affected editor/bridge tests then passed.
+- Clean committed snapshot: all 146 portal backend tests passed, including 17 dedicated source/editor tests.
+- Clean committed snapshot: all 41 portal frontend tests passed (13 files), plus both publication portability tests.
 - Local synthetic browser: title edit, `/tabla` insertion, table cell edit, saved draft reopen, publication at the same URL, attributed before/after history, and restoration into a draft while the published head and version count stayed unchanged.
 - Responsive checks: editor/document and history had no page-wide horizontal overflow at 390 px and 320 px. Wide tables used their own scroll container. Light and dark appearances were inspected. Existing portal form styles initially overrode title styling; the editor selectors were corrected and verified in-browser.
 - No real customer artifact was modified by these smoke checks. Screenshots remain local under `/tmp/margen-editor-evidence`; they are not public repository assets.
-- Final clean-revision suite results and PR are recorded in the delivery ticket. Production rollout remains a separate, unperformed step until its operator/deployment path is verified.
+- [Draft PR #27](https://github.com/angelbotto/margen/pull/27) contains the first slice; final check receipts are also recorded in the delivery ticket. Production rollout remains a separate, unperformed step until its operator/deployment path is verified.

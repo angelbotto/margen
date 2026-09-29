@@ -135,5 +135,11 @@ class EditorTests(unittest.TestCase):
         self.assertEqual(packet['base_version'],c['version'])
         self.assertEqual(packet['editable_source']['document']['title'],'Human decision')
         self.assertEqual(packet['editable_source']['changes'][0]['after'],'Human decision')
+        bundle=self.owner.post('/api/review/bundle',json={'artifact':self.a['id'],'threads':[]}).json()
+        self.assertEqual(bundle['editable_source']['document']['title'],'Human decision')
+        self.assertIn('Human decision',bundle['text'])
+        self.owner.put(self.path+'/access',json={'visibility':'invited','comments':'reviewers','guests':False,'grants':[{'email':'other@example.com','role':'editor'}]})
+        bundle=self.other.post('/api/review/bundle',json={'artifact':self.a['id'],'threads':[]}).json()
+        self.assertIsNone(bundle['editable_source'])
 
 if __name__=='__main__':unittest.main()

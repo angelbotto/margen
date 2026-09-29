@@ -52,3 +52,5 @@ Authorized artifact editors can read `GET /api/artifacts/{id}/source?version={ve
 An upload to an artifact with a working draft or editor history must supply `expected_current`. The publication CLI accepts `--expected-current VERSION`. A stale upload returns 409. A draft proposal also records its base; releasing it against a newer published head returns 409 even if the caller has just fetched that new head. Retrieve the changes and prepare a new proposal. Do not retry by merely replacing the expected version.
 
 The initial editor preserves complex components and any nested anchors it cannot edit faithfully. Agents should preserve `data-margen-block` and existing DOM IDs when updating HTML so comparisons and review anchors remain useful.
+
+Owner-generated **Preparar contexto para IA** bundles also include the selected immutable `editable_source` in their JSON and copied prompt. This source is not added to another reader's bundle. It excludes unpublished working drafts.
