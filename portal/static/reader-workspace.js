@@ -7,6 +7,8 @@ window.BottifactReaderWorkspace = {
     copy,
     share,
     manage,
+    edit,
+    history,
     comment,
     refresh,
     related,
@@ -447,6 +449,12 @@ window.BottifactReaderWorkspace = {
           if (user()?.id !== current().owner)
             throw Error("Sólo el creador puede gestionar este artefacto.");
           manage();
+          break;
+        case "edit":
+        case "history":
+          if (user()?.id !== current().owner)
+            throw Error("Sólo el creador puede editar y revisar el historial.");
+          await (data.name === "edit" ? edit?.() : history?.());
           break;
         case "bundle":
           await bundle();

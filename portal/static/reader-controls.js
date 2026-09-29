@@ -264,6 +264,9 @@
       bridge?.action("manage"),
     );
     manage.hidden = true;
+    const edit = action(shareMenu, "Editar contenido", () => bridge?.action("edit"));
+    const history = action(shareMenu, "Historial de cambios", () => bridge?.action("history"));
+    edit.hidden = history.hidden = true;
     if (bridge) {
       action(shareMenu, "Referencias y conexiones", () =>
         bridge.action("related"),
@@ -539,6 +542,7 @@
           );
         }
         manage.hidden = !value.reader?.manage;
+        edit.hidden = history.hidden = !value.reader?.manage;
         if (activity) {
           const stats = value.reader?.activity;
           activity.hidden = !value.reader?.manage && !stats?.visible;

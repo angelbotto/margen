@@ -116,13 +116,21 @@ def mount_workspace(app,store,origin,who,account,payload,clean,artifact_for,perm
         u=account(request);body=await payload(request);vid=clean(body.get('version'),120)
         with store.db() as db:
             a=creator(db,aid,u)
+            if vid==a['current_version']:
+                return {'id':aid,'version':vid,'url':origin+'/a/'+aid}
             if body.get('expected_current')!=a['current_version']:raise HTTPException(409,'La versión publicada cambió. Revisa de nuevo antes de publicar.')
-            v=db.execute('SELECT v.*,m.title,m.space FROM versions v JOIN version_meta m ON m.version=v.id WHERE v.id=? AND v.artifact=?',(vid,aid)).fetchone()
+            v=db.execute('SELECT v.*,m.title,m.space,m.source FROM versions v JOIN version_meta m ON m.version=v.id WHERE v.id=? AND v.artifact=?',(vid,aid)).fetchone()
             if not v:raise HTTPException(404,'Versión no disponible.')
+            source=json.loads(v['source'])
+            if source.get('base_version') and source['base_version']!=a['current_version'] and vid!=a['current_version']:
+                raise HTTPException(409,'Esta propuesta parte de una versión anterior. Compara los cambios antes de preparar otra revisión.')
             db.execute("UPDATE version_meta SET state='published' WHERE version=?",(vid,))
             db.execute('UPDATE artifacts SET current_version=?,title=?,space=?,updated=? WHERE id=?',(vid,v['title'],v['space'],int(time.time()),aid))
             index_document(db,{'id':aid,'title':v['title'],'space':v['space'],'current_version':vid},(store.files/(v['sha']+'.html')).read_text())
             db.execute('INSERT INTO audit(actor,action,artifact,at) VALUES(?,?,?,?)',(u['id'],'release:'+vid,aid,int(time.time())))
+            checkpoint=db.execute('SELECT revision FROM editor_checkpoints WHERE artifact=? AND version=?',(aid,vid)).fetchone()
+            if checkpoint:
+                db.execute('UPDATE editor_drafts SET base=?,source_version=?,revision=revision+1 WHERE artifact=? AND revision=?',(vid,vid,aid,checkpoint['revision']))
         return {'id':aid,'version':vid,'url':origin+'/a/'+aid}
 
     @app.get('/api/artifacts/{aid}/compare')
