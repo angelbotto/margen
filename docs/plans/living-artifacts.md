@@ -45,7 +45,7 @@ Open an owned report, edit a title, type `/tabla`, insert rows and values, move 
 - [BOT-34 · Margen · Continuidad de agentes sobre cambios humanos](https://linear.app/botto/issue/BOT-34)
 - [BOT-35 · Margen · Validación integral y preparación del despliegue](https://linear.app/botto/issue/BOT-35)
 
-The native Initiative object requires an authenticated Linear browser session; the connected CLI supports issues but not initiatives. The root issue and six implementation tickets are confirmed in the Botto workspace. Browser authentication was requested while implementation continues.
+The native [Margen · Artefactos vivos initiative](https://linear.app/botto/initiative/margen-artefactos-vivos-c08fea5877dc) is active in the Botto workspace. Its [Editor e historial de cambios project](https://linear.app/botto/project/margen-editor-e-historial-de-cambios-efef43eb0a41) groups BOT-29 and its six existing implementation tickets. The existing credential was verified against the Botto organization before creating these records; no new browser login was needed. Liftit remains a separate workspace.
 
 ## Implemented first slice
 
@@ -57,7 +57,7 @@ The native Initiative object requires an authenticated Linear browser session; t
 
 ## Verification receipts
 
-- Clean committed snapshot: all 146 portal backend tests passed, including 17 dedicated source/editor tests.
+- Clean committed snapshot: 146 portal backend tests passed; final CI passed 147 tests, including 18 dedicated source/editor tests.
 - Clean committed snapshot: all 41 portal frontend tests passed (13 files), plus both publication portability tests.
 - Local synthetic browser: title edit, `/tabla` insertion, table cell edit, saved draft reopen, publication at the same URL, attributed before/after history, and restoration into a draft while the published head and version count stayed unchanged.
 - Responsive checks: editor/document and history had no page-wide horizontal overflow at 390 px and 320 px. Wide tables used their own scroll container. Light and dark appearances were inspected. Existing portal form styles initially overrode title styling; the editor selectors were corrected and verified in-browser.
