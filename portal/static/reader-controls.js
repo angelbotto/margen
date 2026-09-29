@@ -542,7 +542,7 @@
           );
         }
         manage.hidden = !value.reader?.manage;
-        edit.hidden = history.hidden = !value.reader?.manage;
+        edit.hidden = history.hidden = !value.reader?.editing;
         if (activity) {
           const stats = value.reader?.activity;
           activity.hidden = !value.reader?.manage && !stats?.visible;

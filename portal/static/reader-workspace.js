@@ -64,7 +64,7 @@ window.BottifactReaderWorkspace = {
       try {
         preferences = JSON.parse(localStorage.getItem(key()) || "{}");
       } catch {}
-      return { manage: user()?.id === current().owner, preferences };
+      return { manage: user()?.id === current().owner, editing: user()?.id === current().owner && typeof edit === "function", preferences };
     }
     function preferences(value) {
       const next = {};
