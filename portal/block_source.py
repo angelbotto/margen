@@ -127,6 +127,9 @@ def import_document(html,version,title):
             regions.append({'id':rid,'label':next((text_of(inner(tree,n))[:100] for n in batch if n.tag in ('h2','h3')),'Contenido'),'blocks':blocks})
             slots.append({'id':rid,'start':batch[0].start,'end':batch[-1].end});batch.clear()
         for n in parent.children:
+            # Text and comments between elements belong to the original document.
+            # Keep those gaps outside replaceable slots rather than dropping them.
+            if batch and html[batch[-1].end:n.start].strip():flush()
             cls=set((n.attrs.get('class') or '').split())
             if n.tag in ('header','nav','footer','script','style'):
                 flush();continue

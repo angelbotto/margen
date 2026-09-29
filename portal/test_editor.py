@@ -53,6 +53,11 @@ class SourceTests(unittest.TestCase):
         doc['regions'][0]['blocks'][0]['runs']=[{'text':'New section','marks':[]}]
         result=render_document(doc,template)
         self.assertIn('<a href="#heading">New section</a>',result)
+    def test_unwrapped_text_between_blocks_is_preserved(self):
+        html=HTML.replace('</h2><p','</h2>Important unwrapped context<!-- retained marker --><p')
+        doc,template=import_document(html,'v1','Report')
+        doc['regions'][0]['blocks'][0]['runs']=[{'text':'Edited heading','marks':[]}]
+        self.assertIn('Important unwrapped context<!-- retained marker -->',render_document(doc,template))
 
 class EditorTests(unittest.TestCase):
     tearDown=fixtures.PortalTests.tearDown
