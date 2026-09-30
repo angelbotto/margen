@@ -25,7 +25,7 @@ it('undoes and redoes text changes without replacing block identity',async()=>{
  await start();type(document.querySelector('[data-block="b-one"] [contenteditable]')!,'Edited');[...document.querySelectorAll('button')].find(b=>b.textContent==='Deshacer')!.click();expect(editor.getDocument().regions[0].blocks[0].runs[0].text).toBe('Hello');[...document.querySelectorAll('button')].find(b=>b.textContent==='Rehacer')!.click();expect(editor.getDocument().regions[0].blocks[0].id).toBe('b-one');expect(editor.getDocument().regions[0].blocks[0].runs[0].text).toBe('Edited');
 });
 it('renders untrusted block labels as text and keeps preview sandboxed',async()=>{
- state.document.regions[0].blocks.push({id:'b-opaque',type:'opaque',locked:true,label:'<img src=x onerror=alert(1)>'});await start();expect(document.querySelector('img')).toBeNull();expect(document.body.textContent).toContain('<img');[...document.querySelectorAll('button')].find(b=>b.textContent==='Vista previa')!.click();await vi.advanceTimersByTimeAsync(1);expect(document.querySelector('iframe')!.getAttribute('sandbox')).toBe('allow-scripts allow-downloads');
+ state.document.regions[0].blocks.push({id:'b-opaque',type:'opaque',locked:true,label:'<img src=x onerror=alert(1)>'});await start();expect(document.querySelector('img')).toBeNull();expect(document.querySelector('.be-component-frame')!.getAttribute('title')).toContain('<img');[...document.querySelectorAll('button')].find(b=>b.textContent==='Vista previa')!.click();await vi.advanceTimersByTimeAsync(1);expect(document.querySelector('.be-preview iframe')!.getAttribute('sandbox')).toBe('allow-scripts allow-downloads');
 });
 it('keeps conflicting local work until an explicit draft replacement',async()=>{
  let writes=0;const api=vi.fn(async(path:string,o:any)=>{if(o?.method==='PUT'){writes++;throw Object.assign(Error('Otra pestaña guardó'),{status:409});}if(path.endsWith('/restore'))return {...structuredClone(state),revision:4};if(path.endsWith('/editor'))return structuredClone(state);return {current_version:'v1'};});
@@ -36,4 +36,13 @@ it('keeps conflicting local work until an explicit draft replacement',async()=>{
 });
 it('freezes edits while closing waits for the final save',async()=>{
  let release:any;const api=vi.fn(async(_p:string,o:any)=>{if(!o)return structuredClone(state);await new Promise(r=>release=r);return {...state,revision:1,document:JSON.parse(o.body).document};});await start(api);type(document.querySelector('[data-block="b-one"] [contenteditable]')!,'Final text');const closing=editor.close();await Promise.resolve();expect((document.querySelector('.be-content') as HTMLElement).inert).toBe(true);release();await closing;expect(document.querySelector('.block-editor')).toBeNull();
+});
+it('shows isolated component frames and accepts only bounded measurements from their own window',async()=>{
+ state.document.regions[0].blocks.push({id:'b-figure',type:'opaque',locked:true,label:'Architecture'});await start();
+ const frame=document.querySelector('.be-component-frame') as HTMLIFrameElement;
+ expect(frame.getAttribute('sandbox')).toBe('allow-scripts');expect(frame.src).toContain('/editor/component/b-figure');expect(frame.srcdoc).toBe('');
+ const event=(height:number,source:any=frame.contentWindow,origin='null')=>window.dispatchEvent(new MessageEvent('message',{source,origin,data:{type:'margen-component-size',height}}));
+ event(900,window);expect(frame.style.height).toBe('');event(900,frame.contentWindow,'https://evil.test');expect(frame.style.height).toBe('');
+ event(Infinity);expect(frame.style.height).toBe('');event(420);expect(frame.style.height).toBe('424px');expect((document.querySelector('.be-component-status') as HTMLElement).hidden).toBe(true);
+ event(100000);expect(frame.style.height).toBe('4000px');await editor.close();event(200);expect(frame.style.height).toBe('4000px');
 });

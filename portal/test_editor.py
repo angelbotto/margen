@@ -148,3 +148,46 @@ class EditorTests(unittest.TestCase):
         self.assertIsNone(bundle['editable_source'])
 
 if __name__=='__main__':unittest.main()
+
+class ComponentPreviewTests(unittest.TestCase):
+    setUp=EditorTests.setUp
+    tearDown=EditorTests.tearDown
+    client=EditorTests.client
+    draft=EditorTests.draft
+    save=EditorTests.save
+    checkpoint=EditorTests.checkpoint
+    def test_visuals_before_autosave_are_isolated_and_owner_only(self):
+        d=self.draft();block=next(b for r in d['document']['regions'] for b in r['blocks'] if b['type']=='opaque')
+        route=self.path+'/editor/component/'+block['id']
+        r=self.owner.get(route);self.assertEqual(r.status_code,200,r.text)
+        self.assertIn('<svg',r.text);self.assertIn('Keep diagram',r.text)
+        self.assertIn('body{color:red}',r.text)
+        self.assertNotIn('Hello <strong>',r.text)
+        self.assertNotIn('trustedRuntime',r.text)
+        policy=r.headers['Content-Security-Policy']
+        self.assertIn('sandbox allow-scripts;',policy);self.assertNotIn('allow-same-origin',policy)
+        self.assertIn("script-src 'sha256-",policy);self.assertNotIn("script-src 'unsafe-inline'",policy)
+        self.assertEqual(self.other.get(route).status_code,404)
+        self.assertEqual(self.owner.get(self.path+'/editor/component/missing').status_code,404)
+        normal=d['document']['regions'][0]['blocks'][0]['id']
+        self.assertEqual(self.owner.get(self.path+'/editor/component/'+normal).status_code,404)
+        self.owner.put(self.path+'/access',json={'visibility':'invited','comments':'reviewers','guests':False,'grants':[{'email':'other@example.com','role':'editor'}]})
+        self.assertEqual(self.other.get(route).status_code,403)
+    def test_visuals_survive_checkpoint_and_restore_without_source_changes(self):
+        d=self.draft();block=next(b for r in d['document']['regions'] for b in r['blocks'] if b['type']=='opaque')
+        route=self.path+'/editor/component/'+block['id'];before=self.owner.get(route).text
+        d['document']['title']='Surrounding edit';d=self.save(d)
+        self.assertEqual(self.owner.get(route).text,before)
+        checkpoint=self.checkpoint(d)
+        self.assertIn('<figure id="map"><svg',self.owner.get(self.path+'/render?version='+checkpoint['version']).text)
+        self.assertEqual(self.owner.get(route).text,before)
+    def test_large_image_fonts_and_hostile_markup(self):
+        from portal.component_preview import render_component
+        image='data:image/png;base64,'+'A'*150000
+        html=HTML.replace('<svg viewBox="0 0 10 10"><text>Keep diagram</text></svg>', '<img alt="Evidence" src="'+image+'" onerror="alert(1)"><script>alert(2)</script><iframe src="https://example.com"></iframe>')
+        html=html.replace('body{color:red}','@font-face{font-family:Sketch;src:url(data:font/woff2;base64,AAAA)}body{color:red}')
+        doc,template=import_document(html,'v-large','Images')
+        b=next(b for r in doc['regions'] for b in r['blocks'] if b['type']=='opaque')
+        result=render_component(doc,template,b['id'])
+        self.assertIn(image,result);self.assertIn('@font-face',result)
+        self.assertNotIn('onerror',result);self.assertNotIn('alert(2)',result);self.assertNotIn('<iframe',result)

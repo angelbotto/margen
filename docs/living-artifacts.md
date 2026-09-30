@@ -22,7 +22,7 @@ Connection failures display **No guardado** and leave the editor open. Reconnect
 
 - Only the owning account can edit or restore. Being an administrator or invited editor does not confer ownership. Invited editors retain their existing proposal/source permissions.
 - Existing paragraph/heading IDs remain intact. Newly inserted and duplicated blocks get unique IDs. Removed blocks remain available in their original version; existing review tooling reports missing anchors.
-- Unsupported components retain their exact original HTML and appear as **Componente conservado**. This includes complex tables, independently anchored nested content and custom diagrams. Decks and prototypes retain their own editing workflow.
+- Unsupported components retain their exact original HTML and appear inline as read-only visuals. SVG diagrams, embedded images and original fonts/styles are rendered in a separate sandbox. Only a hash-authorized measurement script runs; artifact scripts and network access are blocked. Interactive-only graphics can still be explored in the full draft preview. This includes complex tables, independently anchored nested content and custom diagrams. Decks and prototypes retain their own editing workflow.
 - Surrounding styles, theme, document identity, runtime, audience and comments are retained. Editing does not assign Angel's identity or writing preferences to another account.
 - Charts, timelines, architecture adapters, drag-to-reorder, a formatting toolbar and simultaneous real-time collaboration are not included in this first slice.
 

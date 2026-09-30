@@ -9,6 +9,7 @@ from fastapi import HTTPException, Request
 from fastapi.responses import HTMLResponse
 from portal import block_source as blocks
 from portal.formats import describe
+from portal.component_preview import render_component, CSP as COMPONENT_CSP
 
 
 def migrate(db):
@@ -90,6 +91,19 @@ def mount(app,store,origin,account,payload,artifact_for,permissions):
             if not row:raise HTTPException(404,'Guarda el borrador antes de abrir la vista previa.')
             content=blocks.render_document(json.loads(row['document']),json.loads(row['template']))
         return HTMLResponse(content,headers={'Content-Security-Policy':"sandbox allow-scripts allow-downloads; default-src 'none'; script-src 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'unsafe-inline'; img-src data: blob:; font-src data:; media-src data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'self'"})
+
+    @app.get('/api/artifacts/{aid}/editor/component/{block_id}')
+    def component(aid:str,block_id:str,request:Request):
+        u=account(request,True)
+        with store.db() as db:
+            a=owner(db,aid,u);row=db.execute('SELECT * FROM editor_drafts WHERE artifact=?',(aid,)).fetchone()
+            selected=request.query_params.get('source')
+            if selected:doc,template=source_for(store,db,a,selected)
+            elif row:doc,template=json.loads(row['document']),json.loads(row['template'])
+            else:doc,template=source_for(store,db,a,a['current_version'])
+            try:content=render_component(doc,template,block_id)
+            except ValueError as exc:raise HTTPException(404,str(exc))
+        return HTMLResponse(content,headers={'Content-Security-Policy':COMPONENT_CSP})
 
     @app.post('/api/artifacts/{aid}/editor/checkpoint')
     async def checkpoint(aid:str,request:Request):

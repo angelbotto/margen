@@ -64,6 +64,12 @@
     const page=el('div',undefined,'be-page'),intro=el('p','BORRADOR · SOLO TÚ','eyebrow'),title=el('textarea',undefined,'be-title');title.rows=2;title.maxLength=200;title.value=doc.title;title.setAttribute('aria-label','Título del documento');
     const hint=el('p','Escribe / en un bloque vacío para insertar. Tus lectores verán los cambios cuando publiques.','be-hint'),content=el('div',undefined,'be-content');page.append(intro,title,hint,content);dialog.append(bar,alert,recovery,page);document.body.append(dialog);dialog.showModal();
     const dirty=()=>JSON.stringify(doc)!==saved;
+    const componentFrames=new Map();
+    const componentSize=event=>{
+      if(event.origin!=='null'||event.data?.type!=='margen-component-size'||!Number.isFinite(event.data.height)||event.data.height<=0)return;
+      for(const [frame,loading] of componentFrames){if(frame.isConnected&&event.source===frame.contentWindow){frame.style.height=Math.min(4000,Math.max(100,event.data.height+4))+'px';loading.hidden=true;break;}}
+    };
+    window.addEventListener('message',componentSize);
     function notice(message){alert.textContent=message;alert.hidden=false;recovery.hidden=false;}
     download.addEventListener('click',()=>{const markdown='# '+doc.title+'\n\n'+doc.regions.flatMap(r=>r.blocks.map(b=>readable(b))).join('\n\n');const url=URL.createObjectURL(new Blob([markdown],{type:'text/markdown;charset=utf-8'}));const link=el('a');link.href=url;link.download='mis-cambios.md';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
     restart.addEventListener('click',()=>{const question=el('div');question.append(el('p','Descarga primero los cambios que quieras conservar. Continuar reemplazará el borrador de trabajo, también si fue editado desde otra pestaña. El historial no cambia.'));const yes=el('button','Reemplazar borrador'),no=el('button','Cancelar');no.addEventListener('click',()=>question.remove());yes.addEventListener('click',async()=>{busy=true;controls();try{if(pending)await pending.catch(()=>{});const latest=await api(path),draft=await api(path+'/editor');state=await api(path+'/editor/restore',{method:'POST',body:JSON.stringify({version:latest.current_version,expected_current:latest.current_version,revision:draft.revision})});doc=clone(state.document);saved=JSON.stringify(doc);undo=[];redo=[];render();status.textContent='Borrador actualizado';alert.hidden=true;recovery.hidden=true;question.remove();}catch(error){notice(error.message);}finally{busy=false;controls();}});question.append(no,yes);recovery.append(question);yes.focus();});
@@ -104,7 +110,7 @@
       const cancel=el('button','Cerrar');cancel.addEventListener('click',close);panel.append(input,list,cancel);dialog.append(panel);slash={input,filter,close};filter();input.focus();
     }
     function render(focusId){
-      content.replaceChildren();title.value=doc.title;
+      componentFrames.clear();content.replaceChildren();title.value=doc.title;
       for(const region of doc.regions){const section=el('section',undefined,'be-region');section.setAttribute('aria-label',region.label||'Contenido');
         for(const b of region.blocks){const row=el('article',undefined,'be-block');row.dataset.block=b.id;row.dataset.type=b.type;
           const tools=el('div',undefined,'be-block-tools');const menu=el('details'),summary=el('summary','⋮');summary.setAttribute('aria-label','Acciones del bloque');menu.append(summary);
@@ -126,7 +132,15 @@
             const bar=el('div',undefined,'be-table-actions');for(const [text,fn,disabled] of [['Añadir fila',()=>b.rows.push(b.rows[0].map(()=>'')),b.rows.length>=100],['Añadir columna',()=>b.rows.forEach(r=>r.push('')),b.rows[0].length>=12],['Quitar última fila',()=>b.rows.pop(),b.rows.length<=1],['Quitar última columna',()=>b.rows.forEach(r=>r.pop()),b.rows[0].length<=1]]){const button=el('button',text);button.disabled=disabled;button.addEventListener('click',()=>mutate(fn));bar.append(button);}body.append(bar);
           }else if(b.type==='code'){const code=el('textarea');code.rows=5;code.value=b.text;code.setAttribute('aria-label','Código');code.spellcheck=false;code.addEventListener('input',()=>{remember();b.text=code.value;changed();});body.append(code);
           }else if(b.type==='divider')body.append(el('hr'));
-          else{body.append(el('p','Componente conservado','be-preserved'),el('p',b.label),el('small','Su diseño y contenido se mantienen. Puedes verlo en Vista previa.'));}
+          else{
+            const head=el('div',undefined,'be-component-head'),label=el('span','Solo lectura','be-preserved'),expand=el('button','Abrir vista previa');
+            expand.type='button';expand.addEventListener('click',()=>preview.click());head.append(label,expand);
+            const loading=el('p','Cargando vista…','be-component-status');loading.setAttribute('role','status');
+            const frame=el('iframe',undefined,'be-component-frame');frame.title=b.label||'Diagrama o imagen, solo lectura';frame.setAttribute('sandbox','allow-scripts');frame.setAttribute('referrerpolicy','no-referrer');frame.loading='lazy';
+            frame.src=path+'/editor/component/'+encodeURIComponent(b.id)+'?source='+encodeURIComponent(state.source_version);
+            frame.addEventListener('error',()=>{loading.textContent='No se pudo cargar el bloque. Abre la vista previa para revisarlo.';});
+            componentFrames.set(frame,loading);body.append(head,loading,frame);
+          }
           row.append(body);section.append(row);
         }
         const plus=el('button','+ Insertar bloque','be-insert');plus.addEventListener('click',()=>showSlash(region,region.blocks.at(-1)));section.append(plus);content.append(section);
@@ -138,7 +152,7 @@
     undoButton.addEventListener('click',()=>travel(undo,redo));redoButton.addEventListener('click',()=>travel(redo,undo));
     dialog.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='z'){e.preventDefault();e.shiftKey?travel(redo,undo):travel(undo,redo);}if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='s'){e.preventDefault();save().catch(()=>{});}});
     const unload=e=>{if(dirty()||pending){e.preventDefault();e.returnValue='';}};window.addEventListener('beforeunload',unload);
-    async function close(){if(busy)return;busy=true;controls();try{if(dirty()||pending)await save();while(dirty())await save();closed=true;clearTimeout(timer);window.removeEventListener('beforeunload',unload);dialog.close();dialog.remove();}catch{notice('No se pudo guardar. El editor sigue abierto para conservar tus cambios.');}finally{busy=false;controls();}}
+    async function close(){if(busy)return;busy=true;controls();try{if(dirty()||pending)await save();while(dirty())await save();closed=true;clearTimeout(timer);window.removeEventListener('beforeunload',unload);window.removeEventListener('message',componentSize);componentFrames.clear();dialog.close();dialog.remove();}catch{notice('No se pudo guardar. El editor sigue abierto para conservar tus cambios.');}finally{busy=false;controls();}}
     back.addEventListener('click',close);dialog.addEventListener('cancel',e=>{e.preventDefault();if(slash)slash.close();else close();});
     preview.addEventListener('click',async()=>{try{await save();const d=el('dialog',undefined,'be-preview');const button=el('button','Volver a editar');button.addEventListener('click',()=>{d.close();d.remove();});const frame=el('iframe');frame.title='Vista previa del borrador';frame.setAttribute('sandbox','allow-scripts allow-downloads');frame.src=path+'/editor/preview';d.append(button,frame);dialog.append(d);d.showModal();d.addEventListener('cancel',()=>d.remove());}catch{}});
     let checkpointRequest=null;
