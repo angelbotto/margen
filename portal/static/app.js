@@ -15,6 +15,7 @@
     current = null,
     grants = [],
     uploadVersion = false,
+    uploadBase = null,
     poll = null,
     noticePoll = null,
     toastTimer = null,
@@ -1353,6 +1354,7 @@
   } catch {}
   function upload(revision = false) {
     uploadVersion = revision;
+    uploadBase = revision ? current.current_version : null;
     $("#upload-heading").textContent = revision
       ? "Subir una revisión"
       : "Publicar artefacto";
@@ -1439,6 +1441,7 @@
           space: form.elements.space.value,
           html: await file.text(),
           mode: uploadVersion ? "draft" : "published",
+          ...(uploadVersion ? {expected_current: uploadBase} : {}),
           source: {
             agent: form.elements.agent.value,
             session: form.elements.session.value,
@@ -1755,6 +1758,8 @@
     search: contextWorkbench.search,
     share: openShare,
     manage: () => $("#owner-panel").showPopover(),
+    edit: () => $("#edit-document").click(),
+    history: () => $("#history-document").click(),
     comment: (kind) => {
       requestedEntryType = kind;
       $("#comment-document").click();
@@ -1947,6 +1952,7 @@
     }
     const owner = user?.id === current.owner;
     $("#owner-tools").hidden = !owner;
+    $("#edit-document").hidden = !owner;
     $("#owner-panel").hidden = !owner;
     $("#doc-title").textContent = current.title;
     document.title = current.title + " · Margen";
@@ -2145,6 +2151,22 @@
       b.disabled = false;
     }
   });
+  $("#edit-document").addEventListener("click", safe(async () => {
+    await window.MargenBlockEditor.open({api, artifact: current, onPublished: async () => {
+      current = await api("/api/artifacts/" + current.id);
+      $("#artifact-frame").src = "/api/artifacts/" + current.id + "/render?version=" + current.current_version;
+      $("#doc-title").textContent = current.title;
+      document.title = current.title + " · Margen";
+      const select = $("#version"); select.replaceChildren();
+      current.versions.forEach(v => { const option = new Option((v.id === current.current_version ? "Publicada · " : v.state === "draft" ? "Borrador · " : "Anterior · ") + new Date(v.created * 1000).toLocaleString("es"), v.id); select.append(option); });
+      select.value = current.current_version; versionControls();
+    }});
+  }));
+  $("#history-document").addEventListener("click", safe(async () => {
+    await window.MargenBlockEditor.history({api, artifact: current, onRestore: async () => {
+      toast("Versión restaurada como borrador. Abre Editar para revisarla.");
+    }});
+  }));
   function versionControls() {
     const v = current.versions.find((v) => v.id === $("#version").value);
     let source = {};

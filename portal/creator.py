@@ -394,6 +394,8 @@ def mount(
                 "text": prompt_bundle(items),
                 "policy": "Create a draft and report evidence for each addressed thread. Never publish or resolve feedback from this assignment.",
             }
+            from portal.editor import context_source
+            packet["editable_source"] = context_source(db, a["id"], base)
             key = uuid.uuid4().hex
             now = int(time.time())
             db.execute(
@@ -753,6 +755,8 @@ def mount(
                     b.get("session") or target.get("session", ""), 200, True
                 ),
                 "label": "Margen assignment " + key,
+                "base_version": j["base_version"],
+                "kind": "agent", "actor": u["id"],
             }
             prior = db.execute(
                 "SELECT v.id FROM versions v JOIN version_meta m ON m.version=v.id WHERE v.artifact=? AND v.sha=? AND m.state='draft' AND json_extract(m.source,'$.label')=?",

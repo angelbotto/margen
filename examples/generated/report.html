@@ -3085,6 +3085,43 @@ body:has(.revision-barra) { padding-bottom:0; }
 
 .firma-editorial .margen-mark{width:30px;height:30px;flex:none;color:var(--tinta);vertical-align:middle;margin-right:9px}
 
+/* SKETCH DIAGRAM START */
+/* Sketch diagrams: semantic HTML carries the source; SVG only draws the ink. */
+.sketch-diagram { container-type: inline-size; color: var(--tinta); }
+.sketch-diagram > figcaption { margin: 0 0 28px; color: var(--tinta); font: 600 20px/1.4 var(--sans); }
+.sketch-diagram .sketch-flow { display: flex; flex-direction: column; gap: 0; list-style: none; padding: 0; margin: 0; }
+.sketch-diagram .sketch-step { min-width: 0; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: stretch; }
+.sketch-diagram .sketch-node { position: relative; isolation: isolate; min-height: 186px; padding: 28px 26px; display: flex; flex-direction: column; justify-content: center; gap: 12px; overflow-wrap: anywhere; }
+.sketch-diagram .sketch-outline { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; overflow: visible; }
+.sketch-diagram .sketch-outline path { stroke: var(--tinta-2); stroke-width: 1.5; vector-effect: non-scaling-stroke; fill: color-mix(in srgb, var(--azul, var(--tinta)) 9%, var(--papel)); }
+.sketch-diagram .sketch-outline .sketch-echo { fill: none; opacity: .32; stroke-width: .8; }
+.sketch-diagram .sketch-step:nth-child(2n) .sketch-outline path:first-child { fill: color-mix(in srgb, var(--tinta) 4%, var(--papel)); }
+.sketch-diagram .sketch-step:last-child .sketch-outline path:first-child { fill: color-mix(in srgb, var(--verde, var(--tinta)) 8%, var(--papel)); }
+.sketch-diagram .sketch-number { font: 500 12px/1.4 var(--mono); color: var(--tinta-2); letter-spacing: .08em; }
+.sketch-diagram .sketch-meta { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.sketch-diagram .sketch-symbol { display: block; width: 48px; height: 48px; flex: none; color: var(--tinta); }
+.sketch-diagram .sketch-symbol path { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.sketch-diagram .sketch-title { font: 400 36px/1.1 var(--mano); color: var(--tinta); }
+.sketch-diagram .sketch-body { font: 400 16px/1.6 var(--sans); color: var(--tinta); }
+.sketch-diagram .sketch-connection { display: flex; min-height: 88px; align-items: center; justify-content: center; gap: 14px; padding: 10px; color: var(--tinta); font: 400 16px/1.4 var(--sans); }
+.sketch-diagram .sketch-arrow { width: 56px; height: 36px; flex: none; transform: rotate(90deg); }
+.sketch-diagram .sketch-arrow path { fill: none; stroke: var(--tinta); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.sketch-diagram .sketch-note { margin: 28px 8px 0; color: var(--tinta); font: 400 30px/1.2 var(--mano); }
+@container (min-width: 820px) {
+  .sketch-diagram .sketch-flow { flex-direction: row; align-items: stretch; gap: 104px; }
+  .sketch-diagram .sketch-step { flex: 1; position: relative; }
+  .sketch-diagram .sketch-node { flex: 1; min-width: 0; }
+  .sketch-diagram .sketch-connection { position: absolute; left: 100%; top: 0; bottom: 0; width: 104px; flex-direction: column; padding: 12px 6px; text-align: center; font-size: 14px; }
+  .sketch-diagram .sketch-arrow { transform: none; }
+}
+@media print {
+  .sketch-diagram .sketch-flow { flex-direction: column; gap: 0; }
+  .sketch-diagram .sketch-step { flex-direction: column; break-inside: avoid; }
+  .sketch-diagram .sketch-connection { position: static; width: auto; flex-direction: row; flex-basis: auto; }
+  .sketch-diagram .sketch-arrow { transform: rotate(90deg); }
+}
+/* SKETCH DIAGRAM END */
+
 /* REVIEW COMPOSER START */
 /* Shared by portable artifacts and the hosted adapter. */
 [data-revision-editor].review-composer{padding:12px!important;border:1px solid var(--linea)!important;border-radius:14px!important;background:var(--papel)!important;color:var(--tinta);box-shadow:0 4px 10px #00000008,0 16px 48px #00000022!important;max-width:calc(100vw - 24px)}

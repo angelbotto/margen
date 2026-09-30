@@ -3096,6 +3096,43 @@ body:has(.revision-barra) { padding-bottom:0; }
 
 .firma-editorial .margen-mark{width:30px;height:30px;flex:none;color:var(--tinta);vertical-align:middle;margin-right:9px}
 
+/* SKETCH DIAGRAM START */
+/* Sketch diagrams: semantic HTML carries the source; SVG only draws the ink. */
+.sketch-diagram { container-type: inline-size; color: var(--tinta); }
+.sketch-diagram > figcaption { margin: 0 0 28px; color: var(--tinta); font: 600 20px/1.4 var(--sans); }
+.sketch-diagram .sketch-flow { display: flex; flex-direction: column; gap: 0; list-style: none; padding: 0; margin: 0; }
+.sketch-diagram .sketch-step { min-width: 0; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: stretch; }
+.sketch-diagram .sketch-node { position: relative; isolation: isolate; min-height: 186px; padding: 28px 26px; display: flex; flex-direction: column; justify-content: center; gap: 12px; overflow-wrap: anywhere; }
+.sketch-diagram .sketch-outline { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; overflow: visible; }
+.sketch-diagram .sketch-outline path { stroke: var(--tinta-2); stroke-width: 1.5; vector-effect: non-scaling-stroke; fill: color-mix(in srgb, var(--azul, var(--tinta)) 9%, var(--papel)); }
+.sketch-diagram .sketch-outline .sketch-echo { fill: none; opacity: .32; stroke-width: .8; }
+.sketch-diagram .sketch-step:nth-child(2n) .sketch-outline path:first-child { fill: color-mix(in srgb, var(--tinta) 4%, var(--papel)); }
+.sketch-diagram .sketch-step:last-child .sketch-outline path:first-child { fill: color-mix(in srgb, var(--verde, var(--tinta)) 8%, var(--papel)); }
+.sketch-diagram .sketch-number { font: 500 12px/1.4 var(--mono); color: var(--tinta-2); letter-spacing: .08em; }
+.sketch-diagram .sketch-meta { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.sketch-diagram .sketch-symbol { display: block; width: 48px; height: 48px; flex: none; color: var(--tinta); }
+.sketch-diagram .sketch-symbol path { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.sketch-diagram .sketch-title { font: 400 36px/1.1 var(--mano); color: var(--tinta); }
+.sketch-diagram .sketch-body { font: 400 16px/1.6 var(--sans); color: var(--tinta); }
+.sketch-diagram .sketch-connection { display: flex; min-height: 88px; align-items: center; justify-content: center; gap: 14px; padding: 10px; color: var(--tinta); font: 400 16px/1.4 var(--sans); }
+.sketch-diagram .sketch-arrow { width: 56px; height: 36px; flex: none; transform: rotate(90deg); }
+.sketch-diagram .sketch-arrow path { fill: none; stroke: var(--tinta); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.sketch-diagram .sketch-note { margin: 28px 8px 0; color: var(--tinta); font: 400 30px/1.2 var(--mano); }
+@container (min-width: 820px) {
+  .sketch-diagram .sketch-flow { flex-direction: row; align-items: stretch; gap: 104px; }
+  .sketch-diagram .sketch-step { flex: 1; position: relative; }
+  .sketch-diagram .sketch-node { flex: 1; min-width: 0; }
+  .sketch-diagram .sketch-connection { position: absolute; left: 100%; top: 0; bottom: 0; width: 104px; flex-direction: column; padding: 12px 6px; text-align: center; font-size: 14px; }
+  .sketch-diagram .sketch-arrow { transform: none; }
+}
+@media print {
+  .sketch-diagram .sketch-flow { flex-direction: column; gap: 0; }
+  .sketch-diagram .sketch-step { flex-direction: column; break-inside: avoid; }
+  .sketch-diagram .sketch-connection { position: static; width: auto; flex-direction: row; flex-basis: auto; }
+  .sketch-diagram .sketch-arrow { transform: rotate(90deg); }
+}
+/* SKETCH DIAGRAM END */
+
 /* REVIEW COMPOSER START */
 /* Shared by portable artifacts and the hosted adapter. */
 [data-revision-editor].review-composer{padding:12px!important;border:1px solid var(--linea)!important;border-radius:14px!important;background:var(--papel)!important;color:var(--tinta);box-shadow:0 4px 10px #00000008,0 16px 48px #00000022!important;max-width:calc(100vw - 24px)}
@@ -5326,6 +5363,9 @@ ERROR  ejemplo rechazado      1 recurso externo</code></pre></div></section></di
       bridge?.action("manage"),
     );
     manage.hidden = true;
+    const edit = action(shareMenu, "Editar contenido", () => bridge?.action("edit"));
+    const history = action(shareMenu, "Historial de cambios", () => bridge?.action("history"));
+    edit.hidden = history.hidden = true;
     if (bridge) {
       action(shareMenu, "Referencias y conexiones", () =>
         bridge.action("related"),
@@ -5601,6 +5641,7 @@ ERROR  ejemplo rechazado      1 recurso externo</code></pre></div></section></di
           );
         }
         manage.hidden = !value.reader?.manage;
+        edit.hidden = history.hidden = !value.reader?.editing;
         if (activity) {
           const stats = value.reader?.activity;
           activity.hidden = !value.reader?.manage && !stats?.visible;
@@ -6377,4 +6418,4 @@ ERROR  ejemplo rechazado      1 recurso externo</code></pre></div></section></di
 })();
 
 </script>
-<script type="application/json" data-nota-manifiesto>{"version": "4", "paginas": ["contenido"], "modulos": ["packages/core/components/interface.js", "packages/core/components/reader-controls.js", "packages/core/components/audio.js", "packages/core/components/controls.js", "packages/core/components/editorial-pieces.js", "packages/core/components/reader.js", "packages/core/components/tabs.js", "packages/core/components/code.js", "packages/core/components/review.js"], "fuentes": {"packages/core/styles/fonts.css": "c496fb4f095a14cbb6a82503a4a828720c01a8120df3c73113495d832e5d40cb", "packages/core/styles/artifact.css": "f36493a6719170e154c42ebc8aa63308eb57fff6220adffc4a272fe0eb661953", "packages/core/components/interface.js": "ffd922850a2dd39f346f6615264b5522ccfc26ce17285fee36c79d026b3a0cce", "packages/core/components/reader-controls.js": "ab818968a46e54841fe92c170820c8f040d9fc5ab43ffa8df1e7302c1f6fc852", "packages/core/components/audio.js": "db6014d04e8710e87912c453eedbe9c24b7feb8bfb02934f5c0cca26da682232", "packages/core/components/controls.js": "b3881b4411e12ae56a1859a56dd14c2fb073712fa732874fce50e9c2061d0aa5", "packages/core/components/editorial-pieces.js": "8604004dfc2aacf7e51ae4a0e6184950fdaaa0187f64e956b562adb787cd5fe9", "packages/core/components/reader.js": "a517796cab8ed2d658e22cb5af2805d6c0a98de38985df411286217ae4a19b71", "packages/core/components/tabs.js": "89079edd08150658542602e557ad735cf8157bbb737f0b6cd505f15207e0c40b", "packages/core/components/code.js": "16e94c9d0be68b13a270bd57485c129e3fa7b071cfa4aa2ee9d52052363796a7", "packages/core/components/review.js": "ad144dd2cc37a70a2adb4898e6aaa96cd06d2974e895ac1943bf35cf43bd72d7"}}</script>
+<script type="application/json" data-nota-manifiesto>{"version": "4", "paginas": ["contenido"], "modulos": ["packages/core/components/interface.js", "packages/core/components/reader-controls.js", "packages/core/components/audio.js", "packages/core/components/controls.js", "packages/core/components/editorial-pieces.js", "packages/core/components/reader.js", "packages/core/components/tabs.js", "packages/core/components/code.js", "packages/core/components/review.js"], "fuentes": {"packages/core/styles/fonts.css": "c496fb4f095a14cbb6a82503a4a828720c01a8120df3c73113495d832e5d40cb", "packages/core/styles/artifact.css": "c778762acb9fb9752326f7c111c1fdbf21126e4f17fa7e24dc093474bf6375c9", "packages/core/components/interface.js": "ffd922850a2dd39f346f6615264b5522ccfc26ce17285fee36c79d026b3a0cce", "packages/core/components/reader-controls.js": "9e432baf8154ea1225b5d2770ea215598442a027a875e5f3c24f3515c2a86bc9", "packages/core/components/audio.js": "db6014d04e8710e87912c453eedbe9c24b7feb8bfb02934f5c0cca26da682232", "packages/core/components/controls.js": "b3881b4411e12ae56a1859a56dd14c2fb073712fa732874fce50e9c2061d0aa5", "packages/core/components/editorial-pieces.js": "8604004dfc2aacf7e51ae4a0e6184950fdaaa0187f64e956b562adb787cd5fe9", "packages/core/components/reader.js": "a517796cab8ed2d658e22cb5af2805d6c0a98de38985df411286217ae4a19b71", "packages/core/components/tabs.js": "89079edd08150658542602e557ad735cf8157bbb737f0b6cd505f15207e0c40b", "packages/core/components/code.js": "16e94c9d0be68b13a270bd57485c129e3fa7b071cfa4aa2ee9d52052363796a7", "packages/core/components/review.js": "ad144dd2cc37a70a2adb4898e6aaa96cd06d2974e895ac1943bf35cf43bd72d7"}}</script>

@@ -20,3 +20,7 @@ it('does not show owner controls or hidden activity to readers',async()=>{
   expect(document.querySelector('input[type=checkbox]')).toBeNull();
   expect(document.body.textContent).toContain('no ha compartido');
 });
+it('only the owner can invoke editor or history through the artifact bridge',async()=>{
+ const reader=setup();await expect(reader.instance.handle('action',{name:'edit'})).rejects.toThrow('Sólo el creador');await expect(reader.instance.handle('action',{name:'history'})).rejects.toThrow('Sólo el creador');
+ const edit=vi.fn(),history=vi.fn();const instance=(window as any).BottifactReaderWorkspace.create({api:vi.fn(),current:()=>({id:'a',owner:'owner'}),user:()=>({id:'owner'}),edit,history});await instance.handle('action',{name:'edit'});await instance.handle('action',{name:'history'});expect(edit).toHaveBeenCalledOnce();expect(history).toHaveBeenCalledOnce();
+});

@@ -1,0 +1,30 @@
+{
+  "schema": "margen-sketch/1",
+  "id": "sketch-example",
+  "title": "De una idea a una revisión compartida",
+  "nodes": [
+    {
+      "id": "idea",
+      "title": "Una idea",
+      "body": "Escribe la pregunta que este documento debe resolver.",
+      "icon": "person"
+    },
+    {
+      "id": "draft",
+      "title": "Un borrador",
+      "body": "Ordena la evidencia y deja visibles las dudas.",
+      "icon": "document"
+    },
+    {
+      "id": "review",
+      "title": "Una revisión",
+      "body": "Comparte la versión y recoge los cambios propuestos.",
+      "icon": "team"
+    }
+  ],
+  "transitions": [
+    "desarrollar",
+    "compartir"
+  ],
+  "note": "Ejemplo ilustrativo: cada flecha tiene una intención."
+}
