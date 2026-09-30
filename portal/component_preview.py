@@ -35,6 +35,10 @@ class StaticMarkup(HTMLParser):
     def handle_startendtag(self, tag, attrs):
         self.handle_starttag(tag,attrs)
         if tag in self.blocked:self.depth=max(0,self.depth-1)
+        elif tag not in {'area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr'}:
+            # SVG shapes must close before the next sibling; HTMLParser otherwise
+            # turns <rect/> into a parent and the browser hides nested labels.
+            self.handle_endtag(tag)
     def handle_endtag(self, tag):
         if tag in self.blocked:self.depth=max(0,self.depth-1);return
         if not self.depth:self.parts.append('</'+tag+'>')
