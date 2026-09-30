@@ -3098,6 +3098,9 @@ body:has(.revision-barra) { padding-bottom:0; }
 .sketch-diagram .sketch-step:nth-child(2n) .sketch-outline path:first-child { fill: color-mix(in srgb, var(--tinta) 4%, var(--papel)); }
 .sketch-diagram .sketch-step:last-child .sketch-outline path:first-child { fill: color-mix(in srgb, var(--verde, var(--tinta)) 8%, var(--papel)); }
 .sketch-diagram .sketch-number { font: 500 12px/1.4 var(--mono); color: var(--tinta-2); letter-spacing: .08em; }
+.sketch-diagram .sketch-meta { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.sketch-diagram .sketch-symbol { display: block; width: 48px; height: 48px; flex: none; color: var(--tinta); }
+.sketch-diagram .sketch-symbol path { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .sketch-diagram .sketch-title { font: 400 36px/1.1 var(--mano); color: var(--tinta); }
 .sketch-diagram .sketch-body { font: 400 16px/1.6 var(--sans); color: var(--tinta); }
 .sketch-diagram .sketch-connection { display: flex; min-height: 88px; align-items: center; justify-content: center; gap: 14px; padding: 10px; color: var(--tinta); font: 400 16px/1.4 var(--sans); }
@@ -7290,17 +7293,17 @@ Origen: sin sesión conectada; no inventar una referencia.&lt;/code&gt;&lt;/pre&
 <ol class="sketch-flow">
 <li class="sketch-step" id="sketch-example-idea"><div class="sketch-node">
 <svg class="sketch-outline" viewBox="0 0 300 200" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M8 7 Q146 2 292 8 Q298 89 292 192 Q158 197 7 191 Q3 97 8 7Z"/><path class="sketch-echo" d="M10 10 Q164 6 290 10 L289 190 Q150 193 11 188 Q7 102 10 10Z"/></svg>
-<span class="sketch-number">01</span><strong class="sketch-title">Una idea</strong><p class="sketch-body">Escribe la pregunta que este documento debe resolver.</p></div>
+<div class="sketch-meta"><span class="sketch-number">01</span><svg class="sketch-symbol" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M24 18 C23 5 43 5 42 18 C43 31 23 31 24 18 M14 55 C13 31 51 31 51 55 M23 47 L22 56 M42 46 L43 56"/></svg></div><strong class="sketch-title">Una idea</strong><p class="sketch-body">Escribe la pregunta que este documento debe resolver.</p></div>
 <div class="sketch-connection"><svg class="sketch-arrow" viewBox="0 0 64 40" aria-hidden="true" focusable="false"><path d="M4 22 Q27 12 58 19 M46 8 L59 19 L47 30"/></svg><span>desarrollar<span class="sr-only"> → Un borrador</span></span></div>
 </li>
 <li class="sketch-step" id="sketch-example-draft"><div class="sketch-node">
 <svg class="sketch-outline" viewBox="0 0 300 200" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M7 8 Q158 3 291 6 Q297 98 293 191 Q152 196 8 193 Q3 91 7 8Z"/><path class="sketch-echo" d="M10 10 Q164 6 290 10 L289 190 Q150 193 11 188 Q7 102 10 10Z"/></svg>
-<span class="sketch-number">02</span><strong class="sketch-title">Un borrador</strong><p class="sketch-body">Ordena la evidencia y deja visibles las dudas.</p></div>
+<div class="sketch-meta"><span class="sketch-number">02</span><svg class="sketch-symbol" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M15 6 Q31 5 39 7 L51 20 L50 57 Q33 58 14 56 Z M39 7 L39 21 L51 20 M23 31 L42 30 M23 40 L42 40 M23 49 L36 48"/></svg></div><strong class="sketch-title">Un borrador</strong><p class="sketch-body">Ordena la evidencia y deja visibles las dudas.</p></div>
 <div class="sketch-connection"><svg class="sketch-arrow" viewBox="0 0 64 40" aria-hidden="true" focusable="false"><path d="M4 22 Q27 12 58 19 M46 8 L59 19 L47 30"/></svg><span>compartir<span class="sr-only"> → Una revisión</span></span></div>
 </li>
 <li class="sketch-step" id="sketch-example-review"><div class="sketch-node">
 <svg class="sketch-outline" viewBox="0 0 300 200" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M8 7 Q146 2 292 8 Q298 89 292 192 Q158 197 7 191 Q3 97 8 7Z"/><path class="sketch-echo" d="M10 10 Q164 6 290 10 L289 190 Q150 193 11 188 Q7 102 10 10Z"/></svg>
-<span class="sketch-number">03</span><strong class="sketch-title">Una revisión</strong><p class="sketch-body">Comparte la versión y recoge los cambios propuestos.</p></div>
+<div class="sketch-meta"><span class="sketch-number">03</span><svg class="sketch-symbol" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M24 19 C23 6 41 6 40 19 C40 31 24 31 24 19 M17 56 C15 33 49 33 47 56 M10 18 C3 17 3 31 11 31 M5 52 C1 36 13 33 18 38 M53 18 C61 18 61 31 53 31 M47 38 C56 32 64 39 59 52"/></svg></div><strong class="sketch-title">Una revisión</strong><p class="sketch-body">Comparte la versión y recoge los cambios propuestos.</p></div>
 </li>
 </ol>
 <p class="sketch-note">Ejemplo ilustrativo: cada flecha tiene una intención.</p>
@@ -7310,17 +7313,17 @@ Origen: sin sesión conectada; no inventar una referencia.&lt;/code&gt;&lt;/pre&
 &lt;ol class=&quot;sketch-flow&quot;&gt;
 &lt;li class=&quot;sketch-step&quot; id=&quot;sketch-example-idea&quot;&gt;&lt;div class=&quot;sketch-node&quot;&gt;
 &lt;svg class=&quot;sketch-outline&quot; viewBox=&quot;0 0 300 200&quot; preserveAspectRatio=&quot;none&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M8 7 Q146 2 292 8 Q298 89 292 192 Q158 197 7 191 Q3 97 8 7Z&quot;/&gt;&lt;path class=&quot;sketch-echo&quot; d=&quot;M10 10 Q164 6 290 10 L289 190 Q150 193 11 188 Q7 102 10 10Z&quot;/&gt;&lt;/svg&gt;
-&lt;span class=&quot;sketch-number&quot;&gt;01&lt;/span&gt;&lt;strong class=&quot;sketch-title&quot;&gt;Una idea&lt;/strong&gt;&lt;p class=&quot;sketch-body&quot;&gt;Escribe la pregunta que este documento debe resolver.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&quot;sketch-meta&quot;&gt;&lt;span class=&quot;sketch-number&quot;&gt;01&lt;/span&gt;&lt;svg class=&quot;sketch-symbol&quot; viewBox=&quot;0 0 64 64&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M24 18 C23 5 43 5 42 18 C43 31 23 31 24 18 M14 55 C13 31 51 31 51 55 M23 47 L22 56 M42 46 L43 56&quot;/&gt;&lt;/svg&gt;&lt;/div&gt;&lt;strong class=&quot;sketch-title&quot;&gt;Una idea&lt;/strong&gt;&lt;p class=&quot;sketch-body&quot;&gt;Escribe la pregunta que este documento debe resolver.&lt;/p&gt;&lt;/div&gt;
 &lt;div class=&quot;sketch-connection&quot;&gt;&lt;svg class=&quot;sketch-arrow&quot; viewBox=&quot;0 0 64 40&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M4 22 Q27 12 58 19 M46 8 L59 19 L47 30&quot;/&gt;&lt;/svg&gt;&lt;span&gt;desarrollar&lt;span class=&quot;sr-only&quot;&gt; → Un borrador&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
 &lt;/li&gt;
 &lt;li class=&quot;sketch-step&quot; id=&quot;sketch-example-draft&quot;&gt;&lt;div class=&quot;sketch-node&quot;&gt;
 &lt;svg class=&quot;sketch-outline&quot; viewBox=&quot;0 0 300 200&quot; preserveAspectRatio=&quot;none&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M7 8 Q158 3 291 6 Q297 98 293 191 Q152 196 8 193 Q3 91 7 8Z&quot;/&gt;&lt;path class=&quot;sketch-echo&quot; d=&quot;M10 10 Q164 6 290 10 L289 190 Q150 193 11 188 Q7 102 10 10Z&quot;/&gt;&lt;/svg&gt;
-&lt;span class=&quot;sketch-number&quot;&gt;02&lt;/span&gt;&lt;strong class=&quot;sketch-title&quot;&gt;Un borrador&lt;/strong&gt;&lt;p class=&quot;sketch-body&quot;&gt;Ordena la evidencia y deja visibles las dudas.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&quot;sketch-meta&quot;&gt;&lt;span class=&quot;sketch-number&quot;&gt;02&lt;/span&gt;&lt;svg class=&quot;sketch-symbol&quot; viewBox=&quot;0 0 64 64&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M15 6 Q31 5 39 7 L51 20 L50 57 Q33 58 14 56 Z M39 7 L39 21 L51 20 M23 31 L42 30 M23 40 L42 40 M23 49 L36 48&quot;/&gt;&lt;/svg&gt;&lt;/div&gt;&lt;strong class=&quot;sketch-title&quot;&gt;Un borrador&lt;/strong&gt;&lt;p class=&quot;sketch-body&quot;&gt;Ordena la evidencia y deja visibles las dudas.&lt;/p&gt;&lt;/div&gt;
 &lt;div class=&quot;sketch-connection&quot;&gt;&lt;svg class=&quot;sketch-arrow&quot; viewBox=&quot;0 0 64 40&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M4 22 Q27 12 58 19 M46 8 L59 19 L47 30&quot;/&gt;&lt;/svg&gt;&lt;span&gt;compartir&lt;span class=&quot;sr-only&quot;&gt; → Una revisión&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
 &lt;/li&gt;
 &lt;li class=&quot;sketch-step&quot; id=&quot;sketch-example-review&quot;&gt;&lt;div class=&quot;sketch-node&quot;&gt;
 &lt;svg class=&quot;sketch-outline&quot; viewBox=&quot;0 0 300 200&quot; preserveAspectRatio=&quot;none&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M8 7 Q146 2 292 8 Q298 89 292 192 Q158 197 7 191 Q3 97 8 7Z&quot;/&gt;&lt;path class=&quot;sketch-echo&quot; d=&quot;M10 10 Q164 6 290 10 L289 190 Q150 193 11 188 Q7 102 10 10Z&quot;/&gt;&lt;/svg&gt;
-&lt;span class=&quot;sketch-number&quot;&gt;03&lt;/span&gt;&lt;strong class=&quot;sketch-title&quot;&gt;Una revisión&lt;/strong&gt;&lt;p class=&quot;sketch-body&quot;&gt;Comparte la versión y recoge los cambios propuestos.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&quot;sketch-meta&quot;&gt;&lt;span class=&quot;sketch-number&quot;&gt;03&lt;/span&gt;&lt;svg class=&quot;sketch-symbol&quot; viewBox=&quot;0 0 64 64&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M24 19 C23 6 41 6 40 19 C40 31 24 31 24 19 M17 56 C15 33 49 33 47 56 M10 18 C3 17 3 31 11 31 M5 52 C1 36 13 33 18 38 M53 18 C61 18 61 31 53 31 M47 38 C56 32 64 39 59 52&quot;/&gt;&lt;/svg&gt;&lt;/div&gt;&lt;strong class=&quot;sketch-title&quot;&gt;Una revisión&lt;/strong&gt;&lt;p class=&quot;sketch-body&quot;&gt;Comparte la versión y recoge los cambios propuestos.&lt;/p&gt;&lt;/div&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p class=&quot;sketch-note&quot;&gt;Ejemplo ilustrativo: cada flecha tiene una intención.&lt;/p&gt;

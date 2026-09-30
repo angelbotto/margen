@@ -3098,6 +3098,9 @@ body:has(.revision-barra) { padding-bottom:0; }
 .sketch-diagram .sketch-step:nth-child(2n) .sketch-outline path:first-child { fill: color-mix(in srgb, var(--tinta) 4%, var(--papel)); }
 .sketch-diagram .sketch-step:last-child .sketch-outline path:first-child { fill: color-mix(in srgb, var(--verde, var(--tinta)) 8%, var(--papel)); }
 .sketch-diagram .sketch-number { font: 500 12px/1.4 var(--mono); color: var(--tinta-2); letter-spacing: .08em; }
+.sketch-diagram .sketch-meta { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.sketch-diagram .sketch-symbol { display: block; width: 48px; height: 48px; flex: none; color: var(--tinta); }
+.sketch-diagram .sketch-symbol path { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .sketch-diagram .sketch-title { font: 400 36px/1.1 var(--mano); color: var(--tinta); }
 .sketch-diagram .sketch-body { font: 400 16px/1.6 var(--sans); color: var(--tinta); }
 .sketch-diagram .sketch-connection { display: flex; min-height: 88px; align-items: center; justify-content: center; gap: 14px; padding: 10px; color: var(--tinta); font: 400 16px/1.4 var(--sans); }

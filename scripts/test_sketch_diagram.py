@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 import unittest
 from html.parser import HTMLParser
-from sketch_diagram import render
+from sketch_diagram import render, ICONS
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = json.loads((ROOT/'packages/core/recipes/sketch-diagram/source.json').read_text())
@@ -53,6 +53,18 @@ class SketchTests(unittest.TestCase):
 
     def test_generated_specimen_is_current(self):
         self.assertEqual(render(SOURCE), (ROOT/'packages/core/recipes/sketch-diagram/example.html').read_text())
+
+    def test_symbols_preserve_labels_and_reject_arbitrary_markup(self):
+        for icon in ICONS:
+            source = copy.deepcopy(SOURCE)
+            source['nodes'][0]['icon'] = icon
+            markup = render(source)
+            self.assertIn('class="sketch-symbol"', markup)
+            self.assertIn(source['nodes'][0]['title'], markup)
+            self.assertIn('aria-hidden="true"', markup)
+        for icon in ('<svg onload="alert(1)">', 'unknown', {}, ['person']):
+            source = copy.deepcopy(SOURCE); source['nodes'][0]['icon'] = icon
+            with self.assertRaises(ValueError): render(source)
 
 
 if __name__ == '__main__': unittest.main()

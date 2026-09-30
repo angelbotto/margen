@@ -8,7 +8,7 @@
 
 **When:** Explain a short directed flow in an Excalidraw-like hand-drawn style. Use two or three stages per diagram. Separate an overview, a history example and an agent handoff when each answers a different question. This is a native Margen recipe, not the Excalidraw editor or its file format.
 
-**Source:** Copy `source.json` from this recipe. Schema `margen-sketch/1` requires a unique diagram `id`, `title`, two or three `nodes` with stable `id`, `title`, `body`, and exactly one `transitions` label between each consecutive pair. `note` is optional. Node order is the directed reading order. Labels are plain text, never HTML. Preserve the JSON outside the published HTML for later revisions.
+**Source:** Copy `source.json` from this recipe. Schema `margen-sketch/1` requires a unique diagram `id`, `title`, two or three `nodes` with stable `id`, `title`, `body`, and exactly one `transitions` label between each consecutive pair. `note` is optional. Node order is the directed reading order. Each node may include `icon`: `person`, `team`, `server`, `database`, `cloud`, `document`, `payment`, `store`, `approval` or `agent`. These original SVG symbols are decorative; always name the entity in the visible title. Omit the field when no symbol helps. Unknown icons and arbitrary SVG are rejected. Labels are plain text, never HTML. Preserve the JSON outside the published HTML for later revisions.
 
 ```bash
 python3 scripts/sketch_diagram.py --source /path/flow.json --output /path/flow.html

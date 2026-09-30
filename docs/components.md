@@ -2549,17 +2549,17 @@ Origen: sin sesión conectada; no inventar una referencia.</code></pre></div><p 
 <ol class="sketch-flow">
 <li class="sketch-step" id="sketch-example-idea"><div class="sketch-node">
 <svg class="sketch-outline" viewBox="0 0 300 200" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M8 7 Q146 2 292 8 Q298 89 292 192 Q158 197 7 191 Q3 97 8 7Z"/><path class="sketch-echo" d="M10 10 Q164 6 290 10 L289 190 Q150 193 11 188 Q7 102 10 10Z"/></svg>
-<span class="sketch-number">01</span><strong class="sketch-title">Una idea</strong><p class="sketch-body">Escribe la pregunta que este documento debe resolver.</p></div>
+<div class="sketch-meta"><span class="sketch-number">01</span><svg class="sketch-symbol" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M24 18 C23 5 43 5 42 18 C43 31 23 31 24 18 M14 55 C13 31 51 31 51 55 M23 47 L22 56 M42 46 L43 56"/></svg></div><strong class="sketch-title">Una idea</strong><p class="sketch-body">Escribe la pregunta que este documento debe resolver.</p></div>
 <div class="sketch-connection"><svg class="sketch-arrow" viewBox="0 0 64 40" aria-hidden="true" focusable="false"><path d="M4 22 Q27 12 58 19 M46 8 L59 19 L47 30"/></svg><span>desarrollar<span class="sr-only"> → Un borrador</span></span></div>
 </li>
 <li class="sketch-step" id="sketch-example-draft"><div class="sketch-node">
 <svg class="sketch-outline" viewBox="0 0 300 200" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M7 8 Q158 3 291 6 Q297 98 293 191 Q152 196 8 193 Q3 91 7 8Z"/><path class="sketch-echo" d="M10 10 Q164 6 290 10 L289 190 Q150 193 11 188 Q7 102 10 10Z"/></svg>
-<span class="sketch-number">02</span><strong class="sketch-title">Un borrador</strong><p class="sketch-body">Ordena la evidencia y deja visibles las dudas.</p></div>
+<div class="sketch-meta"><span class="sketch-number">02</span><svg class="sketch-symbol" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M15 6 Q31 5 39 7 L51 20 L50 57 Q33 58 14 56 Z M39 7 L39 21 L51 20 M23 31 L42 30 M23 40 L42 40 M23 49 L36 48"/></svg></div><strong class="sketch-title">Un borrador</strong><p class="sketch-body">Ordena la evidencia y deja visibles las dudas.</p></div>
 <div class="sketch-connection"><svg class="sketch-arrow" viewBox="0 0 64 40" aria-hidden="true" focusable="false"><path d="M4 22 Q27 12 58 19 M46 8 L59 19 L47 30"/></svg><span>compartir<span class="sr-only"> → Una revisión</span></span></div>
 </li>
 <li class="sketch-step" id="sketch-example-review"><div class="sketch-node">
 <svg class="sketch-outline" viewBox="0 0 300 200" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M8 7 Q146 2 292 8 Q298 89 292 192 Q158 197 7 191 Q3 97 8 7Z"/><path class="sketch-echo" d="M10 10 Q164 6 290 10 L289 190 Q150 193 11 188 Q7 102 10 10Z"/></svg>
-<span class="sketch-number">03</span><strong class="sketch-title">Una revisión</strong><p class="sketch-body">Comparte la versión y recoge los cambios propuestos.</p></div>
+<div class="sketch-meta"><span class="sketch-number">03</span><svg class="sketch-symbol" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M24 19 C23 6 41 6 40 19 C40 31 24 31 24 19 M17 56 C15 33 49 33 47 56 M10 18 C3 17 3 31 11 31 M5 52 C1 36 13 33 18 38 M53 18 C61 18 61 31 53 31 M47 38 C56 32 64 39 59 52"/></svg></div><strong class="sketch-title">Una revisión</strong><p class="sketch-body">Comparte la versión y recoge los cambios propuestos.</p></div>
 </li>
 </ol>
 <p class="sketch-note">Ejemplo ilustrativo: cada flecha tiene una intención.</p>
@@ -2568,7 +2568,7 @@ Origen: sin sesión conectada; no inventar una referencia.</code></pre></div><p 
 
 **When:** Explain a short directed flow in an Excalidraw-like hand-drawn style. Use two or three stages per diagram. Separate an overview, a history example and an agent handoff when each answers a different question. This is a native Margen recipe, not the Excalidraw editor or its file format.
 
-**Source:** Copy `source.json` from this recipe. Schema `margen-sketch/1` requires a unique diagram `id`, `title`, two or three `nodes` with stable `id`, `title`, `body`, and exactly one `transitions` label between each consecutive pair. `note` is optional. Node order is the directed reading order. Labels are plain text, never HTML. Preserve the JSON outside the published HTML for later revisions.
+**Source:** Copy `source.json` from this recipe. Schema `margen-sketch/1` requires a unique diagram `id`, `title`, two or three `nodes` with stable `id`, `title`, `body`, and exactly one `transitions` label between each consecutive pair. `note` is optional. Node order is the directed reading order. Each node may include `icon`: `person`, `team`, `server`, `database`, `cloud`, `document`, `payment`, `store`, `approval` or `agent`. These original SVG symbols are decorative; always name the entity in the visible title. Omit the field when no symbol helps. Unknown icons and arbitrary SVG are rejected. Labels are plain text, never HTML. Preserve the JSON outside the published HTML for later revisions.
 
 ```bash
 python3 scripts/sketch_diagram.py --source /path/flow.json --output /path/flow.html
