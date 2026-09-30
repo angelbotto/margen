@@ -63,3 +63,7 @@ The native [Margen · Artefactos vivos initiative](https://linear.app/botto/init
 - Responsive checks: editor/document and history had no page-wide horizontal overflow at 390 px and 320 px. Wide tables used their own scroll container. Light and dark appearances were inspected. Existing portal form styles initially overrode title styling; the editor selectors were corrected and verified in-browser.
 - No real customer artifact was modified by these smoke checks. Screenshots remain local under `/tmp/margen-editor-evidence`; they are not public repository assets.
 - [Draft PR #27](https://github.com/angelbotto/margen/pull/27) contains the first slice; final check receipts are also recorded in the delivery ticket. Production rollout remains a separate, unperformed step until its operator/deployment path is verified.
+
+## Hand-drawn diagrams: requested extension
+
+[BOT-36](https://linear.app/botto/issue/BOT-36) adds the reusable `sketch-diagram` recipe and `margen-sketch/1` source generator, plus a private explanatory artifact. Native HTML labels remain readable while deterministic SVG strokes supply the sketch aesthetic. A single semantic flow reflows on narrow screens. This first slice supports two or three stages; it does not add an Excalidraw canvas or a diagram adapter to the portal slash menu. The existing editor preserves these figures intact. Validation and artifact receipts are recorded on BOT-36.

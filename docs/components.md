@@ -2538,3 +2538,44 @@ Origen: sin sesión conectada; no inventar una referencia.</code></pre></div><p 
 ```
 
 **Use and limits:** Explain a manual editorial correction and its reason without hiding uncertainty. Use real source versions and quotes; examples are synthetic. Not an automatic diff or version-control engine. Keep Before/Proposal labels clear on mobile and retain keyboard-readable/copyable text.
+
+## Sketch diagram
+
+<!-- nota:ejemplo sketch-diagram -->
+
+```html
+<figure class="pieza amplio sketch-diagram" id="sketch-example" data-sketch-diagram="1" aria-labelledby="sketch-example-caption">
+<figcaption id="sketch-example-caption">De una idea a una revisión compartida</figcaption>
+<ol class="sketch-flow">
+<li class="sketch-step" id="sketch-example-idea"><div class="sketch-node">
+<svg class="sketch-outline" viewBox="0 0 300 200" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M8 7 Q146 2 292 8 Q298 89 292 192 Q158 197 7 191 Q3 97 8 7Z"/><path class="sketch-echo" d="M10 10 Q164 6 290 10 L289 190 Q150 193 11 188 Q7 102 10 10Z"/></svg>
+<span class="sketch-number">01</span><strong class="sketch-title">Una idea</strong><p class="sketch-body">Escribe la pregunta que este documento debe resolver.</p></div>
+<div class="sketch-connection"><svg class="sketch-arrow" viewBox="0 0 64 40" aria-hidden="true" focusable="false"><path d="M4 22 Q27 12 58 19 M46 8 L59 19 L47 30"/></svg><span>desarrollar<span class="sr-only"> → Un borrador</span></span></div>
+</li>
+<li class="sketch-step" id="sketch-example-draft"><div class="sketch-node">
+<svg class="sketch-outline" viewBox="0 0 300 200" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M7 8 Q158 3 291 6 Q297 98 293 191 Q152 196 8 193 Q3 91 7 8Z"/><path class="sketch-echo" d="M10 10 Q164 6 290 10 L289 190 Q150 193 11 188 Q7 102 10 10Z"/></svg>
+<span class="sketch-number">02</span><strong class="sketch-title">Un borrador</strong><p class="sketch-body">Ordena la evidencia y deja visibles las dudas.</p></div>
+<div class="sketch-connection"><svg class="sketch-arrow" viewBox="0 0 64 40" aria-hidden="true" focusable="false"><path d="M4 22 Q27 12 58 19 M46 8 L59 19 L47 30"/></svg><span>compartir<span class="sr-only"> → Una revisión</span></span></div>
+</li>
+<li class="sketch-step" id="sketch-example-review"><div class="sketch-node">
+<svg class="sketch-outline" viewBox="0 0 300 200" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M8 7 Q146 2 292 8 Q298 89 292 192 Q158 197 7 191 Q3 97 8 7Z"/><path class="sketch-echo" d="M10 10 Q164 6 290 10 L289 190 Q150 193 11 188 Q7 102 10 10Z"/></svg>
+<span class="sketch-number">03</span><strong class="sketch-title">Una revisión</strong><p class="sketch-body">Comparte la versión y recoge los cambios propuestos.</p></div>
+</li>
+</ol>
+<p class="sketch-note">Ejemplo ilustrativo: cada flecha tiene una intención.</p>
+</figure>
+```
+
+**When:** Explain a short directed flow in an Excalidraw-like hand-drawn style. Use two or three stages per diagram. Separate an overview, a history example and an agent handoff when each answers a different question. This is a native Margen recipe, not the Excalidraw editor or its file format.
+
+**Source:** Copy `source.json` from this recipe. Schema `margen-sketch/1` requires a unique diagram `id`, `title`, two or three `nodes` with stable `id`, `title`, `body`, and exactly one `transitions` label between each consecutive pair. `note` is optional. Node order is the directed reading order. Labels are plain text, never HTML. Preserve the JSON outside the published HTML for later revisions.
+
+```bash
+python3 scripts/sketch_diagram.py --source /path/flow.json --output /path/flow.html
+```
+
+Insert the generated figure as a sibling of `.prosa`, then compose the complete document with `scripts/create_artifact.py`. Give every figure a unique ID. Styles are included in the canonical `artifact.css` by `scripts/build.py`; no extra runtime or remote assets are needed. Do not paste a screenshot of the figure.
+
+**Reading and accessibility:** Real HTML text and an ordered list carry the meaning; decorative SVG borders/arrows are hidden from assistive technology. Connections name their destination in reading order. The same DOM reflows vertically below an 820px figure width. Labels retain their CSS font sizes and text wraps instead of scaling or clipping. Light/dark colors follow the current theme. There are no animations or keyboard-only interactions; all content is available without JavaScript. Print uses the vertical flow. No color encodes a required distinction.
+
+**Limits:** This first recipe supports linear flows, not branching architectures, free-positioned canvas editing, numerical charts, Excalidraw import/export, or real-time collaboration. Split larger processes, or select `relationship-map` for an explorable graph. The block editor conservatively preserves this figure as an opaque component; it does not yet expose editable diagram nodes in its slash menu. The source generator fails closed on invalid schema, duplicate IDs, missing transitions and oversize content. Always inspect the actual standalone artifact on desktop and mobile, in light and dark mode. Drawing paths alone do not prove legibility or accessibility conformance.

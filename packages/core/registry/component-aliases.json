@@ -88,5 +88,6 @@
   "context-bundle": "context-bundle",
   "evidence-ledger": "evidence-ledger",
   "review-queue": "review-queue",
-  "version-comparison": "version-comparison"
+  "version-comparison": "version-comparison",
+  "sketch-diagram": "sketch-diagram"
 }

@@ -13,6 +13,7 @@ review_css=(ROOT/'packages/core/styles/review-composer.css').read_text()
 css_path=ROOT/'packages/core/styles/artifact.css'
 css=css_path.read_text()
 blocks = [
+    ("SKETCH DIAGRAM", (ROOT/'packages/core/styles/sketch-diagram.css').read_text()),
     ("REVIEW COMPOSER", review_css),
     ("PRESENTATION", (ROOT/'packages/core/styles/presentation.css').read_text()),
     ("TABLE CONTENT", (ROOT/'packages/core/styles/table-content.css').read_text()),
