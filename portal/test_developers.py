@@ -102,6 +102,31 @@ class DevelopersTests(unittest.TestCase):
         self.assertIn('attachment', download.headers['content-disposition'])
         self.assertIn('<script>', download.json()['content'])
 
+    def test_bundled_runtime_is_hashed_and_community_cannot_opt_in(self):
+        import base64
+        import hashlib
+        import re
+        response = self.guest.get('/api/developers/items/component-line-chart/preview')
+        policy = response.headers['content-security-policy']
+        self.assertIn('sandbox allow-scripts;', policy)
+        self.assertNotIn('allow-same-origin', policy)
+        self.assertNotIn("script-src 'unsafe-inline'", policy)
+        self.assertIn("default-src 'none'", policy)
+        self.assertIn('data-grafica="lineas"', response.text)
+        scripts = re.findall(r'<script>(.*?)</script>', response.text, re.S)
+        self.assertEqual(len(scripts), 1)
+        self.assertIn('window.NotaGraficas', scripts[0])
+        digest = base64.b64encode(hashlib.sha256(scripts[0].encode()).digest()).decode()
+        self.assertIn("'sha256-" + digest + "'", policy)
+        package = self.package('component')
+        package['content'] = bundled()['component-line-chart']['content']
+        key = self.submit(package)
+        community = self.owner.get('/api/developers/items/' + key + '/preview')
+        self.assertIn("script-src 'none'", community.headers['content-security-policy'])
+        self.assertNotIn('<script>', community.text)
+        package['preview_runtime'] = ['charts.js']
+        self.assertEqual(self.owner.post('/api/developers/submissions', json={'package': package}).status_code, 422)
+
     def test_theme_applies_as_draft_preserving_identity_and_access(self):
         key = self.submit()
         url = '/api/developers/items/' + key + '/use'

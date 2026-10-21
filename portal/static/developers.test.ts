@@ -21,7 +21,7 @@ const click = (text: string) => {
 it('renders real items as text, filters accents and saves per-account favorites', async () => {
   const items = [structuredClone(theme), structuredClone(recipe)];
   const api = vi.fn(async (path, options) => path.endsWith('/favorite') ? {...theme, favorite:JSON.parse(options.body).favorite, favorites:1} : {items, can_submit:true, admin:false});
-  await (window as any).MargenDevelopers.render({root, api, user:{}});
+  await (window as any).MargenDevelopers.render({root, api, user:{}, section:"themes"});
   expect(root.querySelector('img')).toBeNull();
   expect([...root.querySelectorAll('iframe')].every(f => f.getAttribute('sandbox') === '')).toBe(true);
   const search = root.querySelector<HTMLInputElement>('input[type=search]')!;
@@ -48,9 +48,9 @@ it('distinguishes private creations, review queue and public catalog', async () 
   expect(api).toHaveBeenCalledWith('/api/developers/submissions?scope=review');
   expect(root.textContent).toContain('Pendiente de revisión');
   expect(root.querySelector('[aria-label^="Guardar"]')).toBeNull();
-  click('Todos'); await tick();
-  expect(root.textContent).toContain('Kaira');
-  expect(root.textContent).not.toContain('Pendiente de revisión');
+  click('Mis aportes'); await tick();
+  expect(api).toHaveBeenCalledWith('/api/developers/submissions');
+  expect(root.querySelector('iframe')).toBeNull();
 });
 it('opens a shared item by URL even if it is not listed in the catalog', async () => {
   history.replaceState(null,'','/?view=developers&item=shared123');
@@ -105,4 +105,59 @@ it.each([true, false])('preserves component content, license and provenance when
   expect(saved.credits).toContain(initial.author);
   if (visual) expect(saved.design).toEqual((initial as any).design);
   else expect(saved.content).toBe(initial.content);
+});
+
+it('shows component documentation with categorized navigation, code and copy, never artifact creation', async () => {
+  const component = {...recipe, id:'component-line-chart', slug:'line-chart', title:'Líneas', origin:'bundled', category:'Gráficas', content:'<figure data-grafica="lineas">Example</figure>', dependencies:['packages/core/components/charts.js'], preview_runtime:['charts.js']};
+  const api = vi.fn(async path => path.endsWith('/catalog') ? {items:[theme, component], can_submit:true} : component);
+  const writeText = vi.fn().mockResolvedValue(undefined);
+  Object.defineProperty(navigator, 'clipboard', {configurable:true, value:{writeText}});
+  await (window as any).MargenDevelopers.render({root, api, user:{}, section:'components'});
+  expect(root.querySelector('.component-detail h2')!.textContent).toBe('Líneas');
+  expect(root.querySelector('.component-index')!.textContent).toContain('Gráficas');
+  expect(root.querySelector('.component-index')!.textContent).not.toContain('Kaira');
+  expect(root.querySelector('.developer-card')).toBeNull();
+  expect(root.querySelector('dialog')).toBeNull();
+  expect(root.textContent).not.toContain('Crear artefacto');
+  expect(root.textContent).toContain('Dependencias');
+  expect(root.querySelector('iframe')!.getAttribute('sandbox')).toBe('allow-scripts');
+  click('Código');
+  expect((root.querySelector('.component-code') as HTMLElement).hidden).toBe(false);
+  expect(root.querySelector('iframe')!.hidden).toBe(true);
+  click('Copiar HTML'); await tick();
+  expect(writeText).toHaveBeenCalledWith(component.content);
+  click('Vista previa'); expect(root.querySelector('iframe')!.hidden).toBe(false);
+  const search = root.querySelector<HTMLInputElement>('input[type=search]')!;
+  search.value='lineas'; search.dispatchEvent(new Event('input'));
+  expect(root.querySelectorAll('.component-index-link')).toHaveLength(1);
+});
+it('keeps community source inert in documentation and handles denied clipboard access', async () => {
+  const component = {...recipe, origin:'community', content:'<script>alert(1)</script>', preview_runtime:['charts.js']};
+  const api = vi.fn(async path => path.endsWith('/catalog') ? {items:[component], can_submit:false} : component);
+  Object.defineProperty(navigator, 'clipboard', {configurable:true, value:{writeText:vi.fn().mockRejectedValue(Error('Denied'))}});
+  await (window as any).MargenDevelopers.render({root, api, user:null, section:'components'});
+  expect(root.querySelector('iframe')!.getAttribute('sandbox')).toBe('');
+  expect(root.querySelector('script')).toBeNull();
+  click('Copiar HTML'); await tick();
+  expect(root.textContent).toContain('El navegador no permitió');
+  expect((root.querySelector('.component-code') as HTMLElement).hidden).toBe(false);
+});
+it('ignores a slow old component detail when selecting another component', async () => {
+  const a = {...recipe, id:'a', title:'Primero'}, b = {...recipe, id:'b', title:'Segundo'};
+  let resolveA: any;
+  const api = vi.fn(async path => path.endsWith('/catalog') ? {items:[a,b], can_submit:false} : path.endsWith('/a') ? new Promise(resolve => {resolveA=resolve;}) : {...b, content:'Second'});
+  const pending = (window as any).MargenDevelopers.render({root, api, user:null, section:'components'});
+  await tick(); click('Segundo'); await tick();
+  resolveA({...a, content:'First'}); await pending;
+  expect(root.querySelector('.component-detail h2')!.textContent).toBe('Segundo');
+  expect(location.search).toContain('view=components&item=b');
+});
+it('keeps the theme gallery separate and offers its visual creator', async () => {
+  const api = vi.fn(async () => ({items:[theme,recipe], can_submit:true}));
+  await (window as any).MargenDevelopers.render({root, api, user:{}, section:'themes'});
+  expect(root.querySelectorAll('.developer-card')).toHaveLength(1);
+  expect(root.textContent).not.toContain(recipe.title);
+  click('Crear un tema');
+  expect(root.querySelector('.community-studio')).not.toBeNull();
+  expect(root.querySelector('[data-token=papel]')).not.toBeNull();
 });
