@@ -42,8 +42,16 @@ RENDERS = {
     '[data-explorador]': 'select, input', '[data-pestanas]': '[role=tab][aria-selected=true]',
     '[data-visor]': 'iframe, button', '[data-lenguaje]': 'span[class]', '[data-galeria]': '[data-galeria-pista]',
 }
+# Recipes reported as plain tables in production; their drawing is required unconditionally.
+REQUIRED = {
+    'gantt': '.evidencia-visor svg [data-ev-row]', 'sankey': '.evidencia-visor svg .ev-flujo',
+    'funnel': '.evidencia-visor svg .ev-solido', 'waterfall': '.grafica-caja svg .cascada-sube',
+    'sparkline': 'svg.sparkline', 'coordinates': '.escena-caja canvas', 'attention-map': '.atencion-area',
+    'small-multiples': '.grafica-caja svg .grafica-trazo',
+}
 # Error slots modules fill when their renderer fails (for example, three.js unavailable).
-ERRORS = '[data-error-analitica], [data-error-grafica], [data-error], .grafica-error, .globo-error, .error-componente'
+ERRORS = ('[data-error-analitica], [data-error-grafica], [data-error], [data-error-reporte], [data-error-visor], '
+          '[data-error-pestanas], .evidencia-error, .grafica-error, .globo-error, .error-componente')
 EXPECTED_ERRORS = ()
 
 
@@ -151,11 +159,20 @@ class BundledPreviewBrowserTests(unittest.TestCase):
                         visible = hosts.evaluate_all("(nodes, output) => nodes.some(node => node.getClientRects().length) && nodes.filter(node => node.getClientRects().length).every(node => [...node.querySelectorAll(output)].some(n => { const r = n.getBoundingClientRect(); return r.width > 0 && r.height > 0; }))", output)
                         if not visible:
                             failures.append(item['slug'] + ': ' + owner + ' sin ' + output + ' visible')
+                    # Every report host must hold a live NotaReportes instance, not just its static table.
+                    if body.evaluate("() => document.querySelectorAll('[data-reporte]').length && ![...document.querySelectorAll('[data-reporte]')].every(host => window.NotaReportes?.get(host))"):
+                        failures.append(item['slug'] + ': reporte sin instancia de NotaReportes')
+                    if item['slug'] in REQUIRED:
+                        drawn = body.evaluate("(_, selector) => [...document.querySelectorAll(selector)].some(n => { const r = n.getBoundingClientRect(); return r.width > 0 && r.height > 0; })", REQUIRED[item['slug']])
+                        if not drawn:
+                            failures.append(item['slug'] + ': sin ' + REQUIRED[item['slug']] + ' (requerido)')
                     failed = body.evaluate("(_, selector) => [...document.querySelectorAll(selector)].filter(n => n.getClientRects().length && n.textContent.trim()).map(n => n.textContent.trim())", ERRORS)
                     if failed:
                         failures.append(item['slug'] + ': error visible ' + '; '.join(failed))
                     for width in WIDTHS:
                         page.locator('iframe').evaluate('(frame, width) => { frame.style.width = width + "px"; }', width)
+                        # Static recipes run without scripts, so frames are counted in the parent harness.
+                        page.evaluate('() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))')
                         overflow = body.evaluate('() => document.documentElement.scrollWidth - document.documentElement.clientWidth')
                         if overflow > 1:
                             failures.append(item['slug'] + ': overflow ' + str(overflow) + 'px a ' + str(width))
@@ -198,6 +215,13 @@ class BundledPreviewBrowserTests(unittest.TestCase):
             frame.locator('input[name=despues]').dispatch_event('input')
             page.wait_for_timeout(200)
             self.assertNotEqual(frame.locator('[data-resultado]').text_content(), result)
+
+            frame = self.load(page, bundled()['component-reconciliation'])
+            self.assertTrue(frame.locator('[data-reporte]').evaluate('host => !!window.NotaReportes.get(host)'))
+            cells = frame.locator('[data-reporte] tbody tr td:nth-of-type(3)').all_text_contents()
+            self.assertEqual([int(c.replace('−', '-').replace('+', '')) for c in cells], [-2, 0, 3])
+            total = frame.locator('[data-reporte] tfoot td').all_text_contents()[:3]
+            self.assertEqual([int(c.replace('−', '-').replace('+', '').replace('.', '')) for c in total], [230, 231, 1])
 
             frame = self.load(page, bundled()['component-gantt'])
             choice = frame.locator('.evidencia-controles select')
