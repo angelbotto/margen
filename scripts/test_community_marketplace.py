@@ -46,7 +46,7 @@ class BrowserTests(unittest.TestCase):
         page.get_by_role('heading', name='Dale tu forma a Margen.').wait_for()
 
     def assert_layout(self, page):
-        for width in (1440, 390, 320):
+        for width in (1440, 390, 320, 300):
             page.set_viewport_size({'width': width, 'height': 950})
             self.assertTrue(page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1'), f'Page overflow at {width}')
             dialog = page.locator('dialog[open]')
