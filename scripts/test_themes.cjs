@@ -33,4 +33,40 @@ equal(restored.api.set({family:'invalid'}),false);equal(restored.api.set({mode:'
 const blocked=load({initial:'liftit',mode:'system',blocked:true});equal(blocked.api.set({mode:'dark'}),true);equal(blocked.dataset.theme,'liftit-dark');
 const unscoped=load({stored:{'nota-apariencia-v2':'{"family":"sea","mode":"light"}','nota-tema':'dark'}});equal(unscoped.dataset.theme,'sea-light');
 const corrupt=load({stored:{'nota-apariencia-v2':'broken'}});equal(corrupt.dataset.themeFamily,'editorial');
-console.log(`${assertions} comprobaciones: 15 familias, modos independientes, cambio del SO, persistencia, alias y almacenamiento bloqueado.`);
+// Kaira is a color family, not a brand asset or a typography override.
+const kaira=registry.familias.find(family=>family.id==='kaira');
+assert.ok(kaira,'Kaira must be registered with complete light and dark palettes');assertions++;
+const css=fs.readFileSync('packages/core/styles/artifact.css','utf8');
+function luminance(hex){
+ return hex.slice(1).match(/../g).map(value=>parseInt(value,16)/255)
+  .map(value=>value<=.04045?value/12.92:((value+.055)/1.055)**2.4)
+  .reduce((sum,value,index)=>sum+value*[.2126,.7152,.0722][index],0);
+}
+function contrast(a,b){const x=luminance(a),y=luminance(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05);}
+for(const mode of ['light','dark']){
+ const palette=kaira[mode];
+ const rule=css.match(new RegExp(`:root\\[data-theme="kaira-${mode}"\\] \\{([^}]+)\\}`));
+ assert.ok(rule,`Missing generated Kaira ${mode} CSS`);assertions++;
+ const generated=Object.fromEntries([...rule[1].matchAll(/--([\w-]+):\s*([^;]+);/g)].map(match=>[match[1],match[2]]));
+ for(const key of ['papel','panel','panel-2','tinta','tinta-2','tinta-3','naranja','verde','rojo','azul']){
+  assert.match(palette[key],/^#[\da-f]{6}$/i);assertions++;
+  equal(generated[key],palette[key]);
+ }
+ for(const ink of ['tinta','tinta-2','tinta-3','naranja','verde','rojo','azul'])for(const bg of ['papel','panel','panel-2']){
+  const ratio=contrast(palette[ink],palette[bg]);
+  assert.ok(ratio>=4.5,`Kaira ${mode}: ${ink}/${bg} contrast ${ratio} < 4.5`);assertions++;
+ }
+ for(let level=0;level<=4;level++){
+  assert.ok(contrast(generated['calor-tinta'],generated[`calor-${level}`])>=4.5,`Kaira ${mode}: heatmap ${level}`);assertions++;
+ }
+ for(const bg of ['naranja-suave','tabla-total','tabla-elegida']){
+  const resolved=generated[bg].replace(/^var\(--([\w-]+)\)$/,(_,key)=>generated[key]);
+  assert.ok(contrast(palette.tinta,resolved)>=4.5,`Kaira ${mode}: selected/table text on ${bg}`);assertions++;
+ }
+ const initial=load({initial:'kaira',mode,dark:mode!=='dark'});
+ equal(initial.dataset.theme,`kaira-${mode}`);
+ equal(initial.dataset.themeFamily,'kaira');
+ const restored=load({initial:'editorial',mode:'system',stored:Object.fromEntries(initial.values)});
+ equal(restored.dataset.theme,`kaira-${mode}`);
+}
+console.log(`${assertions} comprobaciones: ${registry.familias.length} familias, modos independientes, cambio del SO, persistencia, alias, almacenamiento bloqueado y contraste Kaira AA.`);

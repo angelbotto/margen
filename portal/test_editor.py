@@ -191,3 +191,12 @@ class ComponentPreviewTests(unittest.TestCase):
         result=render_component(doc,template,b['id'])
         self.assertIn(image,result);self.assertIn('@font-face',result)
         self.assertNotIn('onerror',result);self.assertNotIn('alert(2)',result);self.assertNotIn('<iframe',result)
+    def test_self_closing_svg_shapes_preserve_visible_siblings(self):
+        from portal.component_preview import StaticMarkup
+        from xml.etree import ElementTree
+        source='<svg><rect width="20" height="20"/><text>Visible label</text><path d="M0 0L20 20"/><circle r="4"/></svg>'
+        root=ElementTree.fromstring(''.join(StaticMarkup(source).parts))
+        self.assertEqual([child.tag for child in root],['rect','text','path','circle'])
+        self.assertEqual(root[1].text,'Visible label')
+        self.assertEqual(len(root[0]),0)
+        self.assertEqual(''.join(StaticMarkup('<script/><svg><path/></svg><img src="data:image/png;base64,AA"/>').parts),'<svg><path></path></svg><img src="data:image/png;base64,AA">')
