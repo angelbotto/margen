@@ -47,8 +47,12 @@ Mount one shared dock. Comments, Share and Preferences have distinct purposes. R
 
 Choose a family for the material: Editorial for narrative, Liftit for logistics, Tikin/Catabum for their respective brands, Blueprint for conceptual architecture and Hacker for technical evidence. Linear and Modern support compact product documentation. Light/dark/system mode is independent. Use consistent typography roles; handwritten annotation does not replace the body face. All families must support the same components and accessible state labels.
 
-## Semantic prose spacing
+## Shared reading rhythm
 
-In standard notes, a plain `<article>` directly inside `.hoja` (or its `.pagina`) preserves the page grid. Its direct `.ancho` and `.amplio` children use the corresponding wider measure. Plain direct sections and explicit `.prosa` sections receive paragraph and heading rhythm; classed components keep their own layout. Presentations are excluded. Keep structured components at these layout boundaries rather than nesting wide tables inside prose.
+All theme families use the same spacing tokens: paragraph 18px, heading-before 36px, heading-after 14px, section 28px and eyebrow 10px. The shared source is `packages/core/styles/editorial-flow.css`; the build embeds it in standalone CSS and the hosted reader. Legacy `.hoja` documents receive the same rules. Hosted corrections change rendering, not stored source, versions or audience.
 
-The shared source is `packages/core/styles/editorial-flow.css`; `scripts/build.py` embeds it in standalone CSS and the portal reader additions. Hosted corrections change rendering, not stored document versions. Reproduce the browser geometry check with `python scripts/test_editorial_flow.py` in an environment with Playwright and Chromium installed.
+Plain semantic containers, nested prose, lists and canonical recipe text hosts receive reading rhythm. A plain `<article>` directly inside `.hoja` or `.pagina` preserves the page grid, including direct `.ancho` and `.amplio` figures. Keep wide evidence beside prose rather than inside its text column. Custom classed text containers should include `.prosa`, at any nesting depth. The generator and validator warn about unknown classed prose; `validate_artifact.py --strict-composition FILE` treats these warnings as failures.
+
+Grid/flex components retain their own gaps. Do not add `.prosa` to a layout grid or control group. `data-ritmo="propio"` opts a custom layout and its descendants out of automatic reading rhythm. Inline-styled containers also retain their layout; use an explicit prose child when needed. Data interfaces, navigation and presentations are excluded.
+
+Run `python scripts/test_editorial_flow.py` in an environment with Playwright and Chromium installed. The suite checks all recipe examples at 320/390/1440px, 16 theme families in light/dark mode, nested text, article grids, long identifiers, print visibility, excluded components and hosted stylesheet ordering. A historical downloaded HTML embeds its old CSS; regenerate it with the same document ID to update that offline copy.

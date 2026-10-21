@@ -19,6 +19,8 @@ Read [project identity](project-identity.md) for `.margen.json`, custom company 
 
 The generator embeds complete fonts, CSS and required modules. Wide `.ancho` or `.amplio` figures are siblings of text sections inside `.hoja` or `.pagina`; nesting them in a narrow paragraph column breaks their width. Multipage documents use a grid on each `.pagina`, not a competing grid on the outer wrapper. Chapter navigation is page navigation; local content tabs use tab semantics.
 
+Custom text wrappers use `.prosa`; intentional custom layouts may opt out with `data-ritmo="propio"`. Plain article wrappers directly inside the page also preserve the wide-figure grid. Run `validate_artifact.py --strict-composition FILE` to reject custom prose wrappers without a known spacing contract.
+
 The base includes one appearance menu and one review surface. The hosted adapter negotiates permissions without passing credentials into artifact HTML. Theme and typography preferences are reader-specific; published source remains immutable. Preserve existing metadata keys such as `nota-documento` and runtime globals for compatibility.
 
 ## Validation

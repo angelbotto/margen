@@ -123,43 +123,113 @@
 @media(pointer:coarse){.review-context-menu button{min-height:44px}}
 @media print{.review-context-menu{display:none!important}}
 
-/* Semantic prose boundaries retain the page grid and reading rhythm.
-   Classed sections/components keep their own layout; slides are excluded. */
+/* Shared editorial rhythm for all Margen themes, including legacy .hoja pages.
+   Reading flow owns margins; flex/grid components retain their own gaps.
+   Explicit .prosa works at any depth. Data views and presentation canvases opt out. */
+.hoja {
+  --prosa-parrafo: 18px;
+  --prosa-antes-titulo: 36px;
+  --prosa-despues-titulo: 14px;
+  --prosa-bloque: 28px;
+  --prosa-ceja: 10px;
+}
 @media screen {
-  :is(.nota-estandar:not([data-presentation]), .nota-estandar:not([data-presentation]) > .pagina) > article:not([class]) {
+  :is(.hoja:not([data-presentation]), .hoja:not([data-presentation]) > .pagina) > article:not([class]):not([style], [data-ritmo="propio"]):not([data-ritmo="propio"] *) {
     grid-column: 1 / -1;
     display: grid;
     grid-template-columns: 1fr min(var(--texto), calc(100% - 2 * var(--gutter))) 1fr;
     row-gap: inherit;
     min-width: 0;
   }
-  :is(.nota-estandar:not([data-presentation]), .nota-estandar:not([data-presentation]) > .pagina) > article:not([class]) > * {
+  :is(.hoja:not([data-presentation]), .hoja:not([data-presentation]) > .pagina) > article:not([class]):not([style], [data-ritmo="propio"]):not([data-ritmo="propio"] *) > * {
     grid-column: 2;
     min-width: 0;
   }
-  :is(.nota-estandar:not([data-presentation]), .nota-estandar:not([data-presentation]) > .pagina) > article:not([class]) > :is(.ancho, .amplio) {
+  :is(.hoja:not([data-presentation]), .hoja:not([data-presentation]) > .pagina) > article:not([class]):not([style], [data-ritmo="propio"]):not([data-ritmo="propio"] *) > :is(.ancho, .amplio) {
     grid-column: 1 / -1;
     margin-inline: auto;
     width: min(var(--ancho), calc(100% - 2 * var(--gutter)));
   }
-  :is(.nota-estandar:not([data-presentation]), .nota-estandar:not([data-presentation]) > .pagina) > article:not([class]) > .amplio {
+  :is(.hoja:not([data-presentation]), .hoja:not([data-presentation]) > .pagina) > article:not([class]):not([style], [data-ritmo="propio"]):not([data-ritmo="propio"] *) > .amplio {
     width: min(var(--amplio), calc(100% - 2 * var(--gutter)));
   }
 }
-:is(.nota-estandar:not([data-presentation]), .nota-estandar:not([data-presentation]) > .pagina, .nota-estandar:not([data-presentation]) > article:not([class]), .nota-estandar:not([data-presentation]) > .pagina > article:not([class])) > :is(section:not([class]), .prosa) {
-  display: flow-root;
-  overflow-wrap: anywhere;
-}
-:is(.nota-estandar:not([data-presentation]), .nota-estandar:not([data-presentation]) > .pagina, .nota-estandar:not([data-presentation]) > article:not([class]), .nota-estandar:not([data-presentation]) > .pagina > article:not([class])) > :is(section:not([class]), .prosa) > * + * {
-  margin-block-start: 18px;
-}
-:is(.nota-estandar:not([data-presentation]), .nota-estandar:not([data-presentation]) > .pagina, .nota-estandar:not([data-presentation]) > article:not([class]), .nota-estandar:not([data-presentation]) > .pagina > article:not([class])) > :is(section:not([class]), .prosa) > :is(h2,h3,h4):not(:first-child) {
-  margin-block-start: 36px;
-}
-:is(.nota-estandar:not([data-presentation]), .nota-estandar:not([data-presentation]) > .pagina, .nota-estandar:not([data-presentation]) > article:not([class]), .nota-estandar:not([data-presentation]) > .pagina > article:not([class])) > :is(section:not([class]), .prosa) > :is(h2,h3,h4) + * {
-  margin-block-start: 14px;
-}
-.nota-estandar:not([data-presentation]) .pieza > :is(h3,h4):not(:first-child) { margin-block-start: 28px; }
+
+.hoja:not([data-presentation]) :is(
+  .prosa, .pieza, .apunte-cuerpo, .marco-contenido,
+  .revisiones-editoriales > li, .cards-trazadas > article,
+  section:not([class]), section[class=""], section[class="ancho"], section[class="amplio"], figure[class="ancho"], figure[class="amplio"],
+  div:not([class]), div[class=""], article:not([class]), article[class=""], li
+):not(.hoja > article:not([class]):not([style], [data-ritmo="propio"]):not([data-ritmo="propio"] *), .pagina > article:not([class]):not([style], [data-ritmo="propio"]):not([data-ritmo="propio"] *), [style]:not(.prosa), .cronologia > li, .estanteria > li, .nota-sonido > div, [data-ritmo="propio"], [data-visor], [data-explorador], [data-revision], .card-editorial):not(:is(
+  [data-presentation], [data-visor], [data-explorador], [data-revision],
+  nav, form, dialog, table, pre, button, .indice, .datos, .codigo, .terminal,
+  .card-editorial, .antes-despues, .kept, .pie .campos, .grafica-leyenda, .calor-leyenda, .analitica-leyenda, .lista-estados, .tabla-caja, .grafica-caja, .escena-caja, .escritura-caja,
+  .galeria-pista, .apariencia-panel, [data-ritmo="propio"]
+) *) > :is(p, ul, ol, dl, blockquote, figure, section, article, .tabla-caja, .codigo, .prosa) + :is(p, ul, ol, dl, blockquote, figure, section, article, .tabla-caja, .codigo, .prosa) { margin-block-start: var(--prosa-parrafo); }
+
+.hoja:not([data-presentation]) :is(
+  .prosa, .pieza, .apunte-cuerpo, .marco-contenido,
+  .revisiones-editoriales > li, .cards-trazadas > article,
+  section:not([class]), section[class=""], section[class="ancho"], section[class="amplio"], figure[class="ancho"], figure[class="amplio"],
+  div:not([class]), div[class=""], article:not([class]), article[class=""], li
+):not(.hoja > article:not([class]):not([style], [data-ritmo="propio"]):not([data-ritmo="propio"] *), .pagina > article:not([class]):not([style], [data-ritmo="propio"]):not([data-ritmo="propio"] *), [style]:not(.prosa), .cronologia > li, .estanteria > li, .nota-sonido > div, [data-ritmo="propio"], [data-visor], [data-explorador], [data-revision], .card-editorial):not(:is(
+  [data-presentation], [data-visor], [data-explorador], [data-revision],
+  nav, form, dialog, table, pre, button, .indice, .datos, .codigo, .terminal,
+  .card-editorial, .antes-despues, .kept, .pie .campos, .grafica-leyenda, .calor-leyenda, .analitica-leyenda, .lista-estados, .tabla-caja, .grafica-caja, .escena-caja, .escritura-caja,
+  .galeria-pista, .apariencia-panel, [data-ritmo="propio"]
+) *) > :is(p, ul, ol, dl, blockquote, figure, section, article, div) + :is(h1, h2, h3, h4, h5, h6) { margin-block-start: var(--prosa-antes-titulo); }
+
+.hoja:not([data-presentation]) :is(
+  .prosa, .pieza, .apunte-cuerpo, .marco-contenido,
+  .revisiones-editoriales > li, .cards-trazadas > article,
+  section:not([class]), section[class=""], section[class="ancho"], section[class="amplio"], figure[class="ancho"], figure[class="amplio"],
+  div:not([class]), div[class=""], article:not([class]), article[class=""], li
+):not(.hoja > article:not([class]):not([style], [data-ritmo="propio"]):not([data-ritmo="propio"] *), .pagina > article:not([class]):not([style], [data-ritmo="propio"]):not([data-ritmo="propio"] *), [style]:not(.prosa), .cronologia > li, .estanteria > li, .nota-sonido > div, [data-ritmo="propio"], [data-visor], [data-explorador], [data-revision], .card-editorial):not(:is(
+  [data-presentation], [data-visor], [data-explorador], [data-revision],
+  nav, form, dialog, table, pre, button, .indice, .datos, .codigo, .terminal,
+  .card-editorial, .antes-despues, .kept, .pie .campos, .grafica-leyenda, .calor-leyenda, .analitica-leyenda, .lista-estados, .tabla-caja, .grafica-caja, .escena-caja, .escritura-caja,
+  .galeria-pista, .apariencia-panel, [data-ritmo="propio"]
+) *) > :is(h1, h2, h3, h4, h5, h6) + :is(p, ul, ol, dl, blockquote, figure, div, section) { margin-block-start: var(--prosa-despues-titulo); }
+
+.hoja:not([data-presentation]) :is(
+  .prosa, .pieza, .apunte-cuerpo, .marco-contenido,
+  .revisiones-editoriales > li, .cards-trazadas > article,
+  section:not([class]), section[class=""], section[class="ancho"], section[class="amplio"], figure[class="ancho"], figure[class="amplio"],
+  div:not([class]), div[class=""], article:not([class]), article[class=""], li
+):not(.hoja > article:not([class]):not([style], [data-ritmo="propio"]):not([data-ritmo="propio"] *), .pagina > article:not([class]):not([style], [data-ritmo="propio"]):not([data-ritmo="propio"] *), [style]:not(.prosa), .cronologia > li, .estanteria > li, .nota-sonido > div, [data-ritmo="propio"], [data-visor], [data-explorador], [data-revision], .card-editorial):not(:is(
+  [data-presentation], [data-visor], [data-explorador], [data-revision],
+  nav, form, dialog, table, pre, button, .indice, .datos, .codigo, .terminal,
+  .card-editorial, .antes-despues, .kept, .pie .campos, .grafica-leyenda, .calor-leyenda, .analitica-leyenda, .lista-estados, .tabla-caja, .grafica-caja, .escena-caja, .escritura-caja,
+  .galeria-pista, .apariencia-panel, [data-ritmo="propio"]
+) *) > :is(.ceja, .estante-estado) + :is(h1, h2, h3, h4, h5, h6) { margin-block-start: var(--prosa-ceja); }
+
+.hoja:not([data-presentation]) :is(
+  .prosa, .pieza, .apunte-cuerpo, .marco-contenido,
+  .revisiones-editoriales > li, .cards-trazadas > article,
+  section:not([class]), section[class=""], section[class="ancho"], section[class="amplio"], figure[class="ancho"], figure[class="amplio"],
+  div:not([class]), div[class=""], article:not([class]), article[class=""], li
+):not(.hoja > article:not([class]):not([style], [data-ritmo="propio"]):not([data-ritmo="propio"] *), .pagina > article:not([class]):not([style], [data-ritmo="propio"]):not([data-ritmo="propio"] *), [style]:not(.prosa), .cronologia > li, .estanteria > li, .nota-sonido > div, [data-ritmo="propio"], [data-visor], [data-explorador], [data-revision], .card-editorial):not(:is(
+  [data-presentation], [data-visor], [data-explorador], [data-revision],
+  nav, form, dialog, table, pre, button, .indice, .datos, .codigo, .terminal,
+  .card-editorial, .antes-despues, .kept, .pie .campos, .grafica-leyenda, .calor-leyenda, .analitica-leyenda, .lista-estados, .tabla-caja, .grafica-caja, .escena-caja, .escritura-caja,
+  .galeria-pista, .apariencia-panel, [data-ritmo="propio"]
+) *) > :is(section, article) + :is(section, article) { margin-block-start: var(--prosa-bloque); }
+
+
+.hoja:not([data-presentation]) :is(
+  .prosa, .pieza, .apunte-cuerpo, .marco-contenido,
+  .revisiones-editoriales > li, .cards-trazadas > article,
+  section:not([class]), section[class=""], section[class="ancho"], section[class="amplio"], figure[class="ancho"], figure[class="amplio"],
+  div:not([class]), div[class=""], article:not([class]), article[class=""], li
+):not(.hoja > article:not([class]):not([style], [data-ritmo="propio"]):not([data-ritmo="propio"] *), .pagina > article:not([class]):not([style], [data-ritmo="propio"]):not([data-ritmo="propio"] *), [style]:not(.prosa), .cronologia > li, .estanteria > li, .nota-sonido > div, [data-ritmo="propio"], [data-visor], [data-explorador], [data-revision], .card-editorial):not(:is(
+  [data-presentation], [data-visor], [data-explorador], [data-revision],
+  nav, form, dialog, table, pre, button, .indice, .datos, .codigo, .terminal,
+  .card-editorial, .antes-despues, .kept, .pie .campos, .grafica-leyenda, .calor-leyenda, .analitica-leyenda, .lista-estados, .tabla-caja, .grafica-caja, .escena-caja, .escritura-caja,
+  .galeria-pista, .apariencia-panel, [data-ritmo="propio"]
+) *) { overflow-wrap: anywhere; }
+
+/* Explicit flow roots contain collapsing margins, unless a custom layout opts out. */
+.hoja:not([data-presentation]) .prosa:not([data-ritmo="propio"]):not([data-ritmo="propio"] *) { display: flow-root; }
 @media print {
-  :is(.nota-estandar:not([data-presentation]), .nota-estandar:not([data-presentation]) > .pagina) > article:not([class]) > * + * { margin-block-start: 18pt; }
+  :is(.hoja:not([data-presentation]), .hoja:not([data-presentation]) > .pagina) > article:not([class]):not([style], [data-ritmo="propio"]):not([data-ritmo="propio"] *) > * + * { margin-block-start: 18pt; }
 }

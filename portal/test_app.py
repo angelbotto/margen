@@ -41,6 +41,24 @@ class PortalTests(unittest.TestCase):
         return {'id':'test-event-1','kind':'create','version':self.a['version'],'text':'Revisar la cifra','author':'Autor inventado',
                 'anchor':{'reference':'dato','tag':'P','text':'Cifra de ejemplo','quote':'ejemplo','page':'Informe','x':.4,'y':.5},**kw}
 
+    def test_reader_updates_rhythm_without_rewriting_source(self):
+        from portal.test_reader_style import OLD
+        html=HTML+'<style>p{color:red}'+OLD+'</style>'
+        artifact=self.owner.post('/api/artifacts',json={'title':'Legacy report','html':html}).json()
+        path='/api/artifacts/'+artifact['id']
+        before=self.owner.get(path).json()
+        result=self.owner.get(path+'/render')
+        self.assertEqual(result.status_code,200)
+        self.assertNotIn('.legacy-flow',result.text)
+        self.assertIn('Shared editorial rhythm',result.text)
+        self.assertIn('p{color:red}',result.text)
+        after=self.owner.get(path).json()
+        self.assertEqual(before['current_version'],after['current_version'])
+        self.assertEqual(before['visibility'],after['visibility'])
+        with self.store.db() as db:
+            row=db.execute('SELECT sha FROM versions WHERE id=?',(artifact['version'],)).fetchone()
+        self.assertEqual((self.store.files/(row['sha']+'.html')).read_text(),html)
+
     def test_private_authorization_and_direct_render(self):
         self.assertEqual(self.owner.get(self.path).json()['visibility'],'private')
         for c in [self.other,self.guest]:
