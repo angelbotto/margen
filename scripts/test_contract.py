@@ -1,6 +1,6 @@
 """Regresiones de composición y omisiones reales; no instala dependencias."""
 import json,unittest,re
-from contract_artifact import build,validate,Document,ROOT,recipe,THREE
+from contract_artifact import build,validate,composition_warnings,Document,ROOT,recipe,THREE
 class ContractTests(unittest.TestCase):
  @classmethod
  def setUpClass(cls):
@@ -49,6 +49,16 @@ class ContractTests(unittest.TestCase):
    with self.subTest(recipe=item['id']):
     result=build(item['nombre'],[{**self.pages[0],'html':html}]);self.assertEqual(validate(result),[])
     if THREE in item['dependencias']:self.assertEqual(result.count('<script src="'+THREE+'">'),1)
+ def test_custom_prose_guidance_and_wide_article(self):
+  source='<section class="business-summary" id="summary"><h2>Summary</h2><p>Evidence.</p></section>'
+  render=lambda content:build('Report',[{'id':'start','titulo':'Start','html':content}])
+  self.assertEqual(len(composition_warnings(render(source))),1)
+  for content in [source.replace('business-summary','business-summary prosa'), source.replace('id="summary"','data-ritmo="propio" id="summary"'), source.replace('business-summary','seccion')]:
+   self.assertEqual(composition_warnings(render(content)),[])
+  self.assertEqual(composition_warnings(build('Deck',[{'id':'start','titulo':'Start','html':source}],format='presentation')),[])
+  for attrs in ['data-ritmo="propio"','style="display:block"']:
+   with self.assertRaises(ValueError):render('<article '+attrs+'><figure class="ancho"><p>Trapped.</p></figure></article>')
+  self.assertEqual(validate(render('<article><section id="summary"><h2>Summary</h2><p>Evidence.</p></section><figure class="ancho"><p>Wide evidence.</p></figure></article>')),[])
  def test_brand_identity_is_independent_of_palette(self):
   from brands import BRANDS
   import base64,hashlib,xml.etree.ElementTree as ET

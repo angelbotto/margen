@@ -1,0 +1,40 @@
+/* Semantic prose boundaries retain the page grid and reading rhythm.
+   Classed sections/components keep their own layout; slides are excluded. */
+@media screen {
+  :is(.nota-estandar:not([data-presentation]), .nota-estandar:not([data-presentation]) > .pagina) > article:not([class]) {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr min(var(--texto), calc(100% - 2 * var(--gutter))) 1fr;
+    row-gap: inherit;
+    min-width: 0;
+  }
+  :is(.nota-estandar:not([data-presentation]), .nota-estandar:not([data-presentation]) > .pagina) > article:not([class]) > * {
+    grid-column: 2;
+    min-width: 0;
+  }
+  :is(.nota-estandar:not([data-presentation]), .nota-estandar:not([data-presentation]) > .pagina) > article:not([class]) > :is(.ancho, .amplio) {
+    grid-column: 1 / -1;
+    margin-inline: auto;
+    width: min(var(--ancho), calc(100% - 2 * var(--gutter)));
+  }
+  :is(.nota-estandar:not([data-presentation]), .nota-estandar:not([data-presentation]) > .pagina) > article:not([class]) > .amplio {
+    width: min(var(--amplio), calc(100% - 2 * var(--gutter)));
+  }
+}
+:is(.nota-estandar:not([data-presentation]), .nota-estandar:not([data-presentation]) > .pagina, .nota-estandar:not([data-presentation]) > article:not([class]), .nota-estandar:not([data-presentation]) > .pagina > article:not([class])) > :is(section:not([class]), .prosa) {
+  display: flow-root;
+  overflow-wrap: anywhere;
+}
+:is(.nota-estandar:not([data-presentation]), .nota-estandar:not([data-presentation]) > .pagina, .nota-estandar:not([data-presentation]) > article:not([class]), .nota-estandar:not([data-presentation]) > .pagina > article:not([class])) > :is(section:not([class]), .prosa) > * + * {
+  margin-block-start: 18px;
+}
+:is(.nota-estandar:not([data-presentation]), .nota-estandar:not([data-presentation]) > .pagina, .nota-estandar:not([data-presentation]) > article:not([class]), .nota-estandar:not([data-presentation]) > .pagina > article:not([class])) > :is(section:not([class]), .prosa) > :is(h2,h3,h4):not(:first-child) {
+  margin-block-start: 36px;
+}
+:is(.nota-estandar:not([data-presentation]), .nota-estandar:not([data-presentation]) > .pagina, .nota-estandar:not([data-presentation]) > article:not([class]), .nota-estandar:not([data-presentation]) > .pagina > article:not([class])) > :is(section:not([class]), .prosa) > :is(h2,h3,h4) + * {
+  margin-block-start: 14px;
+}
+.nota-estandar:not([data-presentation]) .pieza > :is(h3,h4):not(:first-child) { margin-block-start: 28px; }
+@media print {
+  :is(.nota-estandar:not([data-presentation]), .nota-estandar:not([data-presentation]) > .pagina) > article:not([class]) > * + * { margin-block-start: 18pt; }
+}

@@ -2,7 +2,7 @@
 """Compone una o varias páginas con los controles obligatorios. Sin instalaciones ni red."""
 import argparse,json
 from pathlib import Path
-from contract_artifact import build,THEMES,STYLES,MODES
+from contract_artifact import build,THEMES,STYLES,MODES,composition_warnings
 from brands import BRANDS
 from project_profile import resolve, FORMATS
 
@@ -31,6 +31,7 @@ def main():
   def option(cli,key,legacy=None):return cli if cli is not None else config.get(key,config.get(legacy)) if key in config or legacy in config else prefs.get(key)
   result=build(title,pages,description,mode=option(args.modo,'mode','modo'),theme=option(args.tema,'theme','tema'),style=option(args.estilo,'typography','estilo'),document_id=option(args.documento_id,'document_id','documento_id'),marca=option(args.marca,'brand','marca'),project=project,format=option(args.format,'format'),theme_policy=option(args.theme_policy,'themePolicy'))
 
+  for warning in composition_warnings(result):print('COMPOSITION: '+warning)
   args.salida.parent.mkdir(parents=True,exist_ok=True);args.salida.write_text(result)
   print(str(args.salida)+': base estándar verificada; '+str(len(pages))+' página(s). Probar a 320/390 px y en navegador antes de compartir.')
  except (ValueError,KeyError,TypeError,OSError) as error:p.exit(1,str(error)+'\n')

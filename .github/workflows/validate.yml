@@ -70,3 +70,17 @@ jobs:
       - run: git diff --exit-code -- packages/core/components/table-model.js
       - run: npm run build:demo
       - run: npm pack --workspace @bottifact/core --pack-destination /tmp && npm pack --workspace @bottifact/react --pack-destination /tmp
+
+  editorial-layout:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.13'
+      - name: Install browser test dependencies
+        run: |
+          pip install playwright==1.58.0
+          python -m playwright install --with-deps chromium
+      - name: Check shared reading rhythm
+        run: python scripts/test_editorial_flow.py

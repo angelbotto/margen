@@ -122,6 +122,33 @@ def build(title,pages,description='',brand='Margen',theme=None,style=None,docume
  if errors:raise ValueError('\n'.join(errors))
  return result
 
+def composition_warnings(html):
+ """Flag custom prose wrappers whose rhythm cannot be inferred from canonical CSS."""
+ doc=Document(html);warnings=[]
+ css=(ROOT/'packages/core/styles/artifact.css').read_text()
+ known=set(re.findall(r'\.([A-Za-z_][A-Za-z0-9_-]*)',css))
+ for node in doc.live:
+  if node.tag not in {'section','article','div'} or not node.classes:continue
+  ancestors=[];parent=node
+  while parent:ancestors.append(parent);parent=parent.parent
+  if not any('hoja' in n.classes for n in ancestors):continue
+  if any('data-presentation' in n.attrs or 'data-visor' in n.attrs or 'data-explorador' in n.attrs or n.attrs.get('data-ritmo')=='propio' or n.tag in {'nav','form','dialog','table','pre'} for n in ancestors):continue
+  if 'prosa' in node.classes or node.classes & (known-{'ancho','amplio'}):continue
+  if node.classes <= {'ancho','amplio'}:continue
+  if any(a.tag in {'h1','h2','h3','h4','h5','h6'} and b.tag in {'p','ul','ol','dl','blockquote'} for a,b in zip(node.children,node.children[1:])):
+   warnings.append((node.attrs.get('id') or node.tag+'.'+'.'.join(sorted(node.classes)))+': custom prose wrapper has no canonical rhythm; add class="prosa" or data-ritmo="propio" for an intentionally custom layout. Check heading spacing in a browser.')
+ return warnings
+
+def layout_boundary(node):
+ if node is None:return False
+ if node.classes & {'hoja','pagina'}:return True
+ if node.tag!='article' or 'class' in node.attrs or 'style' in node.attrs or not node.parent or not node.parent.classes & {'hoja','pagina'}:return False
+ parent=node
+ while parent:
+  if 'data-presentation' in parent.attrs or parent.attrs.get('data-ritmo')=='propio':return False
+  parent=parent.parent
+ return True
+
 def validate(html):
  doc=Document(html);nodes=doc.live;errors=[]
  def require(condition,message):
@@ -170,7 +197,7 @@ def validate(html):
   if n.attrs.get('href','').startswith('#'):require(n.attrs['href'][1:] in ids,'Enlace sin destino: '+n.attrs['href'])
   for attr in ['aria-controls','aria-labelledby','aria-describedby','data-copiar','data-ir','data-actividad-tabla']:
    if n.attrs.get(attr):require(all(x in ids for x in n.attrs[attr].split()),'Referencia sin destino: '+n.attrs[attr])
-  if n.classes & {'ancho','amplio'}:require(bool(n.parent and ('hoja' in n.parent.classes or 'pagina' in n.parent.classes)),'Figura ancha fuera de la rejilla: '+n.attrs.get('id',n.tag))
+  if n.classes & {'ancho','amplio'}:require(layout_boundary(n.parent),'Figura ancha fuera de la rejilla: '+n.attrs.get('id',n.tag))
   if n.classes & {'tabla-caja','grafica-caja','diagrama-caja','escena-caja','escritura-caja','visor-caja','apariencia-panel','navegacion-scroll','galeria-pista'} or n.tag=='pre':require(n.attrs.get('tabindex')=='0' and bool(n.attrs.get('aria-label') or n.attrs.get('aria-labelledby')),'Desplazamiento sin foco o nombre: '+n.tag)
   require(not any(a.lower().startswith('on') for a in n.attrs),'Manejador inline fuera de los módulos: '+n.tag)
   if n.tag=='img':require(n.attrs.get('src','').startswith('data:') and 'alt' in n.attrs,'Imagen externa o sin alternativa.')
