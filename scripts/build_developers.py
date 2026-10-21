@@ -7,8 +7,19 @@ from themes import DATA, original
 
 ROOT = Path(__file__).resolve().parents[1]
 REPO = 'https://github.com/angelbotto/margen'
-# Reviewed local enhancement modules; never populated from submitted packages.
-PREVIEW_RUNTIME = ('charts.js', 'geography.js', 'analytics.js', 'relationship-map.js')
+# Shared reader modules are loaded only when the recipe uses the markup they enhance;
+# reader-controls.js mounts the document toolbar and never belongs in a recipe preview.
+CORE_TRIGGERS = {
+    'interface.js': ({'data-bottifact-interface'}, {'firma-editorial'}),
+    # Without its own toggle a recipe's sound waits for the reader toolbar; audio.js stays idle.
+    'audio.js': ({'data-audio-activar', 'data-audio-global', 'data-sonido'}, set()),
+    'controls.js': (set(), {'control-menu'}),
+    'editorial-pieces.js': ({'data-actividad', 'data-aviso-animado', 'data-galeria', 'data-editorial-web'}, set()),
+    'reader.js': ({'data-apariencia-menu', 'data-tema', 'data-elegir-tema', 'data-elegir-modo', 'data-elegir-estilo',
+                   'data-comodidad', 'data-papel-tramado', 'data-copiar'}, set()),
+    'code.js': ({'data-copiar', 'data-lenguaje', 'data-lineas'}, {'codigo', 'terminal'}),
+    'review.js': ({'data-revision'}, set()),
+}
 
 
 def hex_color(value):
@@ -20,6 +31,23 @@ def hex_color(value):
     if not re.fullmatch(r'#[a-fA-F0-9]{6}', value):
         raise ValueError('Unsupported palette value: ' + value)
     return value
+
+
+def preview_modules(html):
+    """Modules a real artifact loads for this recipe, minus shared modules it does not use."""
+    from contract_artifact import CORE, Document, modules_for
+    nodes = Document(html).live
+    attributes = {key for node in nodes for key in node.attrs}
+    classes = {name for node in nodes for name in node.classes}
+    result = []
+    for module in modules_for(nodes):
+        name = module.rsplit('/', 1)[1]
+        if module in CORE:
+            triggers, trigger_classes = CORE_TRIGGERS.get(name, (set(), set()))
+            if not (attributes & triggers or classes & trigger_classes):
+                continue
+        result.append(name)
+    return result
 
 
 def generate():
@@ -52,15 +80,14 @@ def generate():
                           title=recipe['nombre'], description=recipe.get('criterio_y_limites', ''),
                           category=recipe['capitulo'], content=recipe['html'],
                           dependencies=recipe.get('dependencias', []), source_url=REPO + source))
-    runtime = {name: (ROOT / 'packages/core/components' / name).read_text() for name in PREVIEW_RUNTIME}
+    runtime = {}
     for item in items:
         if item['kind'] == 'component':
-            dependencies = item.get('dependencies', [])
-            item['preview_runtime'] = [name for name in PREVIEW_RUNTIME
-                                       if 'packages/core/components/' + name in dependencies
-                                       # Geography supports analytics; it cannot render a standalone 3D recipe.
-                                       and (name != 'geography.js' or 'packages/core/components/analytics.js' in dependencies)]
-    (ROOT / 'portal/developers-runtime.json').write_text(json.dumps(runtime, ensure_ascii=False, indent=2) + '\n')
+            item['preview_runtime'] = preview_modules(item['content'])
+            for name in item['preview_runtime']:
+                runtime[name] = (ROOT / 'packages/core/components' / name).read_text()
+    # Reviewed repository modules only; submitted packages never reach this map.
+    (ROOT / 'portal/developers-runtime.json').write_text(json.dumps(dict(sorted(runtime.items())), ensure_ascii=False, indent=2) + '\n')
     version = json.loads((ROOT / 'VERSION.json').read_text())
     for item in items:
         item.update(origin='bundled', author='Contribuidores de Margen', license='MIT',

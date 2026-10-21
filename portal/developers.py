@@ -27,6 +27,10 @@ LIMIT = 150_000
 PREVIEW_CSP = ("sandbox; default-src 'none'; style-src 'unsafe-inline'; img-src data:; "
                "font-src data:; script-src 'none'; object-src 'none'; base-uri 'none'; "
                "form-action 'none'; frame-ancestors 'self'")
+# Same pinned build the artifact contract embeds; integrity binds the exact bytes.
+THREE = ('https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js',
+         'sha512-vnmn/Qqn6aG0POAc9mIGzjq0IybrvxJXYDafNvp9JSnDGxeF3pbkSqLvf+YGd5ku63pT7sa/jxHn7/d0mU8+tA==')
+NEEDS_THREE = {'scene.js', 'globe.js'}
 
 
 @lru_cache(maxsize=1)
@@ -46,6 +50,11 @@ def bundled_preview_scripts(key):
         return []
     assets = preview_runtime()
     return [assets[name].replace('</script', '<\\/script') for name in trusted.get('preview_runtime', []) if name in assets]
+
+
+def bundled_needs_three(key):
+    trusted = bundled().get(key) or {}
+    return trusted.get('kind') == 'component' and bool(NEEDS_THREE & set(trusted.get('preview_runtime', [])))
 
 
 def migrate(db):
@@ -197,15 +206,18 @@ def mount(app, store, who, account, payload, clean, is_admin, artifact_for, publ
             css += theme_css(item)
             markup = '<section class="prosa"><p class="ceja">Una idea para compartir</p><h2>El espacio también cuenta.</h2><p>Un tema acompaña el contenido: texto legible, una paleta propia y lugar para pensar.</p><blockquote>Prueba sus colores en claro y oscuro.</blockquote></section>'
         else:
-            markup = bundled()[key]['content'] if scripts else static_component(item['content'])
+            # Bundled recipes are repository source; only community markup is rebuilt statically.
+            markup = bundled()[key]['content'] if key in bundled() else static_component(item['content'])
         css += 'html,body{margin:0;min-height:0}body{padding:24px;overflow-wrap:anywhere}body>main{display:block;max-width:100%;margin:0;padding:0}*{animation:none!important;transition:none!important}img,svg,canvas{max-width:100%}a,button,input,select,textarea{pointer-events:none}'
         html = '<!doctype html><html lang="es" data-margen-community-theme data-color-mode="' + mode + '"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>' + css + '</style></head><body><main class="hoja">' + markup + '</main></body></html>'
         policy = PREVIEW_CSP
         if scripts:
             html = html.replace('a,button,input,select,textarea{pointer-events:none}', '')
             hashes = ' '.join("'sha256-" + base64.b64encode(hashlib.sha256(source.encode()).digest()).decode() + "'" for source in scripts)
-            policy = policy.replace('sandbox;', 'sandbox allow-scripts;').replace("script-src 'none'", 'script-src ' + hashes)
-            html = html.replace('</body>', ''.join('<script>' + source + '</script>' for source in scripts) + '</body>')
+            three = bundled_needs_three(key)
+            policy = policy.replace('sandbox;', 'sandbox allow-scripts;').replace("script-src 'none'", 'script-src ' + hashes + (' ' + THREE[0] if three else ''))
+            library = '<script src="' + THREE[0] + '" integrity="' + THREE[1] + '" crossorigin="anonymous"></script>' if three else ''
+            html = html.replace('</body>', library + ''.join('<script>' + source + '</script>' for source in scripts) + '</body>')
         return HTMLResponse(html, headers={'Content-Security-Policy': policy})
 
     @app.put('/api/developers/items/{key}/favorite')

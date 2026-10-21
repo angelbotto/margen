@@ -130,7 +130,7 @@ window.MargenDevelopers = (() => {
         }
         const card = el("article", null, "developer-card");
         const visual = el("iframe", null, "developer-preview"); visual.title = "Vista estática de " + item.title;
-        visual.setAttribute("sandbox", ""); visual.loading = "lazy"; visual.tabIndex = -1; visual.setAttribute("aria-hidden", "true");
+        visual.setAttribute("sandbox", item.origin === "bundled" && item.preview_runtime?.length ? "allow-scripts" : ""); visual.loading = "lazy"; visual.tabIndex = -1; visual.setAttribute("aria-hidden", "true");
         visual.src = "/api/developers/items/" + encodeURIComponent(item.id) + "/preview";
         const text = el("div", null, "developer-card-body");
         text.append(el("p", `${labels[item.kind]} · ${labels[item.status] || item.status}`, "eyebrow"), el("h3", item.title), el("p", item.description, "developer-description"), el("p", `${item.author} · ${item.license}`, "meta"));
@@ -204,7 +204,7 @@ window.MargenDevelopers = (() => {
           for (const [value, name] of [["light", "Claro"], ["dark", "Oscuro"]]) modes.append(button(name, () => { frame.src = `/api/developers/items/${item.id}/preview?mode=${value}`; }));
           dialog.append(modes);
         }
-        dialog.append(el("p", detail.kind === "theme" ? "Prueba este tema en un artefacto nuevo o prepara una revisión de uno existente." : (detail.origin === "bundled" && detail.preview_runtime?.length ? "El ejemplo ejecuta los módulos incluidos de la biblioteca. Copia el HTML junto con sus dependencias para conservar este comportamiento." : "Esta vista muestra el HTML/SVG estático. Consulta las dependencias y la fuente para integrar la receta completa."), "muted"));
+        dialog.append(el("p", detail.kind === "theme" ? "Prueba este tema en un artefacto nuevo o prepara una revisión de uno existente." : (detail.origin === "bundled" ? (detail.preview_runtime?.length ? "El ejemplo ejecuta " + detail.preview_runtime.join(", ") + " de la biblioteca. Copia el HTML junto con sus dependencias para conservar este comportamiento." : "Esta receta es HTML y CSS de la hoja, sin módulos: la vista es el resultado completo.") : "Esta vista muestra el HTML/SVG estático. Consulta las dependencias y la fuente para integrar la receta completa."), "muted"));
         if (catalog.can_submit && detail.kind === "theme") {
           const use = el("section", null, "community-use");
           const useActions = el("div", null, "developer-actions");

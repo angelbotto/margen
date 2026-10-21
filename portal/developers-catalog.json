@@ -660,7 +660,9 @@
         "packages/core/components/editorial.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/archive",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "editorial.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -811,7 +813,9 @@
         "packages/core/components/invitation.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/invitation",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "invitation.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -861,7 +865,9 @@
         "packages/core/components/reader.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/activity",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "editorial-pieces.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -886,7 +892,9 @@
         "packages/core/components/reader.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/gallery",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "editorial-pieces.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -912,7 +920,9 @@
         "packages/core/components/handwriting.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/handwritten-note",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "handwriting.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -1063,7 +1073,9 @@
         "packages/core/components/handwriting.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/margin-notes",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "handwriting.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -1188,7 +1200,9 @@
         "packages/core/components/reader.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/animated-callouts",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "editorial-pieces.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -1214,7 +1228,9 @@
         "packages/core/components/evidence.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/visual-story",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "evidence.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -1290,7 +1306,9 @@
         "packages/core/components/reports.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/reconciliation",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "reports.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -1316,7 +1334,9 @@
         "packages/core/components/reports.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/scenario",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "reports.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -1467,7 +1487,9 @@
         "packages/core/components/evidence.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/sensitivity",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "evidence.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -1493,7 +1515,9 @@
         "packages/core/components/evidence.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/gantt",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "evidence.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -1544,7 +1568,10 @@
         "packages/core/components/code.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/context-bundle",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "reader.js",
+        "code.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -1788,7 +1815,9 @@
         "packages/core/components/reports.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/waterfall",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "reports.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -1814,7 +1843,9 @@
         "packages/core/components/reports.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/small-multiples",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "reports.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -1841,6 +1872,7 @@
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/contribution-calendar",
       "preview_runtime": [
+        "geography.js",
         "analytics.js"
       ],
       "origin": "bundled",
@@ -1869,6 +1901,7 @@
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/pie-chart",
       "preview_runtime": [
+        "geography.js",
         "analytics.js"
       ],
       "origin": "bundled",
@@ -1897,6 +1930,7 @@
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/area-chart",
       "preview_runtime": [
+        "geography.js",
         "analytics.js"
       ],
       "origin": "bundled",
@@ -1925,6 +1959,7 @@
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/box-plot",
       "preview_runtime": [
+        "geography.js",
         "analytics.js"
       ],
       "origin": "bundled",
@@ -1953,6 +1988,7 @@
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/candlestick",
       "preview_runtime": [
+        "geography.js",
         "analytics.js"
       ],
       "origin": "bundled",
@@ -2040,7 +2076,9 @@
         "packages/core/components/attention-map.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/attention-map",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "attention-map.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -2066,7 +2104,9 @@
         "packages/core/components/evidence.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/sankey",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "evidence.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -2092,7 +2132,9 @@
         "packages/core/components/evidence.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/cohorts",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "evidence.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -2118,7 +2160,9 @@
         "packages/core/components/evidence.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/funnel",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "evidence.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -2144,7 +2188,9 @@
         "packages/core/components/evidence.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/uncertainty",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "evidence.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -2274,7 +2320,9 @@
         "packages/core/components/tables.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/totals",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "tables.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -2300,7 +2348,9 @@
         "packages/core/components/tables.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/sparkline",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "tables.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -2327,7 +2377,11 @@
         "packages/core/components/data-explorer.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/data-explorer",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "controls.js",
+        "table-model.js",
+        "data-explorer.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -2353,7 +2407,11 @@
         "packages/core/components/data-explorer.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/incident-queue",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "controls.js",
+        "table-model.js",
+        "data-explorer.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -2429,7 +2487,10 @@
         "packages/core/components/prototype.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/prototype",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "controls.js",
+        "prototype.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -2455,7 +2516,9 @@
         "packages/core/components/tabs.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/tabs",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "tabs.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -2506,7 +2569,9 @@
         "packages/core/components/evidence.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/zoomable-evidence",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "evidence.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -2532,7 +2597,10 @@
         "packages/core/components/sound.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/sound",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "audio.js",
+        "sound.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -2559,7 +2627,10 @@
         "packages/core/components/scene.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/coordinates",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "geography.js",
+        "scene.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -2586,7 +2657,10 @@
         "packages/core/components/scene.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/stages",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "geography.js",
+        "scene.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -2614,7 +2688,10 @@
         "packages/core/components/reports.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/journey",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "globe.js",
+        "reports.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -2642,7 +2719,10 @@
         "packages/core/components/scene.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/map-columns",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "geography.js",
+        "scene.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -2670,7 +2750,10 @@
         "packages/core/components/scene.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/map-arcs",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "geography.js",
+        "scene.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -2697,7 +2780,10 @@
         "packages/core/components/scene.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/warehouse",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "geography.js",
+        "scene.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -2726,7 +2812,11 @@
         "packages/core/components/fleet.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/fleet-globe",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "geography.js",
+        "globe.js",
+        "fleet.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -2751,7 +2841,10 @@
         "packages/core/components/reader.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/terminal",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "reader.js",
+        "code.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -2778,7 +2871,11 @@
         "packages/core/components/writing.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/writing",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "audio.js",
+        "sound.js",
+        "writing.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -2803,7 +2900,10 @@
         "packages/core/components/reader.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/appearance",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "audio.js",
+        "reader.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -2829,7 +2929,11 @@
         "packages/core/components/editorial.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/configuration",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "reader.js",
+        "editorial.js",
+        "code.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -2855,7 +2959,11 @@
         "packages/core/components/review.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/review",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "reader.js",
+        "code.js",
+        "review.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -2882,7 +2990,11 @@
         "packages/core/components/tabs.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/polyglot-code",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "reader.js",
+        "tabs.js",
+        "code.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -2932,7 +3044,9 @@
         "packages/core/components/reader.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/navigation",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "interface.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -2958,7 +3072,10 @@
         "packages/core/components/code.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/code-lines",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "reader.js",
+        "code.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -2983,7 +3100,9 @@
         "packages/core/components/reader.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/web-shell",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "editorial-pieces.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
