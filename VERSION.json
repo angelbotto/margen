@@ -1,5 +1,5 @@
 {
-  "version": "2026.09.24-library.1",
+  "version": "2026.10.20-library.1",
   "contrato": "4",
   "componentes": 89,
   "temas": [
@@ -11,6 +11,7 @@
     "liftit",
     "tikin",
     "catabum",
+    "kaira",
     "blueprint",
     "hacker",
     "linear",
@@ -30,7 +31,7 @@
     "dark",
     "system"
   ],
-  "paletas": 30,
+  "paletas": 32,
   "nombre": "Margen",
   "skill": "margen",
   "compatibility": {
@@ -39,5 +40,5 @@
     "formats": 1,
     "python": "3.10"
   },
-  "release_sequence": 2026092401
+  "release_sequence": 2026102001
 }
