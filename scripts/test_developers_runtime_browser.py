@@ -25,15 +25,24 @@ GLOBALS = {
     'scene.js': 'NotaEscena', 'sound.js': 'NotaSonido', 'table-model.js': 'BottifactTableModel', 'tables.js': 'NotaTablas',
     'tabs.js': 'NotaPestanas', 'writing.js': 'NotaEscritura',
 }
-# Rendered output that only exists after the recipe's runtime ran; selectors are visible, sized elements.
+# Marks each runtime draws for its recipe; a generic SVG (such as a copy icon) never counts.
 RENDERS = {
-    '[data-grafica]:not([data-grafica=calor])': 'svg', '[data-grafica=calor]': '[data-nivel]',
-    '[data-analitica]': 'svg', '[data-relationship-map]': 'svg', '[data-escena]': 'canvas', '[data-flota]': 'canvas',
-    '[data-recorrido-globo]': 'canvas', '[data-atencion]': 'svg', '[data-evidencia]': 'svg, canvas, button',
-    '[data-explorador]': 'select, input', '[data-pestanas]': '[role=tab][aria-selected=true]', '[data-tabla]': '[data-ordenar], svg',
-    '[data-reporte=escenario]': 'output', '[data-visor]': 'iframe, button', '[data-lenguaje]': 'span[class]',
-    '[data-galeria]': '[data-galeria-pista]',
+    '[data-grafica=barras], [data-grafica=distribucion]': '.grafica-caja svg .grafica-barra',
+    '[data-grafica=lineas], [data-grafica=temporal]': '.grafica-caja svg .grafica-trazo',
+    '[data-grafica=dispersion]': '.grafica-caja svg .grafica-serie', '[data-grafica=calor]': '[data-nivel]',
+    '[data-reporte=cascada]': '.grafica-caja svg .cascada-sube, .grafica-caja svg .cascada-baja',
+    '[data-reporte=multiples]': '.grafica-caja svg .grafica-trazo', '[data-reporte=conciliacion]': '.tabla-calculo',
+    '[data-reporte=escenario]': 'output', '[data-reporte=recorrido]': '.globo-escena canvas',
+    '[data-analitica]': '.analitica-caja svg path, .analitica-caja svg rect, .analitica-caja svg circle',
+    '[data-relationship-map]': 'svg', '[data-atencion]': '.atencion-area',
+    '[data-evidencia=imagen]': '.ev-pin', '[data-evidencia]:not([data-evidencia=imagen])': '.evidencia-visor [class*=ev-]',
+    '[data-escena]': '.escena-caja canvas', '[data-flota]': 'canvas',
+    '[data-tabla] [data-sparkline]': 'svg.sparkline', '[data-tabla]': '[data-ordenar], svg.sparkline',
+    '[data-explorador]': 'select, input', '[data-pestanas]': '[role=tab][aria-selected=true]',
+    '[data-visor]': 'iframe, button', '[data-lenguaje]': 'span[class]', '[data-galeria]': '[data-galeria-pista]',
 }
+# Error slots modules fill when their renderer fails (for example, three.js unavailable).
+ERRORS = '[data-error-analitica], [data-error-grafica], [data-error], .grafica-error, .globo-error, .error-componente'
 EXPECTED_ERRORS = ()
 
 
@@ -108,13 +117,15 @@ class BundledPreviewBrowserTests(unittest.TestCase):
                                            + (['THREE'] if {'scene.js', 'globe.js'} & set(item['preview_runtime']) else []))
                     if missing:
                         failures.append(item['slug'] + ': no ejecutó ' + ', '.join(missing))
-                    for owner, output in RENDERS.items():
+                    # Hosts come from the recipe source, so a preview that drops the markup cannot skip the check.
+                    owners = body.evaluate("(_, [source, owners]) => { const recipe = new DOMParser().parseFromString(source, 'text/html'); return owners.filter(owner => recipe.querySelector(owner)); }", [item['content'], list(RENDERS)])
+                    for owner in owners:
+                        output = RENDERS[owner]
                         hosts = frame.locator('main.hoja').locator(owner)
-                        if item['preview_runtime'] and hosts.count():
-                            visible = hosts.evaluate_all("(nodes, output) => nodes.some(node => node.getClientRects().length) && nodes.filter(node => node.getClientRects().length).every(node => [...node.querySelectorAll(output)].some(n => { const r = n.getBoundingClientRect(); return r.width > 4 && r.height > 4; }))", output)
-                            if not visible:
-                                failures.append(item['slug'] + ': ' + owner + ' sin ' + output + ' visible')
-                    failed = body.evaluate("() => [...document.querySelectorAll('[data-error-analitica],[data-error-grafica],[data-error],.error-componente')].map(n => n.textContent.trim()).filter(Boolean)")
+                        visible = hosts.evaluate_all("(nodes, output) => nodes.some(node => node.getClientRects().length) && nodes.filter(node => node.getClientRects().length).every(node => [...node.querySelectorAll(output)].some(n => { const r = n.getBoundingClientRect(); return r.width > 0 && r.height > 0; }))", output)
+                        if not visible:
+                            failures.append(item['slug'] + ': ' + owner + ' sin ' + output + ' visible')
+                    failed = body.evaluate("(_, selector) => [...document.querySelectorAll(selector)].filter(n => n.getClientRects().length && n.textContent.trim()).map(n => n.textContent.trim())", ERRORS)
                     if failed:
                         failures.append(item['slug'] + ': error visible ' + '; '.join(failed))
                     for width in WIDTHS:
