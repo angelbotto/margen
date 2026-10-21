@@ -10,9 +10,11 @@ identity_block='// IDENTITY START\n  const identityMarkup = '+json.dumps(margen_
 interface_path.write_text(re.sub(r'// IDENTITY START.*?// IDENTITY END',lambda _:identity_block,interface_source,flags=re.S))
 # Keep review styling identical in standalone and hosted documents.
 review_css=(ROOT/'packages/core/styles/review-composer.css').read_text()
+flow_css=(ROOT/'packages/core/styles/editorial-flow.css').read_text()
 css_path=ROOT/'packages/core/styles/artifact.css'
 css=css_path.read_text()
 blocks = [
+    ("EDITORIAL FLOW", flow_css),
     ("SKETCH DIAGRAM", (ROOT/'packages/core/styles/sketch-diagram.css').read_text()),
     ("REVIEW COMPOSER", review_css),
     ("PRESENTATION", (ROOT/'packages/core/styles/presentation.css').read_text()),
@@ -24,7 +26,7 @@ prefix, marker, suffix = css.partition('/* GENERATED THEMES')
 assert marker, 'Missing generated theme boundary'
 css = prefix.rstrip() + '\n\n' + '\n\n'.join('/* '+name+' START */\n'+content.rstrip()+'\n/* '+name+' END */' for name, content in blocks) + '\n\n' + marker + suffix
 css_path.write_text(css)
-if (ROOT/'portal/static').is_dir():(ROOT/'portal/static/review-additions.css').write_text(review_css)
+if (ROOT/'portal/static').is_dir():(ROOT/'portal/static/review-additions.css').write_text(review_css + "\n" + flow_css)
 from recipes import assemble as assemble_recipes
 assemble_recipes()
 from themes import generate as generate_theme_registry

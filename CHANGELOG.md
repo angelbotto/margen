@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026.10.20-library.2 — Editorial spacing
+
+- Preserve page gutters and wide blocks when plain articles wrap report content. Restore separation between cards, sections, headings and prose.
+- Apply the same scoped correction in the hosted reader for existing documents, preserving their stored source, version and audience. Classed component layouts and presentations keep their own spacing.
+- Verify standalone and hosted stylesheet ordering at 320, 390, 1024 and 1440 pixels, including multipage articles and print visibility.
+
 ## 2026.10.20-library.1 — Kaira theme
 
 - Add Kaira, contributed by Katherin Teran Fomeque (@mkatheteranf-bit), with warm-paper light and deep-plum dark palettes and system mode.
