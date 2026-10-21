@@ -1,9 +1,12 @@
 """Opt-in Chromium regression for bundled map previews and their opaque origins.
 
-Run explicitly with: python -m unittest portal.test_developers_runtime_browser
+Run explicitly with: python scripts/test_developers_runtime_browser.py
 Uses disposable FastAPI accounts/content; never contacts a deployed portal.
 """
 import unittest
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from playwright.sync_api import sync_playwright
 from portal import test_developers as fixtures

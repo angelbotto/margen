@@ -11,7 +11,7 @@ it('moves existing destinations without dropping handlers or revealing admin', (
   const click = vi.fn(); shared.addEventListener('click', click);
   (window as any).MargenSidebar.init(nav);
   (window as any).MargenSidebar.init(nav);
-  expect(nav.querySelectorAll('.nav-group')).toHaveLength(3);
+  expect(nav.querySelectorAll('.nav-group')).toHaveLength(4);
   expect(nav.querySelector('.nav-library [data-view=shared]')).toBe(shared);
   shared.click(); expect(click).toHaveBeenCalledOnce();
   expect(nav.querySelector<HTMLButtonElement>('[data-view=admin]')!.hidden).toBe(true);

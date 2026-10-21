@@ -22,6 +22,26 @@ class WorkspaceTests(unittest.TestCase):
  def client(self,email):
   c=TestClient(self.app,base_url=ORIGIN,headers={'Origin':ORIGIN});u=self.store.user(email,email);c.cookies.set(COOKIE,self.store.session(u['id']));return c
  def event(self,id='comment',**kw):return {'id':id,'kind':'create','version':self.a['version'],'text':'Aclarar el criterio','session':'reunion-semana-3','anchor':{'reference':'resumen','section':'Prioridades','tag':'P','text':'Fase uno','quote':'uno','page':'Roadmap','x':.5,'y':.5},**kw}
+ def test_admin_counts_distinguish_verified_guests_visibility_and_utc_window(self):
+  import time
+  with self.store.db() as db:db.execute("INSERT INTO users VALUES('guest-test',NULL,'Invitado',0)")
+  now=int(time.time())
+  today=time.strftime('%Y-%m-%d',time.gmtime(now))
+  start=time.strftime('%Y-%m-%d',time.gmtime(now-29*86400))
+  before=time.strftime('%Y-%m-%d',time.gmtime(now-30*86400))
+  future=time.strftime('%Y-%m-%d',time.gmtime(now+86400))
+  with self.store.db() as db:
+   db.executemany('INSERT INTO artifact_visits VALUES(?,?,?)',[(self.a['id'],day,views) for day,views in [(today,7),(start,3),(before,100),(future,100)]])
+  self.assertEqual(self.owner.get('/api/admin').status_code,403)
+  with patch.dict('os.environ',{'BOTTIFACT_ADMIN_EMAILS':'owner@example.com'}):
+   response=self.owner.get('/api/admin').json()
+  self.assertEqual(response['counts']['verified_users'],3)
+  self.assertEqual(response['counts']['guest_users'],1)
+  self.assertEqual(response['counts']['users'],4)
+  self.assertEqual(response['visibility'],{'private':0,'invited':1,'unlisted':0,'public':0})
+  self.assertEqual(response['traffic'],{'views':10,'since':start,'until':today,'days':30})
+  self.assertNotIn('email',str(response))
+
  def test_private_notes_stay_private_in_review_inbox_export_and_notifications(self):
   response=self.owner.post(self.path+'/review',json=self.event('personal',entry_type='note'));self.assertEqual(response.status_code,200,response.text)
   self.assertEqual(self.reviewer.get(self.path+'/review').json()['snapshot']['events'],[])

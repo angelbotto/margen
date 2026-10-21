@@ -13,11 +13,12 @@ window.MargenSidebar = (() => {
     for (const [id, label, views] of [
       ['library', 'Biblioteca', ['mine', 'shared', 'inbox']],
       ['knowledge', 'Conocimiento', ['brain', 'work', 'insights']],
-      ['account', 'Más herramientas', ['notifications', 'public', 'archived', 'connections', 'developers', 'all', 'admin']],
+      ['resources', 'Crear con Margen', ['themes', 'components', 'developers', 'connections']],
+      ['account', 'Gestionar', ['notifications', 'public', 'archived', 'all', 'admin']],
     ]) {
-      const group = el(id === 'account' ? 'details' : 'section', null, 'nav-group nav-' + id);
+      const group = el('section', null, 'nav-group nav-' + id);
       group.setAttribute('aria-label', label);
-      group.append(el(id === 'account' ? 'summary' : 'h2', label));
+      group.append(el('h2', label));
       for (const view of views) {
         const button = nav.querySelector('[data-view="' + view + '"]');
         if (!button) continue;

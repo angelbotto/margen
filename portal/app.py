@@ -777,7 +777,7 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
     @app.get('/')
     @app.get('/a/{aid}')
     def page(request: Request, aid: str=''):
-        if not aid and request.query_params.get('view') != 'developers' and not (who(request) or {}).get('verified'): return RedirectResponse('/login', status_code=303)
+        if not aid and request.query_params.get('view') not in {'themes', 'components', 'developers'} and not (who(request) or {}).get('verified'): return RedirectResponse('/login', status_code=303)
         content=(ROOT/'static/index.html').read_text()
         if aid:content=content.replace('<body class="portal-app">','<body class="portal-app reading">').replace('<section id="library">','<section id="library" hidden>')
         return HTMLResponse(content)
