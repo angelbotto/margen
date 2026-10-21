@@ -230,7 +230,7 @@
 
   document.querySelectorAll('[data-copiar]').forEach(button => {
     if(button.closest('.codigo,.terminal')){button.classList.add('nota-icono');button.setAttribute('aria-label',button.getAttribute('aria-label')||'Copiar código');button.title=button.getAttribute('aria-label');button.innerHTML='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V3H4v13h4"/></svg>';
-      const block=button.closest('.codigo,.terminal'),heading=block.querySelector('.cab > span:not(.copia-estado)');block.classList.add('codigo-compacto');if(heading&&/^(CSS|HTML|JavaScript|TypeScript|JSON|Python|SQL|Shell|Bash|Terminal)$/i.test(heading.textContent.trim()))block.classList.add('codigo-sin-titulo');
+      const block=button.closest('.codigo,.terminal');block.classList.add('codigo-compacto');block.classList.remove('codigo-sin-titulo');
     }
     button.addEventListener('click',async () => {
       const code = document.getElementById(button.dataset.copiar);

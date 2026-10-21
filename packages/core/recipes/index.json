@@ -434,5 +434,9 @@
   {
     "file": "sketch-diagram/README.md",
     "example": "sketch-diagram/example.html"
+  },
+  {
+    "file": "web-shell/README.md",
+    "example": "web-shell/example.html"
   }
 ]

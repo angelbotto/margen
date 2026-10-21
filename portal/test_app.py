@@ -59,6 +59,31 @@ class PortalTests(unittest.TestCase):
             row=db.execute('SELECT sha FROM versions WHERE id=?',(artifact['version'],)).fetchone()
         self.assertEqual((self.store.files/(row['sha']+'.html')).read_text(),html)
 
+    def test_reader_refreshes_reference_only_in_rendered_copy(self):
+        html = (HTML + '<style>p{color:red}</style><main class="hoja"><h1>Reference</h1></main>'
+                '<script data-nota-modulo="packages/core/components/code.js">oldCode();</script>'
+                '<script data-nota-modulo="packages/core/components/editorial-pieces.js">oldPieces();</script>')
+        artifact=self.owner.post('/api/artifacts',json={'title':'Editorial reference','html':html}).json()
+        path='/api/artifacts/'+artifact['id']
+        before=self.owner.get(path).json()
+        rendered=self.owner.get(path+'/render')
+        self.assertEqual(rendered.status_code,200)
+        self.assertIn('<style data-margen-editorial-reference>',rendered.text)
+        self.assertIn('backdrop-filter:blur(12px)',rendered.text)
+        self.assertIn('p{color:red}',rendered.text)
+        self.assertNotIn('oldCode();',rendered.text)
+        self.assertNotIn('oldPieces();',rendered.text)
+        self.assertNotIn('allow-same-origin',rendered.headers['content-security-policy'])
+        self.assertEqual(self.other.get(path+'/render').status_code,404)
+        after=self.owner.get(path).json()
+        self.assertEqual(before['current_version'],after['current_version'])
+        self.assertEqual(before['visibility'],after['visibility'])
+        with self.store.db() as db:
+            row=db.execute('SELECT sha FROM versions WHERE id=?',(artifact['version'],)).fetchone()
+            self.assertEqual(db.execute('SELECT count(*) FROM versions WHERE artifact=?',(artifact['id'],)).fetchone()[0],1)
+        self.assertEqual((self.store.files/(row['sha']+'.html')).read_text(),html)
+        self.assertNotIn('<style data-margen-editorial-reference>',self.owner.get(self.path+'/render').text)
+
     def test_private_authorization_and_direct_render(self):
         self.assertEqual(self.owner.get(self.path).json()['visibility'],'private')
         for c in [self.other,self.guest]:

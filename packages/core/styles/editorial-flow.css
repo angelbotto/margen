@@ -2,10 +2,10 @@
    Reading flow owns margins; flex/grid components retain their own gaps.
    Explicit .prosa works at any depth. Data views and presentation canvases opt out. */
 .hoja {
-  --prosa-parrafo: 18px;
-  --prosa-antes-titulo: 36px;
-  --prosa-despues-titulo: 14px;
-  --prosa-bloque: 28px;
+  --prosa-parrafo: 16px;
+  --prosa-antes-titulo: 24px;
+  --prosa-despues-titulo: 8px;
+  --prosa-bloque: 32px;
   --prosa-ceja: 10px;
 }
 @media screen {

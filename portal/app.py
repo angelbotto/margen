@@ -728,10 +728,14 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
             if not v: raise HTTPException(404,'Versión no encontrada.')
             content=(store.files/(v['sha']+'.html')).read_text()
         from urllib.parse import quote
-        from portal.reader_style import without_embedded_flow
+        from portal.reader_style import without_embedded_flow, refresh_editorial_reference
         # The shared reader supplies current rhythm; remove only its old marked CSS block.
         # Stored source, revisions, custom CSS and permissions remain unchanged.
         content=without_embedded_flow(content)
+        content=refresh_editorial_reference(content,
+            (ROOT/'static/editorial-reference.css').read_text(),
+            (ROOT/'static/editorial-code.js').read_text(),
+            (ROOT/'static/editorial-pieces.js').read_text())
         content=re.sub(r'href="([^"]+)" data-margen-original="([^"]+)"',lambda m:'data-bottifact-link href="/api/artifacts/'+aid+'/attachments/'+vid+'/'+quote(m[2],safe='')+'"',content)
         # El iframe y la cabecera CSP fuerzan origen opaco, incluso al abrir esta URL fuera del portal.
         bridge=(ROOT/'static/bridge.js').read_text()

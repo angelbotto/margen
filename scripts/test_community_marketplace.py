@@ -71,7 +71,8 @@ class BrowserTests(unittest.TestCase):
         self.assertEqual(frame.locator('html').get_attribute('data-color-mode'), 'dark')
         self.assertIn('Source Serif 4', frame.locator('h1').evaluate('(e)=>getComputedStyle(e).fontFamily'))
         self.assertIn('Manrope', frame.locator('main').evaluate('(e)=>getComputedStyle(e).fontFamily'))
-        self.assertGreaterEqual(frame.locator('h1 + p').evaluate('(e)=>e.getBoundingClientRect().top-e.previousElementSibling.getBoundingClientRect().bottom'), 13)
+        # The theme preview uses the shared 8px prose rhythm, not a hero layout.
+        self.assertAlmostEqual(frame.locator('h1 + p').evaluate('(e)=>e.getBoundingClientRect().top-e.previousElementSibling.getBoundingClientRect().bottom'), 8, delta=.5)
         self.assertEqual(frame.locator('html').evaluate('(e)=>getComputedStyle(e).getPropertyValue("--papel").trim()'), '#142421')
         studio.get_by_role('button', name='Guardar para mí', exact=True).click()
         detail = page.locator('.developer-dialog')

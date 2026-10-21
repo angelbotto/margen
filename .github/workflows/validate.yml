@@ -90,3 +90,8 @@ jobs:
         run: python scripts/test_community_marketplace.py && python scripts/test_portal_shell.py && python scripts/test_developers_runtime_browser.py
       - name: Check shared reading rhythm
         run: python scripts/test_editorial_flow.py
+
+      - name: Check measured editorial components and optional web shell
+        run: |
+          python scripts/test_editorial_reference.py
+          python scripts/test_editorial_web.py

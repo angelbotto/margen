@@ -43,9 +43,9 @@ class EditorialFlow(unittest.TestCase):
                         box = lambda selector: page.locator(selector).bounding_box()
                         card,head,para,sub = [box('#'+s) for s in ('card','heading','paragraph','subheading')]
                         self.assertGreaterEqual(head['y']-card['y']-card['height'],23)
-                        self.assertGreaterEqual(para['y']-head['y']-head['height'],13)
-                        self.assertGreaterEqual(sub['y']-para['y']-para['height'],35)
-                        self.assertGreaterEqual(box('#card-heading')['y']-box('#card p')['y']-box('#card p')['height'],27)
+                        self.assertGreaterEqual(para['y']-head['y']-head['height'],7)
+                        self.assertGreaterEqual(sub['y']-para['y']-para['height'],23)
+                        self.assertGreaterEqual(box('#card-heading')['y']-box('#card p')['y']-box('#card p')['height'],23)
                         self.assertGreaterEqual(head['x'],17)
                         self.assertLessEqual(page.evaluate('document.documentElement.scrollWidth'),width)
                         self.assertEqual(page.locator('#custom p').evaluate('e=>getComputedStyle(e).marginTop'),'0px')
@@ -101,7 +101,7 @@ class EditorialFlow(unittest.TestCase):
                         page.set_content(f'<style>{css}</style><main class="hoja">{content}</main>')
                         page.evaluate('([family,mode])=>{document.documentElement.dataset.theme=mode==="light"?family+"-light":family;document.documentElement.dataset.colorMode=mode}',[family,mode])
                         gaps=page.evaluate("""()=>[...document.querySelectorAll('h3+p,h4+p')].map(p=>p.getBoundingClientRect().top-p.previousElementSibling.getBoundingClientRect().bottom)""")
-                        self.assertTrue(all(gap>=13 for gap in gaps),gaps)
+                        self.assertTrue(all(gap>=7 for gap in gaps),gaps)
                         self.assertLessEqual(page.evaluate('document.documentElement.scrollWidth'),width)
         # Preserve intentional custom flow and exclude data/UI canvases.
         protected = ['<section class="prosa" data-ritmo="propio"><div>'+prose+'</div></section>',
@@ -134,7 +134,7 @@ class EditorialFlow(unittest.TestCase):
         load('<section><h2>Evidence</h2><p>'+'X'*100+'</p></section>')
         self.assertEqual(page.evaluate('document.documentElement.scrollWidth'),320)
         load('<article class="prosa"><h2>Evidence</h2><p>Text</p></article>')
-        self.assertEqual(page.locator('h2+p').evaluate('e=>getComputedStyle(e).marginTop'),'14px')
+        self.assertEqual(page.locator('h2+p').evaluate('e=>getComputedStyle(e).marginTop'),'8px')
         load('<section class="kept"><article><h3>Evidence</h3><p>Text</p></article></section>')
         self.assertEqual(page.locator('h3+p').evaluate('e=>getComputedStyle(e).marginTop'),'0px')
         self.assertEqual(page.locator('article').evaluate('e=>getComputedStyle(e).rowGap'),'12px')

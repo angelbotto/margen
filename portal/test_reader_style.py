@@ -33,4 +33,77 @@ class ReaderStylesTest(unittest.TestCase):
         self.assertEqual(without_embedded_flow('<style>'+OLD), '<style>'+OLD)
 
 
+
+
+class EditorialReferenceRefreshTest(unittest.TestCase):
+    def refresh(self, html):
+        from portal.reader_style import refresh_editorial_reference
+        return refresh_editorial_reference(html, '.hoja{color:blue}', 'window.currentCode = true;')
+
+    def test_refreshes_only_marked_styles_and_module(self):
+        old = '/* EDITORIAL REFERENCE START */.old{}/* EDITORIAL REFERENCE END */'
+        source = ('<html><head><style>p{color:red}'+old+'</style></head><body><main class="hoja"></main>'
+                  '<script data-nota-modulo="packages/core/components/code.js">old();</script>'
+                  '<script>const example="<style>'+old+'</style>";</script><style>.custom{color:red}</style></body></html>')
+        result = self.refresh(source)
+        self.assertIn('p{color:red}', result)
+        self.assertIn('<script>const example="<style>'+old+'</style>";</script>', result)
+        self.assertIn('<script data-nota-modulo="packages/core/components/code.js">\nwindow.currentCode = true;\n</script>', result)
+        self.assertIn('<style>.custom{color:red}</style><style data-margen-editorial-reference>', result)
+        self.assertEqual(self.refresh(result), result)
+        self.assertIn('old();', source)
+
+    def test_headless_documents_preserve_doctype_and_leading_comments(self):
+        prefixes = ('<!doctype html>', '\n\t<!DOCTYPE html>', '<!-- editorial note -->\n<!DOCTYPE html>',
+                    '<!-- <!doctype html> is only an example -->\n<!doctype html>')
+        bodies = ('<main class="hoja"><h1>Evidence</h1></main>',
+                  '<html><head><meta charset="utf-8"><body><main class="hoja">Evidence</main></body></html>')
+        for prefix in prefixes:
+            for body in bodies:
+                with self.subTest(prefix=prefix, body=body):
+                    source = prefix + body
+                    result = self.refresh(source)
+                    self.assertTrue(result.startswith(prefix+'<style data-margen-editorial-reference>'))
+                    self.assertTrue(result.endswith(body))
+                    self.assertEqual(self.refresh(result), result)
+
+    def test_preserves_non_margen_presentations_and_literal_html(self):
+        for content in ('<main>Custom app</main>', '<main class="hoja" data-presentation></main>',
+                        '<main class="hoja" data-ritmo="propio"></main>',
+                        '<textarea><main class="hoja"></main></textarea>',
+                        '<script>const fake=`<main class="hoja"></main>`</script>'):
+            with self.subTest(content=content):
+                self.assertEqual(self.refresh(content), content)
+
+    def test_custom_scripts_and_incomplete_blocks_are_not_rewritten(self):
+        for script in ('<script data-nota-modulo="mine/code.js">custom();</script>',
+                       '<script data-nota-modulo="packages/core/components/code.js" type="application/json">{"own":1}</script>',
+                       '<script data-nota-modulo="packages/core/components/code.js" src="own.js"></script>',
+                       '<script data-nota-modulo="packages/core/components/code.js">unfinished();'):
+            result = self.refresh('<main class="hoja"></main>' + script)
+            self.assertIn(script, result)
+
+    def test_real_elements_only_across_line_separators(self):
+        for separator in ('\u2028', '\v', '\r', '\r\n', '\n'):
+            source = '<p>A'+separator+'B</p><main class="hoja"></main><style>.own{}</style>'
+            self.assertTrue(self.refresh(source).startswith(source))
+
+
+class EditorialReferenceInertTemplateTest(unittest.TestCase):
+    def test_templates_do_not_capture_styles_or_document_detection(self):
+        from portal.reader_style import refresh_editorial_reference
+        source = '<style>h1{font-size:10px}</style><main class="hoja"><h1>Visible</h1></main><template><style>.card{color:red}</style><script data-nota-modulo="packages/core/components/code.js">inert();</script></template>'
+        result = refresh_editorial_reference(source, 'h1{font-size:50px}', 'current();')
+        self.assertIn('</style><style data-margen-editorial-reference>h1{font-size:50px}</style><main', result)
+        self.assertIn('<template><style>.card{color:red}</style><script data-nota-modulo="packages/core/components/code.js">inert();</script></template>', result)
+        inert = '<template><main class="hoja"></main><style data-margen-editorial-reference>inert{}</style></template>'
+        self.assertEqual(refresh_editorial_reference(inert, 'current{}', 'current();'), inert)
+
+    def test_noscript_fallback_is_not_an_insertion_target(self):
+        from portal.reader_style import refresh_editorial_reference
+        source='<main class="hoja"></main><noscript><style>p{color:red}</style></noscript>'
+        result=refresh_editorial_reference(source,'.hoja{color:blue}','current();')
+        self.assertTrue(result.startswith('<style data-margen-editorial-reference>'))
+        self.assertTrue(result.endswith(source))
+
 if __name__ == '__main__': unittest.main()

@@ -15,6 +15,7 @@ css_path=ROOT/'packages/core/styles/artifact.css'
 css=css_path.read_text()
 blocks = [
     ("EDITORIAL FLOW", flow_css),
+    ("EDITORIAL REFERENCE", (ROOT/'packages/core/styles/editorial-reference.css').read_text()),
     ("SKETCH DIAGRAM", (ROOT/'packages/core/styles/sketch-diagram.css').read_text()),
     ("REVIEW COMPOSER", review_css),
     ("PRESENTATION", (ROOT/'packages/core/styles/presentation.css').read_text()),
@@ -26,7 +27,11 @@ prefix, marker, suffix = css.partition('/* GENERATED THEMES')
 assert marker, 'Missing generated theme boundary'
 css = prefix.rstrip() + '\n\n' + '\n\n'.join('/* '+name+' START */\n'+content.rstrip()+'\n/* '+name+' END */' for name, content in blocks) + '\n\n' + marker + suffix
 css_path.write_text(css)
-if (ROOT/'portal/static').is_dir():(ROOT/'portal/static/review-additions.css').write_text(review_css + "\n" + flow_css)
+if (ROOT/'portal/static').is_dir():
+    (ROOT/'portal/static/review-additions.css').write_text(review_css + "\n" + flow_css)
+    (ROOT/'portal/static/editorial-reference.css').write_text((ROOT/'packages/core/styles/editorial-reference.css').read_text())
+    (ROOT/'portal/static/editorial-code.js').write_text((ROOT/'packages/core/components/code.js').read_text())
+    (ROOT/'portal/static/editorial-pieces.js').write_text((ROOT/'packages/core/components/editorial-pieces.js').read_text())
 from recipes import assemble as assemble_recipes
 assemble_recipes()
 from themes import generate as generate_theme_registry
@@ -272,3 +277,11 @@ generate_project_formats()
 if (ROOT / "portal").is_dir():
  from build_developers import generate as generate_developers
  generate_developers()
+
+# The opt-in web composition has a full-page demo without the artifact review dock.
+web=(ROOT/'packages/core/recipes/web-shell/example.html').read_text()
+web=web.replace('<section class="ancho web-editorial" data-editorial-web id="web-editorial-ejemplo" tabindex="0" aria-label="Sitio editorial de ejemplo, desplazable">','<body class="web-editorial" data-editorial-web>')
+web=web.rstrip().removesuffix('</section>')
+web=web.replace('<p class="ceja">Un cuaderno abierto</p>','',1).replace('<h2>La forma también explica.</h2>','<h1>La forma también explica.</h1>',1)
+web=web.replace('<div class="web-contenido" id="web-contenido" tabindex="-1">','<main class="web-contenido" id="web-contenido" tabindex="-1">').replace('  </div>\n  <footer class="web-pie"','  </main>\n  <footer class="web-pie"')
+(ROOT/'examples/generated/editorial-web.html').write_text('<!doctype html><html lang="es" data-theme="dark"><head>'+start('Margen · Sitio editorial')+'</head>'+web+script('packages/core/components/editorial-pieces.js')+'</body></html>')

@@ -3090,10 +3090,10 @@ body:has(.revision-barra) { padding-bottom:0; }
    Reading flow owns margins; flex/grid components retain their own gaps.
    Explicit .prosa works at any depth. Data views and presentation canvases opt out. */
 .hoja {
-  --prosa-parrafo: 18px;
-  --prosa-antes-titulo: 36px;
-  --prosa-despues-titulo: 14px;
-  --prosa-bloque: 28px;
+  --prosa-parrafo: 16px;
+  --prosa-antes-titulo: 24px;
+  --prosa-despues-titulo: 8px;
+  --prosa-bloque: 32px;
   --prosa-ceja: 10px;
 }
 @media screen {
@@ -3197,6 +3197,183 @@ body:has(.revision-barra) { padding-bottom:0; }
   :is(.hoja:not([data-presentation]), .hoja:not([data-presentation]) > .pagina) > article:not([class]):not([style], [data-ritmo="propio"]):not([data-ritmo="propio"] *) > * + * { margin-block-start: 18pt; }
 }
 /* EDITORIAL FLOW END */
+
+/* EDITORIAL REFERENCE START */
+/* Layout owners and presentation canvases are scope boundaries, including the boundary node itself. */
+@scope (:root) to ([data-ritmo="propio"], [data-presentation]) {
+/* Measured against cmrg.me on 2026-10-21. Geometry is shared; palettes and
+   reader-selected typography remain independent. See docs/editorial-reference.md. */
+@media screen {
+ .hoja:not([data-presentation]) { --texto:33rem; --ancho:64rem; --gutter:24px; }
+ :root:not([data-lectura-comoda]) .hoja:not([data-presentation]) { font-size:15.5px; line-height:1.55; }
+ .hoja:not([data-presentation]) h1:not([data-ritmo=propio] *) { font-size:44.5px; line-height:49.4444px; }
+ .hoja:not([data-presentation]) h2:not([data-ritmo=propio] *) { font-size:36.4px; line-height:43.68px; }
+ @media(max-width:639px) { .hoja:not([data-presentation]) h1:not([data-ritmo=propio] *) { font-size:36.4px; line-height:43.68px; } }
+}
+.hoja:not([data-presentation]) { row-gap:24px; }
+.hoja.lectura-guiada:not([data-presentation]) { margin-inline:0; }
+.hoja:not([data-presentation]) .cabecera { gap:16px; }
+/* Code has its own measure and transparent surface. The backdrop blurs the
+   marginal index behind it, never the source text or the whole document. */
+.codigo.codigo-editorial { position:relative; z-index:3; border:0; border-radius:0; background:transparent; padding:0; }
+.marcos-editoriales .codigo.codigo-editorial { padding:0; }
+.codigo.codigo-editorial .cab { position:relative; display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:start; gap:0; min-height:27.5714px; padding:0 16px 8px; border:0; color:var(--tinta-3); font:13.7px/19.5714px var(--mono); }
+.codigo.codigo-editorial .cab > span:not(.copia-estado) { position:static; width:auto; height:auto; clip-path:none; overflow:visible; }
+.codigo.codigo-editorial .cab > button { position:absolute; inset:-10px 4px auto auto; width:44px; height:44px; min-height:44px; min-width:44px; padding:14px; border:0; background:transparent; transition:color 150ms cubic-bezier(.075,.82,.165,1),background-color 150ms; }
+.codigo.codigo-editorial .cab > button:hover { color:var(--tinta); background:color-mix(in srgb,var(--panel) 60%,transparent); }
+.codigo.codigo-editorial .cab > button svg { width:16px; height:16px; }
+.codigo.codigo-editorial pre { position:relative; margin:0; padding:16px 0; overflow:auto; overscroll-behavior-inline:contain; background:color-mix(in srgb,var(--panel) 25%,transparent); -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); font:13.7px/22px var(--mono); letter-spacing:.05px; scrollbar-width:thin; }
+.codigo.codigo-editorial pre:focus-visible { outline:2px dashed var(--foco); outline-offset:4px; }
+.codigo-editorial code[data-lineas] { display:block; width:max-content; min-width:100%; }
+.codigo-editorial .codigo-linea { min-height:1lh; vertical-align:top; padding-inline:48px 16px; border-left:0; }
+.codigo-editorial .codigo-linea::before { left:16px; width:16px; color:var(--tinta-3); }
+.codigo-editorial .codigo-linea.destacada { box-shadow:inset 2px 0 var(--naranja); }
+.codigo-editorial mark { color:var(--naranja); background:var(--naranja-suave); border:1px solid color-mix(in srgb,var(--naranja) 22%,transparent); border-radius:4px; padding:1px 3px; }
+.codigo.codigo-editorial::before,.codigo.codigo-editorial::after { content:''; position:absolute; pointer-events:none; z-index:1; }
+.codigo.codigo-editorial::before { inset:27.5714px max(-24px,calc(50% - 50vw)) 0; border-block:1px dashed color-mix(in srgb,var(--linea) 80%,transparent); mask-image:linear-gradient(90deg,transparent,#000 15%,#000 85%,transparent); }
+.codigo.codigo-editorial::after { inset:11.5714px 0 -16px; border-inline:1px dashed color-mix(in srgb,var(--linea) 80%,transparent); mask-image:linear-gradient(transparent,#000 1rem,#000 calc(100% - 1rem),transparent); }
+.codigo.codigo-editorial > .marco-lineas { display:none; }
+@media(min-width:640px) {
+ .codigo.codigo-editorial::before { inset-inline:max(-64px,calc(50% - 50vw)); }
+ .codigo.codigo-editorial::after { inset-block:-20.4286px -48px; mask-image:linear-gradient(transparent,#000 35%,#000 65%,transparent); }
+}
+/* A wide code sample uses the same centered measure even inside a prose section.
+   Data canvases, custom layouts and presentations keep their own geometry. */
+.hoja:not([data-presentation]) > .codigo.codigo-editorial,
+.hoja:not([data-presentation]) > .pagina > .codigo.codigo-editorial { grid-column:2; width:100%; }
+@media(min-width:1280px) {
+ .hoja:not([data-presentation]) > .codigo.codigo-editorial,
+ .hoja:not([data-presentation]) > .pagina > .codigo.codigo-editorial { grid-column:1/-1; width:48rem; margin-inline:auto; }
+ .hoja:not([data-presentation]) :is(.seccion,.prosa) > .codigo.codigo-editorial:not([data-ritmo=propio] *) { width:48rem; max-width:none; margin-inline:calc((100% - 48rem)/2); }
+ .hoja.lectura-guiada:not([data-presentation]) > .indice,
+ .hoja.lectura-guiada:not([data-presentation]) > .pagina > .indice { left:max(24px,calc(50vw - 648px)); width:min(344px,calc(50vw - 304px)); top:max(128px,var(--lectura-cabecera,128px)); max-height:calc(100dvh - max(128px,var(--lectura-cabecera,128px)) - 48px); padding:0; background:transparent; border:0; font:13.7px/24px var(--sans); }
+ .lectura-guiada:not([data-presentation]) .indice ol { margin:0; padding:0; list-style:none; counter-reset:contenido; }
+ .lectura-guiada:not([data-presentation]) .indice li { counter-increment:contenido; margin:0; }
+ .lectura-guiada:not([data-presentation]) .indice li::before { content:none; }
+ .lectura-guiada:not([data-presentation]) .indice a { display:block; color:var(--tinta-3); text-decoration:none; }
+ .lectura-guiada:not([data-presentation]) .indice a::before { content:counter(contenido,decimal-leading-zero) '. '; font-family:var(--mono); }
+ .lectura-guiada:not([data-presentation]) .indice li.visto a { text-decoration:line-through; text-decoration-color:var(--linea-fuerte); }
+ .lectura-guiada:not([data-presentation]) .indice a[aria-current],.lectura-guiada:not([data-presentation]) .indice a:hover { color:var(--tinta); }
+ /* Focused navigation must stay readable and operable through wide figures. */
+ .hoja.lectura-guiada:not([data-presentation]) .indice:focus-within { z-index:4; background:var(--papel); outline:1px dashed var(--linea); outline-offset:8px; }
+}
+@media(min-width:1200px) and (max-width:1279px) {
+ .hoja.lectura-guiada:not([data-presentation]) > .indice,
+ .hoja.lectura-guiada:not([data-presentation]) > .pagina > .indice { position:static; width:auto; max-height:none; }
+}
+@media(prefers-reduced-transparency:reduce) { .codigo.codigo-editorial pre { background:var(--panel); -webkit-backdrop-filter:none; backdrop-filter:none; } }
+@media(prefers-reduced-motion:reduce) { .codigo.codigo-editorial .cab > button { transition:none; } }
+@media(forced-colors:active) { .codigo.codigo-editorial { border:1px solid CanvasText; }.codigo.codigo-editorial::before,.codigo.codigo-editorial::after { display:none; }.codigo.codigo-editorial pre { backdrop-filter:none; } }
+@media print {
+ .codigo.codigo-editorial::before,.codigo.codigo-editorial::after { display:none; }
+ .codigo.codigo-editorial,.hoja:not([data-presentation]) :is(.seccion,.prosa) > .codigo.codigo-editorial { width:100%; margin-inline:0; z-index:auto; }
+ .codigo.codigo-editorial pre { background:transparent; -webkit-backdrop-filter:none; backdrop-filter:none; overflow:visible; white-space:pre-wrap; }
+ .codigo-editorial code[data-lineas] { width:auto; }
+ .codigo-editorial .codigo-linea { white-space:pre-wrap; overflow-wrap:anywhere; }
+}
+/* Open editorial frames extend beyond a component; they do not consume its
+   content width. Only the decorative strokes fade. */
+.marcos-editoriales :is(.ancho,.amplio):not(.pieza):not(.aviso),.marco-difuso,.marco-punteado { padding:0; }
+.marco-lineas::before,.marco-difuso::before { inset:0 max(-24px,calc(50% - 50vw)); border-block:1px dashed color-mix(in srgb,var(--linea) 80%,transparent); mask-image:linear-gradient(90deg,transparent,#000 15%,#000 85%,transparent); }
+.marco-lineas::after,.marco-difuso::after { inset:-16px 0; border-inline:1px dashed color-mix(in srgb,var(--linea) 80%,transparent); mask-image:linear-gradient(transparent,#000 1rem,#000 calc(100% - 1rem),transparent); }
+.marcos-editoriales .marco-difuso::before { border-block-style:dashed; }
+.marcos-editoriales .marco-difuso::after { border-inline-style:dashed; }
+@media(min-width:640px) {
+ .marco-lineas::before,.marco-difuso::before { inset-inline:max(-64px,calc(50% - 50vw)); }
+ .marco-lineas::after,.marco-difuso::after { inset-block:-48px; mask-image:linear-gradient(transparent,#000 35%,#000 65%,transparent); }
+}
+.cards-trazadas,.cards-trazadas.cards-abiertas { grid-template-columns:minmax(0,1fr); gap:8px; border:0; }
+.cards-trazadas > a { padding:16px; gap:8px; border:0; background:transparent; border-radius:4px; transition:background-color 150ms cubic-bezier(.075,.82,.165,1); }
+.cards-trazadas h4 { font:400 18.5px/28.7778px var(--serif); }
+.cards-trazadas p { font:13.7px/19.5714px var(--sans); }
+.cards-trazadas .procedencia { font:12.1px/16.1333px var(--mono); }
+.cards-trazadas > a:hover,.cards-trazadas > a:focus-visible { box-shadow:none; background:color-mix(in srgb,var(--panel) 65%,transparent); }
+@media(min-width:640px) { .cards-trazadas { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(min-width:1024px) { .cards-trazadas { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+@media(prefers-reduced-motion:reduce) { .cards-trazadas > a { transition:none; } }
+@media print { .marco-lineas::before,.marco-lineas::after,.marco-difuso::before,.marco-difuso::after { display:none; } }
+
+/* Article lists retain a reading measure; cards are a separate browsing pattern. */
+[data-archivo] .publicaciones { grid-template-columns:minmax(0,1fr); max-width:33rem; margin-inline:auto; gap:32px; }
+[data-archivo] .publicaciones > article { border:0; padding:0; }
+[data-archivo] .publicaciones h4,.lista-proyectos h4,.estanteria h3 { font:400 22.4px/31.36px var(--serif); }
+[data-archivo] .publicaciones [data-extracto] { font:13.7px/21.235px var(--sans); }
+.cronologia :is(h3,h4) { font:400 18.5px/28.7778px var(--serif); }
+.cronologia p { font-size:13.7px; line-height:21.235px; }
+.aviso.aviso-esquina { padding:0; margin-block:32px; }
+.aviso-esquina > div { padding:16px; border:1px solid color-mix(in srgb,var(--acento) 25%,transparent); border-radius:4px; }
+.aviso-esquina > .num { width:32px; height:32px; top:-13px; left:-13px; }
+.estanteria { max-width:56rem; margin-inline:auto; }
+.estanteria > li { grid-template-columns:minmax(0,224px) minmax(0,1fr); gap:20px; padding:24px 0; }
+@media(max-width:767px) { .estanteria > li { grid-template-columns:minmax(0,192px) minmax(0,1fr); } }
+@media(max-width:639px) { .estanteria > li { grid-template-columns:minmax(0,1fr); }.estanteria .estante-portada { width:192px; max-width:100%; } }
+.galeria-fotografica .galeria-pista { padding:12px 0; scroll-padding-inline:0; }
+.galeria-fotografica .galeria-pista > figure { height:232px; min-height:232px; }
+@media(min-width:1200px) {
+ .regla-guiada { right:32px; top:max(128px,var(--lectura-cabecera,128px)); height:max(44px,calc(100dvh - max(128px,var(--lectura-cabecera,128px)) - 128px)); width:44px; }
+ .regla-guiada .ticks { width:16px; }
+}
+@media print { .aviso.aviso-esquina { margin-block:16pt; }.galeria-fotografica .galeria-pista > figure { height:auto; min-height:0; } }
+
+.galeria-fotografica .galeria-pista { mask-image:linear-gradient(to right,transparent,#000 var(--galeria-fade-inicio,0px),#000 calc(100% - var(--galeria-fade-fin,0px)),transparent); }
+.galeria-fotografica .galeria-pista:focus-within { mask-image:none; }
+@media print { .galeria-fotografica .galeria-pista { mask-image:none; } }
+@media(prefers-reduced-transparency:reduce) { .galeria-fotografica .galeria-pista { mask-image:none; } }
+
+/* Opt-in website topology. Artifact readers keep their comment/preferences dock. */
+.web-editorial { --web-alto:640px; position:relative; isolation:isolate; height:var(--web-alto); overflow:auto; overscroll-behavior:contain; scrollbar-width:thin; background:var(--papel); color:var(--tinta); font:400 15.5px/1.55 var(--sans); }
+body.web-editorial { --web-alto:100dvh; height:auto; overflow:visible; overscroll-behavior:auto; }
+.web-editorial :is(.web-contenido,.web-pie,.web-navegacion) { margin:0; }
+.web-navegacion { position:sticky; top:0; z-index:5; height:64px; padding:16px 24px; transition:opacity 2000ms cubic-bezier(.075,.82,.165,1),filter 2000ms cubic-bezier(.075,.82,.165,1),transform 2000ms cubic-bezier(.075,.82,.165,1); }
+.web-navegacion nav { display:flex; align-items:center; justify-content:space-between; width:100%; max-width:1024px; margin-inline:auto; gap:24px; }
+.web-navegacion nav > div { display:flex; align-items:center; gap:8px; color:var(--tinta-3); }
+.web-navegacion a { color:var(--tinta-2); text-decoration:none; display:inline-flex; align-items:center; min-height:32px; }
+.web-navegacion a:hover,.web-navegacion a:focus-visible { color:var(--tinta); }
+.web-editorial .web-marca { white-space:nowrap; flex-shrink:0; color:var(--tinta); font:400 28.5px/32px var(--serif); text-decoration:none; }
+.web-editorial.web-nav-oculta .web-navegacion { opacity:0; filter:blur(12px); transform:translateY(-12px); pointer-events:none; }
+.web-editorial .web-navegacion:focus-within { opacity:1; filter:none; transform:none; pointer-events:auto; transition:none; }
+.web-contenido { position:relative; z-index:2; min-height:calc(var(--web-alto) - 64px); padding:32px 24px 96px; background:var(--papel); border-bottom:1px solid var(--linea); box-shadow:0 20px 28px color-mix(in srgb,var(--papel) 85%,transparent); }
+.web-prosa { width:min(100%,528px); margin-inline:auto; }
+.web-prosa + .web-prosa { margin-top:64px; }
+.web-prosa :is(h1,h2) { font:400 44.5px/49.4444px var(--serif); margin:0 0 16px; }
+.web-prosa h3 { font:400 28.5px/38px var(--serif); margin:0 0 16px; }
+.web-prosa p { font:400 15.5px/24.025px var(--sans); }
+.web-prosa p + p { margin-top:16px; }
+.web-prosa .ceja { font:12.1px/16.1333px var(--mono); margin-bottom:16px; }
+.web-pie { position:sticky; bottom:0; z-index:0; min-height:256px; padding:32px 24px; }
+.web-pie > div { max-width:1024px; margin-inline:auto; display:grid; gap:16px; }
+.web-pie nav { display:flex; flex-wrap:wrap; gap:12px 24px; }
+.web-pie p { font:400 18.5px/28.7778px var(--serif); }
+.web-pie small { color:var(--tinta-3); font:12.1px/16.1333px var(--mono); }
+.web-pie:focus-within { z-index:4; background:var(--papel); }
+.web-bordes { position:sticky; top:0; height:0; z-index:3; pointer-events:none; }
+.web-bordes::before,.web-bordes::after { content:''; position:absolute; left:0; right:0; height:clamp(40px,calc(var(--web-alto)*.1),160px); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); mask-image:linear-gradient(#000,transparent); }
+.web-bordes::before { top:0; }
+.web-bordes::after { top:calc(var(--web-alto) - clamp(40px,calc(var(--web-alto)*.1),160px)); mask-image:linear-gradient(transparent,#000); }
+.web-editorial:focus-within .web-bordes { visibility:hidden; }
+.web-salto { position:absolute; top:8px; left:24px; z-index:6; padding:12px; color:var(--tinta); background:var(--papel); transform:translateY(-200%); }
+.web-salto:focus { transform:none; }
+body.web-editorial > .web-navegacion { position:fixed; left:0; right:0; }
+body.web-editorial > .web-contenido { padding-top:96px; min-height:100dvh; }
+body.web-editorial > .web-bordes { position:fixed; inset:0 0 auto; }
+@media(max-width:639px) {
+ .web-navegacion { top:calc(var(--web-alto) - 64px - env(safe-area-inset-bottom,0px)); padding:0 24px; height:48px; }
+ .web-navegacion nav { gap:8px; }
+ .web-navegacion nav > div { gap:4px; font-size:13.7px; }
+ .web-navegacion a { min-height:48px; }
+ .web-editorial .web-marca { font-size:22.4px; line-height:31.36px; }
+ .web-editorial.web-nav-oculta .web-navegacion { transform:translateY(12px); }
+ .web-editorial .web-navegacion:focus-within { transform:none; }
+ .web-prosa :is(h1,h2) { font-size:36.4px; line-height:43.68px; }
+ .web-pie { padding-bottom:calc(96px + env(safe-area-inset-bottom,0px)); }
+ body.web-editorial > .web-navegacion { top:auto; bottom:calc(16px + env(safe-area-inset-bottom,0px)); }
+}
+@media(prefers-reduced-motion:reduce) { .web-editorial .web-navegacion { transition:none; }.web-editorial.web-nav-oculta .web-navegacion { opacity:1; filter:none; transform:none; pointer-events:auto; } }
+@media(prefers-reduced-transparency:reduce) { .web-bordes { display:none; }.web-navegacion { background:var(--papel); } }
+@media print { .web-editorial { height:auto; overflow:visible; }.web-navegacion,.web-bordes,.web-salto { display:none; }.web-contenido,body.web-editorial > .web-contenido { padding:0; min-height:0; box-shadow:none; }.web-pie { position:static; padding:24px 0; min-height:0; }.web-prosa + .web-prosa { margin-top:24px; } }
+
+}
+/* EDITORIAL REFERENCE END */
 
 /* SKETCH DIAGRAM START */
 /* Sketch diagrams: semantic HTML carries the source; SVG only draws the ink. */
@@ -5229,7 +5406,7 @@ main.hoja[data-presentation]{margin-top:22px}
 <div class="extracto"><p class="desvanece" aria-hidden="true">Una nota se termina cuando alguien puede tomar una decisión con ella. La forma prepara el terreno; la evidencia sostiene lo que decimos.</p><details><summary>Leer la nota completa</summary><p>Una nota se termina cuando alguien puede tomar una decisión con ella. La forma prepara el terreno; la evidencia sostiene lo que decimos. Si la pieza necesita una segunda lectura para entender qué propone, todavía queda trabajo editorial.</p></details></div>
 <aside class="aviso cita"><span class="num" aria-hidden="true">↳</span><div><blockquote>Dejar una buena nota es dejarle contexto a quien llega después.</blockquote><p class="secundario">Principio de esta plantilla</p></div></aside>
 <section class="seccion" id="libreria"><p class="ceja">06 / componentes para copiar</p>
-<h2>La evidencia tiene muchas formas.</h2><p>Gráficas, tablas y experiencias opcionales. Cada ejemplo conserva sus datos, su criterio y su límite en docs/components.md.</p><div data-buscador-recetas><div class="buscador-recetas"><label for="buscar-receta">Encuentra una pieza</label><input id="buscar-receta" type="search" placeholder="Tabla, globo, artículo, prototipo…" aria-describedby="buscar-estado"><p id="buscar-estado" role="status"></p></div><nav aria-label="Ejemplos de componentes"><ul class="catalogo-indice"><li data-claves=""><a href="#pieza-tabla-densa">Tabla densa</a></li><li data-claves=""><a href="#pieza-terminal">Terminal</a></li><li data-claves=""><a href="#pieza-manuscrita">Nota manuscrita</a></li><li data-claves=""><a href="#barras-ejemplo">Barras</a></li><li data-claves=""><a href="#lineas-ejemplo">Líneas</a></li><li data-claves=""><a href="#temporal-ejemplo">Serie temporal</a></li><li data-claves=""><a href="#dispersion-ejemplo">Dispersión</a></li><li data-claves=""><a href="#distribucion-ejemplo">Distribución</a></li><li data-claves=""><a href="#calor-ejemplo">Mapa de calor</a></li><li data-claves=""><a href="#pieza-comparacion">Comparación</a></li><li data-claves=""><a href="#pieza-totales">Totales y ordenación</a></li><li data-claves=""><a href="#pieza-sparkline">Tabla con serie</a></li><li data-claves=""><a href="#pieza-sonido">Sonido optativo</a></li><li data-claves=""><a href="#pieza-escritura">Escritura por trazos</a></li><li data-claves=""><a href="#xyz-ejemplo">Three.js · XYZ</a></li><li data-claves=""><a href="#etapas-ejemplo">Three.js · etapas</a></li><li data-claves="tema lectura"><a href="#apariencia-ejemplo">Apariencia y lectura cómoda</a></li><li data-claves="reporte informe"><a href="#decision-ejemplo">Ficha de decisión</a></li><li data-claves="historia fechas"><a href="#cronologia-ejemplo">Cronología anotada</a></li><li data-claves="blog autor fecha"><a href="#articulo-ejemplo">Ficha de artículo</a></li><li data-claves="blog fuentes citas"><a href="#referencias-ejemplo">Referencias con regreso</a></li><li data-claves="blog definiciones"><a href="#glosario-ejemplo">Glosario editorial</a></li><li data-claves="blog informe supuestos"><a href="#metodologia-ejemplo">Metodología desplegable</a></li><li data-claves="blog cambios"><a href="#antes-despues-ejemplo">Antes y después</a></li><li data-claves="reporte balance"><a href="#cascada-ejemplo">Cascada de cantidades</a></li><li data-claves="graficas reporte sedes"><a href="#multiples-ejemplo">Pequeños múltiples</a></li><li data-claves="tabla reporte diferencias"><a href="#conciliacion-ejemplo">Conciliación de registros</a></li><li data-claves="calculadora reporte supuestos"><a href="#escenario-ejemplo">Calculadora de escenarios</a></li><li data-claves="globo three geografia historia"><a href="#recorrido-ejemplo">Globo narrado</a></li><li data-claves="prototipo estados responsive"><a href="#visor-ejemplo">Visor de prototipos</a></li><li data-claves=""><a href="#pestanas-ejemplo">Pestañas de una pieza</a></li><li data-claves=""><a href="#hallazgo-ejemplo">Ficha de hallazgo</a></li><li data-claves=""><a href="#archivo-ejemplo">Archivo de publicaciones</a></li><li data-claves=""><a href="#autor-ejemplo">Ficha de autor</a></li><li data-claves=""><a href="#relacionados-ejemplo">Lecturas relacionadas</a></li><li data-claves=""><a href="#anotaciones-ejemplo">Diagrama anotado</a></li><li data-claves=""><a href="#revisiones-ejemplo">Historial de revisiones</a></li><li data-claves=""><a href="#criterios-ejemplo">Matriz de criterios</a></li><li data-claves=""><a href="#riesgos-ejemplo">Registro de riesgos</a></li><li data-claves=""><a href="#configuracion-ejemplo">Configuración editorial</a></li><li data-claves=""><a href="#explorador-ejemplo">Tabla interactiva</a></li><li data-claves=""><a href="#cards-ejemplo">Familia de cards</a></li><li data-claves=""><a href="#revision-ejemplo">Comentarios sobre el documento</a></li><li data-claves=""><a href="#codigo-poliglota">Código en varios lenguajes</a></li><li data-claves=""><a href="#analitica-calendario">Calendario de actividad</a></li><li data-claves=""><a href="#analitica-torta">Torta y donut</a></li><li data-claves=""><a href="#analitica-areas">Áreas apiladas</a></li><li data-claves=""><a href="#analitica-caja">Caja y bigotes</a></li><li data-claves=""><a href="#analitica-velas">Velas OHLC</a></li><li data-claves=""><a href="#analitica-mapa-rutas">Mapa de rutas</a></li><li data-claves=""><a href="#analitica-mapa-burbujas">Mapa de volumen</a></li><li data-claves=""><a href="#analitica-columnas-mapa">Columnas geográficas 3D</a></li><li data-claves=""><a href="#analitica-arcos-mapa">Arcos logísticos 3D</a></li><li data-claves=""><a href="#analitica-almacen">Capacidad de almacén 3D</a></li><li data-claves=""><a href="#apuntes-ejemplo">Apuntes manuscritos al margen</a></li><li data-claves=""><a href="#cards-trazadas-ejemplo">Cards delineadas</a></li><li data-claves=""><a href="#atencion-ejemplo">Attention map de áreas</a></li><li data-claves=""><a href="#marco-ejemplo">Marco de líneas desvanecidas</a></li><li data-claves=""><a href="#estanteria-ejemplo">Estantería editorial</a></li><li data-claves=""><a href="#invitacion-ejemplo">Invitación editorial</a></li><li data-claves=""><a href="#lista-estados-ejemplo">Listas de estado</a></li><li data-claves=""><a href="#lista-proyectos-ejemplo">Lista de proyectos</a></li><li data-claves=""><a href="#conversacion-ejemplo">Conversación en el artículo</a></li><li data-claves=""><a href="#navegacion-ejemplo">Navegación editorial</a></li><li data-claves=""><a href="#pie-editorial-ejemplo">Footer editorial</a></li><li data-claves=""><a href="#actividad-editorial-ejemplo">Actividad con contexto editorial</a></li><li data-claves=""><a href="#codigo-lineas-ejemplo">Código numerado y destacado</a></li><li data-claves=""><a href="#enlaces-icono-ejemplo">Enlaces con icono</a></li><li data-claves=""><a href="#avisos-animados-ejemplo">Avisos con icono animado</a></li><li data-claves=""><a href="#trayectoria-ejemplo">Cronología vertical</a></li><li data-claves=""><a href="#galeria-ejemplo">Galería deslizable</a></li><li data-claves=""><a href="#flota-colombia">Globo operativo de Colombia</a></li><li data-claves=""><a href="#ficha-entrega-ejemplo">Ficha de entrega e hitos</a></li><li data-claves=""><a href="#cola-novedades-ejemplo">Cola de despacho y novedades</a></li><li data-claves=""><a href="#evidencia-relato">Relato visual por pasos</a></li><li data-claves=""><a href="#evidencia-sankey">Flujos Sankey</a></li><li data-claves=""><a href="#evidencia-cohortes">Cohortes de recurrencia</a></li><li data-claves=""><a href="#evidencia-sensibilidad">Sensibilidad de escenarios</a></li><li data-claves=""><a href="#evidencia-gantt">Gantt editorial</a></li><li data-claves=""><a href="#evidencia-embudo">Embudo explicado</a></li><li data-claves=""><a href="#evidencia-incertidumbre">Rangos de incertidumbre</a></li><li data-claves=""><a href="#evidencia-imagen">Evidencia ampliable</a></li><li data-claves=""><a href="#relationship-map-example">Mapa de relaciones explorable</a></li><li data-claves=""><a href="#session-brief-example">Ficha de sesión y continuación</a></li><li data-claves=""><a href="#context-bundle-example">Paquete de contexto para agentes</a></li><li data-claves=""><a href="#evidence-ledger-example">Registro de afirmaciones y evidencia</a></li><li data-claves=""><a href="#review-queue-example">Bandeja de revisión contextual</a></li><li data-claves=""><a href="#version-comparison-example">Comparación editorial entre versiones</a></li><li data-claves=""><a href="#sketch-example">Diagrama a mano · flujos legibles</a></li></ul></nav></div></section>
+<h2>La evidencia tiene muchas formas.</h2><p>Gráficas, tablas y experiencias opcionales. Cada ejemplo conserva sus datos, su criterio y su límite en docs/components.md.</p><div data-buscador-recetas><div class="buscador-recetas"><label for="buscar-receta">Encuentra una pieza</label><input id="buscar-receta" type="search" placeholder="Tabla, globo, artículo, prototipo…" aria-describedby="buscar-estado"><p id="buscar-estado" role="status"></p></div><nav aria-label="Ejemplos de componentes"><ul class="catalogo-indice"><li data-claves=""><a href="#pieza-tabla-densa">Tabla densa</a></li><li data-claves=""><a href="#pieza-terminal">Terminal</a></li><li data-claves=""><a href="#pieza-manuscrita">Nota manuscrita</a></li><li data-claves=""><a href="#barras-ejemplo">Barras</a></li><li data-claves=""><a href="#lineas-ejemplo">Líneas</a></li><li data-claves=""><a href="#temporal-ejemplo">Serie temporal</a></li><li data-claves=""><a href="#dispersion-ejemplo">Dispersión</a></li><li data-claves=""><a href="#distribucion-ejemplo">Distribución</a></li><li data-claves=""><a href="#calor-ejemplo">Mapa de calor</a></li><li data-claves=""><a href="#pieza-comparacion">Comparación</a></li><li data-claves=""><a href="#pieza-totales">Totales y ordenación</a></li><li data-claves=""><a href="#pieza-sparkline">Tabla con serie</a></li><li data-claves=""><a href="#pieza-sonido">Sonido optativo</a></li><li data-claves=""><a href="#pieza-escritura">Escritura por trazos</a></li><li data-claves=""><a href="#xyz-ejemplo">Three.js · XYZ</a></li><li data-claves=""><a href="#etapas-ejemplo">Three.js · etapas</a></li><li data-claves="tema lectura"><a href="#apariencia-ejemplo">Apariencia y lectura cómoda</a></li><li data-claves="reporte informe"><a href="#decision-ejemplo">Ficha de decisión</a></li><li data-claves="historia fechas"><a href="#cronologia-ejemplo">Cronología anotada</a></li><li data-claves="blog autor fecha"><a href="#articulo-ejemplo">Ficha de artículo</a></li><li data-claves="blog fuentes citas"><a href="#referencias-ejemplo">Referencias con regreso</a></li><li data-claves="blog definiciones"><a href="#glosario-ejemplo">Glosario editorial</a></li><li data-claves="blog informe supuestos"><a href="#metodologia-ejemplo">Metodología desplegable</a></li><li data-claves="blog cambios"><a href="#antes-despues-ejemplo">Antes y después</a></li><li data-claves="reporte balance"><a href="#cascada-ejemplo">Cascada de cantidades</a></li><li data-claves="graficas reporte sedes"><a href="#multiples-ejemplo">Pequeños múltiples</a></li><li data-claves="tabla reporte diferencias"><a href="#conciliacion-ejemplo">Conciliación de registros</a></li><li data-claves="calculadora reporte supuestos"><a href="#escenario-ejemplo">Calculadora de escenarios</a></li><li data-claves="globo three geografia historia"><a href="#recorrido-ejemplo">Globo narrado</a></li><li data-claves="prototipo estados responsive"><a href="#visor-ejemplo">Visor de prototipos</a></li><li data-claves=""><a href="#pestanas-ejemplo">Pestañas de una pieza</a></li><li data-claves=""><a href="#hallazgo-ejemplo">Ficha de hallazgo</a></li><li data-claves=""><a href="#archivo-ejemplo">Archivo de publicaciones</a></li><li data-claves=""><a href="#autor-ejemplo">Ficha de autor</a></li><li data-claves=""><a href="#relacionados-ejemplo">Lecturas relacionadas</a></li><li data-claves=""><a href="#anotaciones-ejemplo">Diagrama anotado</a></li><li data-claves=""><a href="#revisiones-ejemplo">Historial de revisiones</a></li><li data-claves=""><a href="#criterios-ejemplo">Matriz de criterios</a></li><li data-claves=""><a href="#riesgos-ejemplo">Registro de riesgos</a></li><li data-claves=""><a href="#configuracion-ejemplo">Configuración editorial</a></li><li data-claves=""><a href="#explorador-ejemplo">Tabla interactiva</a></li><li data-claves=""><a href="#cards-ejemplo">Familia de cards</a></li><li data-claves=""><a href="#revision-ejemplo">Comentarios sobre el documento</a></li><li data-claves=""><a href="#codigo-poliglota">Código en varios lenguajes</a></li><li data-claves=""><a href="#analitica-calendario">Calendario de actividad</a></li><li data-claves=""><a href="#analitica-torta">Torta y donut</a></li><li data-claves=""><a href="#analitica-areas">Áreas apiladas</a></li><li data-claves=""><a href="#analitica-caja">Caja y bigotes</a></li><li data-claves=""><a href="#analitica-velas">Velas OHLC</a></li><li data-claves=""><a href="#analitica-mapa-rutas">Mapa de rutas</a></li><li data-claves=""><a href="#analitica-mapa-burbujas">Mapa de volumen</a></li><li data-claves=""><a href="#analitica-columnas-mapa">Columnas geográficas 3D</a></li><li data-claves=""><a href="#analitica-arcos-mapa">Arcos logísticos 3D</a></li><li data-claves=""><a href="#analitica-almacen">Capacidad de almacén 3D</a></li><li data-claves=""><a href="#apuntes-ejemplo">Apuntes manuscritos al margen</a></li><li data-claves=""><a href="#cards-trazadas-ejemplo">Cards delineadas</a></li><li data-claves=""><a href="#atencion-ejemplo">Attention map de áreas</a></li><li data-claves=""><a href="#marco-ejemplo">Marco de líneas desvanecidas</a></li><li data-claves=""><a href="#estanteria-ejemplo">Estantería editorial</a></li><li data-claves=""><a href="#invitacion-ejemplo">Invitación editorial</a></li><li data-claves=""><a href="#lista-estados-ejemplo">Listas de estado</a></li><li data-claves=""><a href="#lista-proyectos-ejemplo">Lista de proyectos</a></li><li data-claves=""><a href="#conversacion-ejemplo">Conversación en el artículo</a></li><li data-claves=""><a href="#navegacion-ejemplo">Navegación editorial</a></li><li data-claves=""><a href="#pie-editorial-ejemplo">Footer editorial</a></li><li data-claves=""><a href="#actividad-editorial-ejemplo">Actividad con contexto editorial</a></li><li data-claves=""><a href="#codigo-lineas-ejemplo">Código numerado y destacado</a></li><li data-claves=""><a href="#enlaces-icono-ejemplo">Enlaces con icono</a></li><li data-claves=""><a href="#avisos-animados-ejemplo">Avisos con icono animado</a></li><li data-claves=""><a href="#trayectoria-ejemplo">Cronología vertical</a></li><li data-claves=""><a href="#galeria-ejemplo">Galería deslizable</a></li><li data-claves=""><a href="#flota-colombia">Globo operativo de Colombia</a></li><li data-claves=""><a href="#ficha-entrega-ejemplo">Ficha de entrega e hitos</a></li><li data-claves=""><a href="#cola-novedades-ejemplo">Cola de despacho y novedades</a></li><li data-claves=""><a href="#evidencia-relato">Relato visual por pasos</a></li><li data-claves=""><a href="#evidencia-sankey">Flujos Sankey</a></li><li data-claves=""><a href="#evidencia-cohortes">Cohortes de recurrencia</a></li><li data-claves=""><a href="#evidencia-sensibilidad">Sensibilidad de escenarios</a></li><li data-claves=""><a href="#evidencia-gantt">Gantt editorial</a></li><li data-claves=""><a href="#evidencia-embudo">Embudo explicado</a></li><li data-claves=""><a href="#evidencia-incertidumbre">Rangos de incertidumbre</a></li><li data-claves=""><a href="#evidencia-imagen">Evidencia ampliable</a></li><li data-claves=""><a href="#relationship-map-example">Mapa de relaciones explorable</a></li><li data-claves=""><a href="#session-brief-example">Ficha de sesión y continuación</a></li><li data-claves=""><a href="#context-bundle-example">Paquete de contexto para agentes</a></li><li data-claves=""><a href="#evidence-ledger-example">Registro de afirmaciones y evidencia</a></li><li data-claves=""><a href="#review-queue-example">Bandeja de revisión contextual</a></li><li data-claves=""><a href="#version-comparison-example">Comparación editorial entre versiones</a></li><li data-claves=""><a href="#sketch-example">Diagrama a mano · flujos legibles</a></li><li data-claves=""><a href="#web-editorial-ejemplo">Sitio editorial: navegación y cierre</a></li></ul></nav></div></section>
 <figure class="amplio" id="pieza-tabla-densa">
   <div class="tabla-caja densa" tabindex="0" role="region" aria-label="Brechas, desplazable">
     <table><caption>Seguimiento ilustrativo de brechas</caption>
@@ -7603,7 +7780,29 @@ Origen: sin sesión conectada; no inventar una referencia.&lt;/code&gt;&lt;/pre&
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p class=&quot;sketch-note&quot;&gt;Ejemplo ilustrativo: cada flecha tiene una intención.&lt;/p&gt;
-&lt;/figure&gt;</code></pre></div></details><footer class="pie"><p>Margen · Muestra de todos los componentes. Inspirada en <a href="https://www.cmrg.me">cmrg.me</a>; el tema claro, los ajustes de acceso y Dark Sea están documentados en el informe.</p><button type="button" data-sonido aria-pressed="false">Sonido apagado</button></footer>
+&lt;/figure&gt;</code></pre></div></details>
+<section class="ancho web-editorial" data-editorial-web id="web-editorial-ejemplo" tabindex="0" aria-label="Sitio editorial de ejemplo, desplazable">
+  <a class="web-salto" href="#web-contenido">Saltar al contenido</a>
+  <header class="web-navegacion"><nav aria-label="Navegación del sitio de ejemplo"><a class="web-marca" href="#web-contenido">Margen</a><div><a href="#web-lecturas">lecturas</a><span aria-hidden="true">/</span><a href="#web-proyectos">proyectos</a><span aria-hidden="true">/</span><a href="#web-cierre">acerca</a></div></nav></header>
+  <div class="web-bordes" aria-hidden="true"></div>
+  <div class="web-contenido" id="web-contenido" tabindex="-1">
+    <div class="web-prosa"><p class="ceja">Un cuaderno abierto</p><h2>La forma también explica.</h2><p>Una página para leer con calma, explorar lo que sigue y volver al punto que importa.</p></div>
+    <section class="web-prosa" id="web-lecturas"><h3>Lecturas</h3><p>Las ideas necesitan espacio. Una columna breve mantiene el hilo; los ejemplos se abren cuando necesitan mostrar más.</p><p>El marco acompaña sin convertirse en una caja. Las líneas se desvanecen en los márgenes y dejan que el contenido respire.</p><p>Al desplazarte, la navegación se aparta. Vuelve al subir o al darle foco con el teclado.</p></section>
+    <section class="web-prosa" id="web-proyectos"><h3>Lo que estamos construyendo</h3><p>Un archivo que conserva las fuentes, las preguntas y las decisiones. Cada pieza puede compartirse sin perder su contexto.</p><p>Este ejemplo utiliza texto original e ilustrativo. Los enlaces recorren secciones reales de la misma página.</p><p>El cierre se descubre al terminar la lectura, debajo de la superficie principal.</p></section>
+  </div>
+  <footer class="web-pie" id="web-cierre"><div><a class="web-marca" href="#web-contenido">Margen</a><p>Una nota para quien viene después.</p><nav aria-label="Enlaces de cierre del ejemplo"><a href="#web-lecturas">Volver a las lecturas</a><a href="#web-proyectos">Ver los proyectos</a></nav><small>Ejemplo editorial · contenido ilustrativo</small></div></footer>
+</section>
+<details class="receta-copia ancho"><summary>HTML y dependencias · Sitio editorial: navegación y cierre</summary><p class="procedencia">Requiere packages/core/styles/fonts.css, packages/core/styles/artifact.css e packages/core/components/reader.js. Consulta los módulos y límites de esta receta en docs/components.md.</p><div class="codigo"><div class="cab"><span>Sitio editorial: navegación y cierre</span><button type="button" data-copiar="receta-fuente-sitio-editorial" aria-label="Copiar HTML de Sitio editorial: navegación y cierre">Copiar HTML</button><span role="status" class="copia-estado"></span></div><pre tabindex="0" aria-label="HTML de Sitio editorial: navegación y cierre, desplazable"><code id="receta-fuente-sitio-editorial">&lt;section class=&quot;ancho web-editorial&quot; data-editorial-web id=&quot;web-editorial-ejemplo&quot; tabindex=&quot;0&quot; aria-label=&quot;Sitio editorial de ejemplo, desplazable&quot;&gt;
+  &lt;a class=&quot;web-salto&quot; href=&quot;#web-contenido&quot;&gt;Saltar al contenido&lt;/a&gt;
+  &lt;header class=&quot;web-navegacion&quot;&gt;&lt;nav aria-label=&quot;Navegación del sitio de ejemplo&quot;&gt;&lt;a class=&quot;web-marca&quot; href=&quot;#web-contenido&quot;&gt;Margen&lt;/a&gt;&lt;div&gt;&lt;a href=&quot;#web-lecturas&quot;&gt;lecturas&lt;/a&gt;&lt;span aria-hidden=&quot;true&quot;&gt;/&lt;/span&gt;&lt;a href=&quot;#web-proyectos&quot;&gt;proyectos&lt;/a&gt;&lt;span aria-hidden=&quot;true&quot;&gt;/&lt;/span&gt;&lt;a href=&quot;#web-cierre&quot;&gt;acerca&lt;/a&gt;&lt;/div&gt;&lt;/nav&gt;&lt;/header&gt;
+  &lt;div class=&quot;web-bordes&quot; aria-hidden=&quot;true&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;web-contenido&quot; id=&quot;web-contenido&quot; tabindex=&quot;-1&quot;&gt;
+    &lt;div class=&quot;web-prosa&quot;&gt;&lt;p class=&quot;ceja&quot;&gt;Un cuaderno abierto&lt;/p&gt;&lt;h2&gt;La forma también explica.&lt;/h2&gt;&lt;p&gt;Una página para leer con calma, explorar lo que sigue y volver al punto que importa.&lt;/p&gt;&lt;/div&gt;
+    &lt;section class=&quot;web-prosa&quot; id=&quot;web-lecturas&quot;&gt;&lt;h3&gt;Lecturas&lt;/h3&gt;&lt;p&gt;Las ideas necesitan espacio. Una columna breve mantiene el hilo; los ejemplos se abren cuando necesitan mostrar más.&lt;/p&gt;&lt;p&gt;El marco acompaña sin convertirse en una caja. Las líneas se desvanecen en los márgenes y dejan que el contenido respire.&lt;/p&gt;&lt;p&gt;Al desplazarte, la navegación se aparta. Vuelve al subir o al darle foco con el teclado.&lt;/p&gt;&lt;/section&gt;
+    &lt;section class=&quot;web-prosa&quot; id=&quot;web-proyectos&quot;&gt;&lt;h3&gt;Lo que estamos construyendo&lt;/h3&gt;&lt;p&gt;Un archivo que conserva las fuentes, las preguntas y las decisiones. Cada pieza puede compartirse sin perder su contexto.&lt;/p&gt;&lt;p&gt;Este ejemplo utiliza texto original e ilustrativo. Los enlaces recorren secciones reales de la misma página.&lt;/p&gt;&lt;p&gt;El cierre se descubre al terminar la lectura, debajo de la superficie principal.&lt;/p&gt;&lt;/section&gt;
+  &lt;/div&gt;
+  &lt;footer class=&quot;web-pie&quot; id=&quot;web-cierre&quot;&gt;&lt;div&gt;&lt;a class=&quot;web-marca&quot; href=&quot;#web-contenido&quot;&gt;Margen&lt;/a&gt;&lt;p&gt;Una nota para quien viene después.&lt;/p&gt;&lt;nav aria-label=&quot;Enlaces de cierre del ejemplo&quot;&gt;&lt;a href=&quot;#web-lecturas&quot;&gt;Volver a las lecturas&lt;/a&gt;&lt;a href=&quot;#web-proyectos&quot;&gt;Ver los proyectos&lt;/a&gt;&lt;/nav&gt;&lt;small&gt;Ejemplo editorial · contenido ilustrativo&lt;/small&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/section&gt;</code></pre></div></details><footer class="pie"><p>Margen · Muestra de todos los componentes. Inspirada en <a href="https://www.cmrg.me">cmrg.me</a>; el tema claro, los ajustes de acceso y Dark Sea están documentados en el informe.</p><button type="button" data-sonido aria-pressed="false">Sonido apagado</button></footer>
 </main>
 <div class="regla" role="slider" tabindex="0" aria-orientation="vertical" aria-label="Progreso de lectura" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="ticks"></div><div class="cursor"></div><span class="val">0%</span></div>
 <script>
@@ -7849,12 +8048,32 @@ Origen: sin sesión conectada; no inventar una referencia.&lt;/code&gt;&lt;/pre&
 <script>
 /* Actividad, avisos y galería: mejoras locales, sin red ni reproducción automática. */
 (()=>{'use strict';
- const instances=new WeakMap(),selector='[data-actividad],[data-aviso-animado],[data-galeria]';
+ const instances=new WeakMap(),selector='[data-actividad],[data-aviso-animado],[data-galeria],[data-editorial-web]';
  function mount(el){
   if(instances.has(el))return;
   const clean=[],motion=matchMedia('(prefers-reduced-motion: reduce)');
   const on=(node,type,fn,opts)=>{node.addEventListener(type,fn,opts);clean.push(()=>node.removeEventListener(type,fn,opts));};
   let api={motion,destroy(){clean.splice(0).forEach(fn=>fn());instances.delete(el);}};
+  if(el.hasAttribute('data-editorial-web')){
+   const navigation=el.querySelector(':scope > .web-navegacion'),footer=el.querySelector(':scope > .web-pie');if(!navigation||!footer)return;
+   const full=el===document.body,scrollNode=full?window:el,position=()=>full?scrollY:el.scrollTop;
+   let previous=position(),distance=0,direction=0,frame=0;
+   const show=()=>el.classList.remove('web-nav-oculta');
+   const update=()=>{frame=0;const current=position(),delta=current-previous;previous=current;
+    if(motion.matches||current<64||navigation.contains(document.activeElement)){show();distance=0;return;}
+    const nextDirection=Math.sign(delta);if(nextDirection!==direction){direction=nextDirection;distance=0;}distance+=Math.abs(delta);
+    if(distance>=12){el.classList.toggle('web-nav-oculta',direction>0);distance=0;}
+   };
+   on(scrollNode,'scroll',()=>{if(!frame)frame=requestAnimationFrame(update);},{passive:true});
+   on(navigation,'focusin',show);on(motion,'change',()=>{show();previous=position();distance=0;});
+   on(footer,'focusin',()=>{show();footer.scrollIntoView({block:'end',behavior:'instant'});});
+   // Native hash links keep their destinations without JS. Focus follows an
+   // in-page selection so keyboard users land in the content, not a hidden bar.
+   on(el,'click',event=>{const link=event.target.closest('a[href^="#"]');if(!link||!el.contains(link))return;let target;try{target=document.getElementById(decodeURIComponent(link.hash.slice(1)));}catch{return;}if(!target||!el.contains(target))return;
+    const hadTabindex=target.hasAttribute('tabindex');if(!hadTabindex)target.tabIndex=-1;target.focus({preventScroll:true});if(!hadTabindex)target.addEventListener('blur',()=>target.removeAttribute('tabindex'),{once:true});show();
+   });
+   clean.push(()=>{if(frame)cancelAnimationFrame(frame);show();});
+  }
   if(el.hasAttribute('data-actividad')){
    const map=el.querySelector('[data-actividad-mapa]'),legend=el.querySelector('[data-actividad-escala]'),status=el.querySelector('[data-actividad-estado]');if(!map||!legend||!status)return;
    const original=[map.innerHTML,legend.innerHTML,status.textContent];
@@ -7891,13 +8110,13 @@ Origen: sin sesión conectada; no inventar una referencia.&lt;/code&gt;&lt;/pre&
     on(track,'pointermove',e=>{if(!drag||e.pointerId!==drag.id||Math.abs(e.clientX-drag.x)<4)return;e.preventDefault();track.classList.add('arrastrando');track.scrollLeft=drag.left-(e.clientX-drag.x);});
     on(track,'pointerup',end);on(track,'pointercancel',end);on(track,'lostpointercapture',end);on(track,'dragstart',e=>e.preventDefault());clean.push(end);
    }
-   const items=[...track.children],original={prev:prev?.disabled,next:next?.disabled,text:status.textContent};let timer;
-   const update=()=>{const r=track.getBoundingClientRect(),index=items.reduce((best,e,i)=>Math.abs(e.getBoundingClientRect().left-r.left)<Math.abs(items[best].getBoundingClientRect().left-r.left)?i:best,0);if(prev)prev.disabled=track.scrollLeft<=1;if(next)next.disabled=track.scrollLeft>=track.scrollWidth-track.clientWidth-1;status.textContent=items.length?'Vista '+(index+1)+' de '+items.length+'. Desliza para recorrer.':'No hay imágenes en esta galería.';};
+   const items=[...track.children],original={prev:prev?.disabled,next:next?.disabled,text:status.textContent,fadeStart:track.style.getPropertyValue('--galeria-fade-inicio'),fadeEnd:track.style.getPropertyValue('--galeria-fade-fin')};let timer;
+   const update=()=>{if(el.classList.contains('galeria-fotografica')){const edge=Math.min(track.clientWidth*.12,40);track.style.setProperty('--galeria-fade-inicio',Math.min(edge,Math.max(0,track.scrollLeft))+'px');track.style.setProperty('--galeria-fade-fin',Math.min(edge,Math.max(0,track.scrollWidth-track.clientWidth-track.scrollLeft))+'px');}const r=track.getBoundingClientRect(),index=items.reduce((best,e,i)=>Math.abs(e.getBoundingClientRect().left-r.left)<Math.abs(items[best].getBoundingClientRect().left-r.left)?i:best,0);if(prev)prev.disabled=track.scrollLeft<=1;if(next)next.disabled=track.scrollLeft>=track.scrollWidth-track.clientWidth-1;status.textContent=items.length?'Vista '+(index+1)+' de '+items.length+'. Desliza para recorrer.':'No hay imágenes en esta galería.';};
    const move=direction=>{const r=track.getBoundingClientRect(),current=track.scrollLeft,positions=items.map(e=>current+e.getBoundingClientRect().left-r.left),target=direction>0?positions.find(x=>x>current+2):positions.reverse().find(x=>x<current-2);track.scrollTo({left:target??(direction>0?track.scrollWidth:0),behavior:motion.matches?'instant':'smooth'});};
    if(prev)on(prev,'click',()=>move(-1));if(next)on(next,'click',()=>move(1));on(track,'scroll',()=>{clearTimeout(timer);timer=setTimeout(update,90);},{passive:true});
    on(motion,'change',()=>{if(motion.matches)track.scrollTo({left:track.scrollLeft,behavior:'instant'});update();});
    const observer=new ResizeObserver(update);observer.observe(track);update();
-   clean.push(()=>{clearTimeout(timer);observer.disconnect();track.scrollTo({left:track.scrollLeft,behavior:'instant'});if(prev)prev.disabled=original.prev;if(next)next.disabled=original.next;status.textContent=original.text;});
+   clean.push(()=>{clearTimeout(timer);observer.disconnect();track.scrollTo({left:track.scrollLeft,behavior:'instant'});if(prev)prev.disabled=original.prev;if(next)next.disabled=original.next;status.textContent=original.text;for(const [name,value] of [['--galeria-fade-inicio',original.fadeStart],['--galeria-fade-fin',original.fadeEnd]]){if(value)track.style.setProperty(name,value);else track.style.removeProperty(name);}});
   }
   instances.set(el,api);
  }
@@ -8147,7 +8366,7 @@ Origen: sin sesión conectada; no inventar una referencia.&lt;/code&gt;&lt;/pre&
 
   document.querySelectorAll('[data-copiar]').forEach(button => {
     if(button.closest('.codigo,.terminal')){button.classList.add('nota-icono');button.setAttribute('aria-label',button.getAttribute('aria-label')||'Copiar código');button.title=button.getAttribute('aria-label');button.innerHTML='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V3H4v13h4"/></svg>';
-      const block=button.closest('.codigo,.terminal'),heading=block.querySelector('.cab > span:not(.copia-estado)');block.classList.add('codigo-compacto');if(heading&&/^(CSS|HTML|JavaScript|TypeScript|JSON|Python|SQL|Shell|Bash|Terminal)$/i.test(heading.textContent.trim()))block.classList.add('codigo-sin-titulo');
+      const block=button.closest('.codigo,.terminal');block.classList.add('codigo-compacto');block.classList.remove('codigo-sin-titulo');
     }
     button.addEventListener('click',async () => {
       const code = document.getElementById(button.dataset.copiar);
@@ -10244,12 +10463,12 @@ window.NotaGeografia=Object.freeze({
 <script>
 /* Resaltado local conservador. Nueve lenguajes; todos los tokens son nodos de texto. */
 (()=>{'use strict';const done=new WeakSet();
- const sets={javascript:'async await break case catch class const continue debugger default delete do else export extends false finally for from function if import in instanceof let new null of return static super switch this throw true try typeof undefined var void while yield',typescript:'abstract any as boolean declare enum implements interface keyof namespace never number private protected public readonly string type unknown',python:'and as assert async await break class continue def del elif else except False finally for from global if import in is lambda None nonlocal not or pass raise return True try while with yield',sql:'SELECT FROM WHERE JOIN LEFT RIGHT INNER OUTER ON GROUP BY ORDER ASC DESC INSERT INTO VALUES UPDATE SET DELETE CREATE TABLE AS AND OR NOT NULL LIMIT COUNT SUM AVG HAVING DISTINCT',shell:'if then else fi for in do done case esac function echo printf cd pwd export source return exit set',css:'important media supports container keyframes root hover focus display grid flex block none minmax repeat var calc color background padding margin width height'};
- function language(el,text){const declared=el.dataset.lenguaje||el.dataset.language;if(declared)return declared.toLowerCase();if(el.closest('.terminal'))return 'salida';if(el.closest('.receta-copia'))return 'html';const title=el.closest('.codigo')?.querySelector('.cab')?.textContent||'';for(const [re,lang] of [[/\.py\b|python/i,'python'],[/\.tsx?\b|typescript/i,'typescript'],[/\.jsx?\b|javascript/i,'javascript'],[/\.css\b/i,'css'],[/\.sql\b/i,'sql'],[/\.sh\b|shell|bash/i,'shell'],[/\.json\b/i,'json']])if(re.test(title))return lang;if(text.trim().startsWith('<'))return 'html';try{JSON.parse(text);return 'json';}catch{}return 'salida';}
+ const sets={cpp:'include define ifdef endif int char void bool double float auto const unsigned signed long short return if else for while break continue class struct public private protected virtual namespace using new delete nullptr true false template typename sizeof static switch case default',javascript:'async await break case catch class const continue debugger default delete do else export extends false finally for from function if import in instanceof let new null of return static super switch this throw true try typeof undefined var void while yield',typescript:'abstract any as boolean declare enum implements interface keyof namespace never number private protected public readonly string type unknown',python:'and as assert async await break class continue def del elif else except False finally for from global if import in is lambda None nonlocal not or pass raise return True try while with yield',sql:'SELECT FROM WHERE JOIN LEFT RIGHT INNER OUTER ON GROUP BY ORDER ASC DESC INSERT INTO VALUES UPDATE SET DELETE CREATE TABLE AS AND OR NOT NULL LIMIT COUNT SUM AVG HAVING DISTINCT',shell:'if then else fi for in do done case esac function echo printf cd pwd export source return exit set',css:'important media supports container keyframes root hover focus display grid flex block none minmax repeat var calc color background padding margin width height'};
+ function language(el,text){const declared=el.dataset.lenguaje||el.dataset.language;if(declared)return ({js:'javascript',ts:'typescript',bash:'shell','c++':'cpp',c:'cpp'})[declared.toLowerCase()]||declared.toLowerCase();if(el.closest('.terminal'))return 'salida';if(el.closest('.receta-copia'))return 'html';const title=el.closest('.codigo')?.querySelector('.cab')?.textContent||'';for(const [re,lang] of [[/\.py\b|python/i,'python'],[/\.tsx?\b|typescript/i,'typescript'],[/\.jsx?\b|javascript/i,'javascript'],[/\.css\b/i,'css'],[/\.sql\b/i,'sql'],[/\.sh\b|shell|bash/i,'shell'],[/\.json\b/i,'json']])if(re.test(title))return lang;if(text.trim().startsWith('<'))return 'html';try{JSON.parse(text);return 'json';}catch{}return 'salida';}
  function tokens(source,lang){const out=[],add=(text,kind)=>out.push({text,kind});if(lang==='html'){
    const re=/<!--[\s\S]*?-->|<\/?[A-Za-z][^>]*>/g;let end=0;for(const m of source.matchAll(re)){add(source.slice(end,m.index));const token=m[0];if(token.startsWith('<!--'))add(token,'com');else{let pos=0;for(const p of token.matchAll(/(<\/?[\w:-]+)|("[^"]*"|'[^']*')|([\w:-]+)(?=\s*=)/g)){add(token.slice(pos,p.index));add(p[0],p[1]?'kw':p[2]?'str':'codigo-atributo');pos=p.index+p[0].length;}add(token.slice(pos));}end=m.index+token.length;}add(source.slice(end));return out;
   }
-  const comments={javascript:/\/\*[\s\S]*?\*\/|\/\/[^\n]*/.source,typescript:/\/\*[\s\S]*?\*\/|\/\/[^\n]*/.source,css:/\/\*[\s\S]*?\*\//.source,python:/#[^\n]*/.source,shell:/#[^\n]*/.source,sql:/--[^\n]*|\/\*[\s\S]*?\*\//.source};
+  const comments={cpp:/\/\*[\s\S]*?\*\/|\/\/[^\n]*/.source,javascript:/\/\*[\s\S]*?\*\/|\/\/[^\n]*/.source,typescript:/\/\*[\s\S]*?\*\/|\/\/[^\n]*/.source,css:/\/\*[\s\S]*?\*\//.source,python:/#[^\n]*/.source,shell:/#[^\n]*/.source,sql:/--[^\n]*|\/\*[\s\S]*?\*\//.source};
   const pattern=new RegExp('('+(comments[lang]||'(?!)')+')|'+/("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|`(?:\\.|[^`\\])*`)|(\b(?:0x[\da-fA-F]+|\d+(?:[.,]\d+)*(?:e[+-]?\d+)?))|([A-Za-z_$][\w$-]*)/.source,'g');let end=0;const words=new Set(((sets[lang]||'')+' '+(lang==='typescript'?sets.javascript:'')).split(' '));
   for(const m of source.matchAll(pattern)){add(source.slice(end,m.index));let kind;
    if(m[1])kind='com';
@@ -10258,12 +10477,31 @@ window.NotaGeografia=Object.freeze({
   }add(source.slice(end));return out;
  }
  function init(root=document){root.querySelectorAll('.codigo pre code,.terminal pre,[data-lenguaje]').forEach(el=>{if(done.has(el))return;done.add(el);const lang=language(el,el.textContent);el.dataset.coloreado=lang;
+  const block=el.closest('.codigo');
+  if(block&&!el.closest('[data-ritmo="propio"],[data-presentation]')){
+   block.classList.add('codigo-editorial');block.classList.remove('codigo-sin-titulo');
+   let header=block.querySelector('.cab');if(!header){header=document.createElement('div');header.className='cab';block.prepend(header);}
+   const label=header.querySelector('span:not(.copia-estado)');
+   if(!label){const name=document.createElement('span');name.className='codigo-lenguaje';name.textContent=({javascript:'JavaScript',typescript:'TypeScript',python:'Python',sql:'SQL',shell:'Shell',css:'CSS',html:'HTML',json:'JSON',cpp:'C++',salida:'Texto'})[lang]||lang;header.prepend(name);}
+   if(!header.querySelector('[data-copiar]')){
+    const button=document.createElement('button');button.type='button';button.className='nota-icono';button.setAttribute('aria-label','Copiar código');button.title='Copiar código';
+    button.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V3H4v13h4"/></svg>';
+    const status=document.createElement('span');status.className='copia-estado';status.setAttribute('role','status');header.append(button,status);
+    button.addEventListener('click',async()=>{try{if(!navigator.clipboard?.writeText)throw new Error('clipboard unavailable');await navigator.clipboard.writeText(el.textContent);status.textContent='Código copiado.';}catch{const range=document.createRange();range.selectNodeContents(el);const selection=getSelection();selection.removeAllRanges();selection.addRange(range);status.textContent='Código seleccionado. Usa ⌘C o Ctrl+C para copiar.';}});
+   }
+   const pre=el.closest('pre');if(pre&&!pre.hasAttribute('tabindex')){pre.tabIndex=0;pre.setAttribute('aria-label','Código: '+(header.querySelector('span')?.textContent||lang));}
+   if(!el.hasAttribute('data-sin-lineas'))el.setAttribute('data-lineas','');
+  }
   if(el.hasAttribute('data-lineas')){
-   const source=el.textContent,selected=new Set();
+   const source=el.textContent,selected=new Set(),marks=[];
+   const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);let offset=0;
+   while(walker.nextNode()){const node=walker.currentNode,end=offset+node.textContent.length;if(node.parentElement.closest('mark,.subra'))marks.push([offset,end]);offset=end;}
+   let sourceOffset=0;
+   const append=(parent,text)=>{let at=0;for(const [start,end] of marks){const left=Math.max(0,start-sourceOffset),right=Math.min(text.length,end-sourceOffset);if(right<=left)continue;if(left>at)parent.append(document.createTextNode(text.slice(at,left)));const mark=document.createElement('mark');mark.textContent=text.slice(left,right);parent.append(mark);at=right;}if(at<text.length)parent.append(document.createTextNode(text.slice(at)));sourceOffset+=text.length;};
    for(const part of (el.dataset.destacar||'').split(',')){const m=part.trim().match(/^(\d+)(?:-(\d+))?$/);if(!m)continue;const from=Number(m[1]),to=Number(m[2]||m[1]);for(let i=from;i<=Math.min(to,10000);i++)selected.add(i);}
    const frag=document.createDocumentFragment();let number=1,line;
    const next=()=>{line=document.createElement('span');line.className='codigo-linea'+(selected.has(number)?' destacada':'');line.dataset.numero=String(number++);frag.append(line);};next();
-   tokens(source,lang).forEach(({text,kind})=>text.split('\n').forEach((part,i)=>{if(i){frag.append(document.createTextNode('\n'));next();}if(!part)return;const span=document.createElement('span');if(kind)span.className=kind;span.textContent=part;line.append(span);}));
+   tokens(source,lang).forEach(({text,kind})=>text.split('\n').forEach((part,i)=>{if(i){frag.append(document.createTextNode('\n'));sourceOffset++;next();}if(!part)return;const span=document.createElement('span');if(kind)span.className=kind;append(span,part);line.append(span);}));
    el.replaceChildren(frag);return;
   }
   const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT),nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
