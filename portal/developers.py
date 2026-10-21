@@ -2,6 +2,7 @@
 
 Approval lists a contribution; it never installs or executes third-party code.
 """
+import base64
 import hashlib
 import json
 import re
@@ -31,6 +32,20 @@ PREVIEW_CSP = ("sandbox; default-src 'none'; style-src 'unsafe-inline'; img-src 
 @lru_cache(maxsize=1)
 def bundled():
     return {item['id']: item for item in json.loads((ROOT / 'developers-catalog.json').read_text())['items']}
+
+
+@lru_cache(maxsize=1)
+def preview_runtime():
+    # This generated map contains only reviewed repository assets, not user data.
+    return json.loads((ROOT / 'developers-runtime.json').read_text())
+
+
+def bundled_preview_scripts(key):
+    trusted = bundled().get(key)
+    if not trusted or trusted['kind'] != 'component':
+        return []
+    assets = preview_runtime()
+    return [assets[name].replace('</script', '<\\/script') for name in trusted.get('preview_runtime', []) if name in assets]
 
 
 def migrate(db):
@@ -176,15 +191,22 @@ def mount(app, store, who, account, payload, clean, is_admin, artifact_for, publ
         with store.db() as db:
             item = find(db, key, who(request))
         mode = 'dark' if request.query_params.get('mode') == 'dark' else 'light'
+        scripts = bundled_preview_scripts(key)
         css = (ROOT / 'developers-preview.css').read_text() + (ROOT / 'developers-fonts.css').read_text()
         if item['kind'] == 'theme':
             css += theme_css(item)
             markup = '<section class="prosa"><p class="ceja">Una idea para compartir</p><h2>El espacio también cuenta.</h2><p>Un tema acompaña el contenido: texto legible, una paleta propia y lugar para pensar.</p><blockquote>Prueba sus colores en claro y oscuro.</blockquote></section>'
         else:
-            markup = static_component(item['content'])
+            markup = bundled()[key]['content'] if scripts else static_component(item['content'])
         css += 'html,body{margin:0;min-height:0}body{padding:24px;overflow-wrap:anywhere}body>main{display:block;max-width:100%;margin:0;padding:0}*{animation:none!important;transition:none!important}img,svg,canvas{max-width:100%}a,button,input,select,textarea{pointer-events:none}'
         html = '<!doctype html><html lang="es" data-margen-community-theme data-color-mode="' + mode + '"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>' + css + '</style></head><body><main class="hoja">' + markup + '</main></body></html>'
-        return HTMLResponse(html, headers={'Content-Security-Policy': PREVIEW_CSP})
+        policy = PREVIEW_CSP
+        if scripts:
+            html = html.replace('a,button,input,select,textarea{pointer-events:none}', '')
+            hashes = ' '.join("'sha256-" + base64.b64encode(hashlib.sha256(source.encode()).digest()).decode() + "'" for source in scripts)
+            policy = policy.replace('sandbox;', 'sandbox allow-scripts;').replace("script-src 'none'", 'script-src ' + hashes)
+            html = html.replace('</body>', ''.join('<script>' + source + '</script>' for source in scripts) + '</body>')
+        return HTMLResponse(html, headers={'Content-Security-Policy': policy})
 
     @app.put('/api/developers/items/{key}/favorite')
     async def favorite(key: str, request: Request):

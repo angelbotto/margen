@@ -132,6 +132,7 @@
       ? (user.email || user.name) +
         (user.admin ? " · administrador" : user.verified ? "" : " · invitado")
       : "Sin sesión";
+    window.MargenPortalShell.updateIdentity(user);
     $("#logout").hidden = !user;
     $("#login").hidden = !!user?.verified;
     $("#publish").hidden = !user?.verified;
@@ -862,14 +863,14 @@
   }
   async function load(append = false) {
     window.MargenDevelopers.destroy();
-    if (view === "developers") {
+    if (["themes", "components", "developers"].includes(view)) {
       listController?.abort(); graphController?.abort(); graphInstance?.destroy();
       previews.disconnect(); covers.disconnect(); workspace.destroy();
       for (const id of ["feed-end", "table-preferences", "context-tools", "browse-bar", "library-filters", "overview"])
         $("#" + id).hidden = true;
       $(".tools").hidden = true;
       $("#results").removeAttribute("aria-busy");
-      return window.MargenDevelopers.render({root: $("#results"), api, user});
+      return window.MargenDevelopers.render({root: $("#results"), api, user, section: view});
     }
     if (["brain", "insights", "work"].includes(view)) {
       listController?.abort();
@@ -1015,12 +1016,6 @@
         selectedArtifacts.clear();
         renderBatch();
         view = button.dataset.view;
-        if (innerWidth <= 850)
-          button.scrollIntoView({
-            block: "nearest",
-            inline: "center",
-            behavior: "instant",
-          });
         document.body.dataset.view = view;
         history.replaceState(
           null,
@@ -1035,10 +1030,13 @@
                     encodeURIComponent(
                       new URLSearchParams(location.search).get("section"),
                     )
-                  : "") + (view === "developers" && new URLSearchParams(location.search).has("item") ? "&item=" + encodeURIComponent(new URLSearchParams(location.search).get("item")) : ""),
+                  : "") + (["themes", "components", "developers"].includes(view) && new URLSearchParams(location.search).has("item") ? "&item=" + encodeURIComponent(new URLSearchParams(location.search).get("item")) : ""),
         );
+        $("#library .heading .eyebrow").textContent = view === "admin" ? "Operación del portal" : "Tu archivo de trabajo";
         $("#library-title").textContent = {
-          developers: "Temas y componentes",
+          themes: "Temas",
+          components: "Componentes",
+          developers: "Developers",
           brain: "Grafo de conocimiento",
           insights: "Visitas",
           work: "Mi trabajo",
@@ -1047,7 +1045,7 @@
           shared: "Compartidos conmigo",
           inbox: "Conversaciones en contexto.",
           notifications: "Lo que necesita tu atención.",
-          admin: "Tu biblioteca, bajo control.",
+          admin: "Administración",
           archived: "Archivo de artefactos.",
           public: "Biblioteca pública.",
           connections: "La misma cuenta, cualquier agente.",
@@ -1057,7 +1055,10 @@
             mine: "Solo documentos de tu cuenta. Los de otras personas están en Compartidos conmigo.",
             all: "Vista de administración. Cada documento conserva su propietario y sus permisos.",
             shared: "Documentos que otras personas comparten contigo o con los dominios de tu cuenta.",
-            developers: "Temas, componentes y una comunidad que construye contigo.",
+            themes: "Una voz visual para cada documento.",
+            components: "Piezas listas para construir tu próximo artefacto.",
+            developers: "Herramientas, documentación y una comunidad que construye contigo.",
+            admin: "Publicaciones, identidades y continuidad del servicio.",
             brain: "Una memoria de ideas, fuentes y decisiones.",
             insights: "Entiende qué se lee cuando compartes tu trabajo.",
             work: "Revisa evidencia, retoma sesiones y decide el siguiente paso.",
@@ -1169,7 +1170,7 @@
     .querySelectorAll("button[data-close],#close-peek")
     .forEach((b) => decorate?.(b, "close", true));
   for (const [selector, icon, only] of [
-    ["#theme", "appearance", true],
+    ["#theme", "appearance", false],
     ["#publish", "plus", false],
     ["#toggle-filters", "filter", false],
     ["#logout", "logout", false],
@@ -1188,7 +1189,9 @@
     admin: "settings",
     all: "folder",
     connections: "agent",
-    developers: "code",
+    themes: "appearance",
+    components: "cards",
+    developers: "agent",
   }))
     decorate?.($('[data-view="' + view + '"]'), icon);
   for (const name of ["grid", "list", "table", "graph"])
@@ -1340,7 +1343,7 @@
     "click",
     safe(async () => {
       await api("/api/logout", { method: "POST", body: "{}" });
-      location.reload();
+      location.assign("/login");
     }),
   );
   $$("[data-close]").forEach((b) =>
@@ -2426,44 +2429,68 @@
   }
   async function renderAdmin() {
     const root = $("#results");
-    root.className = "workspace-view";
+    root.className = "workspace-view admin-dashboard";
     $("#count").textContent = "";
-    const data = await api("/api/admin");
+    root.replaceChildren(make("p", "Cargando administración…", "muted"));
+    let data;
+    try { data = await api("/api/admin"); }
+    catch (error) {
+      if (view !== "admin") return;
+      const retry = make("button", "Volver a intentar");
+      retry.addEventListener("click", () => renderAdmin());
+      root.replaceChildren(make("p", error.message, "muted"), retry);
+      return;
+    }
     if (view !== "admin") return;
     root.replaceChildren();
-    const intro = make("section", undefined, "workspace-intro");
-    intro.append(
-      make("p", "Operación / visión general", "eyebrow"),
-      make("h2", "Tu biblioteca, bajo control."),
-      make(
-        "p",
-        "Publicaciones, revisiones y continuidad del servicio. Las notas personales conservan su privacidad incluso en administración.",
-        "muted",
-      ),
-    );
-    root.append(intro);
-    const community = make("a", "Developers · catálogo y revisión de aportes", "button");
+    const summary = make("div", undefined, "admin-section-heading");
+    summary.append(make("h2", "Visión general"));
+    const community = make("a", "Revisar aportes de la comunidad");
     community.href = "/?view=developers";
-    root.append(community);
+    const shortcuts = make("div", undefined, "admin-shortcuts");
+    const allArtifacts = make("a", "Ver todos los artefactos");
+    allArtifacts.href = "/?view=all";
+    shortcuts.append(allArtifacts, community);
+    summary.append(shortcuts);
+    root.append(summary);
     const metrics = make("div", undefined, "admin-metrics");
     for (const [key, label] of [
+      ["users", "Identidades"],
       ["artifacts", "Artefactos"],
+      ["versions", "Versiones"],
       ["drafts", "Borradores"],
       ["archived", "Archivados"],
-      ["versions", "Versiones"],
     ]) {
       const card = make("div");
       card.append(
         make("span", label),
         make("strong", String(data.counts[key])),
+        make("small", {users:"Incluye invitados", artifacts:"En toda la biblioteca", versions:"Historial conservado", drafts:"Pendientes de publicación", archived:"Con enlace conservado"}[key]),
       );
       metrics.append(card);
     }
     root.append(metrics);
-    const performance = make("details", undefined, "operation-card");
+    const distribution = make("section", undefined, "admin-distribution");
+    distribution.setAttribute("aria-label", "Cuentas, acceso y aperturas");
+    for (const [title, pairs, note] of [
+      ["Cuentas", [["Verificadas", data.counts.verified_users], ["Invitados", data.counts.guest_users]], "Las identidades invitadas no tienen correo verificado."],
+      ["Acceso de los artefactos", [["Privados", data.visibility.private], ["Personas y dominios", data.visibility.invited], ["Con enlace", data.visibility.unlisted], ["Públicos", data.visibility.public]], "Incluye documentos archivados; archivar conserva su acceso."],
+      ["Aperturas · 30 días", [["Aperturas registradas", data.traffic.views]], "Del " + data.traffic.since + " al " + data.traffic.until + " (UTC). No son visitantes únicos; sólo incluye la medición activada."],
+    ]) {
+      const panel = make("div"), list = make("dl");
+      panel.append(make("h3", title));
+      for (const [label, value] of pairs) {
+        const row = make("div"); row.append(make("dt", label), make("dd", String(value))); list.append(row);
+      }
+      panel.append(list, make("p", note, "muted")); distribution.append(panel);
+    }
+    root.append(distribution);
+    const performance = make("details", undefined, "operation-card admin-performance");
     performance.append(make("summary", "Rendimiento del servicio"));
     performance.addEventListener("toggle", async () => {
-      if (!performance.open || performance.dataset.loaded) return;
+      if (!performance.open || performance.dataset.loaded || performance.dataset.loading) return;
+      performance.dataset.loading = "1";
+      performance.querySelector(".performance-error")?.remove();
       try {
         const sample = await api("/api/operations/performance");
         const table = make("table"),
@@ -2507,10 +2534,17 @@
         );
         performance.dataset.loaded = "1";
       } catch (e) {
-        toast(e.message);
+        const error = make("p", "No pudimos consultar el rendimiento. Cierra y abre esta sección para reintentar.", "performance-error");
+        error.setAttribute("role", "status");
+        performance.append(error);
+      } finally {
+        delete performance.dataset.loading;
       }
     });
-    root.append(performance);
+    const health = make("div", undefined, "admin-section-heading");
+    health.append(make("h2", "Estado del servicio"));
+    root.append(health);
+    root.append(make("p", "Respaldo, restauración y copia externa: comprobación vigente durante 48 horas. Procesos programados: últimos 5 minutos.", "admin-health-note muted"));
     const operations = make("div", undefined, "operations-grid");
     for (const [key, title] of [
       ["backup", "Respaldo automático"],
@@ -2541,7 +2575,7 @@
       if (state?.detail) card.append(make("p", state.detail));
       operations.append(card);
     }
-    root.append(operations);
+    root.append(operations, performance);
     const stats = make(
       "p",
       data.counts.users +
@@ -2555,15 +2589,19 @@
     root.append(stats);
     const activity = make("section", undefined, "admin-activity");
     activity.append(make("h3", "Actividad reciente"));
+    activity.append(make("p", "Últimos 40 cambios de documentos y cuentas. Las notas personales conservan su privacidad.", "muted"));
     const actions = {
       organize: "Organización actualizada",
       rename: "Nombre actualizado",
       publish: "Versión guardada",
     };
+    if (!data.activity.length) activity.append(make("p", "Aún no hay actividad registrada.", "muted"));
     for (const event of data.activity) {
       const row = make("div", undefined, "activity-row");
+      const occurred = make("time", new Date(event.at * 1000).toLocaleString("es"));
+      occurred.dateTime = new Date(event.at * 1000).toISOString();
       row.append(
-        make("time", new Date(event.at * 1000).toLocaleString("es")),
+        occurred,
         make(
           "span",
           actions[event.action] ||
@@ -2596,7 +2634,7 @@
   ])
     .then(() => {
       const match = location.pathname.match(/^\/a\/([a-f0-9]{32})$/);
-      if (!match && !user?.verified && new URLSearchParams(location.search).get("view") !== "developers") {
+      if (!match && !user?.verified && !["themes", "components", "developers"].includes(new URLSearchParams(location.search).get("view"))) {
         location.replace("/login");
         return;
       }

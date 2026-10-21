@@ -188,11 +188,19 @@ def mount_workspace(app,store,origin,who,account,payload,clean,artifact_for,perm
     def admin(request:Request):
         u=account(request)
         if not is_admin(u):raise HTTPException(403,'Sólo administración.')
+        now=int(time.time())
+        today=time.strftime('%Y-%m-%d',time.gmtime(now))
+        since=time.strftime('%Y-%m-%d',time.gmtime(now-29*86400))
         with store.db() as db:
             counts={name:db.execute('SELECT count(*) FROM '+name).fetchone()[0] for name in ['artifacts','versions','users','tokens','events']}
+            counts['verified_users']=db.execute('SELECT count(*) FROM users WHERE verified=1').fetchone()[0]
+            counts['guest_users']=db.execute('SELECT count(*) FROM users WHERE verified=0').fetchone()[0]
+            visibility={key:0 for key in ['private','invited','unlisted','public']}
+            visibility.update({r['visibility']:r['total'] for r in db.execute('SELECT visibility,count(*) AS total FROM artifacts GROUP BY visibility')})
+            views=db.execute('SELECT coalesce(sum(views),0) FROM artifact_visits WHERE day>=? AND day<=?',(since,today)).fetchone()[0]
             counts['drafts']=db.execute("SELECT count(*) FROM version_meta WHERE state='draft'").fetchone()[0]
             counts['archived']=db.execute('SELECT count(*) FROM artifact_meta WHERE archived=1').fetchone()[0]
             status={r['key']:json.loads(r['value']) for r in db.execute('SELECT * FROM operation_status')}
             activity=[dict(r) for r in db.execute('SELECT a.action,a.at,d.title,u.name FROM audit a LEFT JOIN artifacts d ON d.id=a.artifact LEFT JOIN users u ON u.id=a.actor ORDER BY a.id DESC LIMIT 40')]
             sizes=sum(f.stat().st_size for f in store.files.rglob('*') if f.is_file())
-        return {'counts':counts,'operations':status,'activity':activity,'file_bytes':sizes}
+        return {'counts':counts,'operations':status,'activity':activity,'file_bytes':sizes,'visibility':visibility,'traffic':{'views':views,'since':since,'until':today,'days':30}}

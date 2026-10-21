@@ -41,9 +41,9 @@ class BrowserTests(unittest.TestCase):
         page.on('pageerror', lambda error: self.errors.append(error.stack))
         return page
 
-    def open_catalog(self, page, item=''):
-        page.goto('https://portal.test/?view=developers' + ('&item=' + item if item else ''))
-        page.get_by_role('heading', name='Dale tu forma a Margen.').wait_for()
+    def open_catalog(self, page, item='', section='themes'):
+        page.goto('https://portal.test/?view=' + section + ('&item=' + item if item else ''))
+        page.locator('.developers-intro').wait_for()
 
     def assert_layout(self, page):
         for width in (1440, 390, 320, 300):
@@ -109,17 +109,17 @@ class BrowserTests(unittest.TestCase):
 
     def test_visual_component_fork_and_hostile_svg_reuse(self):
         page = self.page(self.fixture.owner)
-        self.open_catalog(page)
-        page.get_by_role('button', name='Crear un componente', exact=True).click()
+        self.open_catalog(page, section='components')
+        page.get_by_role('button', name='Crear componente visual', exact=True).click()
         studio = page.locator('.community-studio')
         studio.get_by_label('Nombre', exact=True).fill('Un proceso claro')
         studio.get_by_label('Tipo de componente').select_option('diagram')
         studio.get_by_label('Contenido · hasta 12 bloques').fill('Investigar\nProponer\nDecidir')
         studio.get_by_role('checkbox').check()
         studio.get_by_role('button', name='Compartir por enlace', exact=True).click()
-        detail = page.locator('.developer-dialog')
+        detail = page.locator('.component-detail')
         detail.get_by_role('heading', name='Un proceso claro').wait_for()
-        detail.get_by_role('button', name='Crear mi versión').click()
+        detail.get_by_role('button', name='Crear una variante visual').click()
         studio = page.locator('.community-studio')
         self.assertEqual(studio.get_by_label('Tipo de componente').input_value(), 'diagram')
         self.assertEqual(studio.get_by_label('Contenido · hasta 12 bloques').input_value(), 'Investigar\nProponer\nDecidir')
