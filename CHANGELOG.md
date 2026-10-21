@@ -5,7 +5,7 @@
 - Apply shared paragraph, heading, eyebrow and section spacing across all theme families and legacy editorial pages, nested prose, cards, lists and width-only wrappers. Correct collapsed boundaries found in nine canonical recipes.
 - Preserve independent grid/flex component spacing, wrapping on small screens, data views and presentations; support explicit custom-layout opt-out.
 - Warn when custom prose wrappers lack a spacing contract; offer strict composition validation. Keep wide figures inside semantic article grids valid.
-- Add browser regression coverage for all 91 recipe examples, all 16 theme families and hosted stylesheet precedence.
+- Run browser regression checks in CI for all 91 recipe examples, all 16 theme families and hosted stylesheet precedence.
 
 ## 2026.10.20-library.2 — Editorial spacing
 
