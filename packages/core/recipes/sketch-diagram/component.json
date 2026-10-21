@@ -1,0 +1,10 @@
+{
+  "id": "sketch-diagram",
+  "legacyId": "sketch-diagram",
+  "category": "graficas",
+  "title": "Diagrama a mano \u00b7 flujos legibles",
+  "dependencies": [
+    "packages/core/styles/fonts.css",
+    "packages/core/styles/artifact.css"
+  ]
+}

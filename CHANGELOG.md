@@ -1,5 +1,26 @@
 # Changelog
 
+## 2026.10.20-library.1 — Kaira theme
+
+- Add Kaira, contributed by Katherin Teran Fomeque (@mkatheteranf-bit), with warm-paper light and deep-plum dark palettes and system mode.
+- Preserve independent typography, existing components and reader preferences; include contrast and mode-persistence regression checks.
+- Publish 16 theme families and 32 palettes with an updated signed-release sequence. Existing standalone artifacts retain their embedded themes until regenerated.
+
+## 0.15.2 — Library filters and rendering
+
+- Separate query-builder actions, align compact removal controls and adapt conditions to narrow screens. Keep edits local until apply; validate values and ranges.
+- Refine library facets, table spacing, selection states and gallery hierarchy.
+- Append table rows without rebuilding prior rows or frames. Preserve facet controls while loading additional results.
+- Limit active preview frames to eight and release off-screen documents. Preserve sandbox isolation.
+- Add query interaction and preview lifecycle regressions; verify incremental rendering against a synthetic 60-document library.
+
+## 0.15.1 — Guided personal installation
+
+- Add accessible OS icon choices, explicit WSL mode, multi-agent selection, destination previews and shell-specific copy actions.
+- Persist selected integrations across manual and scheduled updates on Windows, macOS and Linux.
+- Separate skill installation from account linking; refine personal connection inputs and hidden-token guidance.
+- Verify selection persistence and expansion on the native platform matrix.
+
 ## 0.15.0 — Native Windows installation
 
 - Add PowerShell bootstrap and OS-specific commands in installation and account connection screens.

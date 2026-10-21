@@ -39,9 +39,10 @@ def managed_copy(source, target):
     print('Managed skill: ' + str(target))
 
 
-def integrate(destination, home=None):
+def integrate(destination, home=None, agents=('codex','claude','hermes')):
     home = Path(home or Path.home()); destination = Path(destination).resolve()
-    for agent in ('.agents','.claude','.hermes'):
+    targets = {'codex':'.agents', 'claude':'.claude', 'hermes':'.hermes'}
+    for agent in (targets[name] for name in agents):
         managed_copy(destination, home/agent/'skills/margen')
         managed_copy(destination/'compat/bottifact', home/agent/'skills/bottifact')
     binary = home/'.local/bin'; binary.mkdir(parents=True, exist_ok=True)

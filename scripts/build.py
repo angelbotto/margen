@@ -13,6 +13,7 @@ review_css=(ROOT/'packages/core/styles/review-composer.css').read_text()
 css_path=ROOT/'packages/core/styles/artifact.css'
 css=css_path.read_text()
 blocks = [
+    ("SKETCH DIAGRAM", (ROOT/'packages/core/styles/sketch-diagram.css').read_text()),
     ("REVIEW COMPOSER", review_css),
     ("PRESENTATION", (ROOT/'packages/core/styles/presentation.css').read_text()),
     ("TABLE CONTENT", (ROOT/'packages/core/styles/table-content.css').read_text()),
@@ -213,7 +214,8 @@ print('Generados examples/generated/collaborative.html y temas Linear Light / Da
 
 from example_appearance import generate as build_apariencia
 build_apariencia()
-print("Generado examples/generated/themes.html: 15 familias y 30 versiones")
+from themes import FAMILIES
+print(f"Generado examples/generated/themes.html: {len(FAMILIES)} familias y {2*len(FAMILIES)} versiones")
 
 from example_executive import generate as build_ejecutivo
 build_ejecutivo()

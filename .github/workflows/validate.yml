@@ -18,6 +18,7 @@ jobs:
           python scripts/build.py
           python scripts/validate.py
           python scripts/test_contract.py
+          python scripts/test_sketch_diagram.py
           python scripts/test_project_profile.py
           node scripts/test_review_store.cjs
           node scripts/test_themes.cjs

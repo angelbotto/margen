@@ -15,6 +15,7 @@
     current = null,
     grants = [],
     uploadVersion = false,
+    uploadBase = null,
     poll = null,
     noticePoll = null,
     toastTimer = null,
@@ -47,28 +48,7 @@
     for (const e of entries)
       e.target.style.setProperty("--preview-scale", e.contentRect.width / 1000);
   });
-  const covers = new IntersectionObserver(
-    (entries) => {
-      for (const { target, isIntersecting } of entries) {
-        if (!isIntersecting) {
-          target.querySelector("iframe")?.remove();
-          continue;
-        }
-        if (target.querySelector("iframe")) continue;
-        const frame = make("iframe");
-        frame.title = "Vista previa de " + target.dataset.title;
-        frame.setAttribute("sandbox", "");
-        frame.tabIndex = -1;
-        frame.setAttribute("aria-hidden", "true");
-        frame.addEventListener("load", () => frame.classList.add("ready"), {
-          once: true,
-        });
-        frame.src = target.dataset.src;
-        target.prepend(frame);
-      }
-    },
-    { rootMargin: "650px 0px" },
-  );
+  const covers = window.MargenPreviews.create({limit: 8});
   const more = new IntersectionObserver(
     (entries) => {
       if (
@@ -360,8 +340,9 @@
     };
     bar.append(clear);
   }
-  function renderTable() {
+  function renderTable(added = null) {
     renderBatch();
+    const existing = added && $(".artifact-table tbody");
     const wrap = make("div", undefined, "table-scroll");
     wrap.tabIndex = 0;
     wrap.setAttribute("role", "region");
@@ -411,7 +392,7 @@
     head.append(tr);
     table.append(head);
     const tbody = make("tbody");
-    for (const a of items) {
+    for (const a of added || items) {
       const row = make("tr"),
         doc = make("td"),
         title = make("div"),
@@ -462,6 +443,7 @@
       row.append(action);
       tbody.append(row);
     }
+    if (existing) { existing.append(...tbody.children); applyTablePreferences(); return; }
     table.append(tbody);
     wrap.append(table);
     wrap.addEventListener("scroll", () => {
@@ -963,6 +945,7 @@
               $("#total-visits").textContent = "—";
             });
       }
+      if (!append) {
       const filter = $("#space-filter"),
         selected = filter.value;
       filter.replaceChildren();
@@ -992,8 +975,12 @@
       updateBrowse();
       updateCompanies(data.spaces || []);
       updateCategories(data.categories || []);
+      }
       if ((append && layout === "grid") || (append && layout === "list")) {
         added.forEach(renderCard);
+        $("#count").textContent = total + " artefactos";
+      } else if (append && layout === "table" && $(".artifact-table")) {
+        renderTable(added);
         $("#count").textContent = total + " artefactos";
       } else {
         renderList();
@@ -1367,6 +1354,7 @@
   } catch {}
   function upload(revision = false) {
     uploadVersion = revision;
+    uploadBase = revision ? current.current_version : null;
     $("#upload-heading").textContent = revision
       ? "Subir una revisión"
       : "Publicar artefacto";
@@ -1453,6 +1441,7 @@
           space: form.elements.space.value,
           html: await file.text(),
           mode: uploadVersion ? "draft" : "published",
+          ...(uploadVersion ? {expected_current: uploadBase} : {}),
           source: {
             agent: form.elements.agent.value,
             session: form.elements.session.value,
@@ -1729,7 +1718,7 @@
         review: "pending-filter",
       }))
         if (p[key] !== undefined) $("#" + id).value = p[key];
-      load();
+      return load();
     },
   });
   const creatorWorkspace = window.MargenCreator.create({
@@ -1769,6 +1758,8 @@
     search: contextWorkbench.search,
     share: openShare,
     manage: () => $("#owner-panel").showPopover(),
+    edit: () => $("#edit-document").click(),
+    history: () => $("#history-document").click(),
     comment: (kind) => {
       requestedEntryType = kind;
       $("#comment-document").click();
@@ -1961,6 +1952,7 @@
     }
     const owner = user?.id === current.owner;
     $("#owner-tools").hidden = !owner;
+    $("#edit-document").hidden = !owner;
     $("#owner-panel").hidden = !owner;
     $("#doc-title").textContent = current.title;
     document.title = current.title + " · Margen";
@@ -2022,57 +2014,58 @@
       );
       return;
     }
-    const section = make("section", undefined, "connection");
+    const ui = window.MargenInstall;
+    const section = make("section", undefined, "connection install-connection");
+    const identity = make("div", undefined, "connection-account");
+    identity.append(ui.icon("user"), make("span", "Publicarás como " + user.email));
     section.append(
-      make("h2", "Conectar tu cuenta a un agente"),
-      make("p", "Cuenta que publicará: " + user.email, "eyebrow"),
-      make(
-        "p",
-        "Crea una conexión personal y guárdala en el equipo del agente. Puede publicar documentos y consultar tus revisiones. Cada publicación es privada salvo que indiques --visibilidad public o unlisted. Revoca la conexión cuando quieras.",
-      ),
+      make("h2", "Tu biblioteca, en tus agentes"), identity,
+      make("p", "Instala el skill donde trabajas y conecta este equipo a tu cuenta. Los agentes de tu usuario comparten la conexión; cada compañero debe crear la suya.", "install-help"),
     );
-    const list = make("ol");
-    [
-      "Instala o actualiza el skill con el comando de abajo. Funciona con Claude Code, Codex y Hermes.",
-      "Cada persona entra con su correo y crea su propia conexión. Comparte el instalador, nunca el token.",
-      "Usa margen connect y margen publish para enviar el HTML.",
-    ].forEach((t) => list.append(make("li", t)));
-    section.append(list);
-    const install = make("pre");
-    window.MargenInstall.selector(section, install);
-    section.append(
-      install,
-      make(
-        "p",
-        "El mismo comando actualiza la biblioteca, conserva un respaldo y no cambia tu token. Generar archivos localmente no requiere una cuenta.",
-        "muted",
-      ),
+    const install = make("pre"), terminal = make("div", undefined, "install-terminal");
+    const terminalHead = make("div", "Terminal", "install-terminal-head");
+    const actions = make("div", undefined, "install-command-actions"), installSummary = make("span"), copy = make("button", "Copiar comando", "primary");
+    copy.prepend(ui.icon("copy"));
+    const copyStatus = make("p", undefined, "install-status"); copyStatus.setAttribute("role", "status");
+    const connectCommand = make("pre"), connectRow = make("div", undefined, "install-connect-command");
+    const copyConnect = make("button"); copyConnect.append(ui.icon("copy")); copyConnect.setAttribute("aria-label", "Copiar comando de conexión");
+    const connectStatus = make("p", undefined, "install-status"); connectStatus.setAttribute("role", "status");
+    const picker = ui.selector(section, install, (platform, state) => {
+      copy.disabled = !state.valid; terminal.classList.toggle("is-empty", !state.valid);
+      terminalHead.textContent = state.shell + " · Instalación personal";
+      installSummary.textContent = state.valid ? state.names.join(" + ") : "Elige tus agentes";
+      copyStatus.textContent = ""; connectStatus.textContent = "";
+      connectCommand.textContent = ui.connectionCommand(platform, location.origin, user.email);
+    });
+    copy.onclick = () => { if (picker.state.valid) ui.copyText(install.textContent, copyStatus, install); };
+    copyConnect.onclick = () => ui.copyText(connectCommand.textContent, connectStatus, connectCommand);
+    actions.append(installSummary, copy); terminal.append(terminalHead, install, actions);
+    section.append(terminal, copyStatus);
+    const form = make("div", undefined, "connection-form"), nameLabel = make("label", "03 · Nombre de esta conexión");
+    const label = make("input"); label.id = "agent-connection-name"; nameLabel.htmlFor = label.id;
+    label.placeholder = "Ej. Mi portátil · Claude"; label.maxLength = 80; label.autocomplete = "off";
+    const row = make("div", undefined, "connection-form-row"), create = make("button", "Crear token personal", "primary");
+    create.prepend(ui.icon("key")); row.append(label, create);
+    const output = make("div"); output.hidden = true;
+    create.addEventListener("click", safe(async () => {
+      create.disabled = true;
+      try {
+        const result = await api("/api/tokens", { method: "POST", body: JSON.stringify({label: label.value || "Mi equipo"}) });
+        const secret = make("pre", result.token, "connection-secret"), copyToken = make("button", "Copiar token");
+        copyToken.prepend(ui.icon("copy"));
+        const tokenStatus = make("p", undefined, "install-status"); tokenStatus.setAttribute("role", "status");
+        copyToken.onclick = () => ui.copyText(result.token, tokenStatus, secret);
+        output.replaceChildren(make("p", "Token de " + user.email + ". Se muestra una sola vez. Pégalo únicamente cuando lo pida la terminal.", "install-help"), secret, copyToken, tokenStatus);
+        output.hidden = false; create.textContent = "Token creado";
+      } catch (error) { create.disabled = false; throw error; }
+    }));
+    connectRow.append(connectCommand, copyConnect);
+    form.append(nameLabel, row, output,
+      make("p", "Ejecuta este comando y pega el token cuando te lo pida. La entrada es oculta; Margen verificará que corresponde a " + user.email + ".", "install-help"),
+      connectRow, connectStatus,
+      make("p", "Abre una conversación nueva y pide «Usa el skill margen». Puedes comprobar la cuenta con margen status y revocar su acceso aquí cuando quieras.", "install-help"),
     );
-    const label = make("input");
-    label.placeholder = "Nombre: Hermes MacBook";
-    label.maxLength = 80;
-    label.setAttribute("aria-label", "Nombre de la conexión");
-    const create = make("button", "Crear conexión", "primary"),
-      output = make("pre");
-    create.addEventListener(
-      "click",
-      safe(async () => {
-        const result = await api("/api/tokens", {
-          method: "POST",
-          body: JSON.stringify({ label: label.value || "Agente" }),
-        });
-        output.textContent =
-          "Conexión exclusiva de " + user.email + ". No la compartas con el equipo.\nToken personal (se muestra una sola vez):\n" +
-          result.token +
-          "\n\nmargen connect --servidor " +
-          location.origin +
-          " --email " + user.email +
-          "\nPega el token solo en la terminal. El comando comprobará que pertenece a este correo.";
-        create.disabled = true;
-      }),
-    );
-    section.append(label, create, output);
-    root.append(section);
+    section.append(form); root.append(section);
     const tokens = (await api("/api/tokens")).tokens;
     for (const token of tokens) {
       const row = make("div", undefined, "token-row"),
@@ -2158,6 +2151,22 @@
       b.disabled = false;
     }
   });
+  $("#edit-document").addEventListener("click", safe(async () => {
+    await window.MargenBlockEditor.open({api, artifact: current, onPublished: async () => {
+      current = await api("/api/artifacts/" + current.id);
+      $("#artifact-frame").src = "/api/artifacts/" + current.id + "/render?version=" + current.current_version;
+      $("#doc-title").textContent = current.title;
+      document.title = current.title + " · Margen";
+      const select = $("#version"); select.replaceChildren();
+      current.versions.forEach(v => { const option = new Option((v.id === current.current_version ? "Publicada · " : v.state === "draft" ? "Borrador · " : "Anterior · ") + new Date(v.created * 1000).toLocaleString("es"), v.id); select.append(option); });
+      select.value = current.current_version; versionControls();
+    }});
+  }));
+  $("#history-document").addEventListener("click", safe(async () => {
+    await window.MargenBlockEditor.history({api, artifact: current, onRestore: async () => {
+      toast("Versión restaurada como borrador. Abre Editar para revisarla.");
+    }});
+  }));
   function versionControls() {
     const v = current.versions.find((v) => v.id === $("#version").value);
     let source = {};

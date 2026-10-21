@@ -37,6 +37,8 @@ The PowerShell bootstrap adds `$HOME\.local\bin` to the **user** PATH unless `-N
 
 Credentials are protected with Windows DPAPI for the current OS user, and are not portable between user accounts. A copied or older plaintext credential must be reconnected. Tokens stay outside the skill and are never included in update packages. Native .NET verifies release signatures using the pinned RSA key; verification is not skipped when OpenSSL is absent.
 
+Use `-Agents 'codex,hermes'` on the PowerShell installer, or `--agents codex,hermes` on the updater, to select integrations. Omit this option on subsequent updates to retain the saved selection.
+
 Windows uses managed **copies** in `.agents/skills/margen`, `.claude/skills/margen` and `.hermes/skills/margen`. Updating the canonical library refreshes those copies and backs up previous managed directories. Independent skill folders are preserved. macOS/Linux keep directory symlinks. Custom destination updates should use `margen update`; `--no-links` deliberately leaves agent integrations untouched.
 
 ## Prompt portability

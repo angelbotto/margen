@@ -1,1 +1,57 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Instalar Margen</title><link rel="icon" type="image/svg+xml" href="/static/margen-favicon.svg"><link rel="stylesheet" href="/static/fonts.css"><link rel="stylesheet" href="/static/style.css"><script src="/static/install-command.js" defer></script><script src="/static/install.js" defer></script></head><body><header class="top"><a class="brand" href="/" aria-label="Margen · Inicio" title="Margen"><svg class="margen-mark" width="30" height="30" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none"><g stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3 28 10v13l-12 7L4 23V10Z" stroke-dasharray=".6 3.2"/><path d="m4 10 12 7 12-7M16 17v13"/><path d="M16 3v13M4 23l12-7 12 7" opacity=".35" stroke-dasharray=".6 3.2"/></g></svg></a><a class="button" href="/login">Entrar al portal</a></header><main class="install-page"><p class="eyebrow">Crear es independiente de publicar</p><h1>Un comando.<br>La misma biblioteca.</h1><p class="lede">Instala o actualiza Margen en Codex, Claude Code y Hermes. Sin cuenta para generar tus HTML.</p><section class="connection"><h2>Elige tu terminal</h2><div id="install-platform"></div><pre id="command">curl -fsSL https://artifacts.botto.is/install.sh | bash</pre><button id="copy-install" class="primary">Copiar comando</button><p id="copy-status" role="status"></p><p class="muted" id="platform-help"></p><a id="installer-source" href="/install.sh">Ver el instalador antes de ejecutarlo ↗</a></section><div class="install-details"><section><h2>Codex, Claude Code y Hermes</h2><p>Una biblioteca para tus agentes, instalada dentro de tu usuario del sistema. Cada persona conecta su propia cuenta. Las actualizaciones guardan un respaldo y conservan tu token. Las carpetas propias se respetan.</p><p>Después abre una conversación nueva y pide: <em>«Usa el skill margen».</em></p></section><section><h2>ChatGPT</h2><p>Si tu espacio permite skills, entra a <strong>Plugins → Skills → Create → Upload from your computer</strong> e importa el paquete. Su instalación y actualización se hacen dentro de ChatGPT.</p><a class="button" href="/downloads/bottifact-portable.zip">Descargar paquete del skill</a><p class="muted"><a href="https://help.openai.com/en/articles/20001066" target="_blank" rel="noopener noreferrer">Consultar disponibilidad de skills en ChatGPT ↗</a></p></section><section><h2>Actualizar</h2><pre>margen update</pre><p>También puedes repetir el comando de instalación. Si el comando no aparece, añade <code>~/.local/bin</code> a tu PATH.</p></section><section><h2>Publicar y recibir comentarios</h2><p>Entra al portal con tu correo, abre <strong>Conectar un agente</strong> y crea tu token personal. Comprueba el correo que aparece antes de copiarlo. Comparte este instalador con el equipo, nunca tu token ni la carpeta de configuración.</p><a href="/login">Conectar mi cuenta →</a></section></div></main><footer><span>Margen · Tus documentos, tus decisiones.</span><a href="/login">Volver al portal</a></footer></body></html>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Instalar Margen · Tus agentes, tu biblioteca</title>
+  <link rel="canonical" href="https://artifacts.botto.is/install">
+  <link rel="icon" type="image/svg+xml" href="/static/margen-favicon.svg">
+  <link rel="stylesheet" href="/static/fonts.css"><link rel="stylesheet" href="/static/style.css"><link rel="stylesheet" href="/static/install.css">
+  <script src="/static/install-command.js" defer></script><script src="/static/install.js" defer></script>
+</head>
+<body class="install-site">
+<a class="skip" href="#main">Saltar al contenido</a>
+<header class="top install-header">
+  <a class="brand" href="/" aria-label="Margen · Inicio" title="Margen"><img src="/static/margen-favicon.svg" width="30" height="30" alt=""></a>
+  <nav aria-label="Navegación"><a href="https://github.com/angelbotto/margen/blob/main/docs/hosted-service.md" target="_blank" rel="noopener noreferrer">Guía</a><button id="install-theme" class="install-theme" aria-label="Cambiar apariencia" title="Cambiar apariencia">◐</button><a class="button" href="/">Ir a mi biblioteca <span aria-hidden="true">↗</span></a></nav>
+</header>
+<main id="main" class="install-page">
+  <header class="install-intro"><p class="eyebrow">Margen / Empezar</p><h1>Tu biblioteca.<br>En los agentes que usas.</h1><p class="lede">Elige dónde instalar el skill. Después conecta tu cuenta para publicar, compartir y recibir comentarios.</p></header>
+  <div class="install-layout">
+    <section id="install-platform" aria-label="Configurar instalación"></section>
+    <section class="install-result" aria-labelledby="command-heading">
+      <div class="install-terminal">
+        <div class="install-terminal-head"><span id="shell-label">Terminal</span><span class="install-local-label">Instalación personal</span></div>
+        <h2 id="command-heading" class="sr-only">Tu comando de instalación</h2>
+        <pre id="command" tabindex="0">Activa JavaScript para elegir tu sistema y tus agentes.</pre>
+        <div class="install-command-actions"><span id="install-summary">Elige tus agentes</span><button id="copy-install" class="primary" disabled>Copiar comando</button></div>
+      </div>
+      <p id="copy-status" class="install-status" role="status"></p>
+      <p id="restart-help" class="install-help">Al terminar, abre una conversación nueva y pide: <strong>«Usa el skill margen».</strong></p>
+      <details class="install-paths"><summary>Qué se instala y dónde</summary><p>Una biblioteca compartida en tu usuario. El skill se añade a estos agentes:</p><ul id="install-path-list"><li>Selecciona al menos uno para ver las carpetas.</li></ul><p>Actualizar conserva tu elección y tus credenciales. No desinstala integraciones previas ni reemplaza carpetas propias.</p></details>
+      <a id="installer-source" class="install-source" href="/install.sh">Ver el instalador <span aria-hidden="true">↗</span></a>
+    </section>
+  </div>
+  <section class="install-account" aria-labelledby="account-heading">
+    <div class="install-section-heading"><div><p class="eyebrow">03 · Tu cuenta</p><h2 id="account-heading">Tus artefactos, a tu nombre.</h2></div><a class="button primary" href="/login?next=%2F%3Fview%3Dconnections">Conectar mi cuenta <span aria-hidden="true">→</span></a></div>
+    <p class="install-account-intro">Instalar el skill no inicia sesión. Puedes crear HTML sin cuenta; para publicarlo, conecta una vez este usuario del equipo a tu cuenta de Margen.</p>
+    <ol class="install-connect-flow">
+      <li><span data-install-icon="user"></span><h3>Entra con tu correo</h3><p>Usa tu propia cuenta de Google o el código enviado a tu correo.</p></li>
+      <li><span data-install-icon="key"></span><h3>Crea tu conexión</h3><p>En «Conectar un agente», ponle un nombre, por ejemplo «Mi portátil», y copia tu token personal.</p></li>
+      <li><span data-install-icon="terminal"></span><h3>Conecta en la terminal</h3><p>El comando de abajo pide tu correo y el token de forma oculta. Comprueba que ambos pertenecen a tu cuenta.</p></li>
+    </ol>
+    <div class="install-connect-command"><pre id="connect-command" tabindex="0"></pre><button id="copy-connect" aria-label="Copiar comando para conectar mi cuenta" title="Copiar comando"></button></div>
+    <p id="connect-status" class="install-status" role="status"></p>
+    <p class="install-help">Los agentes de este usuario del equipo comparten la conexión. Cada compañero conecta la suya. No pegues tokens en el chat ni los incluyas en un artefacto.</p>
+  </section>
+  <section class="install-faq" aria-labelledby="faq-heading">
+    <h2 id="faq-heading">Antes de empezar</h2>
+    <details><summary>¿Necesito una cuenta para crear?</summary><p>No. Generar y leer HTML funciona sin cuenta. Conectar tu cuenta permite guardar versiones en el portal, compartir y reunir comentarios. La cuenta de tu agente y la cuenta de Margen son independientes.</p></details>
+    <details><summary>¿Cómo actualizo después?</summary><p>Ejecuta <code>margen update</code> o vuelve a usar el instalador. Las actualizaciones recuerdan los agentes seleccionados. Si agregas otro, selecciona todos los que quieras mantener actualizados.</p></details>
+    <details><summary>¿Uso Windows o WSL?</summary><p>Elige Windows si tu agente corre en PowerShell. Si corre dentro de WSL, marca esa opción y ejecuta el comando en la terminal de Linux. Son instalaciones separadas; usa el entorno donde trabaja tu agente.</p></details>
+    <details><summary>¿Y si trabajo desde ChatGPT u otro entorno?</summary><p>La instalación local no instala extensiones en una web. Si tu entorno permite importar skills, puedes usar el paquete portable; consulta sus instrucciones de importación.</p><a href="/downloads/bottifact-portable.zip">Descargar el paquete del skill ↗</a></details>
+  </section>
+  <noscript><p>Consulta la <a href="https://github.com/angelbotto/margen/blob/main/docs/platform-support.md">guía de instalación por sistema</a> para instalar sin este selector.</p></noscript>
+</main>
+<footer><span>Margen · Tus documentos, tus decisiones.</span><a href="https://github.com/angelbotto/margen" target="_blank" rel="noopener noreferrer">Código abierto ↗</a></footer>
+</body>
+</html>

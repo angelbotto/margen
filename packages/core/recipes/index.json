@@ -430,5 +430,9 @@
   {
     "file": "version-comparison/README.md",
     "example": "version-comparison/example.html"
+  },
+  {
+    "file": "sketch-diagram/README.md",
+    "example": "sketch-diagram/example.html"
   }
 ]

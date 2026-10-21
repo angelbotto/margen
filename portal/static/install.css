@@ -1,0 +1,91 @@
+/* Installation controls are shared with the signed-in connection screen. */
+.install-icon{display:inline-flex;flex:0 0 auto;width:22px;height:22px;align-items:center;justify-content:center}
+.install-icon svg{width:100%;height:100%}
+.install-picker{min-width:0}
+.install-picker fieldset{padding:0;border:0;margin:0 0 30px;min-width:0}
+.install-picker legend{font:500 13px/1.5 var(--sans);letter-spacing:.01em;margin:0 0 14px;padding:0}
+.install-platforms{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.install-option{position:relative;display:block!important;margin:0!important;cursor:pointer;min-width:0}
+.install-option>input{position:absolute;width:1px;height:1px;margin:0;opacity:0;padding:0;border:0}
+.install-option-face{display:flex;align-items:center;justify-content:center;gap:12px;min-height:68px;padding:14px 12px;border:1px solid var(--line);border-radius:12px;background:var(--panel);font-size:13px;transition:background 160ms,border-color 160ms,box-shadow 160ms}
+.install-platforms .install-option-face{flex-direction:column;gap:9px;min-height:104px}
+.install-platforms .install-icon{width:28px;height:28px}
+.install-option:hover .install-option-face{border-color:var(--muted);background:var(--wash)}
+.install-option>input:checked+.install-option-face{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,var(--panel));box-shadow:inset 0 0 0 1px var(--accent)}
+.install-option>input:focus-visible+.install-option-face{outline:2px solid var(--accent);outline-offset:4px}
+.install-option>input:active+.install-option-face{background:var(--wash)}
+.install-agents{display:grid;gap:8px;margin:14px 0 12px}
+.install-agents .install-option-face{min-height:56px;justify-content:flex-start;padding:12px 16px}
+.install-agents .install-icon:first-child{margin-right:3px}
+.install-tick{margin-left:auto;width:18px;height:18px;border:1px solid var(--line);border-radius:5px;padding:2px;color:transparent}
+.install-option>input:checked+.install-option-face .install-tick{background:var(--accent);border-color:var(--accent);color:var(--panel)}
+.install-help{font-size:12px!important;line-height:1.65;color:var(--muted);margin:12px 0 0;max-width:66ch}
+.install-wsl{display:flex!important;align-items:center;gap:9px;margin:14px 0 0!important;font-size:12px;cursor:pointer;min-height:36px}
+.install-wsl[hidden]{display:none!important}
+.install-wsl input{width:16px;height:16px;accent-color:var(--accent);margin:0}
+.install-site .install-header{max-width:1240px;padding:22px 40px}
+.install-site .brand{align-items:center}
+.install-site .brand img{filter:none}
+:root[data-dark] .install-site .brand img{filter:invert(.85)}
+.install-header nav{display:flex;align-items:center;gap:22px;font-size:12px}
+.install-header nav>a:first-child{text-decoration:none;color:var(--muted)}
+.install-theme{border:0;background:transparent;width:36px;height:36px;padding:0;border-radius:50%;font-size:20px}
+.install-site .install-page{max-width:1120px;margin:0 auto;padding:0 40px}
+.install-intro{padding:58px 0 46px;max-width:680px}
+.install-intro h1{font-size:clamp(42px,5.2vw,66px);line-height:1.05;margin:16px 0 20px;letter-spacing:-.035em}
+.install-intro .lede{font-size:15px;max-width:53ch;line-height:1.75}
+.install-layout{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:56px;align-items:start}
+.install-result{position:sticky;top:28px;min-width:0;padding-top:4px}
+.install-terminal{border:1px solid var(--line);border-radius:16px;background:var(--panel);overflow:hidden;box-shadow:0 6px 24px color-mix(in srgb,var(--ink) 5%,transparent)}
+.install-terminal-head{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 20px;border-bottom:1px solid var(--line);font-size:11px;color:var(--muted)}
+#shell-label{display:flex;align-items:center;gap:8px;color:var(--ink)}
+#shell-label .install-icon{width:16px;height:16px}
+.install-terminal pre{font:12px/1.9 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;padding:24px;margin:0;min-height:160px;color:var(--ink);tab-size:2}
+.install-terminal.is-empty pre{color:var(--muted);display:flex;align-items:center}
+.install-command-actions{padding:15px 18px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:11px;color:var(--muted)}
+.install-command-actions>span{min-width:0;line-height:1.55}
+.install-command-actions button{white-space:nowrap;font-size:12px;min-height:40px;border-radius:8px;gap:8px;flex-shrink:0}
+.install-command-actions button:disabled{cursor:not-allowed}
+.install-command-actions .install-icon{width:15px;height:15px}
+.install-status{min-height:18px;font-size:12px;color:var(--accent);margin:8px 0}
+.install-paths{font-size:12px;margin:18px 0 10px;color:var(--muted)}
+.install-paths summary{color:var(--ink);cursor:pointer;padding:8px 0}
+.install-paths ul{list-style:none;padding:0;margin:10px 0}
+.install-paths li{padding:6px 0;overflow-wrap:anywhere}
+.install-paths code{font-size:11px}
+.install-source{font-size:12px;color:var(--muted);text-decoration:none;display:inline-flex;gap:8px;padding:6px 0}
+.install-source:hover{text-decoration:underline}
+.install-account{border-top:1px dotted var(--line);margin-top:42px;padding-top:38px}
+.install-section-heading{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.install-section-heading h2{font-size:36px;letter-spacing:-.02em;margin-top:10px}
+.install-section-heading .button{font-size:13px;border-radius:9px;min-height:42px;gap:12px}
+.install-account-intro{font-size:14px;line-height:1.7;color:var(--muted);max-width:68ch;margin:20px 0 30px}
+.install-connect-flow{list-style:none;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;margin:0 0 22px}
+.install-connect-flow h3{font:500 14px/1.4 var(--sans);margin:12px 0 8px}
+.install-connect-flow p{font-size:12px;color:var(--muted);line-height:1.75;margin:0}
+.install-connect-flow .install-icon{color:var(--muted);width:20px;height:20px}
+.install-connect-command{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:10px;padding:10px 12px 10px 18px;background:var(--panel)}
+.install-connect-command pre{flex:1;min-width:0;margin:0;font:12px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere}
+.install-connect-command button{width:36px;height:36px;flex-shrink:0;padding:8px;border:0;background:transparent}
+.install-connect-command button:hover{background:var(--wash)}
+.install-connect-command .install-icon{width:17px;height:17px}
+.install-faq{display:grid;grid-template-columns:1fr 2fr;column-gap:70px;margin:68px 0 24px;border-top:1px solid var(--line);padding-top:30px}
+.install-faq h2{grid-row:1/5;font-size:27px}
+.install-faq details{grid-column:2;border-bottom:1px solid var(--line);font-size:13px}
+.install-faq summary{cursor:pointer;padding:17px 0;line-height:1.6}
+.install-faq p,.install-faq details>a{font-size:12px;color:var(--muted);line-height:1.75;margin:0 0 18px;display:block}
+.connection.install-connection{max-width:850px;border:0;padding:0 0 32px}
+.install-connection .install-picker{max-width:640px;margin-top:28px}
+.install-connection .install-terminal{margin:8px 0 24px;max-width:640px}
+.install-connection .install-terminal pre{min-height:100px}
+.install-connection .connection-account{display:flex;align-items:center;gap:10px;background:var(--wash);border:1px solid var(--line);padding:12px 16px;border-radius:10px;margin:16px 0;max-width:640px;font-size:13px;overflow-wrap:anywhere}
+.connection-form{border-top:1px solid var(--line);padding-top:24px;margin-top:28px;max-width:640px}
+.connection-form>label{display:block;font-size:12px;font-weight:500;margin-bottom:8px}
+.connection-form-row{display:flex;gap:10px;align-items:center}
+.connection-form-row input{flex:1;width:100%;min-width:0;border-radius:9px;min-height:44px;background:var(--panel);padding:10px 13px;transition:border-color 160ms,box-shadow 160ms}
+.connection-form-row input:focus{border-color:var(--accent);outline:0;box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 12%,transparent)}
+.connection-form-row button{border-radius:9px;min-height:44px;font-size:12px;white-space:nowrap}
+.connection-secret{padding:16px;margin:16px 0;border:1px solid var(--line);border-radius:10px;background:var(--panel);overflow-wrap:anywhere;white-space:pre-wrap;font:12px/1.8 ui-monospace,SFMono-Regular,Consolas,monospace}
+@media(max-width:800px){.install-layout{gap:28px;grid-template-columns:1fr 1.1fr}.install-platforms{gap:6px}.install-command-actions{flex-wrap:wrap}.install-local-label{display:none}.install-connect-flow{gap:22px}.install-site .install-page{padding:0 24px}}
+@media(max-width:620px){.install-site .install-header{padding:16px 20px}.install-header nav{gap:12px}.install-header nav>a:first-child{display:none}.install-site .install-page{padding:0 20px}.install-intro{padding:36px 0 30px}.install-intro h1{font-size:44px}.install-intro .lede{font-size:14px}.install-layout{grid-template-columns:1fr;gap:0}.install-result{position:static}.install-platforms .install-option-face{min-height:90px}.install-picker fieldset{margin-bottom:24px}.install-terminal pre{min-height:100px;padding:20px}.install-local-label{display:inline}.install-command-actions{flex-wrap:nowrap}.install-command-actions button{padding:8px 10px;font-size:11px}.install-account{margin-top:30px;padding-top:26px}.install-section-heading{align-items:flex-start;flex-direction:column;gap:18px}.install-section-heading h2{font-size:32px}.install-account-intro{font-size:13px}.install-connect-flow{grid-template-columns:1fr;gap:24px}.install-connect-flow li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:0 12px}.install-connect-flow h3{margin:0 0 6px}.install-connect-flow p{grid-column:2}.install-faq{display:block;margin-top:40px;padding-top:24px}.install-faq h2{margin-bottom:16px}.install-header .button{font-size:11px}.connection-form-row{flex-wrap:wrap}.connection-form-row input{flex-basis:100%}}
+@media(prefers-reduced-motion:reduce){.install-option-face,.connection-form-row input{transition:none}}

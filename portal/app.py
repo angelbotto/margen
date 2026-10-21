@@ -99,6 +99,8 @@ class Store:
             CREATE VIRTUAL TABLE IF NOT EXISTS artifact_fts USING fts5(artifact UNINDEXED,version UNINDEXED,title,space,body,tokenize='unicode61 remove_diacritics 2');
             ''')
             migrate(db)
+            from portal.editor import migrate as migrate_editor
+            migrate_editor(db)
             from portal.library_query import migrate as migrate_library
             migrate_library(db)
 
@@ -127,7 +129,7 @@ class Store:
             for old in known:
                 if old['id'] == uid: continue
                 changed_before = db.total_changes
-                for table, column in [('sessions','user_id'), ('tokens','user_id'), ('logins','user_id'), ('artifacts','owner'), ('events','actor'), ('audit','actor'), ('creator_jobs','owner'), ('creator_decisions','owner'), ('creator_rules','owner'), ('creator_connectors','owner'), ('creator_decision_history','actor'), ('review_threads','actor')]:
+                for table, column in [('sessions','user_id'), ('tokens','user_id'), ('logins','user_id'), ('artifacts','owner'), ('events','actor'), ('audit','actor'), ('creator_jobs','owner'), ('creator_decisions','owner'), ('creator_rules','owner'), ('creator_connectors','owner'), ('creator_decision_history','actor'), ('review_threads','actor'), ('editor_drafts','owner'), ('editor_sources','actor')]:
                     db.execute(f'UPDATE {table} SET {column}=? WHERE {column}=?', (uid, old['id']))
                 for table in ['review_reads','thread_reads','notifications','notification_settings']:
                     # Las claves únicas del usuario canónico prevalecen; el historial original queda auditable.
@@ -512,12 +514,18 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
         mode=body.get('mode','published')
         if mode not in ('draft','published'):raise HTTPException(422,'Estado de versión inválido.')
         source=provenance(body,clean)
+        source.update(actor=u['id'],author=u['name'],kind='agent' if u.get('agent') else 'human-upload')
         visibility=body.get('visibility','private')
         if visibility not in ('private','unlisted','public'): raise HTTPException(422,'Visibilidad inválida.')
         if aid and 'visibility' in body: raise HTTPException(422,'Una revisión conserva los permisos. Cámbialos desde Compartir.')
         with store.db() as db:
             if aid:
                 a = artifact_for(db,aid,u,'edit')
+                managed=db.execute('SELECT 1 FROM editor_sources e JOIN versions v ON v.id=e.version WHERE v.artifact=? LIMIT 1',(aid,)).fetchone() or db.execute('SELECT 1 FROM editor_drafts WHERE artifact=?',(aid,)).fetchone()
+                if managed and body.get('expected_current')!=a['current_version']:
+                    raise HTTPException(409,'Este documento tiene cambios del editor. Lee su fuente actual y envía expected_current con la versión base de tu propuesta.')
+                if managed:source['base_version']=a['current_version']
+                source['actor']=u['id'];source['author']=u['name'];source['kind']='agent' if u.get('agent') else 'human-upload'
                 if db.execute('SELECT count(*) FROM versions WHERE artifact=?',(aid,)).fetchone()[0]>=200: raise HTTPException(409,'Máximo 200 versiones por documento.')
                 visibility=a['visibility']
                 if a['document_id'] != docid: raise HTTPException(409,'Esta revisión pertenece a otro documento-id.')
@@ -684,6 +692,8 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
     mount_context(app,store,origin,account,payload,clean,artifact_for,permissions)
     from portal.creator import mount as mount_creator
     mount_creator(app,store,origin,account,payload,clean,artifact_for,permissions,threads,snapshot)
+    from portal.editor import mount as mount_editor
+    mount_editor(app,store,origin,account,payload,artifact_for,permissions)
 
     @lru_cache(maxsize=32)
     def static_preview(sha,title):
