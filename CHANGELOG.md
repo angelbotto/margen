@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026.10.20-library.1 — Kaira theme
+
+- Add Kaira, contributed by Katherin Teran Fomeque (@mkatheteranf-bit), with warm-paper light and deep-plum dark palettes and system mode.
+- Preserve independent typography, existing components and reader preferences; include contrast and mode-persistence regression checks.
+- Publish 16 theme families and 32 palettes with an updated signed-release sequence. Existing standalone artifacts retain their embedded themes until regenerated.
+
 ## 0.15.2 — Library filters and rendering
 
 - Separate query-builder actions, align compact removal controls and adapt conditions to narrow screens. Keep edits local until apply; validate values and ranges.
