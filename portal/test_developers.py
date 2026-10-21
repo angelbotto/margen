@@ -127,6 +127,22 @@ class DevelopersTests(unittest.TestCase):
         package['preview_runtime'] = ['charts.js']
         self.assertEqual(self.owner.post('/api/developers/submissions', json={'package': package}).status_code, 422)
 
+    def test_bundled_map_previews_load_geography_before_analytics(self):
+        import re
+        for slug in ('route-map', 'bubble-map'):
+            with self.subTest(slug=slug):
+                item = bundled()['component-' + slug]
+                self.assertEqual(item['preview_runtime'], ['geography.js', 'analytics.js'])
+                response = self.guest.get('/api/developers/items/' + item['id'] + '/preview')
+                scripts = re.findall(r'<script>(.*?)</script>', response.text, re.S)
+                self.assertEqual(len(scripts), 2)
+                self.assertIn('window.NotaGeografia=', scripts[0])
+                self.assertIn('window.NotaAnalitica=', scripts[1])
+                self.assertNotIn('allow-same-origin', response.headers['content-security-policy'])
+        for item in bundled().values():
+            if item['kind'] == 'component' and 'packages/core/components/analytics.js' not in item.get('dependencies', []):
+                self.assertNotIn('geography.js', item['preview_runtime'])
+
     def test_theme_applies_as_draft_preserving_identity_and_access(self):
         key = self.submit()
         url = '/api/developers/items/' + key + '/use'

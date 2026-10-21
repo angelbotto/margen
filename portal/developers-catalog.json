@@ -1982,6 +1982,7 @@
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/route-map",
       "preview_runtime": [
+        "geography.js",
         "analytics.js"
       ],
       "origin": "bundled",
@@ -2011,6 +2012,7 @@
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/bubble-map",
       "preview_runtime": [
+        "geography.js",
         "analytics.js"
       ],
       "origin": "bundled",

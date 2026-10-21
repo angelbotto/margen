@@ -8,7 +8,7 @@ from themes import DATA, original
 ROOT = Path(__file__).resolve().parents[1]
 REPO = 'https://github.com/angelbotto/margen'
 # Reviewed local enhancement modules; never populated from submitted packages.
-PREVIEW_RUNTIME = ('charts.js', 'analytics.js', 'relationship-map.js')
+PREVIEW_RUNTIME = ('charts.js', 'geography.js', 'analytics.js', 'relationship-map.js')
 
 
 def hex_color(value):
@@ -55,7 +55,11 @@ def generate():
     runtime = {name: (ROOT / 'packages/core/components' / name).read_text() for name in PREVIEW_RUNTIME}
     for item in items:
         if item['kind'] == 'component':
-            item['preview_runtime'] = [name for name in PREVIEW_RUNTIME if 'packages/core/components/' + name in item.get('dependencies', [])]
+            dependencies = item.get('dependencies', [])
+            item['preview_runtime'] = [name for name in PREVIEW_RUNTIME
+                                       if 'packages/core/components/' + name in dependencies
+                                       # Geography supports analytics; it cannot render a standalone 3D recipe.
+                                       and (name != 'geography.js' or 'packages/core/components/analytics.js' in dependencies)]
     (ROOT / 'portal/developers-runtime.json').write_text(json.dumps(runtime, ensure_ascii=False, indent=2) + '\n')
     version = json.loads((ROOT / 'VERSION.json').read_text())
     for item in items:
