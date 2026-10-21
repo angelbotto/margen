@@ -44,6 +44,12 @@ def components():
 class BundledPreviewBrowserTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        import urllib.request
+        from portal.developers import THREE
+        try:
+            urllib.request.urlopen(urllib.request.Request(THREE[0], method='HEAD'), timeout=10).close()
+        except OSError as error:
+            raise unittest.SkipTest('cdnjs no responde; las escenas 3D necesitan three.js fijado: ' + str(error))
         cls.fixture = fixtures.DevelopersTests()
         cls.fixture.setUp()
         cls.playwright = sync_playwright().start()
@@ -97,13 +103,15 @@ class BundledPreviewBrowserTests(unittest.TestCase):
                     errors.clear()
                     frame = self.load(page, item)
                     body = frame.locator('body')
-                    missing = body.evaluate('(_, names) => names.filter(name => !(name in window))', [GLOBALS[name] for name in item['preview_runtime']])
+                    missing = body.evaluate('(_, names) => names.filter(name => !(name in window))', [GLOBALS[name] for name in item['preview_runtime']]
+                                           # Pinned three.js arrives only through its integrity-checked script tag.
+                                           + (['THREE'] if {'scene.js', 'globe.js'} & set(item['preview_runtime']) else []))
                     if missing:
                         failures.append(item['slug'] + ': no ejecutó ' + ', '.join(missing))
                     for owner, output in RENDERS.items():
                         hosts = frame.locator('main.hoja').locator(owner)
                         if item['preview_runtime'] and hosts.count():
-                            visible = hosts.evaluate_all("(nodes, output) => nodes.filter(node => node.getClientRects().length).every(node => [...node.querySelectorAll(output)].some(n => { const r = n.getBoundingClientRect(); return r.width > 4 && r.height > 4; }))", output)
+                            visible = hosts.evaluate_all("(nodes, output) => nodes.some(node => node.getClientRects().length) && nodes.filter(node => node.getClientRects().length).every(node => [...node.querySelectorAll(output)].some(n => { const r = n.getBoundingClientRect(); return r.width > 4 && r.height > 4; }))", output)
                             if not visible:
                                 failures.append(item['slug'] + ': ' + owner + ' sin ' + output + ' visible')
                     failed = body.evaluate("() => [...document.querySelectorAll('[data-error-analitica],[data-error-grafica],[data-error],.error-componente')].map(n => n.textContent.trim()).filter(Boolean)")

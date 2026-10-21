@@ -30,7 +30,7 @@ PREVIEW_CSP = ("sandbox; default-src 'none'; style-src 'unsafe-inline'; img-src 
 # Same pinned build the artifact contract embeds; integrity binds the exact bytes.
 THREE = ('https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js',
          'sha512-vnmn/Qqn6aG0POAc9mIGzjq0IybrvxJXYDafNvp9JSnDGxeF3pbkSqLvf+YGd5ku63pT7sa/jxHn7/d0mU8+tA==')
-NEEDS_THREE = {'scene.js', 'globe.js'}
+NEEDS_THREE = {'scene.js', 'globe.js', 'fleet.js'}
 
 
 @lru_cache(maxsize=1)
@@ -212,7 +212,8 @@ def mount(app, store, who, account, payload, clean, is_admin, artifact_for, publ
         html = '<!doctype html><html lang="es" data-margen-community-theme data-color-mode="' + mode + '"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>' + css + '</style></head><body><main class="hoja">' + markup + '</main></body></html>'
         policy = PREVIEW_CSP
         if scripts:
-            html = html.replace('a,button,input,select,textarea{pointer-events:none}', '')
+            # Runtime controls stay usable; recipe links would only navigate the preview frame.
+            html = html.replace('a,button,input,select,textarea{pointer-events:none}', 'a[href]{pointer-events:none}')
             hashes = ' '.join("'sha256-" + base64.b64encode(hashlib.sha256(source.encode()).digest()).decode() + "'" for source in scripts)
             three = bundled_needs_three(key)
             policy = policy.replace('sandbox;', 'sandbox allow-scripts;').replace("script-src 'none'", 'script-src ' + hashes + (' ' + THREE[0] if three else ''))

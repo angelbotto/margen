@@ -130,7 +130,7 @@ window.MargenDevelopers = (() => {
         }
         const card = el("article", null, "developer-card");
         const visual = el("iframe", null, "developer-preview"); visual.title = "Vista estática de " + item.title;
-        visual.setAttribute("sandbox", item.origin === "bundled" && item.preview_runtime?.length ? "allow-scripts" : ""); visual.loading = "lazy"; visual.tabIndex = -1; visual.setAttribute("aria-hidden", "true");
+        visual.setAttribute("sandbox", ""); visual.loading = "lazy"; visual.tabIndex = -1; visual.setAttribute("aria-hidden", "true");
         visual.src = "/api/developers/items/" + encodeURIComponent(item.id) + "/preview";
         const text = el("div", null, "developer-card-body");
         text.append(el("p", `${labels[item.kind]} · ${labels[item.status] || item.status}`, "eyebrow"), el("h3", item.title), el("p", item.description, "developer-description"), el("p", `${item.author} · ${item.license}`, "meta"));
