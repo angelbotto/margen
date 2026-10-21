@@ -33,7 +33,6 @@ class ReaderStylesTest(unittest.TestCase):
         self.assertEqual(without_embedded_flow('<style>'+OLD), '<style>'+OLD)
 
 
-if __name__ == '__main__': unittest.main()
 
 
 class EditorialReferenceRefreshTest(unittest.TestCase):
@@ -74,3 +73,23 @@ class EditorialReferenceRefreshTest(unittest.TestCase):
         for separator in ('\u2028', '\v', '\r', '\r\n', '\n'):
             source = '<p>A'+separator+'B</p><main class="hoja"></main><style>.own{}</style>'
             self.assertTrue(self.refresh(source).startswith(source))
+
+
+class EditorialReferenceInertTemplateTest(unittest.TestCase):
+    def test_templates_do_not_capture_styles_or_document_detection(self):
+        from portal.reader_style import refresh_editorial_reference
+        source = '<style>h1{font-size:10px}</style><main class="hoja"><h1>Visible</h1></main><template><style>.card{color:red}</style><script data-nota-modulo="packages/core/components/code.js">inert();</script></template>'
+        result = refresh_editorial_reference(source, 'h1{font-size:50px}', 'current();')
+        self.assertIn('</style><style data-margen-editorial-reference>h1{font-size:50px}</style><main', result)
+        self.assertIn('<template><style>.card{color:red}</style><script data-nota-modulo="packages/core/components/code.js">inert();</script></template>', result)
+        inert = '<template><main class="hoja"></main><style data-margen-editorial-reference>inert{}</style></template>'
+        self.assertEqual(refresh_editorial_reference(inert, 'current{}', 'current();'), inert)
+
+    def test_noscript_fallback_is_not_an_insertion_target(self):
+        from portal.reader_style import refresh_editorial_reference
+        source='<main class="hoja"></main><noscript><style>p{color:red}</style></noscript>'
+        result=refresh_editorial_reference(source,'.hoja{color:blue}','current();')
+        self.assertTrue(result.startswith('<style data-margen-editorial-reference>'))
+        self.assertTrue(result.endswith(source))
+
+if __name__ == '__main__': unittest.main()

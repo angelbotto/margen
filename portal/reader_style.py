@@ -79,6 +79,7 @@ def refresh_editorial_reference(content, css, code, pieces=None):
             self.injected = False
             self.head_end = None
             self.last_style = None
+            self.inert_depth = 0
 
         def pos(self):
             line, column = self.getpos()
@@ -86,6 +87,13 @@ def refresh_editorial_reference(content, css, code, pieces=None):
 
         def handle_starttag(self, tag, attributes):
             if self.literal:
+                return
+            if tag in {'template', 'noscript'}:
+                self.inert_depth += 1
+                return
+            if self.inert_depth:
+                if tag in {'script','style','textarea','title','xmp','iframe','noembed','noframes','plaintext'}:
+                    self.literal = tag
                 return
             attrs = dict(attributes)
             if 'hoja' in (attrs.get('class') or '').split() and 'data-presentation' not in attrs and attrs.get('data-ritmo') != 'propio':
@@ -119,6 +127,11 @@ def refresh_editorial_reference(content, css, code, pieces=None):
                         self.edits.append((start, end, new))
                 self.literal = None
                 self.block = None
+                return
+            if tag in {'template', 'noscript'} and self.inert_depth:
+                self.inert_depth -= 1
+                return
+            if self.inert_depth:
                 return
             if tag == 'head':
                 self.head_end = self.pos()

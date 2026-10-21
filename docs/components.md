@@ -2582,3 +2582,25 @@ Insert the generated figure as a sibling of `.prosa`, then compose the complete 
 **Reading and accessibility:** Real HTML text and an ordered list carry the meaning; decorative SVG borders/arrows are hidden from assistive technology. Connections name their destination in reading order. The same DOM reflows vertically below an 820px figure width. Labels retain their CSS font sizes and text wraps instead of scaling or clipping. Light/dark colors follow the current theme. There are no animations or keyboard-only interactions; all content is available without JavaScript. Print uses the vertical flow. No color encodes a required distinction.
 
 **Limits:** This first recipe supports linear flows, not branching architectures, free-positioned canvas editing, numerical charts, Excalidraw import/export, or real-time collaboration. Split larger processes, or select `relationship-map` for an explorable graph. The block editor conservatively preserves this figure as an opaque component; it does not yet expose editable diagram nodes in its slash menu. The source generator fails closed on invalid schema, duplicate IDs, missing transitions and oversize content. Always inspect the actual standalone artifact on desktop and mobile, in light and dark mode. Drawing paths alone do not prove legibility or accessibility conformance.
+
+## Editorial web shell
+
+<!-- nota:ejemplo sitio-editorial -->
+
+```html
+<section class="ancho web-editorial" data-editorial-web id="web-editorial-ejemplo" tabindex="0" aria-label="Sitio editorial de ejemplo, desplazable">
+  <a class="web-salto" href="#web-contenido">Saltar al contenido</a>
+  <header class="web-navegacion"><nav aria-label="Navegación del sitio de ejemplo"><a class="web-marca" href="#web-contenido">Margen</a><div><a href="#web-lecturas">lecturas</a><span aria-hidden="true">/</span><a href="#web-proyectos">proyectos</a><span aria-hidden="true">/</span><a href="#web-cierre">acerca</a></div></nav></header>
+  <div class="web-bordes" aria-hidden="true"></div>
+  <div class="web-contenido" id="web-contenido" tabindex="-1">
+    <div class="web-prosa"><p class="ceja">Un cuaderno abierto</p><h2>La forma también explica.</h2><p>Una página para leer con calma, explorar lo que sigue y volver al punto que importa.</p></div>
+    <section class="web-prosa" id="web-lecturas"><h3>Lecturas</h3><p>Las ideas necesitan espacio. Una columna breve mantiene el hilo; los ejemplos se abren cuando necesitan mostrar más.</p><p>El marco acompaña sin convertirse en una caja. Las líneas se desvanecen en los márgenes y dejan que el contenido respire.</p><p>Al desplazarte, la navegación se aparta. Vuelve al subir o al darle foco con el teclado.</p></section>
+    <section class="web-prosa" id="web-proyectos"><h3>Lo que estamos construyendo</h3><p>Un archivo que conserva las fuentes, las preguntas y las decisiones. Cada pieza puede compartirse sin perder su contexto.</p><p>Este ejemplo utiliza texto original e ilustrativo. Los enlaces recorren secciones reales de la misma página.</p><p>El cierre se descubre al terminar la lectura, debajo de la superficie principal.</p></section>
+  </div>
+  <footer class="web-pie" id="web-cierre"><div><a class="web-marca" href="#web-contenido">Margen</a><p>Una nota para quien viene después.</p><nav aria-label="Enlaces de cierre del ejemplo"><a href="#web-lecturas">Volver a las lecturas</a><a href="#web-proyectos">Ver los proyectos</a></nav><small>Ejemplo editorial · contenido ilustrativo</small></div></footer>
+</section>
+```
+
+**Use and limits:** This is a website composition, separate from artifact review controls. The embedded specimen scrolls inside its own region. For a full page, move `web-editorial` and `data-editorial-web` to the document body; use a `main` element for `.web-contenido`. Keep the header, edge decoration, main and footer as siblings. Do not add this shell around a chapter/presentation reader or its comment/preferences dock. `examples/generated/editorial-web.html` demonstrates the full-page topology offline.
+
+Desktop navigation sits at the top; below 640 px it sits 16 px above the bottom safe area. Scroll direction reveals it; keyboard focus always restores it immediately. The footer reveals beneath the main surface. Reduced motion disables directional hiding and animated transitions; reduced transparency removes edge blur. Without JavaScript every link and section remains usable. Keep anchor IDs unique, preserve the skip link and accessible region name, and replace only the illustrative copy and real destinations. This pattern reproduces structure and motion, not the original site's identity or proprietary serif.

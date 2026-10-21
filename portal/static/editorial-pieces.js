@@ -1,11 +1,31 @@
 /* Actividad, avisos y galería: mejoras locales, sin red ni reproducción automática. */
 (()=>{'use strict';
- const instances=new WeakMap(),selector='[data-actividad],[data-aviso-animado],[data-galeria]';
+ const instances=new WeakMap(),selector='[data-actividad],[data-aviso-animado],[data-galeria],[data-editorial-web]';
  function mount(el){
   if(instances.has(el))return;
   const clean=[],motion=matchMedia('(prefers-reduced-motion: reduce)');
   const on=(node,type,fn,opts)=>{node.addEventListener(type,fn,opts);clean.push(()=>node.removeEventListener(type,fn,opts));};
   let api={motion,destroy(){clean.splice(0).forEach(fn=>fn());instances.delete(el);}};
+  if(el.hasAttribute('data-editorial-web')){
+   const navigation=el.querySelector(':scope > .web-navegacion'),footer=el.querySelector(':scope > .web-pie');if(!navigation||!footer)return;
+   const full=el===document.body,scrollNode=full?window:el,position=()=>full?scrollY:el.scrollTop;
+   let previous=position(),distance=0,direction=0,frame=0;
+   const show=()=>el.classList.remove('web-nav-oculta');
+   const update=()=>{frame=0;const current=position(),delta=current-previous;previous=current;
+    if(motion.matches||current<64||navigation.contains(document.activeElement)){show();distance=0;return;}
+    const nextDirection=Math.sign(delta);if(nextDirection!==direction){direction=nextDirection;distance=0;}distance+=Math.abs(delta);
+    if(distance>=12){el.classList.toggle('web-nav-oculta',direction>0);distance=0;}
+   };
+   on(scrollNode,'scroll',()=>{if(!frame)frame=requestAnimationFrame(update);},{passive:true});
+   on(navigation,'focusin',show);on(motion,'change',()=>{show();previous=position();distance=0;});
+   on(footer,'focusin',()=>{show();footer.scrollIntoView({block:'end',behavior:'instant'});});
+   // Native hash links keep their destinations without JS. Focus follows an
+   // in-page selection so keyboard users land in the content, not a hidden bar.
+   on(el,'click',event=>{const link=event.target.closest('a[href^="#"]');if(!link||!el.contains(link))return;let target;try{target=document.getElementById(decodeURIComponent(link.hash.slice(1)));}catch{return;}if(!target||!el.contains(target))return;
+    const hadTabindex=target.hasAttribute('tabindex');if(!hadTabindex)target.tabIndex=-1;target.focus({preventScroll:true});if(!hadTabindex)target.addEventListener('blur',()=>target.removeAttribute('tabindex'),{once:true});show();
+   });
+   clean.push(()=>{if(frame)cancelAnimationFrame(frame);show();});
+  }
   if(el.hasAttribute('data-actividad')){
    const map=el.querySelector('[data-actividad-mapa]'),legend=el.querySelector('[data-actividad-escala]'),status=el.querySelector('[data-actividad-estado]');if(!map||!legend||!status)return;
    const original=[map.innerHTML,legend.innerHTML,status.textContent];

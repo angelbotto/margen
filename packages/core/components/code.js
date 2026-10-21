@@ -15,7 +15,7 @@
  }
  function init(root=document){root.querySelectorAll('.codigo pre code,.terminal pre,[data-lenguaje]').forEach(el=>{if(done.has(el))return;done.add(el);const lang=language(el,el.textContent);el.dataset.coloreado=lang;
   const block=el.closest('.codigo');
-  if(block){
+  if(block&&!el.closest('[data-ritmo="propio"],[data-presentation]')){
    block.classList.add('codigo-editorial');block.classList.remove('codigo-sin-titulo');
    let header=block.querySelector('.cab');if(!header){header=document.createElement('div');header.className='cab';block.prepend(header);}
    const label=header.querySelector('span:not(.copia-estado)');

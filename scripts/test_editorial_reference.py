@@ -104,6 +104,39 @@ class EditorialReference(unittest.TestCase):
   result=refresh_editorial_reference(old,css,code)
   page,errors=self.page(390,html=result);self.assertEqual(page.locator('#first').bounding_box()['width'],342);self.assertEqual(page.locator('#source').text_content(),SOURCE);self.assertEqual(errors,[])
   self.assertIn('stale code runtime',old);self.assertNotIn('stale code runtime',result)
+ def test_author_owned_and_presentation_boundaries(self):
+  import re
+  css=(ROOT/'packages/core/styles/artifact.css').read_text()
+  old=re.sub(r'/\* EDITORIAL REFERENCE START \*/.*?/\* EDITORIAL REFERENCE END \*/','',css,flags=re.S)
+  code=(ROOT/'packages/core/components/code.js').read_text()
+  for boundary in ('data-ritmo="propio"','data-presentation'):
+   with self.subTest(boundary=boundary):
+    content='<main class="hoja" '+boundary+'><h1 '+boundary+'>Own layout</h1><figure class="codigo"><pre style="font:13px/25px monospace;padding:20px"><code data-lenguaje="javascript">const own = 1;</code></pre></figure><div class="cards-trazadas"><a href="#own"><h4>Own card</h4><p>Own text</p></a></div></main>'
+    snapshots=[]
+    for styles,runtime in ((old,''),(css,code)):
+     page,errors=self.page(html='<style>'+styles+'</style>'+content+'<script>'+runtime+'</script>')
+     snapshots.append(page.locator('h1,pre,.cards-trazadas>a').evaluate_all('es=>es.map(e=>{const s=getComputedStyle(e);return [s.fontSize,s.lineHeight,s.padding,s.margin,s.backdropFilter,s.width]})'))
+     self.assertEqual(page.locator('.codigo-editorial,.codigo-linea').count(),0)
+     self.assertEqual(errors,[]);page.close()
+    self.assertEqual(snapshots[0],snapshots[1])
+  # A heading may opt out on the node itself, not just on an ancestor.
+  for styles in (old,css):
+   page,_=self.page(html='<style>'+styles+'</style><main class="hoja"><h1 data-ritmo="propio" style="font-size:19px">Owned</h1></main>')
+   self.assertEqual(page.locator('h1').evaluate('e=>getComputedStyle(e).fontSize'),'19px');page.close()
+ def test_code_blurs_index_at_real_overlap(self):
+  html=self.html.replace('Leer con atención','Leer con atención: ejemplos y decisiones con suficiente contexto')
+  page,errors=self.page(html=html);offset=page.locator('#snippet pre').bounding_box()['y']-150
+  page.evaluate('top=>scrollTo({top,behavior:"instant"})',offset);page.wait_for_timeout(80)
+  index=page.locator('.indice').bounding_box();code=page.locator('#snippet pre').bounding_box()
+  self.assertGreater(index['x']+index['width'],code['x'])
+  self.assertLess(max(index['y'],code['y']),min(index['y']+index['height'],code['y']+code['height']))
+  point=[(max(index['x'],code['x'])+min(index['x']+index['width'],code['x']+code['width']))/2,(max(index['y'],code['y'])+min(index['y']+index['height'],code['y']+code['height']))/2]
+  self.assertTrue(page.evaluate('([x,y])=>!!document.elementFromPoint(x,y)?.closest("#snippet")',point))
+  self.assertTrue(page.locator('.indice a').first.evaluate('(e,box)=>{const range=document.createRange();range.selectNodeContents(e);return [...range.getClientRects()].some(r=>r.right>box.x&&r.bottom>box.y&&r.top<box.y+box.height)}',code))
+  page.screenshot(path='/tmp/margen-reference-overlap.png')
+  page.locator('.indice a').first.focus()
+  self.assertTrue(page.evaluate('([x,y])=>!!document.elementFromPoint(x,y)?.closest(".indice")',point))
+  self.assertEqual(errors,[])
  def test_no_script(self):
   page,_=self.page(js=False);self.assertEqual(page.locator('#source').text_content(),SOURCE);self.assertTrue(page.locator('#snippet .cab > span').first.is_visible())
 if __name__=='__main__':unittest.main()

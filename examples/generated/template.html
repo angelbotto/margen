@@ -588,7 +588,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   --marcador: #bc542b; --foco: #a13f19;
   --globo-base: #8e8479; --globo-arco: #82705c; --globo-punto: #6c6158;
   --globo-glow: #a39179; --globo-dark: 0; --globo-brillo: 2.4;
-  --texto: 33rem; --ancho: 64rem; --amplio: 76rem; --gutter: 24px;
+  --texto: 35rem; --ancho: 62rem; --amplio: 76rem; --gutter: clamp(20px, 4vw, 40px);
   --serif: 'Instrument Serif', Georgia, serif;
   --sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --mono: 'Geist Mono', ui-monospace, monospace;
@@ -645,12 +645,12 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 /* 02 — Una voz editorial, sin convertir el cuerpo en tipografía de exhibición. */
 * { box-sizing: border-box; }
 html { scroll-padding-top: 32px; }
-body { margin: 0; background: var(--papel); color: var(--tinta); font: 400 15.5px/1.55 var(--sans); letter-spacing: .05px; -webkit-font-smoothing: antialiased; }
+body { margin: 0; background: var(--papel); color: var(--tinta); font: 400 16px/1.65 var(--sans); letter-spacing: .05px; -webkit-font-smoothing: antialiased; }
 h1,h2,h3,p,figure,blockquote,dl,dd { margin: 0; }
 h1,h2,h3 { font-family: var(--serif); font-weight: 400; letter-spacing: -.02em; text-wrap: balance; }
-h1 { font-size: clamp(36.4px, 4vw, 44.5px); line-height: 1.111111; }
-h2 { font-size: clamp(28.5px, 3.4vw, 36.4px); line-height: 1.2; }
-h3 { font-size: 28.5px; line-height: 1.333333; }
+h1 { font-size: clamp(38px, 5vw, 54px); line-height: 1.06; }
+h2 { font-size: clamp(30px, 3.4vw, 38px); line-height: 1.15; }
+h3 { font-size: 26px; line-height: 1.2; }
 p + p { margin-top: 1.15em; }
 strong { font-weight: 600; }
 a { color: var(--azul); text-underline-offset: .2em; text-decoration-thickness: 1px; overflow-wrap: anywhere; }
@@ -3199,11 +3199,13 @@ body:has(.revision-barra) { padding-bottom:0; }
 /* EDITORIAL FLOW END */
 
 /* EDITORIAL REFERENCE START */
+/* Layout owners and presentation canvases are scope boundaries, including the boundary node itself. */
+@scope (:root) to ([data-ritmo="propio"], [data-presentation]) {
 /* Measured against cmrg.me on 2026-10-21. Geometry is shared; palettes and
    reader-selected typography remain independent. See docs/editorial-reference.md. */
 @media screen {
- :root:has(.hoja:not([data-presentation])) { --texto:33rem; --ancho:64rem; --gutter:24px; }
- :root:not([data-lectura-comoda]) body:has(.hoja:not([data-presentation])) { font-size:15.5px; line-height:1.55; }
+ .hoja:not([data-presentation]) { --texto:33rem; --ancho:64rem; --gutter:24px; }
+ :root:not([data-lectura-comoda]) .hoja:not([data-presentation]) { font-size:15.5px; line-height:1.55; }
  .hoja:not([data-presentation]) h1:not([data-ritmo=propio] *) { font-size:44.5px; line-height:49.4444px; }
  .hoja:not([data-presentation]) h2:not([data-ritmo=propio] *) { font-size:36.4px; line-height:43.68px; }
  @media(max-width:639px) { .hoja:not([data-presentation]) h1:not([data-ritmo=propio] *) { font-size:36.4px; line-height:43.68px; } }
@@ -3317,6 +3319,60 @@ body:has(.revision-barra) { padding-bottom:0; }
 .galeria-fotografica .galeria-pista:focus-within { mask-image:none; }
 @media print { .galeria-fotografica .galeria-pista { mask-image:none; } }
 @media(prefers-reduced-transparency:reduce) { .galeria-fotografica .galeria-pista { mask-image:none; } }
+
+/* Opt-in website topology. Artifact readers keep their comment/preferences dock. */
+.web-editorial { --web-alto:640px; position:relative; isolation:isolate; height:var(--web-alto); overflow:auto; overscroll-behavior:contain; scrollbar-width:thin; background:var(--papel); color:var(--tinta); font:400 15.5px/1.55 var(--sans); }
+body.web-editorial { --web-alto:100dvh; height:auto; overflow:visible; overscroll-behavior:auto; }
+.web-editorial :is(.web-contenido,.web-pie,.web-navegacion) { margin:0; }
+.web-navegacion { position:sticky; top:0; z-index:5; height:64px; padding:16px 24px; transition:opacity 2000ms cubic-bezier(.075,.82,.165,1),filter 2000ms cubic-bezier(.075,.82,.165,1),transform 2000ms cubic-bezier(.075,.82,.165,1); }
+.web-navegacion nav { display:flex; align-items:center; justify-content:space-between; width:100%; max-width:1024px; margin-inline:auto; gap:24px; }
+.web-navegacion nav > div { display:flex; align-items:center; gap:8px; color:var(--tinta-3); }
+.web-navegacion a { color:var(--tinta-2); text-decoration:none; display:inline-flex; align-items:center; min-height:32px; }
+.web-navegacion a:hover,.web-navegacion a:focus-visible { color:var(--tinta); }
+.web-editorial .web-marca { white-space:nowrap; flex-shrink:0; color:var(--tinta); font:400 28.5px/32px var(--serif); text-decoration:none; }
+.web-editorial.web-nav-oculta .web-navegacion { opacity:0; filter:blur(12px); transform:translateY(-12px); pointer-events:none; }
+.web-editorial .web-navegacion:focus-within { opacity:1; filter:none; transform:none; pointer-events:auto; transition:none; }
+.web-contenido { position:relative; z-index:2; min-height:calc(var(--web-alto) - 64px); padding:32px 24px 96px; background:var(--papel); border-bottom:1px solid var(--linea); box-shadow:0 20px 28px color-mix(in srgb,var(--papel) 85%,transparent); }
+.web-prosa { width:min(100%,528px); margin-inline:auto; }
+.web-prosa + .web-prosa { margin-top:64px; }
+.web-prosa :is(h1,h2) { font:400 44.5px/49.4444px var(--serif); margin:0 0 16px; }
+.web-prosa h3 { font:400 28.5px/38px var(--serif); margin:0 0 16px; }
+.web-prosa p { font:400 15.5px/24.025px var(--sans); }
+.web-prosa p + p { margin-top:16px; }
+.web-prosa .ceja { font:12.1px/16.1333px var(--mono); margin-bottom:16px; }
+.web-pie { position:sticky; bottom:0; z-index:0; min-height:256px; padding:32px 24px; }
+.web-pie > div { max-width:1024px; margin-inline:auto; display:grid; gap:16px; }
+.web-pie nav { display:flex; flex-wrap:wrap; gap:12px 24px; }
+.web-pie p { font:400 18.5px/28.7778px var(--serif); }
+.web-pie small { color:var(--tinta-3); font:12.1px/16.1333px var(--mono); }
+.web-pie:focus-within { z-index:4; background:var(--papel); }
+.web-bordes { position:sticky; top:0; height:0; z-index:3; pointer-events:none; }
+.web-bordes::before,.web-bordes::after { content:''; position:absolute; left:0; right:0; height:clamp(40px,calc(var(--web-alto)*.1),160px); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); mask-image:linear-gradient(#000,transparent); }
+.web-bordes::before { top:0; }
+.web-bordes::after { top:calc(var(--web-alto) - clamp(40px,calc(var(--web-alto)*.1),160px)); mask-image:linear-gradient(transparent,#000); }
+.web-editorial:focus-within .web-bordes { visibility:hidden; }
+.web-salto { position:absolute; top:8px; left:24px; z-index:6; padding:12px; color:var(--tinta); background:var(--papel); transform:translateY(-200%); }
+.web-salto:focus { transform:none; }
+body.web-editorial > .web-navegacion { position:fixed; left:0; right:0; }
+body.web-editorial > .web-contenido { padding-top:96px; min-height:100dvh; }
+body.web-editorial > .web-bordes { position:fixed; inset:0 0 auto; }
+@media(max-width:639px) {
+ .web-navegacion { top:calc(var(--web-alto) - 64px - env(safe-area-inset-bottom,0px)); padding:0 24px; height:48px; }
+ .web-navegacion nav { gap:8px; }
+ .web-navegacion nav > div { gap:4px; font-size:13.7px; }
+ .web-navegacion a { min-height:48px; }
+ .web-editorial .web-marca { font-size:22.4px; line-height:31.36px; }
+ .web-editorial.web-nav-oculta .web-navegacion { transform:translateY(12px); }
+ .web-editorial .web-navegacion:focus-within { transform:none; }
+ .web-prosa :is(h1,h2) { font-size:36.4px; line-height:43.68px; }
+ .web-pie { padding-bottom:calc(96px + env(safe-area-inset-bottom,0px)); }
+ body.web-editorial > .web-navegacion { top:auto; bottom:calc(16px + env(safe-area-inset-bottom,0px)); }
+}
+@media(prefers-reduced-motion:reduce) { .web-editorial .web-navegacion { transition:none; }.web-editorial.web-nav-oculta .web-navegacion { opacity:1; filter:none; transform:none; pointer-events:auto; } }
+@media(prefers-reduced-transparency:reduce) { .web-bordes { display:none; }.web-navegacion { background:var(--papel); } }
+@media print { .web-editorial { height:auto; overflow:visible; }.web-navegacion,.web-bordes,.web-salto { display:none; }.web-contenido,body.web-editorial > .web-contenido { padding:0; min-height:0; box-shadow:none; }.web-pie { position:static; padding:24px 0; min-height:0; }.web-prosa + .web-prosa { margin-top:24px; } }
+
+}
 /* EDITORIAL REFERENCE END */
 
 /* SKETCH DIAGRAM START */
@@ -5350,7 +5406,7 @@ main.hoja[data-presentation]{margin-top:22px}
 <div class="extracto"><p class="desvanece" aria-hidden="true">Una nota se termina cuando alguien puede tomar una decisión con ella. La forma prepara el terreno; la evidencia sostiene lo que decimos.</p><details><summary>Leer la nota completa</summary><p>Una nota se termina cuando alguien puede tomar una decisión con ella. La forma prepara el terreno; la evidencia sostiene lo que decimos. Si la pieza necesita una segunda lectura para entender qué propone, todavía queda trabajo editorial.</p></details></div>
 <aside class="aviso cita"><span class="num" aria-hidden="true">↳</span><div><blockquote>Dejar una buena nota es dejarle contexto a quien llega después.</blockquote><p class="secundario">Principio de esta plantilla</p></div></aside>
 <section class="seccion" id="libreria"><p class="ceja">06 / componentes para copiar</p>
-<h2>La evidencia tiene muchas formas.</h2><p>Gráficas, tablas y experiencias opcionales. Cada ejemplo conserva sus datos, su criterio y su límite en docs/components.md.</p><div data-buscador-recetas><div class="buscador-recetas"><label for="buscar-receta">Encuentra una pieza</label><input id="buscar-receta" type="search" placeholder="Tabla, globo, artículo, prototipo…" aria-describedby="buscar-estado"><p id="buscar-estado" role="status"></p></div><nav aria-label="Ejemplos de componentes"><ul class="catalogo-indice"><li data-claves=""><a href="#pieza-tabla-densa">Tabla densa</a></li><li data-claves=""><a href="#pieza-terminal">Terminal</a></li><li data-claves=""><a href="#pieza-manuscrita">Nota manuscrita</a></li><li data-claves=""><a href="#barras-ejemplo">Barras</a></li><li data-claves=""><a href="#lineas-ejemplo">Líneas</a></li><li data-claves=""><a href="#temporal-ejemplo">Serie temporal</a></li><li data-claves=""><a href="#dispersion-ejemplo">Dispersión</a></li><li data-claves=""><a href="#distribucion-ejemplo">Distribución</a></li><li data-claves=""><a href="#calor-ejemplo">Mapa de calor</a></li><li data-claves=""><a href="#pieza-comparacion">Comparación</a></li><li data-claves=""><a href="#pieza-totales">Totales y ordenación</a></li><li data-claves=""><a href="#pieza-sparkline">Tabla con serie</a></li><li data-claves=""><a href="#pieza-sonido">Sonido optativo</a></li><li data-claves=""><a href="#pieza-escritura">Escritura por trazos</a></li><li data-claves=""><a href="#xyz-ejemplo">Three.js · XYZ</a></li><li data-claves=""><a href="#etapas-ejemplo">Three.js · etapas</a></li><li data-claves="tema lectura"><a href="#apariencia-ejemplo">Apariencia y lectura cómoda</a></li><li data-claves="reporte informe"><a href="#decision-ejemplo">Ficha de decisión</a></li><li data-claves="historia fechas"><a href="#cronologia-ejemplo">Cronología anotada</a></li><li data-claves="blog autor fecha"><a href="#articulo-ejemplo">Ficha de artículo</a></li><li data-claves="blog fuentes citas"><a href="#referencias-ejemplo">Referencias con regreso</a></li><li data-claves="blog definiciones"><a href="#glosario-ejemplo">Glosario editorial</a></li><li data-claves="blog informe supuestos"><a href="#metodologia-ejemplo">Metodología desplegable</a></li><li data-claves="blog cambios"><a href="#antes-despues-ejemplo">Antes y después</a></li><li data-claves="reporte balance"><a href="#cascada-ejemplo">Cascada de cantidades</a></li><li data-claves="graficas reporte sedes"><a href="#multiples-ejemplo">Pequeños múltiples</a></li><li data-claves="tabla reporte diferencias"><a href="#conciliacion-ejemplo">Conciliación de registros</a></li><li data-claves="calculadora reporte supuestos"><a href="#escenario-ejemplo">Calculadora de escenarios</a></li><li data-claves="globo three geografia historia"><a href="#recorrido-ejemplo">Globo narrado</a></li><li data-claves="prototipo estados responsive"><a href="#visor-ejemplo">Visor de prototipos</a></li><li data-claves=""><a href="#pestanas-ejemplo">Pestañas de una pieza</a></li><li data-claves=""><a href="#hallazgo-ejemplo">Ficha de hallazgo</a></li><li data-claves=""><a href="#archivo-ejemplo">Archivo de publicaciones</a></li><li data-claves=""><a href="#autor-ejemplo">Ficha de autor</a></li><li data-claves=""><a href="#relacionados-ejemplo">Lecturas relacionadas</a></li><li data-claves=""><a href="#anotaciones-ejemplo">Diagrama anotado</a></li><li data-claves=""><a href="#revisiones-ejemplo">Historial de revisiones</a></li><li data-claves=""><a href="#criterios-ejemplo">Matriz de criterios</a></li><li data-claves=""><a href="#riesgos-ejemplo">Registro de riesgos</a></li><li data-claves=""><a href="#configuracion-ejemplo">Configuración editorial</a></li><li data-claves=""><a href="#explorador-ejemplo">Tabla interactiva</a></li><li data-claves=""><a href="#cards-ejemplo">Familia de cards</a></li><li data-claves=""><a href="#revision-ejemplo">Comentarios sobre el documento</a></li><li data-claves=""><a href="#codigo-poliglota">Código en varios lenguajes</a></li><li data-claves=""><a href="#analitica-calendario">Calendario de actividad</a></li><li data-claves=""><a href="#analitica-torta">Torta y donut</a></li><li data-claves=""><a href="#analitica-areas">Áreas apiladas</a></li><li data-claves=""><a href="#analitica-caja">Caja y bigotes</a></li><li data-claves=""><a href="#analitica-velas">Velas OHLC</a></li><li data-claves=""><a href="#analitica-mapa-rutas">Mapa de rutas</a></li><li data-claves=""><a href="#analitica-mapa-burbujas">Mapa de volumen</a></li><li data-claves=""><a href="#analitica-columnas-mapa">Columnas geográficas 3D</a></li><li data-claves=""><a href="#analitica-arcos-mapa">Arcos logísticos 3D</a></li><li data-claves=""><a href="#analitica-almacen">Capacidad de almacén 3D</a></li><li data-claves=""><a href="#apuntes-ejemplo">Apuntes manuscritos al margen</a></li><li data-claves=""><a href="#cards-trazadas-ejemplo">Cards delineadas</a></li><li data-claves=""><a href="#atencion-ejemplo">Attention map de áreas</a></li><li data-claves=""><a href="#marco-ejemplo">Marco de líneas desvanecidas</a></li><li data-claves=""><a href="#estanteria-ejemplo">Estantería editorial</a></li><li data-claves=""><a href="#invitacion-ejemplo">Invitación editorial</a></li><li data-claves=""><a href="#lista-estados-ejemplo">Listas de estado</a></li><li data-claves=""><a href="#lista-proyectos-ejemplo">Lista de proyectos</a></li><li data-claves=""><a href="#conversacion-ejemplo">Conversación en el artículo</a></li><li data-claves=""><a href="#navegacion-ejemplo">Navegación editorial</a></li><li data-claves=""><a href="#pie-editorial-ejemplo">Footer editorial</a></li><li data-claves=""><a href="#actividad-editorial-ejemplo">Actividad con contexto editorial</a></li><li data-claves=""><a href="#codigo-lineas-ejemplo">Código numerado y destacado</a></li><li data-claves=""><a href="#enlaces-icono-ejemplo">Enlaces con icono</a></li><li data-claves=""><a href="#avisos-animados-ejemplo">Avisos con icono animado</a></li><li data-claves=""><a href="#trayectoria-ejemplo">Cronología vertical</a></li><li data-claves=""><a href="#galeria-ejemplo">Galería deslizable</a></li><li data-claves=""><a href="#flota-colombia">Globo operativo de Colombia</a></li><li data-claves=""><a href="#ficha-entrega-ejemplo">Ficha de entrega e hitos</a></li><li data-claves=""><a href="#cola-novedades-ejemplo">Cola de despacho y novedades</a></li><li data-claves=""><a href="#evidencia-relato">Relato visual por pasos</a></li><li data-claves=""><a href="#evidencia-sankey">Flujos Sankey</a></li><li data-claves=""><a href="#evidencia-cohortes">Cohortes de recurrencia</a></li><li data-claves=""><a href="#evidencia-sensibilidad">Sensibilidad de escenarios</a></li><li data-claves=""><a href="#evidencia-gantt">Gantt editorial</a></li><li data-claves=""><a href="#evidencia-embudo">Embudo explicado</a></li><li data-claves=""><a href="#evidencia-incertidumbre">Rangos de incertidumbre</a></li><li data-claves=""><a href="#evidencia-imagen">Evidencia ampliable</a></li><li data-claves=""><a href="#relationship-map-example">Mapa de relaciones explorable</a></li><li data-claves=""><a href="#session-brief-example">Ficha de sesión y continuación</a></li><li data-claves=""><a href="#context-bundle-example">Paquete de contexto para agentes</a></li><li data-claves=""><a href="#evidence-ledger-example">Registro de afirmaciones y evidencia</a></li><li data-claves=""><a href="#review-queue-example">Bandeja de revisión contextual</a></li><li data-claves=""><a href="#version-comparison-example">Comparación editorial entre versiones</a></li><li data-claves=""><a href="#sketch-example">Diagrama a mano · flujos legibles</a></li></ul></nav></div></section>
+<h2>La evidencia tiene muchas formas.</h2><p>Gráficas, tablas y experiencias opcionales. Cada ejemplo conserva sus datos, su criterio y su límite en docs/components.md.</p><div data-buscador-recetas><div class="buscador-recetas"><label for="buscar-receta">Encuentra una pieza</label><input id="buscar-receta" type="search" placeholder="Tabla, globo, artículo, prototipo…" aria-describedby="buscar-estado"><p id="buscar-estado" role="status"></p></div><nav aria-label="Ejemplos de componentes"><ul class="catalogo-indice"><li data-claves=""><a href="#pieza-tabla-densa">Tabla densa</a></li><li data-claves=""><a href="#pieza-terminal">Terminal</a></li><li data-claves=""><a href="#pieza-manuscrita">Nota manuscrita</a></li><li data-claves=""><a href="#barras-ejemplo">Barras</a></li><li data-claves=""><a href="#lineas-ejemplo">Líneas</a></li><li data-claves=""><a href="#temporal-ejemplo">Serie temporal</a></li><li data-claves=""><a href="#dispersion-ejemplo">Dispersión</a></li><li data-claves=""><a href="#distribucion-ejemplo">Distribución</a></li><li data-claves=""><a href="#calor-ejemplo">Mapa de calor</a></li><li data-claves=""><a href="#pieza-comparacion">Comparación</a></li><li data-claves=""><a href="#pieza-totales">Totales y ordenación</a></li><li data-claves=""><a href="#pieza-sparkline">Tabla con serie</a></li><li data-claves=""><a href="#pieza-sonido">Sonido optativo</a></li><li data-claves=""><a href="#pieza-escritura">Escritura por trazos</a></li><li data-claves=""><a href="#xyz-ejemplo">Three.js · XYZ</a></li><li data-claves=""><a href="#etapas-ejemplo">Three.js · etapas</a></li><li data-claves="tema lectura"><a href="#apariencia-ejemplo">Apariencia y lectura cómoda</a></li><li data-claves="reporte informe"><a href="#decision-ejemplo">Ficha de decisión</a></li><li data-claves="historia fechas"><a href="#cronologia-ejemplo">Cronología anotada</a></li><li data-claves="blog autor fecha"><a href="#articulo-ejemplo">Ficha de artículo</a></li><li data-claves="blog fuentes citas"><a href="#referencias-ejemplo">Referencias con regreso</a></li><li data-claves="blog definiciones"><a href="#glosario-ejemplo">Glosario editorial</a></li><li data-claves="blog informe supuestos"><a href="#metodologia-ejemplo">Metodología desplegable</a></li><li data-claves="blog cambios"><a href="#antes-despues-ejemplo">Antes y después</a></li><li data-claves="reporte balance"><a href="#cascada-ejemplo">Cascada de cantidades</a></li><li data-claves="graficas reporte sedes"><a href="#multiples-ejemplo">Pequeños múltiples</a></li><li data-claves="tabla reporte diferencias"><a href="#conciliacion-ejemplo">Conciliación de registros</a></li><li data-claves="calculadora reporte supuestos"><a href="#escenario-ejemplo">Calculadora de escenarios</a></li><li data-claves="globo three geografia historia"><a href="#recorrido-ejemplo">Globo narrado</a></li><li data-claves="prototipo estados responsive"><a href="#visor-ejemplo">Visor de prototipos</a></li><li data-claves=""><a href="#pestanas-ejemplo">Pestañas de una pieza</a></li><li data-claves=""><a href="#hallazgo-ejemplo">Ficha de hallazgo</a></li><li data-claves=""><a href="#archivo-ejemplo">Archivo de publicaciones</a></li><li data-claves=""><a href="#autor-ejemplo">Ficha de autor</a></li><li data-claves=""><a href="#relacionados-ejemplo">Lecturas relacionadas</a></li><li data-claves=""><a href="#anotaciones-ejemplo">Diagrama anotado</a></li><li data-claves=""><a href="#revisiones-ejemplo">Historial de revisiones</a></li><li data-claves=""><a href="#criterios-ejemplo">Matriz de criterios</a></li><li data-claves=""><a href="#riesgos-ejemplo">Registro de riesgos</a></li><li data-claves=""><a href="#configuracion-ejemplo">Configuración editorial</a></li><li data-claves=""><a href="#explorador-ejemplo">Tabla interactiva</a></li><li data-claves=""><a href="#cards-ejemplo">Familia de cards</a></li><li data-claves=""><a href="#revision-ejemplo">Comentarios sobre el documento</a></li><li data-claves=""><a href="#codigo-poliglota">Código en varios lenguajes</a></li><li data-claves=""><a href="#analitica-calendario">Calendario de actividad</a></li><li data-claves=""><a href="#analitica-torta">Torta y donut</a></li><li data-claves=""><a href="#analitica-areas">Áreas apiladas</a></li><li data-claves=""><a href="#analitica-caja">Caja y bigotes</a></li><li data-claves=""><a href="#analitica-velas">Velas OHLC</a></li><li data-claves=""><a href="#analitica-mapa-rutas">Mapa de rutas</a></li><li data-claves=""><a href="#analitica-mapa-burbujas">Mapa de volumen</a></li><li data-claves=""><a href="#analitica-columnas-mapa">Columnas geográficas 3D</a></li><li data-claves=""><a href="#analitica-arcos-mapa">Arcos logísticos 3D</a></li><li data-claves=""><a href="#analitica-almacen">Capacidad de almacén 3D</a></li><li data-claves=""><a href="#apuntes-ejemplo">Apuntes manuscritos al margen</a></li><li data-claves=""><a href="#cards-trazadas-ejemplo">Cards delineadas</a></li><li data-claves=""><a href="#atencion-ejemplo">Attention map de áreas</a></li><li data-claves=""><a href="#marco-ejemplo">Marco de líneas desvanecidas</a></li><li data-claves=""><a href="#estanteria-ejemplo">Estantería editorial</a></li><li data-claves=""><a href="#invitacion-ejemplo">Invitación editorial</a></li><li data-claves=""><a href="#lista-estados-ejemplo">Listas de estado</a></li><li data-claves=""><a href="#lista-proyectos-ejemplo">Lista de proyectos</a></li><li data-claves=""><a href="#conversacion-ejemplo">Conversación en el artículo</a></li><li data-claves=""><a href="#navegacion-ejemplo">Navegación editorial</a></li><li data-claves=""><a href="#pie-editorial-ejemplo">Footer editorial</a></li><li data-claves=""><a href="#actividad-editorial-ejemplo">Actividad con contexto editorial</a></li><li data-claves=""><a href="#codigo-lineas-ejemplo">Código numerado y destacado</a></li><li data-claves=""><a href="#enlaces-icono-ejemplo">Enlaces con icono</a></li><li data-claves=""><a href="#avisos-animados-ejemplo">Avisos con icono animado</a></li><li data-claves=""><a href="#trayectoria-ejemplo">Cronología vertical</a></li><li data-claves=""><a href="#galeria-ejemplo">Galería deslizable</a></li><li data-claves=""><a href="#flota-colombia">Globo operativo de Colombia</a></li><li data-claves=""><a href="#ficha-entrega-ejemplo">Ficha de entrega e hitos</a></li><li data-claves=""><a href="#cola-novedades-ejemplo">Cola de despacho y novedades</a></li><li data-claves=""><a href="#evidencia-relato">Relato visual por pasos</a></li><li data-claves=""><a href="#evidencia-sankey">Flujos Sankey</a></li><li data-claves=""><a href="#evidencia-cohortes">Cohortes de recurrencia</a></li><li data-claves=""><a href="#evidencia-sensibilidad">Sensibilidad de escenarios</a></li><li data-claves=""><a href="#evidencia-gantt">Gantt editorial</a></li><li data-claves=""><a href="#evidencia-embudo">Embudo explicado</a></li><li data-claves=""><a href="#evidencia-incertidumbre">Rangos de incertidumbre</a></li><li data-claves=""><a href="#evidencia-imagen">Evidencia ampliable</a></li><li data-claves=""><a href="#relationship-map-example">Mapa de relaciones explorable</a></li><li data-claves=""><a href="#session-brief-example">Ficha de sesión y continuación</a></li><li data-claves=""><a href="#context-bundle-example">Paquete de contexto para agentes</a></li><li data-claves=""><a href="#evidence-ledger-example">Registro de afirmaciones y evidencia</a></li><li data-claves=""><a href="#review-queue-example">Bandeja de revisión contextual</a></li><li data-claves=""><a href="#version-comparison-example">Comparación editorial entre versiones</a></li><li data-claves=""><a href="#sketch-example">Diagrama a mano · flujos legibles</a></li><li data-claves=""><a href="#web-editorial-ejemplo">Sitio editorial: navegación y cierre</a></li></ul></nav></div></section>
 <figure class="amplio" id="pieza-tabla-densa">
   <div class="tabla-caja densa" tabindex="0" role="region" aria-label="Brechas, desplazable">
     <table><caption>Seguimiento ilustrativo de brechas</caption>
@@ -7724,7 +7780,29 @@ Origen: sin sesión conectada; no inventar una referencia.&lt;/code&gt;&lt;/pre&
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p class=&quot;sketch-note&quot;&gt;Ejemplo ilustrativo: cada flecha tiene una intención.&lt;/p&gt;
-&lt;/figure&gt;</code></pre></div></details><footer class="pie"><p>Margen · Muestra de todos los componentes. Inspirada en <a href="https://www.cmrg.me">cmrg.me</a>; el tema claro, los ajustes de acceso y Dark Sea están documentados en el informe.</p><button type="button" data-sonido aria-pressed="false">Sonido apagado</button></footer>
+&lt;/figure&gt;</code></pre></div></details>
+<section class="ancho web-editorial" data-editorial-web id="web-editorial-ejemplo" tabindex="0" aria-label="Sitio editorial de ejemplo, desplazable">
+  <a class="web-salto" href="#web-contenido">Saltar al contenido</a>
+  <header class="web-navegacion"><nav aria-label="Navegación del sitio de ejemplo"><a class="web-marca" href="#web-contenido">Margen</a><div><a href="#web-lecturas">lecturas</a><span aria-hidden="true">/</span><a href="#web-proyectos">proyectos</a><span aria-hidden="true">/</span><a href="#web-cierre">acerca</a></div></nav></header>
+  <div class="web-bordes" aria-hidden="true"></div>
+  <div class="web-contenido" id="web-contenido" tabindex="-1">
+    <div class="web-prosa"><p class="ceja">Un cuaderno abierto</p><h2>La forma también explica.</h2><p>Una página para leer con calma, explorar lo que sigue y volver al punto que importa.</p></div>
+    <section class="web-prosa" id="web-lecturas"><h3>Lecturas</h3><p>Las ideas necesitan espacio. Una columna breve mantiene el hilo; los ejemplos se abren cuando necesitan mostrar más.</p><p>El marco acompaña sin convertirse en una caja. Las líneas se desvanecen en los márgenes y dejan que el contenido respire.</p><p>Al desplazarte, la navegación se aparta. Vuelve al subir o al darle foco con el teclado.</p></section>
+    <section class="web-prosa" id="web-proyectos"><h3>Lo que estamos construyendo</h3><p>Un archivo que conserva las fuentes, las preguntas y las decisiones. Cada pieza puede compartirse sin perder su contexto.</p><p>Este ejemplo utiliza texto original e ilustrativo. Los enlaces recorren secciones reales de la misma página.</p><p>El cierre se descubre al terminar la lectura, debajo de la superficie principal.</p></section>
+  </div>
+  <footer class="web-pie" id="web-cierre"><div><a class="web-marca" href="#web-contenido">Margen</a><p>Una nota para quien viene después.</p><nav aria-label="Enlaces de cierre del ejemplo"><a href="#web-lecturas">Volver a las lecturas</a><a href="#web-proyectos">Ver los proyectos</a></nav><small>Ejemplo editorial · contenido ilustrativo</small></div></footer>
+</section>
+<details class="receta-copia ancho"><summary>HTML y dependencias · Sitio editorial: navegación y cierre</summary><p class="procedencia">Requiere packages/core/styles/fonts.css, packages/core/styles/artifact.css e packages/core/components/reader.js. Consulta los módulos y límites de esta receta en docs/components.md.</p><div class="codigo"><div class="cab"><span>Sitio editorial: navegación y cierre</span><button type="button" data-copiar="receta-fuente-sitio-editorial" aria-label="Copiar HTML de Sitio editorial: navegación y cierre">Copiar HTML</button><span role="status" class="copia-estado"></span></div><pre tabindex="0" aria-label="HTML de Sitio editorial: navegación y cierre, desplazable"><code id="receta-fuente-sitio-editorial">&lt;section class=&quot;ancho web-editorial&quot; data-editorial-web id=&quot;web-editorial-ejemplo&quot; tabindex=&quot;0&quot; aria-label=&quot;Sitio editorial de ejemplo, desplazable&quot;&gt;
+  &lt;a class=&quot;web-salto&quot; href=&quot;#web-contenido&quot;&gt;Saltar al contenido&lt;/a&gt;
+  &lt;header class=&quot;web-navegacion&quot;&gt;&lt;nav aria-label=&quot;Navegación del sitio de ejemplo&quot;&gt;&lt;a class=&quot;web-marca&quot; href=&quot;#web-contenido&quot;&gt;Margen&lt;/a&gt;&lt;div&gt;&lt;a href=&quot;#web-lecturas&quot;&gt;lecturas&lt;/a&gt;&lt;span aria-hidden=&quot;true&quot;&gt;/&lt;/span&gt;&lt;a href=&quot;#web-proyectos&quot;&gt;proyectos&lt;/a&gt;&lt;span aria-hidden=&quot;true&quot;&gt;/&lt;/span&gt;&lt;a href=&quot;#web-cierre&quot;&gt;acerca&lt;/a&gt;&lt;/div&gt;&lt;/nav&gt;&lt;/header&gt;
+  &lt;div class=&quot;web-bordes&quot; aria-hidden=&quot;true&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;web-contenido&quot; id=&quot;web-contenido&quot; tabindex=&quot;-1&quot;&gt;
+    &lt;div class=&quot;web-prosa&quot;&gt;&lt;p class=&quot;ceja&quot;&gt;Un cuaderno abierto&lt;/p&gt;&lt;h2&gt;La forma también explica.&lt;/h2&gt;&lt;p&gt;Una página para leer con calma, explorar lo que sigue y volver al punto que importa.&lt;/p&gt;&lt;/div&gt;
+    &lt;section class=&quot;web-prosa&quot; id=&quot;web-lecturas&quot;&gt;&lt;h3&gt;Lecturas&lt;/h3&gt;&lt;p&gt;Las ideas necesitan espacio. Una columna breve mantiene el hilo; los ejemplos se abren cuando necesitan mostrar más.&lt;/p&gt;&lt;p&gt;El marco acompaña sin convertirse en una caja. Las líneas se desvanecen en los márgenes y dejan que el contenido respire.&lt;/p&gt;&lt;p&gt;Al desplazarte, la navegación se aparta. Vuelve al subir o al darle foco con el teclado.&lt;/p&gt;&lt;/section&gt;
+    &lt;section class=&quot;web-prosa&quot; id=&quot;web-proyectos&quot;&gt;&lt;h3&gt;Lo que estamos construyendo&lt;/h3&gt;&lt;p&gt;Un archivo que conserva las fuentes, las preguntas y las decisiones. Cada pieza puede compartirse sin perder su contexto.&lt;/p&gt;&lt;p&gt;Este ejemplo utiliza texto original e ilustrativo. Los enlaces recorren secciones reales de la misma página.&lt;/p&gt;&lt;p&gt;El cierre se descubre al terminar la lectura, debajo de la superficie principal.&lt;/p&gt;&lt;/section&gt;
+  &lt;/div&gt;
+  &lt;footer class=&quot;web-pie&quot; id=&quot;web-cierre&quot;&gt;&lt;div&gt;&lt;a class=&quot;web-marca&quot; href=&quot;#web-contenido&quot;&gt;Margen&lt;/a&gt;&lt;p&gt;Una nota para quien viene después.&lt;/p&gt;&lt;nav aria-label=&quot;Enlaces de cierre del ejemplo&quot;&gt;&lt;a href=&quot;#web-lecturas&quot;&gt;Volver a las lecturas&lt;/a&gt;&lt;a href=&quot;#web-proyectos&quot;&gt;Ver los proyectos&lt;/a&gt;&lt;/nav&gt;&lt;small&gt;Ejemplo editorial · contenido ilustrativo&lt;/small&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/section&gt;</code></pre></div></details><footer class="pie"><p>Margen · Muestra de todos los componentes. Inspirada en <a href="https://www.cmrg.me">cmrg.me</a>; el tema claro, los ajustes de acceso y Dark Sea están documentados en el informe.</p><button type="button" data-sonido aria-pressed="false">Sonido apagado</button></footer>
 </main>
 <div class="regla" role="slider" tabindex="0" aria-orientation="vertical" aria-label="Progreso de lectura" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="ticks"></div><div class="cursor"></div><span class="val">0%</span></div>
 <script>
@@ -7970,12 +8048,32 @@ Origen: sin sesión conectada; no inventar una referencia.&lt;/code&gt;&lt;/pre&
 <script>
 /* Actividad, avisos y galería: mejoras locales, sin red ni reproducción automática. */
 (()=>{'use strict';
- const instances=new WeakMap(),selector='[data-actividad],[data-aviso-animado],[data-galeria]';
+ const instances=new WeakMap(),selector='[data-actividad],[data-aviso-animado],[data-galeria],[data-editorial-web]';
  function mount(el){
   if(instances.has(el))return;
   const clean=[],motion=matchMedia('(prefers-reduced-motion: reduce)');
   const on=(node,type,fn,opts)=>{node.addEventListener(type,fn,opts);clean.push(()=>node.removeEventListener(type,fn,opts));};
   let api={motion,destroy(){clean.splice(0).forEach(fn=>fn());instances.delete(el);}};
+  if(el.hasAttribute('data-editorial-web')){
+   const navigation=el.querySelector(':scope > .web-navegacion'),footer=el.querySelector(':scope > .web-pie');if(!navigation||!footer)return;
+   const full=el===document.body,scrollNode=full?window:el,position=()=>full?scrollY:el.scrollTop;
+   let previous=position(),distance=0,direction=0,frame=0;
+   const show=()=>el.classList.remove('web-nav-oculta');
+   const update=()=>{frame=0;const current=position(),delta=current-previous;previous=current;
+    if(motion.matches||current<64||navigation.contains(document.activeElement)){show();distance=0;return;}
+    const nextDirection=Math.sign(delta);if(nextDirection!==direction){direction=nextDirection;distance=0;}distance+=Math.abs(delta);
+    if(distance>=12){el.classList.toggle('web-nav-oculta',direction>0);distance=0;}
+   };
+   on(scrollNode,'scroll',()=>{if(!frame)frame=requestAnimationFrame(update);},{passive:true});
+   on(navigation,'focusin',show);on(motion,'change',()=>{show();previous=position();distance=0;});
+   on(footer,'focusin',()=>{show();footer.scrollIntoView({block:'end',behavior:'instant'});});
+   // Native hash links keep their destinations without JS. Focus follows an
+   // in-page selection so keyboard users land in the content, not a hidden bar.
+   on(el,'click',event=>{const link=event.target.closest('a[href^="#"]');if(!link||!el.contains(link))return;let target;try{target=document.getElementById(decodeURIComponent(link.hash.slice(1)));}catch{return;}if(!target||!el.contains(target))return;
+    const hadTabindex=target.hasAttribute('tabindex');if(!hadTabindex)target.tabIndex=-1;target.focus({preventScroll:true});if(!hadTabindex)target.addEventListener('blur',()=>target.removeAttribute('tabindex'),{once:true});show();
+   });
+   clean.push(()=>{if(frame)cancelAnimationFrame(frame);show();});
+  }
   if(el.hasAttribute('data-actividad')){
    const map=el.querySelector('[data-actividad-mapa]'),legend=el.querySelector('[data-actividad-escala]'),status=el.querySelector('[data-actividad-estado]');if(!map||!legend||!status)return;
    const original=[map.innerHTML,legend.innerHTML,status.textContent];
@@ -10380,7 +10478,7 @@ window.NotaGeografia=Object.freeze({
  }
  function init(root=document){root.querySelectorAll('.codigo pre code,.terminal pre,[data-lenguaje]').forEach(el=>{if(done.has(el))return;done.add(el);const lang=language(el,el.textContent);el.dataset.coloreado=lang;
   const block=el.closest('.codigo');
-  if(block){
+  if(block&&!el.closest('[data-ritmo="propio"],[data-presentation]')){
    block.classList.add('codigo-editorial');block.classList.remove('codigo-sin-titulo');
    let header=block.querySelector('.cab');if(!header){header=document.createElement('div');header.className='cab';block.prepend(header);}
    const label=header.querySelector('span:not(.copia-estado)');

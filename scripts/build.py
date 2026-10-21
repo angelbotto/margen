@@ -277,3 +277,11 @@ generate_project_formats()
 if (ROOT / "portal").is_dir():
  from build_developers import generate as generate_developers
  generate_developers()
+
+# The opt-in web composition has a full-page demo without the artifact review dock.
+web=(ROOT/'packages/core/recipes/web-shell/example.html').read_text()
+web=web.replace('<section class="ancho web-editorial" data-editorial-web id="web-editorial-ejemplo" tabindex="0" aria-label="Sitio editorial de ejemplo, desplazable">','<body class="web-editorial" data-editorial-web>')
+web=web.rstrip().removesuffix('</section>')
+web=web.replace('<p class="ceja">Un cuaderno abierto</p>','',1).replace('<h2>La forma también explica.</h2>','<h1>La forma también explica.</h1>',1)
+web=web.replace('<div class="web-contenido" id="web-contenido" tabindex="-1">','<main class="web-contenido" id="web-contenido" tabindex="-1">').replace('  </div>\n  <footer class="web-pie"','  </main>\n  <footer class="web-pie"')
+(ROOT/'examples/generated/editorial-web.html').write_text('<!doctype html><html lang="es" data-theme="dark"><head>'+start('Margen · Sitio editorial')+'</head>'+web+script('packages/core/components/editorial-pieces.js')+'</body></html>')
