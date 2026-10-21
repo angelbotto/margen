@@ -290,6 +290,7 @@
       );
     }
     document.body.append(bar, status);
+    window.MargenSpeech?.mount(bar);
     document.addEventListener("keydown", (event) => {
       if (
         ![

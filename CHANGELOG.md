@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased — Shared neural narration reader
+
+- Add opt-in whole-document, selection and contextual reading controls, preserving comments/native menus, keyboard/mobile access, theme spacing and sandbox isolation.
+- Add disabled-by-default backend candidate adapters, explicit external-text confirmation, immutable version/range authorization, streaming, cancellation, usage caps and private bounded cache. No device-voice fallback; standalone files explain portal availability.
+- Cover extraction, parent/iframe lifecycle, quotas, cache/access, incomplete streams and responsive controls with synthetic tests. Provider selection and real ES/EN/mixed auditory validation remain pending; no purchase, paid synthesis, deployment or analytics expansion.
+
 ## 2026.10.20-library.3 — Shared reading rhythm
 
 - Apply shared paragraph, heading, eyebrow and section spacing across all theme families and legacy editorial pages, nested prose, cards, lists and width-only wrappers. Correct collapsed boundaries found in nine canonical recipes.

@@ -21,7 +21,7 @@ The prototype feeling came from accumulated controls with equal visual weight, i
 
 ## Behavior
 
-The dock contains Comments (including point creation, private notes and its open-thread badge), Share, and Preferences. There is no duplicate review or More tool. Main mobile tools have 44 px targets. Keyboard focus, arrow navigation and reduced motion are preserved. Tooltips supplement accessible labels. Comment context, optional session and entry type are disclosed; privacy stays visible. Blank submissions are disabled and failed saves retain text. The theme picker keeps the current choice visible in its header even while searching other families.
+The dock contains Comments (including point creation, private notes and its open-thread badge), Share, Preferences, and Listen. There is no duplicate review or More tool. Main mobile tools have 44 px targets. Keyboard focus, arrow navigation and reduced motion are preserved. Tooltips supplement accessible labels. Comment context, optional session and entry type are disclosed; privacy stays visible. Blank submissions are disabled and failed saves retain text. The theme picker keeps the current choice visible in its header even while searching other families.
 
 The portal keeps strict CSP and opaque artifact isolation. Shared reader styles are generated from one source. Stored artifact versions remain immutable; updating source content requires a reviewed revision. Copying context neither sends data to an agent nor changes permissions.
 
@@ -42,4 +42,4 @@ Record explorers support Table, List, Cards and Board. List reduces per-record s
 
 ## Editorial collaboration toolbar
 
-A compact paper surface, dotted perimeter fading toward the center, ink-colored icons and restrained active underline tie the toolbar to Margen. Keep Comments, Share and existing Preferences; hide an empty comment badge. Desktop labels sit beside icons, while narrow screens stack them above labels with 44px touch targets. All positioning is scoped and resets inherited `nav` geometry. Foreign decks keep their body dimensions and existing controls. Preferences are available only when the artifact owns an appearance system.
+A compact paper surface, dotted perimeter fading toward the center, ink-colored icons and restrained active underline tie the toolbar to Margen. Keep Comments, Share, existing Preferences and Listen; hide an empty comment badge. Desktop labels sit beside icons, while narrow screens stack them above labels with 44px touch targets. All positioning is scoped and resets inherited `nav` geometry. Foreign decks keep their body dimensions and existing controls. Preferences are available only when the artifact owns an appearance system.

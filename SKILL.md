@@ -47,7 +47,7 @@ Publishing: `python3 scripts/publish.py publicar --file /path/artifact.html --ti
 
 Write from the user to their team or themselves, ready to share. Lead with the conclusion or decision, evidence and implications. Include highlights, lowlights, alternatives and actions where the format warrants them. Preserve depth; never invent first-person experiences, metrics, sources, agreements or results. Distinguish facts, calculations, examples and proposals. Repository documentation is English; artifact content follows the user's language.
 
-- Reuse the base's **Comments → Share → Preferences** dock, themes, sound and review. Never reconstruct them. Notes remain private unless explicitly selected for an AI context bundle. Keep anchoring available on text, cells, charts and images.
+- Reuse the base's **Comments → Share → Preferences → Listen** dock, themes, sound and review. Never reconstruct them. Notes remain private unless explicitly selected for an AI context bundle. Keep anchoring available on text, cells, charts and images.
 - Reading rhythm comes from the base, independently of theme. Use `.prosa` for custom or nested text wrappers; reserve `data-ritmo="propio"` for intentional custom layouts. Resolve composition warnings and check heading gaps on mobile.
 - Text width is 35rem; wide figures 62/76rem and fluid. Wide figures are siblings of prose blocks. Use one outer frame, no nested dotted frames, negative margins or document-wide overflow hiding.
 - Tables and code use named local scrollers. Preserve whole words in short columns; give descriptions deliberate widths and vertical room. Use existing search/filter/column/view controls rather than rebuilding them. Missing data is not zero.

@@ -244,7 +244,7 @@ for filename,identity in json.loads((ROOT/'packages/core/registry/compatibility.
 
 # Recursos compartidos del portal; no se incluyen credenciales ni datos de instancia.
 if (ROOT/"portal/static").is_dir():
- for source,target in [("packages/core/components/interface.js","interface.js"),("packages/core/components/review.js","review.js"),("packages/core/components/reader-controls.js","reader-controls.js"),("packages/core/styles/fonts.css","fonts.css")]:
+ for source,target in [("packages/core/components/interface.js","interface.js"),("packages/core/components/review.js","review.js"),("packages/core/components/reader-controls.js","reader-controls.js"),("packages/core/components/reader-speech.js","reader-speech.js"),("packages/core/styles/fonts.css","fonts.css")]:
   (ROOT/"portal/static"/target).write_bytes((ROOT/source).read_bytes())
 
  # External copy keeps the account UI compatible with its strict style-src policy.

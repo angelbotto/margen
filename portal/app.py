@@ -692,6 +692,8 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
     mount_context(app,store,origin,account,payload,clean,artifact_for,permissions)
     from portal.creator import mount as mount_creator
     mount_creator(app,store,origin,account,payload,clean,artifact_for,permissions,threads,snapshot)
+    from portal.narration import mount as mount_narration
+    mount_narration(app,store,account,payload,artifact_for,permissions)
     from portal.editor import mount as mount_editor
     mount_editor(app,store,origin,account,payload,artifact_for,permissions)
 
@@ -738,7 +740,7 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
         content=re.sub(r'(<script\s+data-nota-modulo=[\"\'](?:revision|packages/core/components/review)\.js[\"\'][^>]*>).*?</script>',
                        lambda m:m[1]+revision+'</script>',content,flags=re.S)
         reader_controls=(ROOT/'static/reader-controls.js').read_text()
-        script='<script>'+(ROOT/'static/interface.js').read_text()+'\n'+bridge+'\n'+reader_controls+'</script><style>'+(ROOT/'static/review-additions.css').read_text()+'</style>'
+        script='<script>'+(ROOT/'static/interface.js').read_text()+'\n'+bridge+'\n'+(ROOT/'static/reader-speech.js').read_text()+'\n'+reader_controls+'</script><style>'+(ROOT/'static/review-additions.css').read_text()+'</style>'
         head=re.search(r'<head(?:\s[^>]*)?>',content,re.I)
         position=head.end() if head else (re.match(r'\s*<!doctype[^>]*>',content,re.I).end() if re.match(r'\s*<!doctype[^>]*>',content,re.I) else 0)
         result=content[:position]+script+content[position:]
