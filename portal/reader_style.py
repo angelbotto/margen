@@ -78,12 +78,19 @@ def refresh_editorial_reference(content, css, code, pieces=None):
             self.margen = False
             self.injected = False
             self.head_end = None
+            self.doctype_end = None
             self.last_style = None
             self.inert_depth = 0
 
         def pos(self):
             line, column = self.getpos()
             return offsets[line - 1] + column
+
+        def handle_decl(self, declaration):
+            # A declaration callback identifies real markup, not a doctype-like
+            # string in a comment, script, template or literal example.
+            if not self.literal and not self.inert_depth and self.doctype_end is None and re.match(r'doctype(?:\s|$)', declaration, re.I):
+                self.doctype_end = self.pos() + len(declaration) + 3
 
         def handle_starttag(self, tag, attributes):
             if self.literal:
@@ -144,7 +151,9 @@ def refresh_editorial_reference(content, css, code, pieces=None):
     if not parser.injected:
         # Last stylesheet wins over the embedded library, including late body
         # styles. Inline component overrides and opt-out layouts remain intact.
-        position = parser.last_style if parser.last_style is not None else (parser.head_end or 0)
+        # When head tags are omitted, inserting before a valid doctype would
+        # switch the rendered document from standards mode to quirks mode.
+        position = next((offset for offset in (parser.last_style, parser.head_end, parser.doctype_end) if offset is not None), 0)
         parser.edits.append((position, position, '<style data-margen-editorial-reference>' + css + '</style>'))
     for start, end, replacement in sorted(parser.edits, reverse=True):
         content = content[:start] + replacement + content[end:]

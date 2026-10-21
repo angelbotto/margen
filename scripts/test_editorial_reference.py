@@ -104,6 +104,22 @@ class EditorialReference(unittest.TestCase):
   result=refresh_editorial_reference(old,css,code)
   page,errors=self.page(390,html=result);self.assertEqual(page.locator('#first').bounding_box()['width'],342);self.assertEqual(page.locator('#source').text_content(),SOURCE);self.assertEqual(errors,[])
   self.assertIn('stale code runtime',old);self.assertNotIn('stale code runtime',result)
+ def test_hosted_upgrade_preserves_browser_document_mode(self):
+  sys.path.insert(0,str(ROOT))
+  from portal.reader_style import refresh_editorial_reference
+  sources=[prefix+body for prefix in ('<!doctype html>','\n<!DOCTYPE html>','<!-- note -->\n<!doctype html>','<!-- <!doctype html> example -->\n<!DOCTYPE html>')
+           for body in ('<main class="hoja"><h1>Evidence</h1></main>','<html><head><meta charset="utf-8"><body><main class="hoja"><h1>Evidence</h1></main></body></html>')]
+  sources.append('<main class="hoja"><h1>Intentional fragment</h1></main>')
+  for source in sources:
+   with self.subTest(source=source):
+    modes=[]
+    updated=refresh_editorial_reference(source,'h1{font-size:50px}','')
+    for html in (source,updated):
+     page,errors=self.page(html=html);modes.append(page.evaluate('document.compatMode'))
+     if html==updated:self.assertEqual(page.locator('h1').evaluate('e=>getComputedStyle(e).fontSize'),'50px')
+     self.assertEqual(errors,[]);page.close()
+    self.assertEqual(modes[0],modes[1])
+    self.assertEqual(modes[1],'BackCompat' if source==sources[-1] else 'CSS1Compat')
  def test_author_owned_and_presentation_boundaries(self):
   import re
   css=(ROOT/'packages/core/styles/artifact.css').read_text()

@@ -53,6 +53,20 @@ class EditorialReferenceRefreshTest(unittest.TestCase):
         self.assertEqual(self.refresh(result), result)
         self.assertIn('old();', source)
 
+    def test_headless_documents_preserve_doctype_and_leading_comments(self):
+        prefixes = ('<!doctype html>', '\n\t<!DOCTYPE html>', '<!-- editorial note -->\n<!DOCTYPE html>',
+                    '<!-- <!doctype html> is only an example -->\n<!doctype html>')
+        bodies = ('<main class="hoja"><h1>Evidence</h1></main>',
+                  '<html><head><meta charset="utf-8"><body><main class="hoja">Evidence</main></body></html>')
+        for prefix in prefixes:
+            for body in bodies:
+                with self.subTest(prefix=prefix, body=body):
+                    source = prefix + body
+                    result = self.refresh(source)
+                    self.assertTrue(result.startswith(prefix+'<style data-margen-editorial-reference>'))
+                    self.assertTrue(result.endswith(body))
+                    self.assertEqual(self.refresh(result), result)
+
     def test_preserves_non_margen_presentations_and_literal_html(self):
         for content in ('<main>Custom app</main>', '<main class="hoja" data-presentation></main>',
                         '<main class="hoja" data-ritmo="propio"></main>',
