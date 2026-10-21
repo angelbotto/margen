@@ -41,7 +41,7 @@ class Handler(BaseHTTPRequestHandler):
             mode='legacy' if 'legacy' in self.path else 'modern'
             real='&real' if 'real' in self.path else ''
             html='''<!doctype html><style>body{margin:0}iframe{display:block;border:0;width:100%;height:100vh}</style><iframe sandbox="allow-scripts allow-downloads" src="/frame?'''+mode+real+'''"></iframe><script>
-            window.addEventListener('message',e=>{if(e.source!==document.querySelector('iframe').contentWindow||e.origin!=='null'||e.data?.bottifact!==1)return;const {id,op}=e.data;window.operations=(window.operations||[]).concat(op);const snapshot={author:'Persona de ejemplo',verified:true,permissions:{comment:true,review:true},events:[],reader:{preferences:{},manage:false}};e.source.postMessage({bottifact:1,id,data:op==='ready'?snapshot:{ok:true}},'*');});</script>'''
+            window.addEventListener('message',e=>{if(e.source!==document.querySelector('iframe').contentWindow||e.origin!=='null'||e.data?.bottifact!==1)return;const {id,op}=e.data;if(op==='action'&&e.data.data?.name==='comment')e.source.postMessage({bottifact:1,op:'capture-context'},'*');window.operations=(window.operations||[]).concat(op);const snapshot={author:'Persona de ejemplo',verified:true,permissions:{comment:true,review:true},snapshot:{format:'nota-revision',version:2,document:'speech-synthetic',events:[]},reader:{preferences:{},manage:false}};e.source.postMessage({bottifact:1,id,data:op==='ready'?snapshot:{ok:true}},'*');});</script>'''
         else:html=fixture(legacy='legacy' in self.path,hosted=frame,real='real' in self.path,chapters='chapters' in self.path)
         self.send_response(200);self.send_header('Content-Type','text/html; charset=utf-8')
         if frame:self.send_header('Content-Security-Policy',CSP)
@@ -151,8 +151,9 @@ class ReaderSpeech(unittest.TestCase):
                 f.locator('[data-speech-tool] summary').click();f.get_by_role('button',name='Elegir desde dónde leer',exact=True).click();p.keyboard.press('Escape')
                 f.locator('[data-review-tool] summary').click();f.get_by_role('button',name='Añadir comentario',exact=True).click()
                 if 'legacy' in path:
-                    p.wait_for_function("operations.includes('action')")
-                else:self.assertTrue(f.locator('.bf-controls-status').count()>0)
+                    p.wait_for_function("operations.includes('action')");f.locator('[data-host-point-picker]').wait_for();f.locator('#first').click();p.wait_for_function("operations.includes('context')")
+                else:
+                    f.locator('#first').click();self.assertTrue(f.locator('[data-revision-editor]').is_visible())
     @unittest.skipUnless(os.getenv('SPEECH_REAL'),'Set SPEECH_REAL=1 for audible device speech')
     def test_real_device_voice_in_sandbox(self):
         p,f=self.open('/host?real')
