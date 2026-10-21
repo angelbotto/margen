@@ -140,8 +140,53 @@ class DevelopersTests(unittest.TestCase):
                 self.assertIn('window.NotaAnalitica=', scripts[1])
                 self.assertNotIn('allow-same-origin', response.headers['content-security-policy'])
         for item in bundled().values():
-            if item['kind'] == 'component' and 'packages/core/components/analytics.js' not in item.get('dependencies', []):
-                self.assertNotIn('geography.js', item['preview_runtime'])
+            if item['kind'] == 'component' and 'geography.js' in item['preview_runtime']:
+                self.assertTrue({'analytics.js', 'scene.js', 'fleet.js'} & set(item['preview_runtime']), item['slug'])
+
+    def test_bundled_previews_keep_recipe_markup_and_pin_three(self):
+        import re
+        from portal.developers import THREE
+        scene = self.guest.get('/api/developers/items/component-coordinates/preview')
+        policy = scene.headers['content-security-policy']
+        self.assertIn('script-src ', policy)
+        self.assertIn(' ' + THREE[0], policy)
+        self.assertNotIn('https://cdnjs.cloudflare.com/ ', policy + ' ')
+        self.assertIn('<script src="' + THREE[0] + '" integrity="' + THREE[1] + '" crossorigin="anonymous"></script>', scene.text)
+        self.assertEqual(re.findall(r'<script src="([^"]+)"', scene.text), [THREE[0]])
+        chart = self.guest.get('/api/developers/items/component-line-chart/preview')
+        self.assertNotIn('cdnjs', chart.headers['content-security-policy'] + chart.text)
+        self.assertIn('a[href]{pointer-events:none}', chart.text)
+        explorer = self.guest.get('/api/developers/items/component-data-explorer/preview')
+        self.assertIn('<select', explorer.text)
+        self.assertIn('<details', explorer.text)
+        static = self.guest.get('/api/developers/items/component-sketch-diagram/preview')
+        self.assertEqual(bundled()['component-sketch-diagram']['preview_runtime'], [])
+        self.assertIn("script-src 'none'", static.headers['content-security-policy'])
+        self.assertIn(bundled()['component-sketch-diagram']['content'], static.text)
+        for item in bundled().values():
+            if item['kind'] == 'component':
+                self.assertNotIn('reader-controls.js', item['preview_runtime'])
+
+    def test_preview_runtime_is_coherent_with_the_artifact_contract(self):
+        import sys
+        from pathlib import Path
+        from portal.developers import THREE, NEEDS_THREE, preview_runtime
+        scripts = Path(__file__).resolve().parents[1] / 'scripts'
+        sys.path.insert(0, str(scripts))
+        try:
+            import contract_artifact
+            from build_developers import CORE_TRIGGERS
+        finally:
+            sys.path.remove(str(scripts))
+        self.assertEqual(THREE[0], contract_artifact.THREE)
+        components = Path(__file__).resolve().parents[1] / 'packages/core/components'
+        self.assertEqual(NEEDS_THREE, {path.name for path in components.glob('*.js') if 'window.THREE' in path.read_text()})
+        self.assertEqual(set(CORE_TRIGGERS) | {'reader-controls.js'}, {module.rsplit('/', 1)[1] for module in contract_artifact.CORE})
+        runtime = preview_runtime()
+        used = {name for item in bundled().values() if item['kind'] == 'component' for name in item['preview_runtime']}
+        self.assertEqual(set(runtime), used)
+        for name, source in runtime.items():
+            self.assertEqual(source, (components / name).read_text())
 
     def test_theme_applies_as_draft_preserving_identity_and_access(self):
         key = self.submit()

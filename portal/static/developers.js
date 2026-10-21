@@ -204,7 +204,7 @@ window.MargenDevelopers = (() => {
           for (const [value, name] of [["light", "Claro"], ["dark", "Oscuro"]]) modes.append(button(name, () => { frame.src = `/api/developers/items/${item.id}/preview?mode=${value}`; }));
           dialog.append(modes);
         }
-        dialog.append(el("p", detail.kind === "theme" ? "Prueba este tema en un artefacto nuevo o prepara una revisión de uno existente." : (detail.origin === "bundled" && detail.preview_runtime?.length ? "El ejemplo ejecuta los módulos incluidos de la biblioteca. Copia el HTML junto con sus dependencias para conservar este comportamiento." : "Esta vista muestra el HTML/SVG estático. Consulta las dependencias y la fuente para integrar la receta completa."), "muted"));
+        dialog.append(el("p", detail.kind === "theme" ? "Prueba este tema en un artefacto nuevo o prepara una revisión de uno existente." : (detail.origin === "bundled" ? (detail.preview_runtime?.length ? "El ejemplo ejecuta " + detail.preview_runtime.join(", ") + " de la biblioteca. Copia el HTML junto con sus dependencias para conservar este comportamiento." : "Esta receta es HTML y CSS de la hoja, sin módulos: la vista es el resultado completo.") : "Esta vista muestra el HTML/SVG estático. Consulta las dependencias y la fuente para integrar la receta completa."), "muted"));
         if (catalog.can_submit && detail.kind === "theme") {
           const use = el("section", null, "community-use");
           const useActions = el("div", null, "developer-actions");
