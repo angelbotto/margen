@@ -861,6 +861,16 @@
     });
   }
   async function load(append = false) {
+    window.MargenDevelopers.destroy();
+    if (view === "developers") {
+      listController?.abort(); graphController?.abort(); graphInstance?.destroy();
+      previews.disconnect(); covers.disconnect(); workspace.destroy();
+      for (const id of ["feed-end", "table-preferences", "context-tools", "browse-bar", "library-filters", "overview"])
+        $("#" + id).hidden = true;
+      $(".tools").hidden = true;
+      $("#results").removeAttribute("aria-busy");
+      return window.MargenDevelopers.render({root: $("#results"), api, user});
+    }
     if (["brain", "insights", "work"].includes(view)) {
       listController?.abort();
       graphController?.abort();
@@ -1025,9 +1035,10 @@
                     encodeURIComponent(
                       new URLSearchParams(location.search).get("section"),
                     )
-                  : ""),
+                  : "") + (view === "developers" && new URLSearchParams(location.search).has("item") ? "&item=" + encodeURIComponent(new URLSearchParams(location.search).get("item")) : ""),
         );
         $("#library-title").textContent = {
+          developers: "Temas y componentes",
           brain: "Grafo de conocimiento",
           insights: "Visitas",
           work: "Mi trabajo",
@@ -1046,6 +1057,7 @@
             mine: "Solo documentos de tu cuenta. Los de otras personas están en Compartidos conmigo.",
             all: "Vista de administración. Cada documento conserva su propietario y sus permisos.",
             shared: "Documentos que otras personas comparten contigo o con los dominios de tu cuenta.",
+            developers: "Temas, componentes y una comunidad que construye contigo.",
             brain: "Una memoria de ideas, fuentes y decisiones.",
             insights: "Entiende qué se lee cuando compartes tu trabajo.",
             work: "Revisa evidencia, retoma sesiones y decide el siguiente paso.",
@@ -1176,6 +1188,7 @@
     admin: "settings",
     all: "folder",
     connections: "agent",
+    developers: "code",
   }))
     decorate?.($('[data-view="' + view + '"]'), icon);
   for (const name of ["grid", "list", "table", "graph"])
@@ -2429,6 +2442,9 @@
       ),
     );
     root.append(intro);
+    const community = make("a", "Developers · catálogo y revisión de aportes", "button");
+    community.href = "/?view=developers";
+    root.append(community);
     const metrics = make("div", undefined, "admin-metrics");
     for (const [key, label] of [
       ["artifacts", "Artefactos"],
@@ -2580,7 +2596,7 @@
   ])
     .then(() => {
       const match = location.pathname.match(/^\/a\/([a-f0-9]{32})$/);
-      if (!match && !user?.verified) {
+      if (!match && !user?.verified && new URLSearchParams(location.search).get("view") !== "developers") {
         location.replace("/login");
         return;
       }

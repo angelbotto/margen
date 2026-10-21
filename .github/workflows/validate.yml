@@ -82,5 +82,11 @@ jobs:
         run: |
           pip install playwright==1.58.0
           python -m playwright install --with-deps chromium
+      - name: Install portal test dependencies
+        run: |
+          pip install --require-hashes -r portal/requirements.lock
+          pip install httpx==0.28.1
+      - name: Check community creation and sharing
+        run: python scripts/test_community_marketplace.py
       - name: Check shared reading rhythm
         run: python scripts/test_editorial_flow.py

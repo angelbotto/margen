@@ -3,8 +3,9 @@ Bottifact — third-party notices
 The root MIT license applies to original Bottifact code and documentation.
 It does not replace the licenses or trademark rights listed below.
 
-Fonts: Geist, Geist Mono, Literata, Reenie Beanie and Instrument Serif.
-SIL Open Font License notices are retained in licencias/*-OFL.txt.
+Fonts: Geist, Geist Mono, Literata, Reenie Beanie, Instrument Serif, Manrope and Source Serif 4.
+SIL Open Font License notices are retained in licenses/*-OFL.txt.
+Community font provenance and embedded subset hashes: tests/evidence/community-fonts.json.
 
 COBE-derived globe shader/landmask: copyright (c) 2021 Shu Ding, MIT.
 The complete notice is preserved at the start of packages/core/components/globe.js.

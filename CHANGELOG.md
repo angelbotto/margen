@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased — Community creation
+
+- Create themes with light/dark palettes and six font families, including embedded Manrope and Source Serif 4. Save privately, share a link or request catalog inclusion without a PR.
+- Build static cards, steps and flow diagrams visually; retain source, license and credits when making a variant. Browse bundled themes/recipes, save favorites and moderate submissions in the portal.
+- Create private artifacts and prepare theme revisions while preserving existing links and permissions. Isolate previews and reconstruct supported static HTML/SVG; downloaded packages can be uploaded again.
+- Verify real browser creation, sharing, typography, reader controls and mobile layouts alongside API access and revision tests.
+
 ## 2026.10.20-library.3 — Shared reading rhythm
 
 - Apply shared paragraph, heading, eyebrow and section spacing across all theme families and legacy editorial pages, nested prose, cards, lists and width-only wrappers. Correct collapsed boundaries found in nine canonical recipes.

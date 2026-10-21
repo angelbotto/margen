@@ -2,6 +2,8 @@
 
 A contribution should improve a reader's ability to understand evidence or make a decision. Each recipe has an editable specimen, a manifest and guidance. The generated reference and examples are outputs, not editing surfaces.
 
+For creation without code or a PR, use the portal’s [visual theme and component editor](community-marketplace.md). This guide covers changes to the library source and interactive runtime.
+
 ## Edit an existing recipe
 
 1. Find its English folder under `packages/core/recipes/` (for example `bar-chart`). `component.json` preserves its original identifier under `legacyId`.
