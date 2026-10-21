@@ -1749,7 +1749,11 @@
     workbenchTools.append(b);
   }
   $("#results").before(workbenchTools);
+  const narration = window.MargenNarration.create({api, binding: () => current && ({artifact:current.id, version:$("#version").value || current.current_version}), emit: data => $("#artifact-frame").contentWindow?.postMessage({bottifact:1,op:"narration-event",data},"*")});
+  addEventListener("pagehide", () => narration.stop());
+  $("#artifact-frame").addEventListener("load", () => narration.stop());
   function setArtifactSource(src) {
+    narration.stop();
     const frame = $("#artifact-frame");
     frame.contentWindow?.postMessage({bottifact:1, op:"stop-speech"}, "*");
     frame.src = src;
@@ -1793,13 +1797,16 @@
         "action",
         "preferences",
         "controls-ready",
+        "narration",
       ].includes(op)
     )
       return;
     const source = event.source;
     try {
       let result;
-      if (["action", "preferences", "controls-ready"].includes(op)) {
+      if (op === "narration") {
+        result = await narration.handle(data);
+      } else if (["action", "preferences", "controls-ready"].includes(op)) {
         result = await readerWorkspace.handle(op, data);
       } else if (op === "export") {
         const exported = await api(

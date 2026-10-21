@@ -20,10 +20,10 @@
     {
       "file": "docs/assets/reader-speech-after.png",
       "source": "examples/content/reader-speech.html",
-      "purpose": "Synthetic mobile reader after voice controls; no account or customer data",
+      "purpose": "Synthetic mobile neural reader controls with mocked provider; UI evidence only, no voice-quality claim or customer data",
       "synthetic": true,
       "reviewed": true,
-      "sha256": "9085b50bc37d827a0924d1c4e039fc14b18fb2416f37bf49d892a9142be45bee"
+      "sha256": "3ef756576d72f8ebd543927a2a1c529064b59e4b796e8254beaa9e30a59380e5"
     }
   ]
 }

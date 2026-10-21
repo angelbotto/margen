@@ -1,8 +1,8 @@
 /* Scoped review bridge. No credentials, cookies or direct network access. */
 (()=>{'use strict';
-  const pending=new Map(),listeners=new Set();let latest=null;const retries=new Map();
+  const pending=new Map(),listeners=new Set(),narrationListeners=new Set();let latest=null;const retries=new Map();
   const send=(op,data={})=>new Promise((resolve,reject)=>{
-    const id=crypto.randomUUID(),timer=setTimeout(()=>{pending.delete(id);reject(Error('No se pudo guardar. El texto permanece aquí; intenta de nuevo.'));},20000);
+    const id=crypto.randomUUID(),timer=setTimeout(()=>{pending.delete(id);reject(Error(op==='narration'?'El portal no respondió. Vuelve a intentar la lectura.':'No se pudo guardar. El texto permanece aquí; intenta de nuevo.'));},20000);
     pending.set(id,{resolve,reject,timer});parent.postMessage({bottifact:1,id,op,data},'*');
   });
   let picking=null;
@@ -28,6 +28,7 @@
   addEventListener('message',event=>{
     if(event.source!==parent||!event.data||event.data.bottifact!==1)return;
     const message=event.data;
+    if(message.op==='narration-event'){narrationListeners.forEach(fn=>fn(message.data));return;}
     if(message.op==='stop-speech'){window.MargenSpeech?.stop();return;}
     if(message.op==='capture-context'){
       captureContext();return;
@@ -39,6 +40,8 @@
     if(message.error)request.reject(Error(message.error));else request.resolve(message.data);
   });
   window.BottifactReviewBridge={
+    narration:data=>send('narration',data),
+    subscribeNarration:fn=>{narrationListeners.add(fn);return()=>narrationListeners.delete(fn);},
     action:name=>send('action',{name}),
     preferences:value=>send('preferences',value),
     controlsReady:()=>send('controls-ready').catch(()=>{}),

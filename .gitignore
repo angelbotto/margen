@@ -28,3 +28,6 @@ packages/*/licenses/
 # Legacy local build output (never publish historical archives).
 descargas/
 packages/core/src/generated-assets.ts
+
+# Local synthetic narration audition; private scores/audio stay out of git.
+tests/artifacts/

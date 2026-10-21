@@ -22,5 +22,9 @@ it('waits for a point instead of attaching a legacy comment to the heading, and 
  window.dispatchEvent(new MessageEvent('message',{source:window.parent,data:{op:'stop-speech'}}));
  expect(stop).not.toHaveBeenCalled();
  window.dispatchEvent(new MessageEvent('message',{source:window.parent,data:{bottifact:1,op:'stop-speech'}}));
- expect(stop).toHaveBeenCalledOnce();delete (window as any).MargenSpeech;
+ expect(stop).toHaveBeenCalledOnce();
+ const narration=vi.fn();const unsubscribe=(window as any).BottifactReviewBridge.subscribeNarration(narration);
+ window.dispatchEvent(new MessageEvent('message',{source:null,data:{bottifact:1,op:'narration-event',data:{state:'playing'}}}));expect(narration).not.toHaveBeenCalled();
+ window.dispatchEvent(new MessageEvent('message',{source:window.parent,data:{bottifact:1,op:'narration-event',data:{state:'playing'}}}));expect(narration).toHaveBeenCalledWith({state:'playing'});unsubscribe();
+ delete (window as any).MargenSpeech;
 });

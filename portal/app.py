@@ -692,6 +692,8 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
     mount_context(app,store,origin,account,payload,clean,artifact_for,permissions)
     from portal.creator import mount as mount_creator
     mount_creator(app,store,origin,account,payload,clean,artifact_for,permissions,threads,snapshot)
+    from portal.narration import mount as mount_narration
+    mount_narration(app,store,account,payload,artifact_for,permissions)
     from portal.editor import mount as mount_editor
     mount_editor(app,store,origin,account,payload,artifact_for,permissions)
 

@@ -1,4 +1,4 @@
-/* Device speech for the shared reader. No network, credentials or stored document text. */
+/* Shared neural narration controls. Audio and authorization live in the trusted host. */
 (() => {
   'use strict';
   if (window.MargenSpeech) return;
@@ -20,12 +20,14 @@
   }
   function extract({range, allPages = false} = {}) {
     const result = [], walker = document.createTreeWalker(root(), NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT);
-    let node;
+    let node,lastElement=null,part=0;const parts=new Map();
     while ((node = walker.nextNode())) {
       const lineBreak=node.nodeType===Node.ELEMENT_NODE && node.tagName==='BR';
       if(node.nodeType!==Node.TEXT_NODE && !lineBreak)continue;
       const parent = node.parentElement;
       if (!parent || !readable(parent, allPages)) continue;
+      const element = parent.closest(blocks) || parent;
+      if(element!==lastElement){part=(parts.get(element)??-1)+1;parts.set(element,part);lastElement=element;}
       let text = lineBreak?' ':node.textContent;
       if (range) {
         if (!range.intersectsNode(node)) continue;
@@ -33,14 +35,13 @@
         const end = range.endContainer === node ? range.endOffset : text.length;
         text = text.slice(start, end);
       }
-      const element = parent.closest(blocks) || parent;
       const last = result.at(-1);
-      if (last?.element === element) last.text += text;
-      else result.push({element, text});
+      if (last?.element === element && last.part===part) last.text += text;
+      else result.push({element, part, text});
     }
     return result.map(item => ({...item, text:item.text.replace(/\s+/g, ' ').trim()})).filter(item => item.text);
   }
-  function chunk(text, limit = 220) {
+  function chunk(text, limit = 1200) {
     const chunks = [];
     let rest = text.trim();
     while (rest.length > limit) {
@@ -63,8 +64,8 @@
     const on = (target, type, fn, options = {}) => target.addEventListener(type, fn, {...options, signal:abort.signal});
     const make = (tag, text) => {const el = document.createElement(tag); if (text) el.textContent = text; return el;};
     const button = (text, fn) => {const el = make('button', text); el.type = 'button'; on(el, 'click', fn); return el;};
-    const synth = window.speechSynthesis;
-    const supported = !!(synth && window.SpeechSynthesisUtterance);
+    const bridge = window.BottifactReviewBridge;
+    const supported = !!bridge?.narration;
     const style = make('style');
     style.textContent = `
       [data-speech-current]{outline:2px solid var(--foco,#6865c8)!important;outline-offset:4px;background-color:color-mix(in srgb,var(--foco,#6865c8) 9%,transparent)}
@@ -94,70 +95,70 @@
     for (const value of [0.75,1,1.25,1.5,2]) {const option = make('option',value+'×');option.value = String(value);speed.append(option);} speed.value='1';
     const voice = make('select'); voice.setAttribute('aria-label','Voz');
     const speedLabel = make('label','Velocidad'), voiceLabel = make('label','Voz');speedLabel.append(speed);voiceLabel.append(voice);
-    const privacy = make('p','Local: voz ofrecida por tu dispositivo. Las voces remotas pueden enviar el texto al servicio de voz.');
-    const settings=make('details');settings.append(make('summary','Velocidad y voz'),speedLabel,voiceLabel,privacy);
+    const profile=make('select');profile.setAttribute('aria-label','Estilo');
+    for(const [value,label] of [['report','Informe'],['narrative','Narración'],['neutral','Lectura neutra']]){const option=make('option',label);option.value=value;profile.append(option);}
+    const profileLabel=make('label','Estilo');profileLabel.append(profile);
+    const privacy = make('p','Voz generada por IA. Antes de enviar texto se pedirá confirmación en el portal.');
+    const settings=make('details');settings.append(make('summary','Velocidad, voz y estilo'),speedLabel,voiceLabel,profileLabel,privacy);
     player.append(status,row,settings);document.body.append(player);
-    let voices = [], queue = [], index = 0, generation = 0, state = 'idle', currentUtterance, highlight, selectionRange, picking, watchdog, internalPage = false, started = false;
-    const lang = () => document.documentElement.lang || 'es';
-    const voiceKey = v => JSON.stringify([v.voiceURI,v.name,v.lang,v.localService]);
+    let queue = [], state = 'idle', highlight, selectionRange, picking, internalPage = false, request='', config=null,generation=0;
+    const unavailable='La narración neuronal aún no está configurada. No se usará una voz del dispositivo.';
     const message = text => {status.textContent = text;};
     function clearHighlight() {highlight?.removeAttribute('data-speech-current');highlight = null;}
     function stop(text = 'Lectura detenida.') {
-      generation++; clearTimeout(watchdog); queue=[]; currentUtterance = null; clearHighlight();
-      if (state !== 'idle' && supported) {synth.cancel();synth.resume();}
-      state='idle'; pause.disabled=stopButton.disabled=true;pause.textContent='Pausar';message(text);
+      generation++;const wasActive=state!=='idle';request='';queue=[];clearHighlight();state='idle';
+      pause.disabled=stopButton.disabled=true;pause.textContent='Pausar';voice.disabled=profile.disabled=false;message(text);
+      if(wasActive&&supported)bridge.narration({action:'stop'}).catch(()=>{});
     }
-    function refreshVoices() {
-      const old = voice.value;
-      voices = supported ? synth.getVoices().slice().sort((a,b) => Number(b.localService)-Number(a.localService) || Number(b.lang.split('-')[0]===lang().split('-')[0])-Number(a.lang.split('-')[0]===lang().split('-')[0]) || Number(b.default)-Number(a.default)) : [];
-      voice.replaceChildren();
-      voices.forEach(v => {const option=make('option',`${v.name} · ${v.lang} · ${v.localService?'Local':'Servicio remoto'}`);option.value=voiceKey(v);voice.append(option);});
-      if (voices.some(v=>voiceKey(v)===old)) voice.value=old;
-      else if(old && voices.length && state!=='idle'){stop('La voz elegida ya no está disponible. Elige otra e inicia la lectura.');return;}
-      if (!voices.length) {
-        voice.append(make('option',supported?'Sin voces disponibles':'API no disponible'));
-        stop(supported?'No hay voces disponibles. Instala o habilita una voz en tu dispositivo y vuelve a intentar.':'Este navegador no ofrece lectura por voz.');
-      } else if (state === 'idle') message('Listo para escuchar.');
+    async function refreshVoices() {
+      if(!supported){message('Abre este documento en el portal de Margen para usar narración neuronal. No hay voz del dispositivo como alternativa.');return;}
+      const token=generation;
+      try{
+        const result=await bridge.narration({action:'config'});if(abort.signal.aborted||token!==generation)return;config=result;voice.replaceChildren();
+        for(const v of config.voices||[]){const option=make('option',v.label);option.value=v.id;voice.append(option);}
+        if(!config.enabled){voice.append(make('option','Narración no configurada'));message(config.reason||unavailable);}
+        else {privacy.textContent=`Voz generada por IA · ${config.provider}. El texto se procesa externamente, previa confirmación. Calidad ES/EN pendiente de evaluación auditiva.`;if(state==='idle')message('Listo para solicitar narración.');}
+      }catch(error){if(abort.signal.aborted||token!==generation)return;config=null;message(error.message);}
     }
-    function speakNext(token) {
-      if (token !== generation || state === 'idle') return;
-      if (state === 'paused') return;
-      if (index >= queue.length) {stop('Lectura terminada.');return;}
-      const item=queue[index];
-      if (!item.element.isConnected) {stop('El documento cambió. Inicia una nueva lectura.');return;}
+    const unsubscribe=bridge?.subscribeNarration?.(event=>{
+      if(!request||event.request!==request)return;
+      if(event.state==='ended'||event.state==='error'){stop(event.message);return;}
+      state=event.state==='paused'?'paused':'playing';pause.disabled=false;pause.textContent=state==='paused'?'Reanudar':'Pausar';
+      message(event.message||'Preparando audio…');
+      const item=queue[event.index];if(!item)return;
+      if(!item.element.isConnected){stop('El documento cambió. Inicia una nueva lectura.');return;}
       const chapter=page(item.element);
-      if (chapter?.hidden) {
-        const trigger=[...document.querySelectorAll('[data-ir]')].find(el=>el.dataset.ir===chapter.id);
-        if (trigger) {internalPage=true;trigger.click();internalPage=false;}
-      }
-      if (!readable(item.element)) {index++;speakNext(token);return;}
+      if(chapter?.hidden){const trigger=[...document.querySelectorAll('[data-ir]')].find(el=>el.dataset.ir===chapter.id);if(trigger){internalPage=true;trigger.click();internalPage=false;}}
       clearHighlight();highlight=item.element;highlight.setAttribute('data-speech-current','');
-      const utterance=new SpeechSynthesisUtterance(item.text);currentUtterance=utterance;started=false;
-      utterance.voice=voices.find(v=>voiceKey(v)===voice.value) || voices[0];utterance.lang=utterance.voice?.lang || lang();utterance.rate=Number(speed.value);
-      const valid=()=>token===generation && currentUtterance===utterance;
-      utterance.onstart=()=>{if(valid()){started=true;clearTimeout(watchdog);message(`Leyendo · ${index+1} de ${queue.length}`);}};
-      utterance.onend=()=>{if(!valid())return;clearTimeout(watchdog);currentUtterance=null;index++;speakNext(token);};
-      utterance.onerror=e=>{if(!valid())return;stop(e.error==='not-allowed'?'El navegador bloqueó la voz. Vuelve a pulsar Escuchar.':'No se pudo reproducir esta voz. Prueba otra voz o reinicia la lectura.');};
-      message(`Iniciando · ${index+1} de ${queue.length}`);
-      watchStart();
-      try {synth.speak(utterance);} catch {stop('No se pudo iniciar esta voz. Prueba otra.');}
+    });
+    async function start(items, includeCode = false) {
+      const selection=getSelection(),savedRange=includeCode&&selectionRange?selectionRange.cloneRange():null;
+      stop();cancelPick();dismissContext();tool.open=false;player.hidden=false;
+      const startGeneration=generation;
+      if(!config?.enabled){await refreshVoices();if(abort.signal.aborted||startGeneration!==generation)return;if(!config?.enabled){close.focus({preventScroll:true});return;}}
+      const full=extract({allPages:true});
+      let mismatch=false;
+      queue=items.filter(item=>includeCode||!item.element.closest('pre')).flatMap(item=>{
+        const source=full.find(x=>x.element===item.element&&x.part===item.part);if(!source){mismatch=true;return [];}
+        let offset=0;
+        if(savedRange&&item.element.contains(savedRange.startContainer)){
+          const prefix=document.createRange();prefix.selectNodeContents(item.element);prefix.setEnd(savedRange.startContainer,savedRange.startOffset);
+          offset=extract({range:prefix}).filter(x=>x.element===item.element&&x.part===item.part).map(x=>x.text).join(' ').length;
+        }
+        let cursor=source.text.indexOf(item.text,offset);if(cursor<0){mismatch=true;return [];}
+        return chunk(item.text).map(text=>{const start=source.text.indexOf(text,cursor);cursor=start+text.length;return {...item,text,fullText:source.text,start,anchor:item.element.closest('[id]')?.id||''};});
+      });
+      if(mismatch){queue=[];message('El texto cambió. Selecciona de nuevo antes de escuchar.');close.focus({preventScroll:true});return;}
+      if(!queue.length){message('No hay texto editorial para leer. El código se lee solo al seleccionarlo.');close.focus({preventScroll:true});return;}
+      request=crypto.randomUUID();const token=request;state='pending';pause.disabled=true;stopButton.disabled=false;voice.disabled=profile.disabled=true;
+      message('Revisa y confirma el envío del texto en el portal.');stopButton.focus({preventScroll:true});
+      if(savedRange){selection.removeAllRanges();selection.addRange(savedRange);}
+      try{await bridge.narration({action:'start',request:token,voice:voice.value,profile:profile.value,rate:Number(speed.value),items:queue.map(({element,...item})=>item)});}
+      catch(error){if(request===token)stop(error.message);}
     }
-    function watchStart() {
-      clearTimeout(watchdog);
-      watchdog=setTimeout(()=>{if(state==='playing' && !started)stop('La voz no respondió. Prueba otra voz o reinicia la lectura.');},12000);
-    }
-    function start(items, includeCode = false) {
-      const selection=getSelection(), savedRange=includeCode && selectionRange?selectionRange.cloneRange():selection?.rangeCount && !selection.isCollapsed?selection.getRangeAt(0).cloneRange():null;
-      stop(); cancelPick(); dismissContext(); tool.open=false;player.hidden=false;
-      refreshVoices();if(!supported||!voices.length){close.focus({preventScroll:true});return;}
-      queue=items.flatMap(item => chunk(item.element.closest('pre') && !includeCode ? 'Bloque de código. Selecciónalo para escuchar su contenido.' : item.text).map(text=>({...item,text})));
-      if(!queue.length){message('No hay texto editorial para leer en este punto.');close.focus({preventScroll:true});return;}
-      index=0;state='playing';pause.disabled=stopButton.disabled=false;pause.focus({preventScroll:true});if(savedRange){selection.removeAllRanges();selection.addRange(savedRange);}speakNext(generation);
-    }
-    function togglePause() {
-      if(state==='idle')return;
-      if(state==='paused') {state='playing';pause.textContent='Pausar';message('Reanudando lectura…');synth.resume();if(!currentUtterance)speakNext(generation);else if(!started)watchStart();}
-      else {state='paused';clearTimeout(watchdog);synth.pause();pause.textContent='Reanudar';message('Lectura pausada.');}
+    function togglePause(){
+      if(state==='idle'||state==='pending')return;
+      bridge.narration({action:state==='paused'?'resume':'pause',request}).catch(error=>stop(error.message));
     }
     const from = (target, sectionOnly=false) => {
       const items=extract({allPages:true});
@@ -169,7 +170,7 @@
     const selected=button('Leer selección',()=>start(selectionRange?extract({range:selectionRange}):[],true));
     const choose=button('Elegir desde dónde leer',()=>pick());
     const show=button('Mostrar reproductor',()=>{tool.open=false;player.hidden=false;});
-    menu.append(full,selected,choose,show,make('p','Selecciona texto o elige un punto. No se reproduce nada automáticamente.'));
+    menu.append(full,selected,choose,show,make('p','Selecciona texto o elige un punto. El código se lee solo al seleccionarlo. Nada se reproduce automáticamente.'));
     function rememberSelection() {
       const selection=getSelection();
       if(selection?.rangeCount && !selection.isCollapsed && root().contains(selection.anchorNode) && root().contains(selection.focusNode) && !selection.anchorNode.parentElement?.closest(excluded)) selectionRange=selection.getRangeAt(0).cloneRange();
@@ -180,8 +181,7 @@
     on(tool,'toggle',()=>{if(tool.open){player.hidden=true;for(const other of bar.querySelectorAll('details[open]'))if(other!==tool)other.open=false;}});
     // Other menus take precedence over the compact player, without stopping speech.
     on(bar,'toggle',e=>{if(e.target!==tool&&e.target.open)player.hidden=true;},{capture:true});
-    on(speed,'change',()=>{if(state!=='idle')message('La velocidad se aplicará al siguiente fragmento.');});
-    on(voice,'change',()=>{if(state!=='idle')message('La voz se aplicará al siguiente fragmento.');});
+    on(speed,'change',()=>{if(state!=='idle')bridge.narration({action:'rate',request,rate:Number(speed.value)}).catch(error=>stop(error.message));});
     function cancelPick() {picking?.();picking=null;}
     function pick() {
       cancelPick();document.dispatchEvent(new Event('bottifact:speech-pick'));tool.open=false;player.hidden=true;
@@ -217,9 +217,8 @@
     on(document,'bottifact:review-mode',e=>{if(e.detail.active){cancelPick();dismissContext();}});
     on(document,'nota:pagina',()=>{if(!internalPage){stop();cancelPick();selectionRange=null;selected.disabled=true;}});
     on(window,'pagehide',()=>stop());
-    if(supported)on(synth,'voiceschanged',refreshVoices);
     refreshVoices();
-    instance={stop,context,start,get state(){return state;},destroy(){stop();cancelPick();abort.abort();tool.remove();player.remove();contextMenu.remove();style.remove();instance=null;}};
+    instance={stop,context,start,get state(){return state;},destroy(){stop();unsubscribe?.();cancelPick();abort.abort();tool.remove();player.remove();contextMenu.remove();style.remove();instance=null;}};
     return instance;
   }
 })();

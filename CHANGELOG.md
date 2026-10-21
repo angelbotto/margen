@@ -1,10 +1,10 @@
 # Changelog
 
-## Unreleased — Shared voice reader
+## Unreleased — Shared neural narration reader
 
-- Add opt-in Web Speech reading for entire documents, selections and contextual points/sections to the shared dock, including hosted legacy HTML and newly generated standalone files.
-- Add compact playback controls, labeled local/remote voices, bounded fragments and block highlighting without changing editorial layout. Preserve native selected-text menus, contextual comments, keyboard access and sandbox isolation.
-- Cover extraction, voice lifecycle, bridge cancellation, picker transitions and responsive controls with synthetic unit/browser tests. Document device-engine limits; no new speech provider or analytics scope.
+- Add opt-in whole-document, selection and contextual reading controls, preserving comments/native menus, keyboard/mobile access, theme spacing and sandbox isolation.
+- Add disabled-by-default backend candidate adapters, explicit external-text confirmation, immutable version/range authorization, streaming, cancellation, usage caps and private bounded cache. No device-voice fallback; standalone files explain portal availability.
+- Cover extraction, parent/iframe lifecycle, quotas, cache/access, incomplete streams and responsive controls with synthetic tests. Provider selection and real ES/EN/mixed auditory validation remain pending; no purchase, paid synthesis, deployment or analytics expansion.
 
 ## 2026.10.20-library.3 — Shared reading rhythm
 
