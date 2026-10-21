@@ -2,7 +2,8 @@
 
 Run explicitly with: python scripts/test_developers_runtime_browser.py
 Uses disposable FastAPI accounts/content; never contacts a deployed portal.
-Three.js is fetched from its pinned cdnjs URL, the only network a preview may use.
+Three.js is served from a local copy verified against the preview's SRI (downloaded once
+from its pinned cdnjs URL); without it only the 3D recipes fail, explicitly.
 """
 import unittest
 import sys
@@ -46,6 +47,29 @@ ERRORS = '[data-error-analitica], [data-error-grafica], [data-error], .grafica-e
 EXPECTED_ERRORS = ()
 
 
+def pinned_three():
+    """Bytes of the pinned three.js build, verified against the preview's SRI; None when unavailable."""
+    import base64
+    import hashlib
+    import os
+    import urllib.request
+    from portal.developers import THREE
+    cache = Path(os.environ.get('XDG_CACHE_HOME', Path.home() / '.cache')) / 'margen' / THREE[0].rsplit('/', 3)[-2] / 'three.min.js'
+    expected = THREE[1].split('-', 1)[1]
+    valid = lambda data: base64.b64encode(hashlib.sha512(data).digest()).decode() == expected
+    if cache.is_file() and valid(cache.read_bytes()):
+        return cache.read_bytes()
+    try:
+        data = urllib.request.urlopen(THREE[0], timeout=20).read()
+    except OSError:
+        return None
+    if not valid(data):
+        raise AssertionError('three.js de cdnjs no coincide con el SRI fijado')
+    cache.parent.mkdir(parents=True, exist_ok=True)
+    cache.write_bytes(data)
+    return data
+
+
 def components():
     return [item for item in bundled().values() if item['kind'] == 'component']
 
@@ -53,12 +77,7 @@ def components():
 class BundledPreviewBrowserTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        import urllib.request
-        from portal.developers import THREE
-        try:
-            urllib.request.urlopen(urllib.request.Request(THREE[0], method='HEAD'), timeout=10).close()
-        except OSError as error:
-            raise unittest.SkipTest('cdnjs no responde; las escenas 3D necesitan three.js fijado: ' + str(error))
+        cls.three = pinned_three()
         cls.fixture = fixtures.DevelopersTests()
         cls.fixture.setUp()
         cls.playwright = sync_playwright().start()
@@ -86,6 +105,10 @@ class BundledPreviewBrowserTests(unittest.TestCase):
 
         context.route('https://portal.test/**', proxy)
         context.route('https://fonts.googleapis.com/**', lambda route: route.abort())
+        three = self.three
+        # Local verified bytes keep the sweep deterministic; the browser still enforces the SRI attribute.
+        context.route('https://cdnjs.cloudflare.com/**', lambda route: route.fulfill(
+            body=three, content_type='application/javascript', headers={'Access-Control-Allow-Origin': '*'}) if three else route.abort())
         page = context.new_page()
         errors = []
         page.on('pageerror', lambda error: errors.append(str(error)))
@@ -109,6 +132,9 @@ class BundledPreviewBrowserTests(unittest.TestCase):
         try:
             for item in components():
                 with self.subTest(slug=item['slug']):
+                    if self.three is None and {'scene.js', 'globe.js', 'fleet.js'} & set(item['preview_runtime']):
+                        failures.append(item['slug'] + ': three.js 0.160.1 no disponible (sin caché verificada ni red)')
+                        continue
                     errors.clear()
                     frame = self.load(page, item)
                     body = frame.locator('body')
@@ -172,6 +198,13 @@ class BundledPreviewBrowserTests(unittest.TestCase):
             frame.locator('input[name=despues]').dispatch_event('input')
             page.wait_for_timeout(200)
             self.assertNotEqual(frame.locator('[data-resultado]').text_content(), result)
+
+            frame = self.load(page, bundled()['component-gantt'])
+            choice = frame.locator('.evidencia-controles select')
+            detail = frame.locator('.evidencia-detalle').text_content()
+            choice.select_option(index=2)
+            self.assertNotEqual(frame.locator('.evidencia-detalle').text_content(), detail)
+            self.assertEqual(frame.locator('.evidencia-visor .ev-elegido[data-ev-row="2"]').count(), 1)
 
             frame = self.load(page, bundled()['component-prototype'])
             frame.locator('[data-ancho-visor="768"]').first.click()
