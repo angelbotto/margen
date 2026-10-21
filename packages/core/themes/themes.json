@@ -246,6 +246,40 @@
       "fuente": "https://github.com/CATABUM-SAS/catabum-V2.0/blob/6e92cb3c33660f22b843f3d655f91ea3b5e9b7d2/app/lib/core/theme/tokens/body_tokens.dart"
     },
     {
+      "id": "kaira",
+      "nombre": "Kaira",
+      "grupo": "marca",
+      "descripcion": "Warm paper · deep plum · antique gold",
+      "light": {
+        "papel": "#fbf4e9",
+        "panel": "#fffaf2",
+        "panel-2": "#f3e7d6",
+        "tinta": "#2d1b28",
+        "tinta-2": "#5a204c",
+        "tinta-3": "#77636f",
+        "naranja": "#805b1f",
+        "verde": "#42643e",
+        "rojo": "#a53843",
+        "azul": "#3e6379",
+        "marca-acento": "#b78a38",
+        "marca-secundario": "#290c24"
+      },
+      "dark": {
+        "papel": "#180611",
+        "panel": "#290c24",
+        "panel-2": "#3b1233",
+        "tinta": "#fffaf2",
+        "tinta-2": "#f0dfaa",
+        "tinta-3": "#c9b5c2",
+        "naranja": "#d9bd77",
+        "verde": "#a8cc9b",
+        "rojo": "#f09caa",
+        "azul": "#a2c9db",
+        "marca-acento": "#b78a38",
+        "marca-secundario": "#290c24"
+      }
+    },
+    {
       "id": "blueprint",
       "nombre": "Blueprint",
       "grupo": "tecnico",
