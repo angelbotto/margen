@@ -19,7 +19,7 @@ An open-source component library, portable agent skill and optional self-hosted 
 
 *This screenshot comes from the synthetic local demo. No customer documents, accounts, comments or session identifiers are shown.*
 
-Margen brings together **88 component recipes**, **15 theme families with light/dark/system modes**, a shared skill for **Claude Code, Codex and Hermes**, and a portal you can run on your own server. Generate standalone HTML without an account. Add the portal when you need shared comments, private notes, permissions, versions and a searchable library.
+Margen brings together **88 component recipes**, **16 theme families with light/dark/system modes**, a shared skill for **Claude Code, Codex and Hermes**, and a portal you can run on your own server. Generate standalone HTML without an account. Add the portal when you need shared comments, private notes, permissions, versions and a searchable library.
 
 > Renamed from Bottifact in v0.6.0. Existing documents, links and commands remain compatible. See the [migration guide](docs/migration-margen.md).
 
