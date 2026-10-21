@@ -492,8 +492,8 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
             db.execute('INSERT INTO bookmarks VALUES(?,?,?,?,?,?)',(bid,u['id'],title,url,space,int(time.time())))
         return {'id':bid,'url':url}
 
-    async def publish(request, aid=None):
-        u = account(request);body = await payload(request)
+    async def publish(request, aid=None, body=None):
+        u = account(request);body = await payload(request) if body is None else body
         content = body.get('html')
         if not isinstance(content,str) or not content.strip() or len(content.encode()) > 20*1024*1024:
             raise HTTPException(422,'El HTML debe ocupar menos de 20 MB.')
@@ -522,7 +522,7 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
             if aid:
                 a = artifact_for(db,aid,u,'edit')
                 managed=db.execute('SELECT 1 FROM editor_sources e JOIN versions v ON v.id=e.version WHERE v.artifact=? LIMIT 1',(aid,)).fetchone() or db.execute('SELECT 1 FROM editor_drafts WHERE artifact=?',(aid,)).fetchone()
-                if managed and body.get('expected_current')!=a['current_version']:
+                if (managed or 'expected_current' in body) and body.get('expected_current')!=a['current_version']:
                     raise HTTPException(409,'Este documento tiene cambios del editor. Lee su fuente actual y envía expected_current con la versión base de tu propuesta.')
                 if managed:source['base_version']=a['current_version']
                 source['actor']=u['id'];source['author']=u['name'];source['kind']='agent' if u.get('agent') else 'human-upload'
@@ -689,6 +689,8 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
         return review(aid,request)
 
     mount_workspace(app,store,origin,who,account,payload,clean,artifact_for,permissions,threads,snapshot,is_admin)
+    from portal.developers import mount as mount_developers
+    mount_developers(app,store,who,account,payload,clean,is_admin,artifact_for,publish)
     mount_context(app,store,origin,account,payload,clean,artifact_for,permissions)
     from portal.creator import mount as mount_creator
     mount_creator(app,store,origin,account,payload,clean,artifact_for,permissions,threads,snapshot)
@@ -775,7 +777,7 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
     @app.get('/')
     @app.get('/a/{aid}')
     def page(request: Request, aid: str=''):
-        if not aid and not (who(request) or {}).get('verified'): return RedirectResponse('/login', status_code=303)
+        if not aid and request.query_params.get('view') != 'developers' and not (who(request) or {}).get('verified'): return RedirectResponse('/login', status_code=303)
         content=(ROOT/'static/index.html').read_text()
         if aid:content=content.replace('<body class="portal-app">','<body class="portal-app reading">').replace('<section id="library">','<section id="library" hidden>')
         return HTMLResponse(content)

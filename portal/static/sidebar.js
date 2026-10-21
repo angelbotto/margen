@@ -13,7 +13,7 @@ window.MargenSidebar = (() => {
     for (const [id, label, views] of [
       ['library', 'Biblioteca', ['mine', 'shared', 'inbox']],
       ['knowledge', 'Conocimiento', ['brain', 'work', 'insights']],
-      ['account', 'Más herramientas', ['notifications', 'public', 'archived', 'connections', 'all', 'admin']],
+      ['account', 'Más herramientas', ['notifications', 'public', 'archived', 'connections', 'developers', 'all', 'admin']],
     ]) {
       const group = el(id === 'account' ? 'details' : 'section', null, 'nav-group nav-' + id);
       group.setAttribute('aria-label', label);

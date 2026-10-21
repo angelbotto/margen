@@ -267,3 +267,8 @@ for page in (ROOT / 'examples/generated').glob('*.html'):
 
 from example_formats import generate as generate_project_formats
 generate_project_formats()
+
+# The deployed portal carries a catalog from the same library sources.
+if (ROOT / "portal").is_dir():
+ from build_developers import generate as generate_developers
+ generate_developers()

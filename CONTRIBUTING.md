@@ -2,6 +2,10 @@
 
 Thank you for improving the tools people use to explain and review their work. Small, focused changes are easier to assess. Open an issue for a large architectural change before implementing it. Bug reports should include reproduction steps using synthetic data, expected behavior and actual behavior.
 
+## Create without code
+
+You can create themes, static components and diagrams in the portal’s **Temas y componentes** editor, save them privately or share a link without a pull request. See [community creation and sharing](docs/community-marketplace.md). The workflow below is for contributing code to Margen itself.
+
 ## Set up
 
 Python 3.10+ generates standalone artifacts using the standard library. Node 22.12+ is needed for the React workspace. Portal development additionally needs its pinned Python dependencies.
