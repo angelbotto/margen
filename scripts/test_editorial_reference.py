@@ -1,0 +1,109 @@
+#!/usr/bin/env python3
+"""Live Chromium checks of measured editorial geometry and interactions; offline."""
+import json,sys,unittest
+from pathlib import Path
+from playwright.sync_api import sync_playwright
+ROOT=Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT/'scripts'))
+from contract_artifact import build
+SOURCE='#include <iostream>\n\nint main() {\n    std::cout << "Hello Margen";\n    return 0;\n}'
+CONTENT='''<section class="prosa" id="first"><h2>Leer con atención</h2><p>Una columna de lectura conserva una medida estable. El código tiene más espacio para mostrar cada línea.</p></section>
+<figure class="codigo ancho" id="snippet"><div class="cab"><span>C++</span><button type="button" data-copiar="source">Copiar código</button><span class="copia-estado" role="status"></span></div><pre tabindex="0" aria-label="Código de ejemplo"><code id="source" data-lenguaje="cpp">#include &lt;iostream&gt;\n\nint main() {\n    std::cout &lt;&lt; "<mark>Hello Margen</mark>";\n    return 0;\n}</code></pre></figure>
+<section class="prosa" id="second"><h2>Conservar el contexto</h2><p>El índice permite volver a una sección sin perder el hilo.</p><div class="codigo" id="plain"><pre tabindex="0" aria-label="Código de ejemplo"><code data-lenguaje="javascript">const text = "&lt;script&gt;alert(1)&lt;/script&gt;";</code></pre></div></section>
+<section class="ancho" id="cards"><div class="cards-trazadas">'''+''.join('<a href="#first"><h4>Una lectura de ejemplo</h4><p>Información de la publicación.</p><span class="procedencia">ENSAYO · 4 min</span></a>' for _ in range(3))+'''</div></section>
+<section id="last"><h2>Final de la lectura</h2>'''+('<p>Un párrafo suficiente para comprobar el desplazamiento y el índice marginal.</p>'*30)+'</section>'
+class EditorialReference(unittest.TestCase):
+ @classmethod
+ def setUpClass(cls):
+  cls.pw=sync_playwright().start();cls.browser=cls.pw.chromium.launch()
+  cls.html=build('La forma de leer',[{'id':'content','titulo':'La forma de leer','html':CONTENT}],theme='editorial',mode='dark')
+ @classmethod
+ def tearDownClass(cls):cls.browser.close();cls.pw.stop()
+ def page(self,width=1440,motion='no-preference',js=True,html=None):
+  context=self.browser.new_context(viewport={'width':width,'height':1000},reduced_motion=motion,java_script_enabled=js,permissions=['clipboard-read','clipboard-write'])
+  self.addCleanup(context.close);page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+  context.route('https://margen.test/**',lambda r:r.fulfill(status=200,content_type='text/html',body=html or self.html))
+  page.goto('https://margen.test/reference');page.evaluate('document.fonts.ready') if js else None
+  return page,errors
+ def test_measures_and_copy(self):
+  page,errors=self.page();code=page.locator('#source');self.assertEqual(code.text_content(),SOURCE)
+  self.assertEqual(code.locator('mark').text_content(),'Hello Margen')
+  self.assertEqual(code.locator('.codigo-linea').count(),6)
+  self.assertTrue(page.locator('#snippet .cab > span').first.is_visible())
+  self.assertEqual(page.locator('#plain .codigo-lenguaje').text_content(),'JavaScript')
+  self.assertEqual(page.locator('#plain script').count(),0)
+  self.assertEqual(page.locator('#snippet').bounding_box()['width'],768)
+  self.assertEqual(page.locator('#first').bounding_box()['width'],528)
+  self.assertEqual(page.locator('#first').bounding_box()['x'],456)
+  self.assertEqual(page.locator('#snippet pre').evaluate('e=>getComputedStyle(e).backdropFilter'),'blur(12px)')
+  lines=code.locator('.codigo-linea').evaluate_all('es=>es.map(e=>e.getBoundingClientRect().y)')
+  self.assertTrue(all(abs(b-a-22)<.1 for a,b in zip(lines,lines[1:])),lines)
+  page.locator('[data-copiar=source]').click();self.assertEqual(page.evaluate('navigator.clipboard.readText()'),SOURCE)
+  self.assertIn('copiado',page.locator('#snippet [role=status]').text_content().lower())
+  page.locator('.indice a').first.focus();self.assertEqual(page.locator('.indice').evaluate('e=>getComputedStyle(e).zIndex'),'4')
+  self.assertEqual(errors,[])
+  page.locator('.indice a').first.blur();page.mouse.move(1200,600);page.screenshot(path='/tmp/margen-reference-desktop.png')
+ def test_responsive_print_and_reduced_motion(self):
+  for width in (300,320,390,640,768,1024,1279,1280,1440):
+   with self.subTest(width=width):
+    page,errors=self.page(width,motion='reduce')
+    self.assertLessEqual(page.evaluate('document.documentElement.scrollWidth'),width)
+    for selector in ('#snippet','#first','#cards'):
+     box=page.locator(selector).bounding_box();self.assertGreaterEqual(box['x'],0);self.assertLessEqual(box['x']+box['width'],width+.5)
+    self.assertEqual(page.locator('#snippet button').evaluate('e=>getComputedStyle(e).transitionDuration'),'0s')
+    columns=page.locator('.cards-trazadas').evaluate('e=>getComputedStyle(e).gridTemplateColumns.split(" ").length')
+    self.assertEqual(columns,3 if width>=1024 else 2 if width>=640 else 1)
+    self.assertEqual(errors,[])
+    if width==390:self.assertEqual(page.locator('#first').bounding_box()['width'],342);page.screenshot(path='/tmp/margen-reference-mobile.png')
+    page.close()
+  page,_=self.page();page.emulate_media(media='print');self.assertEqual(page.locator('#snippet pre').evaluate('e=>getComputedStyle(e).backdropFilter'),'none');self.assertFalse(page.locator('#snippet button').is_visible())
+ def test_components_and_reader_preferences(self):
+  recipes=('archive','timeline','animated-callouts','bookshelf','gallery')
+  html=build('Patrones editoriales',[{'id':'patterns','titulo':'Patrones editoriales','html':''.join((ROOT/'packages/core/recipes'/name/'example.html').read_text() for name in recipes)}],theme='editorial',mode='dark')
+  for width in (300,390,768,1440):
+   with self.subTest(width=width):
+    page,errors=self.page(width,html=html)
+    self.assertLessEqual(page.evaluate('document.documentElement.scrollWidth'),width)
+    styles=page.locator('.publicaciones h4').first.evaluate('e=>[getComputedStyle(e).fontSize,getComputedStyle(e).lineHeight]')
+    self.assertEqual(styles,['22.4px','31.36px'])
+    self.assertEqual(page.locator('.publicaciones').evaluate('e=>getComputedStyle(e).gridTemplateColumns.split(" ").length'),1)
+    self.assertEqual(page.locator('.aviso-esquina > div').first.evaluate('e=>getComputedStyle(e).padding'),'16px')
+    track=page.locator('[data-galeria-pista]');self.assertEqual(track.evaluate('e=>getComputedStyle(e).padding'),'12px 0px')
+    self.assertEqual(track.evaluate('e=>e.style.getPropertyValue("--galeria-fade-inicio")'),'0px')
+    track.evaluate('e=>e.scrollLeft=e.scrollWidth');page.wait_for_timeout(150)
+    self.assertEqual(track.evaluate('e=>e.style.getPropertyValue("--galeria-fade-fin")'),'0px')
+    track.focus();self.assertEqual(track.evaluate('e=>getComputedStyle(e).maskImage'),'none')
+    page.evaluate('document.documentElement.setAttribute("data-lectura-comoda","")')
+    self.assertEqual(page.locator('body').evaluate('e=>getComputedStyle(e).fontSize'),'18px')
+    self.assertEqual(errors,[]);page.close()
+ def test_code_exact_text_and_clipboard_fallback(self):
+  import html as html_lib
+  sources=['\n\n','x\n','\nconst value = "<script>unsafe()</script>";\n','/* first\nsecond */\nlet n = 2;','a < b && b > c']
+  samples=''.join('<figure class="codigo"><pre tabindex="0" aria-label="Código"><code data-lenguaje="javascript">'+html_lib.escape(source)+'</code></pre></figure>' for source in sources)
+  samples+='<figure class="codigo"><pre tabindex="0" aria-label="Código"><code data-lenguaje="javascript">const <mark>a = "a\nb"</mark>;<mark>\n</mark>return a;</code></pre></figure>'
+  html=build('Texto literal',[{'id':'codes','titulo':'Texto literal','html':samples}])
+  page,errors=self.page(html=html)
+  for index,source in enumerate(sources):self.assertEqual(page.locator('.hoja .codigo code').nth(index).text_content(),source)
+  marked=page.locator('.hoja .codigo code').last
+  self.assertEqual(marked.text_content(),'const a = "a\nb";\nreturn a;')
+  self.assertEqual(''.join(marked.locator('mark').all_text_contents()),'a = "a\nb"'.replace('\n',''))
+  before=page.locator('.hoja .codigo').all_text_contents();page.evaluate('NotaCodigo.init()');self.assertEqual(page.locator('.hoja .codigo').all_text_contents(),before)
+  page.evaluate('() => { navigator.clipboard.writeText=()=>Promise.reject(new Error("denied")); }')
+  sample=page.locator('.hoja .codigo').nth(2);sample.locator('button').click()
+  self.assertEqual(page.evaluate('getSelection().toString()'),sources[2])
+  self.assertIn('seleccionado',sample.locator('[role=status]').text_content())
+  self.assertEqual(page.locator('.codigo script').count(),0);self.assertEqual(errors,[])
+ def test_hosted_reference_upgrade(self):
+  sys.path.insert(0,str(ROOT))
+  from portal.reader_style import refresh_editorial_reference
+  import re
+  css=(ROOT/'packages/core/styles/editorial-reference.css').read_text();code=(ROOT/'packages/core/components/code.js').read_text()
+  old=re.sub(r'/\* EDITORIAL REFERENCE START \*/.*?/\* EDITORIAL REFERENCE END \*/','',self.html,flags=re.S)
+  old=old.replace('--texto: 33rem','--texto: 35rem').replace('--gutter:24px','--gutter:18px')
+  old=re.sub(r'(<script data-nota-modulo="packages/core/components/code.js">).*?</script>',r'\1/* stale code runtime */</script>',old,flags=re.S)
+  result=refresh_editorial_reference(old,css,code)
+  page,errors=self.page(390,html=result);self.assertEqual(page.locator('#first').bounding_box()['width'],342);self.assertEqual(page.locator('#source').text_content(),SOURCE);self.assertEqual(errors,[])
+  self.assertIn('stale code runtime',old);self.assertNotIn('stale code runtime',result)
+ def test_no_script(self):
+  page,_=self.page(js=False);self.assertEqual(page.locator('#source').text_content(),SOURCE);self.assertTrue(page.locator('#snippet .cab > span').first.is_visible())
+if __name__=='__main__':unittest.main()

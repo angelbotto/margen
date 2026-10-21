@@ -34,3 +34,43 @@ class ReaderStylesTest(unittest.TestCase):
 
 
 if __name__ == '__main__': unittest.main()
+
+
+class EditorialReferenceRefreshTest(unittest.TestCase):
+    def refresh(self, html):
+        from portal.reader_style import refresh_editorial_reference
+        return refresh_editorial_reference(html, '.hoja{color:blue}', 'window.currentCode = true;')
+
+    def test_refreshes_only_marked_styles_and_module(self):
+        old = '/* EDITORIAL REFERENCE START */.old{}/* EDITORIAL REFERENCE END */'
+        source = ('<html><head><style>p{color:red}'+old+'</style></head><body><main class="hoja"></main>'
+                  '<script data-nota-modulo="packages/core/components/code.js">old();</script>'
+                  '<script>const example="<style>'+old+'</style>";</script><style>.custom{color:red}</style></body></html>')
+        result = self.refresh(source)
+        self.assertIn('p{color:red}', result)
+        self.assertIn('<script>const example="<style>'+old+'</style>";</script>', result)
+        self.assertIn('<script data-nota-modulo="packages/core/components/code.js">\nwindow.currentCode = true;\n</script>', result)
+        self.assertIn('<style>.custom{color:red}</style><style data-margen-editorial-reference>', result)
+        self.assertEqual(self.refresh(result), result)
+        self.assertIn('old();', source)
+
+    def test_preserves_non_margen_presentations_and_literal_html(self):
+        for content in ('<main>Custom app</main>', '<main class="hoja" data-presentation></main>',
+                        '<main class="hoja" data-ritmo="propio"></main>',
+                        '<textarea><main class="hoja"></main></textarea>',
+                        '<script>const fake=`<main class="hoja"></main>`</script>'):
+            with self.subTest(content=content):
+                self.assertEqual(self.refresh(content), content)
+
+    def test_custom_scripts_and_incomplete_blocks_are_not_rewritten(self):
+        for script in ('<script data-nota-modulo="mine/code.js">custom();</script>',
+                       '<script data-nota-modulo="packages/core/components/code.js" type="application/json">{"own":1}</script>',
+                       '<script data-nota-modulo="packages/core/components/code.js" src="own.js"></script>',
+                       '<script data-nota-modulo="packages/core/components/code.js">unfinished();'):
+            result = self.refresh('<main class="hoja"></main>' + script)
+            self.assertIn(script, result)
+
+    def test_real_elements_only_across_line_separators(self):
+        for separator in ('\u2028', '\v', '\r', '\r\n', '\n'):
+            source = '<p>A'+separator+'B</p><main class="hoja"></main><style>.own{}</style>'
+            self.assertTrue(self.refresh(source).startswith(source))

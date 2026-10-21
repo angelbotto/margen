@@ -595,7 +595,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   --marcador: #bc542b; --foco: #a13f19;
   --globo-base: #8e8479; --globo-arco: #82705c; --globo-punto: #6c6158;
   --globo-glow: #a39179; --globo-dark: 0; --globo-brillo: 2.4;
-  --texto: 35rem; --ancho: 62rem; --amplio: 76rem; --gutter: clamp(20px, 4vw, 40px);
+  --texto: 33rem; --ancho: 64rem; --amplio: 76rem; --gutter: 24px;
   --serif: 'Instrument Serif', Georgia, serif;
   --sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --mono: 'Geist Mono', ui-monospace, monospace;
@@ -652,12 +652,12 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 /* 02 — Una voz editorial, sin convertir el cuerpo en tipografía de exhibición. */
 * { box-sizing: border-box; }
 html { scroll-padding-top: 32px; }
-body { margin: 0; background: var(--papel); color: var(--tinta); font: 400 16px/1.65 var(--sans); letter-spacing: .05px; -webkit-font-smoothing: antialiased; }
+body { margin: 0; background: var(--papel); color: var(--tinta); font: 400 15.5px/1.55 var(--sans); letter-spacing: .05px; -webkit-font-smoothing: antialiased; }
 h1,h2,h3,p,figure,blockquote,dl,dd { margin: 0; }
 h1,h2,h3 { font-family: var(--serif); font-weight: 400; letter-spacing: -.02em; text-wrap: balance; }
-h1 { font-size: clamp(38px, 5vw, 54px); line-height: 1.06; }
-h2 { font-size: clamp(30px, 3.4vw, 38px); line-height: 1.15; }
-h3 { font-size: 26px; line-height: 1.2; }
+h1 { font-size: clamp(36.4px, 4vw, 44.5px); line-height: 1.111111; }
+h2 { font-size: clamp(28.5px, 3.4vw, 36.4px); line-height: 1.2; }
+h3 { font-size: 28.5px; line-height: 1.333333; }
 p + p { margin-top: 1.15em; }
 strong { font-weight: 600; }
 a { color: var(--azul); text-underline-offset: .2em; text-decoration-thickness: 1px; overflow-wrap: anywhere; }
@@ -3097,10 +3097,10 @@ body:has(.revision-barra) { padding-bottom:0; }
    Reading flow owns margins; flex/grid components retain their own gaps.
    Explicit .prosa works at any depth. Data views and presentation canvases opt out. */
 .hoja {
-  --prosa-parrafo: 18px;
-  --prosa-antes-titulo: 36px;
-  --prosa-despues-titulo: 14px;
-  --prosa-bloque: 28px;
+  --prosa-parrafo: 16px;
+  --prosa-antes-titulo: 24px;
+  --prosa-despues-titulo: 8px;
+  --prosa-bloque: 32px;
   --prosa-ceja: 10px;
 }
 @media screen {
@@ -3204,6 +3204,127 @@ body:has(.revision-barra) { padding-bottom:0; }
   :is(.hoja:not([data-presentation]), .hoja:not([data-presentation]) > .pagina) > article:not([class]):not([style], [data-ritmo="propio"]):not([data-ritmo="propio"] *) > * + * { margin-block-start: 18pt; }
 }
 /* EDITORIAL FLOW END */
+
+/* EDITORIAL REFERENCE START */
+/* Measured against cmrg.me on 2026-10-21. Geometry is shared; palettes and
+   reader-selected typography remain independent. See docs/editorial-reference.md. */
+@media screen {
+ :root:has(.hoja:not([data-presentation])) { --texto:33rem; --ancho:64rem; --gutter:24px; }
+ :root:not([data-lectura-comoda]) body:has(.hoja:not([data-presentation])) { font-size:15.5px; line-height:1.55; }
+ .hoja:not([data-presentation]) h1:not([data-ritmo=propio] *) { font-size:44.5px; line-height:49.4444px; }
+ .hoja:not([data-presentation]) h2:not([data-ritmo=propio] *) { font-size:36.4px; line-height:43.68px; }
+ @media(max-width:639px) { .hoja:not([data-presentation]) h1:not([data-ritmo=propio] *) { font-size:36.4px; line-height:43.68px; } }
+}
+.hoja:not([data-presentation]) { row-gap:24px; }
+.hoja.lectura-guiada:not([data-presentation]) { margin-inline:0; }
+.hoja:not([data-presentation]) .cabecera { gap:16px; }
+/* Code has its own measure and transparent surface. The backdrop blurs the
+   marginal index behind it, never the source text or the whole document. */
+.codigo.codigo-editorial { position:relative; z-index:3; border:0; border-radius:0; background:transparent; padding:0; }
+.marcos-editoriales .codigo.codigo-editorial { padding:0; }
+.codigo.codigo-editorial .cab { position:relative; display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:start; gap:0; min-height:27.5714px; padding:0 16px 8px; border:0; color:var(--tinta-3); font:13.7px/19.5714px var(--mono); }
+.codigo.codigo-editorial .cab > span:not(.copia-estado) { position:static; width:auto; height:auto; clip-path:none; overflow:visible; }
+.codigo.codigo-editorial .cab > button { position:absolute; inset:-10px 4px auto auto; width:44px; height:44px; min-height:44px; min-width:44px; padding:14px; border:0; background:transparent; transition:color 150ms cubic-bezier(.075,.82,.165,1),background-color 150ms; }
+.codigo.codigo-editorial .cab > button:hover { color:var(--tinta); background:color-mix(in srgb,var(--panel) 60%,transparent); }
+.codigo.codigo-editorial .cab > button svg { width:16px; height:16px; }
+.codigo.codigo-editorial pre { position:relative; margin:0; padding:16px 0; overflow:auto; overscroll-behavior-inline:contain; background:color-mix(in srgb,var(--panel) 25%,transparent); -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); font:13.7px/22px var(--mono); letter-spacing:.05px; scrollbar-width:thin; }
+.codigo.codigo-editorial pre:focus-visible { outline:2px dashed var(--foco); outline-offset:4px; }
+.codigo-editorial code[data-lineas] { display:block; width:max-content; min-width:100%; }
+.codigo-editorial .codigo-linea { min-height:1lh; vertical-align:top; padding-inline:48px 16px; border-left:0; }
+.codigo-editorial .codigo-linea::before { left:16px; width:16px; color:var(--tinta-3); }
+.codigo-editorial .codigo-linea.destacada { box-shadow:inset 2px 0 var(--naranja); }
+.codigo-editorial mark { color:var(--naranja); background:var(--naranja-suave); border:1px solid color-mix(in srgb,var(--naranja) 22%,transparent); border-radius:4px; padding:1px 3px; }
+.codigo.codigo-editorial::before,.codigo.codigo-editorial::after { content:''; position:absolute; pointer-events:none; z-index:1; }
+.codigo.codigo-editorial::before { inset:27.5714px max(-24px,calc(50% - 50vw)) 0; border-block:1px dashed color-mix(in srgb,var(--linea) 80%,transparent); mask-image:linear-gradient(90deg,transparent,#000 15%,#000 85%,transparent); }
+.codigo.codigo-editorial::after { inset:11.5714px 0 -16px; border-inline:1px dashed color-mix(in srgb,var(--linea) 80%,transparent); mask-image:linear-gradient(transparent,#000 1rem,#000 calc(100% - 1rem),transparent); }
+.codigo.codigo-editorial > .marco-lineas { display:none; }
+@media(min-width:640px) {
+ .codigo.codigo-editorial::before { inset-inline:max(-64px,calc(50% - 50vw)); }
+ .codigo.codigo-editorial::after { inset-block:-20.4286px -48px; mask-image:linear-gradient(transparent,#000 35%,#000 65%,transparent); }
+}
+/* A wide code sample uses the same centered measure even inside a prose section.
+   Data canvases, custom layouts and presentations keep their own geometry. */
+.hoja:not([data-presentation]) > .codigo.codigo-editorial,
+.hoja:not([data-presentation]) > .pagina > .codigo.codigo-editorial { grid-column:2; width:100%; }
+@media(min-width:1280px) {
+ .hoja:not([data-presentation]) > .codigo.codigo-editorial,
+ .hoja:not([data-presentation]) > .pagina > .codigo.codigo-editorial { grid-column:1/-1; width:48rem; margin-inline:auto; }
+ .hoja:not([data-presentation]) :is(.seccion,.prosa) > .codigo.codigo-editorial:not([data-ritmo=propio] *) { width:48rem; max-width:none; margin-inline:calc((100% - 48rem)/2); }
+ .hoja.lectura-guiada:not([data-presentation]) > .indice,
+ .hoja.lectura-guiada:not([data-presentation]) > .pagina > .indice { left:max(24px,calc(50vw - 648px)); width:min(344px,calc(50vw - 304px)); top:max(128px,var(--lectura-cabecera,128px)); max-height:calc(100dvh - max(128px,var(--lectura-cabecera,128px)) - 48px); padding:0; background:transparent; border:0; font:13.7px/24px var(--sans); }
+ .lectura-guiada:not([data-presentation]) .indice ol { margin:0; padding:0; list-style:none; counter-reset:contenido; }
+ .lectura-guiada:not([data-presentation]) .indice li { counter-increment:contenido; margin:0; }
+ .lectura-guiada:not([data-presentation]) .indice li::before { content:none; }
+ .lectura-guiada:not([data-presentation]) .indice a { display:block; color:var(--tinta-3); text-decoration:none; }
+ .lectura-guiada:not([data-presentation]) .indice a::before { content:counter(contenido,decimal-leading-zero) '. '; font-family:var(--mono); }
+ .lectura-guiada:not([data-presentation]) .indice li.visto a { text-decoration:line-through; text-decoration-color:var(--linea-fuerte); }
+ .lectura-guiada:not([data-presentation]) .indice a[aria-current],.lectura-guiada:not([data-presentation]) .indice a:hover { color:var(--tinta); }
+ /* Focused navigation must stay readable and operable through wide figures. */
+ .hoja.lectura-guiada:not([data-presentation]) .indice:focus-within { z-index:4; background:var(--papel); outline:1px dashed var(--linea); outline-offset:8px; }
+}
+@media(min-width:1200px) and (max-width:1279px) {
+ .hoja.lectura-guiada:not([data-presentation]) > .indice,
+ .hoja.lectura-guiada:not([data-presentation]) > .pagina > .indice { position:static; width:auto; max-height:none; }
+}
+@media(prefers-reduced-transparency:reduce) { .codigo.codigo-editorial pre { background:var(--panel); -webkit-backdrop-filter:none; backdrop-filter:none; } }
+@media(prefers-reduced-motion:reduce) { .codigo.codigo-editorial .cab > button { transition:none; } }
+@media(forced-colors:active) { .codigo.codigo-editorial { border:1px solid CanvasText; }.codigo.codigo-editorial::before,.codigo.codigo-editorial::after { display:none; }.codigo.codigo-editorial pre { backdrop-filter:none; } }
+@media print {
+ .codigo.codigo-editorial::before,.codigo.codigo-editorial::after { display:none; }
+ .codigo.codigo-editorial,.hoja:not([data-presentation]) :is(.seccion,.prosa) > .codigo.codigo-editorial { width:100%; margin-inline:0; z-index:auto; }
+ .codigo.codigo-editorial pre { background:transparent; -webkit-backdrop-filter:none; backdrop-filter:none; overflow:visible; white-space:pre-wrap; }
+ .codigo-editorial code[data-lineas] { width:auto; }
+ .codigo-editorial .codigo-linea { white-space:pre-wrap; overflow-wrap:anywhere; }
+}
+/* Open editorial frames extend beyond a component; they do not consume its
+   content width. Only the decorative strokes fade. */
+.marcos-editoriales :is(.ancho,.amplio):not(.pieza):not(.aviso),.marco-difuso,.marco-punteado { padding:0; }
+.marco-lineas::before,.marco-difuso::before { inset:0 max(-24px,calc(50% - 50vw)); border-block:1px dashed color-mix(in srgb,var(--linea) 80%,transparent); mask-image:linear-gradient(90deg,transparent,#000 15%,#000 85%,transparent); }
+.marco-lineas::after,.marco-difuso::after { inset:-16px 0; border-inline:1px dashed color-mix(in srgb,var(--linea) 80%,transparent); mask-image:linear-gradient(transparent,#000 1rem,#000 calc(100% - 1rem),transparent); }
+.marcos-editoriales .marco-difuso::before { border-block-style:dashed; }
+.marcos-editoriales .marco-difuso::after { border-inline-style:dashed; }
+@media(min-width:640px) {
+ .marco-lineas::before,.marco-difuso::before { inset-inline:max(-64px,calc(50% - 50vw)); }
+ .marco-lineas::after,.marco-difuso::after { inset-block:-48px; mask-image:linear-gradient(transparent,#000 35%,#000 65%,transparent); }
+}
+.cards-trazadas,.cards-trazadas.cards-abiertas { grid-template-columns:minmax(0,1fr); gap:8px; border:0; }
+.cards-trazadas > a { padding:16px; gap:8px; border:0; background:transparent; border-radius:4px; transition:background-color 150ms cubic-bezier(.075,.82,.165,1); }
+.cards-trazadas h4 { font:400 18.5px/28.7778px var(--serif); }
+.cards-trazadas p { font:13.7px/19.5714px var(--sans); }
+.cards-trazadas .procedencia { font:12.1px/16.1333px var(--mono); }
+.cards-trazadas > a:hover,.cards-trazadas > a:focus-visible { box-shadow:none; background:color-mix(in srgb,var(--panel) 65%,transparent); }
+@media(min-width:640px) { .cards-trazadas { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(min-width:1024px) { .cards-trazadas { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+@media(prefers-reduced-motion:reduce) { .cards-trazadas > a { transition:none; } }
+@media print { .marco-lineas::before,.marco-lineas::after,.marco-difuso::before,.marco-difuso::after { display:none; } }
+
+/* Article lists retain a reading measure; cards are a separate browsing pattern. */
+[data-archivo] .publicaciones { grid-template-columns:minmax(0,1fr); max-width:33rem; margin-inline:auto; gap:32px; }
+[data-archivo] .publicaciones > article { border:0; padding:0; }
+[data-archivo] .publicaciones h4,.lista-proyectos h4,.estanteria h3 { font:400 22.4px/31.36px var(--serif); }
+[data-archivo] .publicaciones [data-extracto] { font:13.7px/21.235px var(--sans); }
+.cronologia :is(h3,h4) { font:400 18.5px/28.7778px var(--serif); }
+.cronologia p { font-size:13.7px; line-height:21.235px; }
+.aviso.aviso-esquina { padding:0; margin-block:32px; }
+.aviso-esquina > div { padding:16px; border:1px solid color-mix(in srgb,var(--acento) 25%,transparent); border-radius:4px; }
+.aviso-esquina > .num { width:32px; height:32px; top:-13px; left:-13px; }
+.estanteria { max-width:56rem; margin-inline:auto; }
+.estanteria > li { grid-template-columns:minmax(0,224px) minmax(0,1fr); gap:20px; padding:24px 0; }
+@media(max-width:767px) { .estanteria > li { grid-template-columns:minmax(0,192px) minmax(0,1fr); } }
+@media(max-width:639px) { .estanteria > li { grid-template-columns:minmax(0,1fr); }.estanteria .estante-portada { width:192px; max-width:100%; } }
+.galeria-fotografica .galeria-pista { padding:12px 0; scroll-padding-inline:0; }
+.galeria-fotografica .galeria-pista > figure { height:232px; min-height:232px; }
+@media(min-width:1200px) {
+ .regla-guiada { right:32px; top:max(128px,var(--lectura-cabecera,128px)); height:max(44px,calc(100dvh - max(128px,var(--lectura-cabecera,128px)) - 128px)); width:44px; }
+ .regla-guiada .ticks { width:16px; }
+}
+@media print { .aviso.aviso-esquina { margin-block:16pt; }.galeria-fotografica .galeria-pista > figure { height:auto; min-height:0; } }
+
+.galeria-fotografica .galeria-pista { mask-image:linear-gradient(to right,transparent,#000 var(--galeria-fade-inicio,0px),#000 calc(100% - var(--galeria-fade-fin,0px)),transparent); }
+.galeria-fotografica .galeria-pista:focus-within { mask-image:none; }
+@media print { .galeria-fotografica .galeria-pista { mask-image:none; } }
+@media(prefers-reduced-transparency:reduce) { .galeria-fotografica .galeria-pista { mask-image:none; } }
+/* EDITORIAL REFERENCE END */
 
 /* SKETCH DIAGRAM START */
 /* Sketch diagrams: semantic HTML carries the source; SVG only draws the ink. */
@@ -6062,13 +6183,13 @@ main.hoja[data-presentation]{margin-top:22px}
     on(track,'pointermove',e=>{if(!drag||e.pointerId!==drag.id||Math.abs(e.clientX-drag.x)<4)return;e.preventDefault();track.classList.add('arrastrando');track.scrollLeft=drag.left-(e.clientX-drag.x);});
     on(track,'pointerup',end);on(track,'pointercancel',end);on(track,'lostpointercapture',end);on(track,'dragstart',e=>e.preventDefault());clean.push(end);
    }
-   const items=[...track.children],original={prev:prev?.disabled,next:next?.disabled,text:status.textContent};let timer;
-   const update=()=>{const r=track.getBoundingClientRect(),index=items.reduce((best,e,i)=>Math.abs(e.getBoundingClientRect().left-r.left)<Math.abs(items[best].getBoundingClientRect().left-r.left)?i:best,0);if(prev)prev.disabled=track.scrollLeft<=1;if(next)next.disabled=track.scrollLeft>=track.scrollWidth-track.clientWidth-1;status.textContent=items.length?'Vista '+(index+1)+' de '+items.length+'. Desliza para recorrer.':'No hay imágenes en esta galería.';};
+   const items=[...track.children],original={prev:prev?.disabled,next:next?.disabled,text:status.textContent,fadeStart:track.style.getPropertyValue('--galeria-fade-inicio'),fadeEnd:track.style.getPropertyValue('--galeria-fade-fin')};let timer;
+   const update=()=>{if(el.classList.contains('galeria-fotografica')){const edge=Math.min(track.clientWidth*.12,40);track.style.setProperty('--galeria-fade-inicio',Math.min(edge,Math.max(0,track.scrollLeft))+'px');track.style.setProperty('--galeria-fade-fin',Math.min(edge,Math.max(0,track.scrollWidth-track.clientWidth-track.scrollLeft))+'px');}const r=track.getBoundingClientRect(),index=items.reduce((best,e,i)=>Math.abs(e.getBoundingClientRect().left-r.left)<Math.abs(items[best].getBoundingClientRect().left-r.left)?i:best,0);if(prev)prev.disabled=track.scrollLeft<=1;if(next)next.disabled=track.scrollLeft>=track.scrollWidth-track.clientWidth-1;status.textContent=items.length?'Vista '+(index+1)+' de '+items.length+'. Desliza para recorrer.':'No hay imágenes en esta galería.';};
    const move=direction=>{const r=track.getBoundingClientRect(),current=track.scrollLeft,positions=items.map(e=>current+e.getBoundingClientRect().left-r.left),target=direction>0?positions.find(x=>x>current+2):positions.reverse().find(x=>x<current-2);track.scrollTo({left:target??(direction>0?track.scrollWidth:0),behavior:motion.matches?'instant':'smooth'});};
    if(prev)on(prev,'click',()=>move(-1));if(next)on(next,'click',()=>move(1));on(track,'scroll',()=>{clearTimeout(timer);timer=setTimeout(update,90);},{passive:true});
    on(motion,'change',()=>{if(motion.matches)track.scrollTo({left:track.scrollLeft,behavior:'instant'});update();});
    const observer=new ResizeObserver(update);observer.observe(track);update();
-   clean.push(()=>{clearTimeout(timer);observer.disconnect();track.scrollTo({left:track.scrollLeft,behavior:'instant'});if(prev)prev.disabled=original.prev;if(next)next.disabled=original.next;status.textContent=original.text;});
+   clean.push(()=>{clearTimeout(timer);observer.disconnect();track.scrollTo({left:track.scrollLeft,behavior:'instant'});if(prev)prev.disabled=original.prev;if(next)next.disabled=original.next;status.textContent=original.text;for(const [name,value] of [['--galeria-fade-inicio',original.fadeStart],['--galeria-fade-fin',original.fadeEnd]]){if(value)track.style.setProperty(name,value);else track.style.removeProperty(name);}});
   }
   instances.set(el,api);
  }
@@ -6318,7 +6439,7 @@ main.hoja[data-presentation]{margin-top:22px}
 
   document.querySelectorAll('[data-copiar]').forEach(button => {
     if(button.closest('.codigo,.terminal')){button.classList.add('nota-icono');button.setAttribute('aria-label',button.getAttribute('aria-label')||'Copiar código');button.title=button.getAttribute('aria-label');button.innerHTML='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V3H4v13h4"/></svg>';
-      const block=button.closest('.codigo,.terminal'),heading=block.querySelector('.cab > span:not(.copia-estado)');block.classList.add('codigo-compacto');if(heading&&/^(CSS|HTML|JavaScript|TypeScript|JSON|Python|SQL|Shell|Bash|Terminal)$/i.test(heading.textContent.trim()))block.classList.add('codigo-sin-titulo');
+      const block=button.closest('.codigo,.terminal');block.classList.add('codigo-compacto');block.classList.remove('codigo-sin-titulo');
     }
     button.addEventListener('click',async () => {
       const code = document.getElementById(button.dataset.copiar);
@@ -6391,12 +6512,12 @@ main.hoja[data-presentation]{margin-top:22px}
 <script data-nota-modulo="packages/core/components/code.js">
 /* Resaltado local conservador. Nueve lenguajes; todos los tokens son nodos de texto. */
 (()=>{'use strict';const done=new WeakSet();
- const sets={javascript:'async await break case catch class const continue debugger default delete do else export extends false finally for from function if import in instanceof let new null of return static super switch this throw true try typeof undefined var void while yield',typescript:'abstract any as boolean declare enum implements interface keyof namespace never number private protected public readonly string type unknown',python:'and as assert async await break class continue def del elif else except False finally for from global if import in is lambda None nonlocal not or pass raise return True try while with yield',sql:'SELECT FROM WHERE JOIN LEFT RIGHT INNER OUTER ON GROUP BY ORDER ASC DESC INSERT INTO VALUES UPDATE SET DELETE CREATE TABLE AS AND OR NOT NULL LIMIT COUNT SUM AVG HAVING DISTINCT',shell:'if then else fi for in do done case esac function echo printf cd pwd export source return exit set',css:'important media supports container keyframes root hover focus display grid flex block none minmax repeat var calc color background padding margin width height'};
- function language(el,text){const declared=el.dataset.lenguaje||el.dataset.language;if(declared)return declared.toLowerCase();if(el.closest('.terminal'))return 'salida';if(el.closest('.receta-copia'))return 'html';const title=el.closest('.codigo')?.querySelector('.cab')?.textContent||'';for(const [re,lang] of [[/\.py\b|python/i,'python'],[/\.tsx?\b|typescript/i,'typescript'],[/\.jsx?\b|javascript/i,'javascript'],[/\.css\b/i,'css'],[/\.sql\b/i,'sql'],[/\.sh\b|shell|bash/i,'shell'],[/\.json\b/i,'json']])if(re.test(title))return lang;if(text.trim().startsWith('<'))return 'html';try{JSON.parse(text);return 'json';}catch{}return 'salida';}
+ const sets={cpp:'include define ifdef endif int char void bool double float auto const unsigned signed long short return if else for while break continue class struct public private protected virtual namespace using new delete nullptr true false template typename sizeof static switch case default',javascript:'async await break case catch class const continue debugger default delete do else export extends false finally for from function if import in instanceof let new null of return static super switch this throw true try typeof undefined var void while yield',typescript:'abstract any as boolean declare enum implements interface keyof namespace never number private protected public readonly string type unknown',python:'and as assert async await break class continue def del elif else except False finally for from global if import in is lambda None nonlocal not or pass raise return True try while with yield',sql:'SELECT FROM WHERE JOIN LEFT RIGHT INNER OUTER ON GROUP BY ORDER ASC DESC INSERT INTO VALUES UPDATE SET DELETE CREATE TABLE AS AND OR NOT NULL LIMIT COUNT SUM AVG HAVING DISTINCT',shell:'if then else fi for in do done case esac function echo printf cd pwd export source return exit set',css:'important media supports container keyframes root hover focus display grid flex block none minmax repeat var calc color background padding margin width height'};
+ function language(el,text){const declared=el.dataset.lenguaje||el.dataset.language;if(declared)return ({js:'javascript',ts:'typescript',bash:'shell','c++':'cpp',c:'cpp'})[declared.toLowerCase()]||declared.toLowerCase();if(el.closest('.terminal'))return 'salida';if(el.closest('.receta-copia'))return 'html';const title=el.closest('.codigo')?.querySelector('.cab')?.textContent||'';for(const [re,lang] of [[/\.py\b|python/i,'python'],[/\.tsx?\b|typescript/i,'typescript'],[/\.jsx?\b|javascript/i,'javascript'],[/\.css\b/i,'css'],[/\.sql\b/i,'sql'],[/\.sh\b|shell|bash/i,'shell'],[/\.json\b/i,'json']])if(re.test(title))return lang;if(text.trim().startsWith('<'))return 'html';try{JSON.parse(text);return 'json';}catch{}return 'salida';}
  function tokens(source,lang){const out=[],add=(text,kind)=>out.push({text,kind});if(lang==='html'){
    const re=/<!--[\s\S]*?-->|<\/?[A-Za-z][^>]*>/g;let end=0;for(const m of source.matchAll(re)){add(source.slice(end,m.index));const token=m[0];if(token.startsWith('<!--'))add(token,'com');else{let pos=0;for(const p of token.matchAll(/(<\/?[\w:-]+)|("[^"]*"|'[^']*')|([\w:-]+)(?=\s*=)/g)){add(token.slice(pos,p.index));add(p[0],p[1]?'kw':p[2]?'str':'codigo-atributo');pos=p.index+p[0].length;}add(token.slice(pos));}end=m.index+token.length;}add(source.slice(end));return out;
   }
-  const comments={javascript:/\/\*[\s\S]*?\*\/|\/\/[^\n]*/.source,typescript:/\/\*[\s\S]*?\*\/|\/\/[^\n]*/.source,css:/\/\*[\s\S]*?\*\//.source,python:/#[^\n]*/.source,shell:/#[^\n]*/.source,sql:/--[^\n]*|\/\*[\s\S]*?\*\//.source};
+  const comments={cpp:/\/\*[\s\S]*?\*\/|\/\/[^\n]*/.source,javascript:/\/\*[\s\S]*?\*\/|\/\/[^\n]*/.source,typescript:/\/\*[\s\S]*?\*\/|\/\/[^\n]*/.source,css:/\/\*[\s\S]*?\*\//.source,python:/#[^\n]*/.source,shell:/#[^\n]*/.source,sql:/--[^\n]*|\/\*[\s\S]*?\*\//.source};
   const pattern=new RegExp('('+(comments[lang]||'(?!)')+')|'+/("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|`(?:\\.|[^`\\])*`)|(\b(?:0x[\da-fA-F]+|\d+(?:[.,]\d+)*(?:e[+-]?\d+)?))|([A-Za-z_$][\w$-]*)/.source,'g');let end=0;const words=new Set(((sets[lang]||'')+' '+(lang==='typescript'?sets.javascript:'')).split(' '));
   for(const m of source.matchAll(pattern)){add(source.slice(end,m.index));let kind;
    if(m[1])kind='com';
@@ -6405,12 +6526,31 @@ main.hoja[data-presentation]{margin-top:22px}
   }add(source.slice(end));return out;
  }
  function init(root=document){root.querySelectorAll('.codigo pre code,.terminal pre,[data-lenguaje]').forEach(el=>{if(done.has(el))return;done.add(el);const lang=language(el,el.textContent);el.dataset.coloreado=lang;
+  const block=el.closest('.codigo');
+  if(block){
+   block.classList.add('codigo-editorial');block.classList.remove('codigo-sin-titulo');
+   let header=block.querySelector('.cab');if(!header){header=document.createElement('div');header.className='cab';block.prepend(header);}
+   const label=header.querySelector('span:not(.copia-estado)');
+   if(!label){const name=document.createElement('span');name.className='codigo-lenguaje';name.textContent=({javascript:'JavaScript',typescript:'TypeScript',python:'Python',sql:'SQL',shell:'Shell',css:'CSS',html:'HTML',json:'JSON',cpp:'C++',salida:'Texto'})[lang]||lang;header.prepend(name);}
+   if(!header.querySelector('[data-copiar]')){
+    const button=document.createElement('button');button.type='button';button.className='nota-icono';button.setAttribute('aria-label','Copiar código');button.title='Copiar código';
+    button.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V3H4v13h4"/></svg>';
+    const status=document.createElement('span');status.className='copia-estado';status.setAttribute('role','status');header.append(button,status);
+    button.addEventListener('click',async()=>{try{if(!navigator.clipboard?.writeText)throw new Error('clipboard unavailable');await navigator.clipboard.writeText(el.textContent);status.textContent='Código copiado.';}catch{const range=document.createRange();range.selectNodeContents(el);const selection=getSelection();selection.removeAllRanges();selection.addRange(range);status.textContent='Código seleccionado. Usa ⌘C o Ctrl+C para copiar.';}});
+   }
+   const pre=el.closest('pre');if(pre&&!pre.hasAttribute('tabindex')){pre.tabIndex=0;pre.setAttribute('aria-label','Código: '+(header.querySelector('span')?.textContent||lang));}
+   if(!el.hasAttribute('data-sin-lineas'))el.setAttribute('data-lineas','');
+  }
   if(el.hasAttribute('data-lineas')){
-   const source=el.textContent,selected=new Set();
+   const source=el.textContent,selected=new Set(),marks=[];
+   const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);let offset=0;
+   while(walker.nextNode()){const node=walker.currentNode,end=offset+node.textContent.length;if(node.parentElement.closest('mark,.subra'))marks.push([offset,end]);offset=end;}
+   let sourceOffset=0;
+   const append=(parent,text)=>{let at=0;for(const [start,end] of marks){const left=Math.max(0,start-sourceOffset),right=Math.min(text.length,end-sourceOffset);if(right<=left)continue;if(left>at)parent.append(document.createTextNode(text.slice(at,left)));const mark=document.createElement('mark');mark.textContent=text.slice(left,right);parent.append(mark);at=right;}if(at<text.length)parent.append(document.createTextNode(text.slice(at)));sourceOffset+=text.length;};
    for(const part of (el.dataset.destacar||'').split(',')){const m=part.trim().match(/^(\d+)(?:-(\d+))?$/);if(!m)continue;const from=Number(m[1]),to=Number(m[2]||m[1]);for(let i=from;i<=Math.min(to,10000);i++)selected.add(i);}
    const frag=document.createDocumentFragment();let number=1,line;
    const next=()=>{line=document.createElement('span');line.className='codigo-linea'+(selected.has(number)?' destacada':'');line.dataset.numero=String(number++);frag.append(line);};next();
-   tokens(source,lang).forEach(({text,kind})=>text.split('\n').forEach((part,i)=>{if(i){frag.append(document.createTextNode('\n'));next();}if(!part)return;const span=document.createElement('span');if(kind)span.className=kind;span.textContent=part;line.append(span);}));
+   tokens(source,lang).forEach(({text,kind})=>text.split('\n').forEach((part,i)=>{if(i){frag.append(document.createTextNode('\n'));sourceOffset++;next();}if(!part)return;const span=document.createElement('span');if(kind)span.className=kind;append(span,part);line.append(span);}));
    el.replaceChildren(frag);return;
   }
   const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT),nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
@@ -6569,4 +6709,4 @@ main.hoja[data-presentation]{margin-top:22px}
 })();
 
 </script>
-<script type="application/json" data-nota-manifiesto>{"version": "4", "paginas": ["contenido"], "modulos": ["packages/core/components/interface.js", "packages/core/components/reader-controls.js", "packages/core/components/audio.js", "packages/core/components/controls.js", "packages/core/components/editorial-pieces.js", "packages/core/components/reader.js", "packages/core/components/code.js", "packages/core/components/review.js"], "fuentes": {"packages/core/styles/fonts.css": "c496fb4f095a14cbb6a82503a4a828720c01a8120df3c73113495d832e5d40cb", "packages/core/styles/artifact.css": "05a51c7547a5388872efdb6e4d81493a1056e4f279583ea50a6777e963527838", "packages/core/components/interface.js": "ffd922850a2dd39f346f6615264b5522ccfc26ce17285fee36c79d026b3a0cce", "packages/core/components/reader-controls.js": "9e432baf8154ea1225b5d2770ea215598442a027a875e5f3c24f3515c2a86bc9", "packages/core/components/audio.js": "db6014d04e8710e87912c453eedbe9c24b7feb8bfb02934f5c0cca26da682232", "packages/core/components/controls.js": "b3881b4411e12ae56a1859a56dd14c2fb073712fa732874fce50e9c2061d0aa5", "packages/core/components/editorial-pieces.js": "8604004dfc2aacf7e51ae4a0e6184950fdaaa0187f64e956b562adb787cd5fe9", "packages/core/components/reader.js": "37d377f06802543916768e04b306d7e4670503e7c81c0e01b269d3fff976cfe0", "packages/core/components/code.js": "16e94c9d0be68b13a270bd57485c129e3fa7b071cfa4aa2ee9d52052363796a7", "packages/core/components/review.js": "ad144dd2cc37a70a2adb4898e6aaa96cd06d2974e895ac1943bf35cf43bd72d7"}}</script>
+<script type="application/json" data-nota-manifiesto>{"version": "4", "paginas": ["contenido"], "modulos": ["packages/core/components/interface.js", "packages/core/components/reader-controls.js", "packages/core/components/audio.js", "packages/core/components/controls.js", "packages/core/components/editorial-pieces.js", "packages/core/components/reader.js", "packages/core/components/code.js", "packages/core/components/review.js"], "fuentes": {"packages/core/styles/fonts.css": "c496fb4f095a14cbb6a82503a4a828720c01a8120df3c73113495d832e5d40cb", "packages/core/styles/artifact.css": "aecc3f6b08586d1ca98ba666ffdb7f95bc45986abc6b1ae5467ae4830bb938ac", "packages/core/components/interface.js": "ffd922850a2dd39f346f6615264b5522ccfc26ce17285fee36c79d026b3a0cce", "packages/core/components/reader-controls.js": "9e432baf8154ea1225b5d2770ea215598442a027a875e5f3c24f3515c2a86bc9", "packages/core/components/audio.js": "db6014d04e8710e87912c453eedbe9c24b7feb8bfb02934f5c0cca26da682232", "packages/core/components/controls.js": "b3881b4411e12ae56a1859a56dd14c2fb073712fa732874fce50e9c2061d0aa5", "packages/core/components/editorial-pieces.js": "338fb4a5c6a4166fa22220622a9503bae2ad565191d2dd8f95cdb33729458d6d", "packages/core/components/reader.js": "8897cbcd0a9a667661c903ace07684db139f5665e4fb2e0f5092e5195e742cde", "packages/core/components/code.js": "768477ac1fb20fd37abfdfca745ec9188921a0300b082f8d2be095176955443c", "packages/core/components/review.js": "ad144dd2cc37a70a2adb4898e6aaa96cd06d2974e895ac1943bf35cf43bd72d7"}}</script>
