@@ -41,7 +41,7 @@ Use the main column for the argument. A left note can challenge an assumption; a
 
 ## Reader controls
 
-Mount one shared dock. Comments, Share and Preferences have distinct purposes. Reader preferences remain separate from creator management. Preserve comment context, version and session when exporting feedback; personal notes stay private unless explicitly included by their author. Keep the composer short, disclose metadata on request, and return focus after closing.
+Mount one shared dock. Comments, Share, Preferences and Listen have distinct purposes. Reader preferences remain separate from creator management. Preserve comment context, version and session when exporting feedback; personal notes stay private unless explicitly included by their author. Keep the composer short, disclose metadata on request, and return focus after closing.
 
 ## Visual voice
 

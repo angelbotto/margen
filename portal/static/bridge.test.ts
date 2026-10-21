@@ -15,4 +15,12 @@ it('waits for a point instead of attaching a legacy comment to the heading, and 
  expect(document.querySelector('[data-host-point-picker]')).toBeNull();
  const message=contexts()[0];window.dispatchEvent(new MessageEvent('message',{source:window.parent,data:{bottifact:1,id:message.id,data:{ok:true}}}));
  post.mockRestore();vi.clearAllTimers();vi.useRealTimers();
+ // Only a marked message from the parent can stop speech.
+
+ const stop=vi.fn();(window as any).MargenSpeech={stop};
+ window.dispatchEvent(new MessageEvent('message',{source:null,data:{bottifact:1,op:'stop-speech'}}));
+ window.dispatchEvent(new MessageEvent('message',{source:window.parent,data:{op:'stop-speech'}}));
+ expect(stop).not.toHaveBeenCalled();
+ window.dispatchEvent(new MessageEvent('message',{source:window.parent,data:{bottifact:1,op:'stop-speech'}}));
+ expect(stop).toHaveBeenCalledOnce();delete (window as any).MargenSpeech;
 });

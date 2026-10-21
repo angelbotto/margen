@@ -83,4 +83,6 @@ jobs:
           pip install playwright==1.58.0
           python -m playwright install --with-deps chromium
       - name: Check shared reading rhythm
-        run: python scripts/test_editorial_flow.py
+        run: |
+          python scripts/test_editorial_flow.py
+          python scripts/test_reader_speech.py

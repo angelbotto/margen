@@ -41,6 +41,18 @@ class PortalTests(unittest.TestCase):
         return {'id':'test-event-1','kind':'create','version':self.a['version'],'text':'Revisar la cifra','author':'Autor inventado',
                 'anchor':{'reference':'dato','tag':'P','text':'Cifra de ejemplo','quote':'ejemplo','page':'Informe','x':.4,'y':.5},**kw}
 
+    def test_speech_runtime_is_injected_once_without_relaxing_isolation(self):
+        response=self.owner.get(self.path+'/render')
+        self.assertEqual(response.status_code,200)
+        self.assertIn('window.MargenSpeech =',response.text)
+        self.assertIn('window.MargenSpeech?.mount(bar)',response.text)
+        policy=response.headers['content-security-policy']
+        self.assertIn('sandbox allow-scripts allow-downloads;',policy)
+        self.assertIn("connect-src 'none'",policy)
+        self.assertNotIn('allow-same-origin',policy)
+        self.assertNotIn('speech-synthesis',policy)
+        self.assertEqual(self.guest.get(self.path+'/render').status_code,404)
+
     def test_reader_updates_rhythm_without_rewriting_source(self):
         from portal.test_reader_style import OLD
         html=HTML+'<style>p{color:red}'+OLD+'</style>'

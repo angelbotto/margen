@@ -1,6 +1,6 @@
 # Working memory and measurement
 
-Open **Mi trabajo** in the authenticated library and select a project. The existing creator controls remain the entry point; document readers retain one Comments / Share / Preferences dock.
+Open **Mi trabajo** in the authenticated library and select a project. The existing creator controls remain the entry point; document readers retain one Comments / Share / Preferences / Listen dock.
 
 ## Available surfaces
 

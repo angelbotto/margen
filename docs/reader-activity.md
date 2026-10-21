@@ -1,6 +1,6 @@
 # Reader activity
 
-The reader's **Share → Artifact activity** panel shows page opens, estimated unique visitors, and participants in the conversation the current reader may access. The three-action dock remains Comments, Share, Preferences.
+The reader's **Share → Artifact activity** panel shows page opens, estimated unique visitors, and participants in the conversation the current reader may access. The dock contains Comments, Share, Preferences and Listen.
 
 ## Visibility and scope
 

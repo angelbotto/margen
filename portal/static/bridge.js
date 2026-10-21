@@ -24,9 +24,11 @@
     document.addEventListener('click',event=>{const target=targetAt(event.target);if(!target)return;event.preventDefault();event.stopImmediatePropagation();capture(target,'',{x:event.clientX,y:event.clientY});},{capture:true,signal:abort.signal});
     document.addEventListener('keydown',event=>{if(event.key==='Escape'){event.preventDefault();stop();focusBefore?.focus?.();}else if(event.key==='Enter'&&focused.has(event.target)){event.preventDefault();capture(event.target);}},{signal:abort.signal});
   }
+  document.addEventListener('bottifact:speech-pick',()=>picking?.());
   addEventListener('message',event=>{
     if(event.source!==parent||!event.data||event.data.bottifact!==1)return;
     const message=event.data;
+    if(message.op==='stop-speech'){window.MargenSpeech?.stop();return;}
     if(message.op==='capture-context'){
       captureContext();return;
     }

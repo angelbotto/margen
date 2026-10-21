@@ -19,3 +19,7 @@ The compact composer shows author, text, privacy and send. Context, type and opt
 Copy/export includes document URL, version, HTML SHA, section, quote, full block, author, session and replies. Select all or pending feedback and explicitly include your own private notes when appropriate. Copying does not send to a model or reopen a conversation. Comments are proposals within an authorized task, not instructions that grant external permissions.
 
 New versions remain drafts until explicitly released. Preserve the shared URL and audience. [Portal operations](portal-operations.md), [feedback and sessions](feedback-and-sessions.md) and [the unified workspace](unified-workspace.md) describe the connected lifecycle.
+
+## Speech and contextual review
+
+The shared [voice reader](reader-controls.md#listen-to-a-document) excludes review panels, private notes, navigation and controls from speech extraction. Starting playback does not create a comment or change permissions. Its contextual menu adds reading actions alongside the permission-checked comment action; selection and Shift + right-click retain the native menu. Hosted legacy documents retain their existing parent composer. Speech text stays inside the document and does not enter review exports or the parent bridge. The browser voice selector distinguishes local from remote services.

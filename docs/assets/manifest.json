@@ -8,6 +8,22 @@
       "synthetic": true,
       "reviewed": true,
       "sha256": "c9e53bb6ebace923002cd3db0a5af632cdad63097744e313747ca792bdca263e"
+    },
+    {
+      "file": "docs/assets/reader-speech-before.png",
+      "source": "examples/content/reader-speech.html",
+      "purpose": "Synthetic mobile reader before voice controls; no account or customer data",
+      "synthetic": true,
+      "reviewed": true,
+      "sha256": "3a5522da92ce7ee109489f98bd3e64f8174e8fcba5b62e4d4decea2b1125e757"
+    },
+    {
+      "file": "docs/assets/reader-speech-after.png",
+      "source": "examples/content/reader-speech.html",
+      "purpose": "Synthetic mobile reader after voice controls; no account or customer data",
+      "synthetic": true,
+      "reviewed": true,
+      "sha256": "9085b50bc37d827a0924d1c4e039fc14b18fb2416f37bf49d892a9142be45bee"
     }
   ]
 }

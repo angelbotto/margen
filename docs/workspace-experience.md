@@ -37,7 +37,7 @@ Existing spaces and topics appear in organization tools without creating an enti
 
 ## Reader controls
 
-The dock retains **Comments, Share, Preferences**, in that order. Comments prioritizes adding feedback, viewing threads and preparing an AI context bundle. Personal notes disclose privacy. Sharing owns access, management and related references. Command search is available from the administrator instead of duplicating it inside every reader menu.
+The dock retains **Comments, Share, Preferences, Listen**, in that order. Comments prioritizes adding feedback, viewing threads and preparing an AI context bundle. Personal notes disclose privacy. Sharing owns access, management and related references. Command search is available from the administrator instead of duplicating it inside every reader menu.
 
 Menu rows combine an icon, a short action and a brief consequence. Accessible names stay concise. Theme favorites sit next to the theme search; typography and audio remain separate tabs. Selecting a theme does not change the independently selected light, dark or system mode.
 

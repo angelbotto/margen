@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased — Shared voice reader
+
+- Add opt-in Web Speech reading for entire documents, selections and contextual points/sections to the shared dock, including hosted legacy HTML and newly generated standalone files.
+- Add compact playback controls, labeled local/remote voices, bounded fragments and block highlighting without changing editorial layout. Preserve native selected-text menus, contextual comments, keyboard access and sandbox isolation.
+- Cover extraction, voice lifecycle, bridge cancellation, picker transitions and responsive controls with synthetic unit/browser tests. Document device-engine limits; no new speech provider or analytics scope.
+
 ## 2026.10.20-library.3 — Shared reading rhythm
 
 - Apply shared paragraph, heading, eyebrow and section spacing across all theme families and legacy editorial pages, nested prose, cards, lists and width-only wrappers. Correct collapsed boundaries found in nine canonical recipes.

@@ -1654,7 +1654,7 @@
       return data;
     } catch (error) {
       if (error.status === 404 || error.status === 401) {
-        $("#artifact-frame").src = "about:blank";
+        setArtifactSource("about:blank");
         clearInterval(poll);
       }
       $("#review-status").textContent =
@@ -1749,6 +1749,11 @@
     workbenchTools.append(b);
   }
   $("#results").before(workbenchTools);
+  function setArtifactSource(src) {
+    const frame = $("#artifact-frame");
+    frame.contentWindow?.postMessage({bottifact:1, op:"stop-speech"}, "*");
+    frame.src = src;
+  }
   const readerWorkspace = window.BottifactReaderWorkspace.create({
     api,
     current: () => current,
@@ -1980,12 +1985,7 @@
       $("#reader-dock").hidden = false;
       versionControls();
       contextRequested = false;
-      $("#artifact-frame").src =
-        "/api/artifacts/" +
-        current.id +
-        "/render?version=" +
-        select.value +
-        location.hash;
+      setArtifactSource("/api/artifacts/" + current.id + "/render?version=" + select.value + location.hash);
     };
     select.addEventListener("change", mount);
     $("#artifact-frame").addEventListener(
@@ -2154,7 +2154,7 @@
   $("#edit-document").addEventListener("click", safe(async () => {
     await window.MargenBlockEditor.open({api, artifact: current, onPublished: async () => {
       current = await api("/api/artifacts/" + current.id);
-      $("#artifact-frame").src = "/api/artifacts/" + current.id + "/render?version=" + current.current_version;
+      setArtifactSource("/api/artifacts/" + current.id + "/render?version=" + current.current_version);
       $("#doc-title").textContent = current.title;
       document.title = current.title + " · Margen";
       const select = $("#version"); select.replaceChildren();
