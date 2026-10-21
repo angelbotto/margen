@@ -6,8 +6,8 @@ FLOW = re.compile(r'/\* EDITORIAL FLOW START \*/.*?/\* EDITORIAL FLOW END \*/', 
 
 
 def without_embedded_flow(content):
-    # HTMLParser treats script bodies as raw data. A CSS-looking string inside a
-    # script or an escaped example must never be rewritten as a real stylesheet.
+    # Track literal-text elements across supported Python versions. A CSS-looking
+    # string inside script, textarea or an escaped example is not a stylesheet.
     if '/* EDITORIAL FLOW START */' not in content:
         return content
     # HTMLParser line numbers count LF only, not Unicode or standalone CR separators.
