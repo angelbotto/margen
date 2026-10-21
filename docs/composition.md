@@ -46,3 +46,9 @@ Mount one shared dock. Comments, Share and Preferences have distinct purposes. R
 ## Visual voice
 
 Choose a family for the material: Editorial for narrative, Liftit for logistics, Tikin/Catabum for their respective brands, Blueprint for conceptual architecture and Hacker for technical evidence. Linear and Modern support compact product documentation. Light/dark/system mode is independent. Use consistent typography roles; handwritten annotation does not replace the body face. All families must support the same components and accessible state labels.
+
+## Semantic prose spacing
+
+In standard notes, a plain `<article>` directly inside `.hoja` (or its `.pagina`) preserves the page grid. Its direct `.ancho` and `.amplio` children use the corresponding wider measure. Plain direct sections and explicit `.prosa` sections receive paragraph and heading rhythm; classed components keep their own layout. Presentations are excluded. Keep structured components at these layout boundaries rather than nesting wide tables inside prose.
+
+The shared source is `packages/core/styles/editorial-flow.css`; `scripts/build.py` embeds it in standalone CSS and the portal reader additions. Hosted corrections change rendering, not stored document versions. Reproduce the browser geometry check with `python scripts/test_editorial_flow.py` in an environment with Playwright and Chromium installed.
