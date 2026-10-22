@@ -232,14 +232,16 @@ def threads(events):
     result = {}
     for e in events:
         if e['kind'] == 'create':
-            result[e['thread']] = {**e, 'replies': [], 'resolved': False, 'deleted': False, 'assignee': ''}
+            result[e['thread']] = {**e, 'author': identity_text(e.get('author')), 'replies': [], 'resolved': False, 'deleted': False, 'assignee': ''}
         t = result.get(e['thread'])
         if not t:
             continue
         t['updated']=e['time']
         if e['kind'] == 'reply': t['replies'].append(e)
         # Una edición de otro actor nunca se muestra con el nombre del autor original.
-        if e['kind'] == 'edit' and (not e.get('actor') or not t.get('actor') or e['actor'] == t['actor']): t['text'] = e['text']
+        if e['kind'] == 'edit' and (not e.get('actor') or not t.get('actor') or e['actor'] == t['actor']):
+            t['text'] = e['text']
+            t['last_edit'] = {**e, 'author': identity_text(e.get('author'))}
         if e['kind'] == 'resolve': t['resolved'] = e['resolved']
         if e['kind'] == 'assign': t['assignee'] = e['assignee']
         if e['kind'] == 'delete': t['deleted'] = True
@@ -363,7 +365,7 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
             a = artifact_for(db, aid, None)
             if not a['guests'] or a['comments'] != 'readers': raise HTTPException(403, 'El autor requiere iniciar sesión para comentar.')
             uid = uuid.uuid4().hex
-            db.execute('INSERT INTO users VALUES(?,NULL,?,0)', (uid, clean(body.get('name'), 80)))
+            db.execute('INSERT INTO users VALUES(?,NULL,?,0)', (uid, identity_text(clean(body.get('name'), 80))))
         return set_session(JSONResponse({'ok':True}), uid)
 
     @app.post('/api/logout')

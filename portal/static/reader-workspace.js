@@ -305,7 +305,7 @@ window.BottifactReaderWorkspace = {
           threads.set(e.thread, { ...e, replies: [] });
         const t = threads.get(e.thread);
         if (!t) continue;
-        if (e.kind === "edit" && (!e.actor || !t.actor || e.actor === t.actor)) t.text = e.text;
+        if (e.kind === "edit" && (!e.actor || !t.actor || e.actor === t.actor)) { t.text = e.text; t.last_edit = e; }
         if (e.kind === "reply") t.replies.push(e);
         if (e.kind === "resolve") t.resolved = e.resolved;
         if (e.kind === "delete") t.deleted = true;
@@ -318,6 +318,7 @@ window.BottifactReaderWorkspace = {
           el("p", t.text),
           el("blockquote", t.anchor.quote),
         );
+        if (t.last_edit) row.append(window.MargenReviewIdentity.element("small", t.last_edit, "Última edición: "));
         for (const r of t.replies)
           row.append(window.MargenReviewIdentity.element("p", r, "", ": " + r.text));
         body.append(row);

@@ -165,10 +165,11 @@ def prompt_bundle(items):
         first=group[0];ctx=first['context']
         lines+=['','## Artefacto: '+first['title'],'ID del portal: '+aid,'Documento estable: '+ctx['document_id'],'Enlace: '+ctx['url'].split('?')[0]]
         for item in group:
-            n=item['thread'];c=item['context'];an=n['anchor'];source=c['source'];stamp=datetime.fromtimestamp(n['time']/1000,timezone.utc).isoformat()
+            n=item['thread'];c=item['context'];an=n['anchor'];source=c['source'];stamp=datetime.fromtimestamp((n.get('last_edit') or n)['time']/1000,timezone.utc).isoformat()
             lines+=['','### '+('Nota personal' if n.get('entry_type')=='note' else 'Comentario')+' · '+n['thread'],
-                    'Estado: '+('resuelto' if n['resolved'] else 'pendiente'),'Autor: '+byline(n)+' · '+stamp,
-                    'Identidad (metadatos del servidor): '+json.dumps(identity_metadata(n),ensure_ascii=False),'Abrir contexto: '+c['url'],
+                    'Estado: '+('resuelto' if n['resolved'] else 'pendiente'),'Autor: '+byline(n.get('last_edit') or n)+' · '+stamp,
+                    *(['Autor original: '+byline(n), 'Última edición: '+byline(n['last_edit'])+' · '+datetime.fromtimestamp(n['last_edit']['time']/1000,timezone.utc).isoformat(), 'Identidad de la edición (metadatos del servidor): '+json.dumps(identity_metadata(n['last_edit']),ensure_ascii=False)] if n.get('last_edit') else []),
+                    'Identidad (metadatos del servidor): '+json.dumps(identity_metadata(n.get('last_edit') or n),ensure_ascii=False),'Abrir contexto: '+c['url'],
                     'Versión de origen: '+n['version'],'SHA-256 del HTML original: '+c['version_sha256'],'Versión publicada actual: '+str(c['current_version']),
                     'Agente de origen: '+(source.get('agent') or 'no registrado'),'Sesión de creación del artefacto: '+(source.get('session') or 'no registrada'),
                     'Dispositivo de creación: '+(source.get('device') or 'no registrado'),

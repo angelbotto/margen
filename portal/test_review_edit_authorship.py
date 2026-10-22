@@ -65,6 +65,16 @@ class EditAuthorshipTests(unittest.TestCase):
         agent = TestClient(self.app, base_url=ORIGIN, headers={'Authorization': 'Bearer ' + token})
         thread = self.thread(self.other, 'Humano')
         self.assertEqual(self.post(agent, kind='edit', thread=thread, text='Del bot de la misma cuenta').status_code, 200)
+        projected = self.projected(thread)
+        self.assertEqual(projected['last_edit']['agent'], 'Bot')
+        exported = self.owner.get('/api/review/export?artifact=' + self.a['id']).json()['text']
+        self.assertIn('Autor: Bot (agente de ', exported)
+        self.assertIn('Autor original: ', exported)
+        self.assertIn('Última edición: Bot (agente de ', exported)
+        self.assertEqual(self.post(self.other, kind='edit', thread=thread, text='Humano de nuevo').status_code, 200)
+        self.assertNotIn('agent', self.projected(thread)['last_edit'])
+        exported = self.owner.get('/api/review/export?artifact=' + self.a['id']).json()['text']
+        self.assertNotIn('Autor: Bot (agente de ', exported)
         owner_token = self.owner.post('/api/tokens', json={'label': 'Codex'}).json()['token']
         owner_agent = TestClient(self.app, base_url=ORIGIN, headers={'Authorization': 'Bearer ' + owner_token})
         self.assertEqual(self.post(owner_agent, kind='edit', thread=thread, text='Del agente de la dueña').status_code, 403)
