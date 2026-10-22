@@ -1,0 +1,544 @@
+{
+ "root": "/Users/angelbotto/orca/workspaces/margen/margen-publishing-main",
+ "portal_module": "/Users/angelbotto/orca/workspaces/margen/margen-publishing-main/portal/__init__.py",
+ "commit": "d500334",
+ "probes": {
+  "dock": [
+   {
+    "engine": "webkit",
+    "doc": "deck",
+    "vp": "desktop",
+    "info": {
+     "hidden": false,
+     "parent": "reader-personal-actions",
+     "display": "flex",
+     "btns": [
+      {
+       "rect": {
+        "x": 1166,
+        "y": 774,
+        "width": 42,
+        "height": 42,
+        "top": 774,
+        "right": 1208,
+        "bottom": 816,
+        "left": 1166
+       },
+       "top_is_self": true,
+       "top": {}
+      },
+      {
+       "rect": {
+        "x": 1216,
+        "y": 774,
+        "width": 42,
+        "height": 42,
+        "top": 774,
+        "right": 1258,
+        "bottom": 816,
+        "left": 1216
+       },
+       "top_is_self": true,
+       "top": {}
+      }
+     ],
+     "host": [],
+     "overlay_visible": false
+    },
+    "doc_under_dock": [
+     "body",
+     "body"
+    ],
+    "puts": 1,
+    "pressed": "true",
+    "toast": {
+     "hidden": false,
+     "text": "Guardado en tu lista. Ver guardados",
+     "link": "/?view=saved"
+    },
+    "server": true,
+    "issues": []
+   },
+   {
+    "engine": "webkit",
+    "doc": "deck",
+    "vp": "mobile",
+    "info": {
+     "hidden": false,
+     "parent": "reader-personal-actions",
+     "display": "flex",
+     "btns": [
+      {
+       "rect": {
+        "x": 276,
+        "y": 718,
+        "width": 42,
+        "height": 42,
+        "top": 718,
+        "right": 318,
+        "bottom": 760,
+        "left": 276
+       },
+       "top_is_self": true,
+       "top": {}
+      },
+      {
+       "rect": {
+        "x": 326,
+        "y": 718,
+        "width": 42,
+        "height": 42,
+        "top": 718,
+        "right": 368,
+        "bottom": 760,
+        "left": 326
+       },
+       "top_is_self": true,
+       "top": {}
+      }
+     ],
+     "host": [],
+     "overlay_visible": false
+    },
+    "doc_under_dock": [
+     "body",
+     "body"
+    ],
+    "puts": 1,
+    "pressed": "true",
+    "toast": {
+     "hidden": false,
+     "text": "Guardado en tu lista. Ver guardados",
+     "link": "/?view=saved"
+    },
+    "server": true,
+    "issues": []
+   },
+   {
+    "engine": "webkit",
+    "doc": "raw",
+    "vp": "desktop",
+    "info": {
+     "hidden": false,
+     "parent": "reader-personal-actions",
+     "display": "flex",
+     "btns": [
+      {
+       "rect": {
+        "x": 1166,
+        "y": 774,
+        "width": 42,
+        "height": 42,
+        "top": 774,
+        "right": 1208,
+        "bottom": 816,
+        "left": 1166
+       },
+       "top_is_self": true,
+       "top": {}
+      },
+      {
+       "rect": {
+        "x": 1216,
+        "y": 774,
+        "width": 42,
+        "height": 42,
+        "top": 774,
+        "right": 1258,
+        "bottom": 816,
+        "left": 1216
+       },
+       "top_is_self": true,
+       "top": {}
+      }
+     ],
+     "host": [
+      {
+       "x": 0,
+       "y": 0,
+       "width": 0,
+       "height": 0,
+       "top": 0,
+       "right": 0,
+       "bottom": 0,
+       "left": 0
+      }
+     ],
+     "overlay_visible": false
+    },
+    "doc_under_dock": [
+     "p",
+     "p"
+    ],
+    "puts": 1,
+    "pressed": "true",
+    "toast": {
+     "hidden": false,
+     "text": "Guardado en tu lista. Ver guardados",
+     "link": "/?view=saved"
+    },
+    "server": true,
+    "issues": []
+   },
+   {
+    "engine": "webkit",
+    "doc": "raw",
+    "vp": "mobile",
+    "info": {
+     "hidden": false,
+     "parent": "reader-personal-actions",
+     "display": "flex",
+     "btns": [
+      {
+       "rect": {
+        "x": 276,
+        "y": 718,
+        "width": 42,
+        "height": 42,
+        "top": 718,
+        "right": 318,
+        "bottom": 760,
+        "left": 276
+       },
+       "top_is_self": true,
+       "top": {}
+      },
+      {
+       "rect": {
+        "x": 326,
+        "y": 718,
+        "width": 42,
+        "height": 42,
+        "top": 718,
+        "right": 368,
+        "bottom": 760,
+        "left": 326
+       },
+       "top_is_self": true,
+       "top": {}
+      }
+     ],
+     "host": [
+      {
+       "x": 0,
+       "y": 0,
+       "width": 0,
+       "height": 0,
+       "top": 0,
+       "right": 0,
+       "bottom": 0,
+       "left": 0
+      }
+     ],
+     "overlay_visible": false
+    },
+    "doc_under_dock": [
+     "p",
+     "p"
+    ],
+    "puts": 1,
+    "pressed": "true",
+    "toast": {
+     "hidden": false,
+     "text": "Guardado en tu lista. Ver guardados",
+     "link": "/?view=saved"
+    },
+    "server": true,
+    "issues": []
+   }
+  ],
+  "occ": [
+   {
+    "engine": "webkit",
+    "doc": "table",
+    "width": 1280,
+    "visible_positions": 1,
+    "occluded_positions": 0,
+    "examples": [],
+    "issues": []
+   },
+   {
+    "engine": "webkit",
+    "doc": "table",
+    "width": 1440,
+    "visible_positions": 10,
+    "occluded_positions": 0,
+    "examples": [],
+    "issues": []
+   },
+   {
+    "engine": "webkit",
+    "doc": "table",
+    "width": 1920,
+    "visible_positions": 10,
+    "occluded_positions": 0,
+    "examples": [],
+    "issues": []
+   },
+   {
+    "engine": "webkit",
+    "doc": "table",
+    "width": 390,
+    "visible_positions": 1,
+    "occluded_positions": 0,
+    "examples": [],
+    "issues": []
+   },
+   {
+    "engine": "webkit",
+    "doc": "gallery",
+    "width": 1280,
+    "visible_positions": 2,
+    "occluded_positions": 0,
+    "examples": [],
+    "issues": []
+   },
+   {
+    "engine": "webkit",
+    "doc": "gallery",
+    "width": 1440,
+    "visible_positions": 21,
+    "occluded_positions": 0,
+    "examples": [],
+    "issues": []
+   },
+   {
+    "engine": "webkit",
+    "doc": "gallery",
+    "width": 1920,
+    "visible_positions": 21,
+    "occluded_positions": 0,
+    "examples": [],
+    "issues": []
+   },
+   {
+    "engine": "webkit",
+    "doc": "gallery",
+    "width": 390,
+    "visible_positions": 1,
+    "occluded_positions": 0,
+    "examples": [],
+    "issues": []
+   },
+   {
+    "engine": "webkit",
+    "doc": "priorities",
+    "width": 1280,
+    "visible_positions": 2,
+    "occluded_positions": 0,
+    "examples": [],
+    "issues": []
+   },
+   {
+    "engine": "webkit",
+    "doc": "priorities",
+    "width": 1440,
+    "visible_positions": 8,
+    "occluded_positions": 0,
+    "examples": [],
+    "issues": []
+   },
+   {
+    "engine": "webkit",
+    "doc": "priorities",
+    "width": 1920,
+    "visible_positions": 8,
+    "occluded_positions": 0,
+    "examples": [],
+    "issues": []
+   },
+   {
+    "engine": "webkit",
+    "doc": "priorities",
+    "width": 390,
+    "visible_positions": 2,
+    "occluded_positions": 0,
+    "examples": [],
+    "issues": []
+   }
+  ],
+  "modal": [
+   {
+    "engine": "webkit",
+    "close": "Escape",
+    "overlay_hidden": false,
+    "dialog_open": false,
+    "focus": "reader-action",
+    "focus_is_like": true,
+    "issues": []
+   },
+   {
+    "engine": "webkit",
+    "close": "button",
+    "overlay_hidden": false,
+    "dialog_open": false,
+    "focus": "reader-action",
+    "focus_is_like": true,
+    "issues": []
+   }
+  ],
+  "theme": [
+   {
+    "engine": "webkit",
+    "doc": "linear-dark",
+    "scheme": "light",
+    "css": {
+     "kind": "anchor",
+     "bg": "rgb(16, 17, 20)",
+     "color": "rgb(255, 255, 255)",
+     "border": "color(srgb 0.287686 0.290667 0.299608)",
+     "badge": null,
+     "frame_bg": "rgb(16, 17, 20)"
+    },
+    "issues": [],
+    "doc_bg": "rgb(16, 17, 20)",
+    "text_contrast": 18.88,
+    "bg_delta_doc": 0.0
+   },
+   {
+    "engine": "webkit",
+    "doc": "linear-dark",
+    "scheme": "dark",
+    "css": {
+     "kind": "anchor",
+     "bg": "rgb(16, 17, 20)",
+     "color": "rgb(255, 255, 255)",
+     "border": "color(srgb 0.287686 0.290667 0.299608)",
+     "badge": null,
+     "frame_bg": "rgb(16, 17, 20)"
+    },
+    "issues": [],
+    "doc_bg": "rgb(16, 17, 20)",
+    "text_contrast": 18.88,
+    "bg_delta_doc": 0.0
+   },
+   {
+    "engine": "webkit",
+    "doc": "hacker",
+    "scheme": "light",
+    "css": {
+     "kind": "anchor",
+     "bg": "rgb(8, 15, 12)",
+     "color": "rgb(255, 255, 255)",
+     "border": "color(srgb 0.263843 0.284706 0.275765)",
+     "badge": null,
+     "frame_bg": "rgb(8, 15, 12)"
+    },
+    "issues": [],
+    "doc_bg": "rgb(8, 15, 12)",
+    "text_contrast": 19.37,
+    "bg_delta_doc": 0.0
+   },
+   {
+    "engine": "webkit",
+    "doc": "hacker",
+    "scheme": "dark",
+    "css": {
+     "kind": "anchor",
+     "bg": "rgb(8, 15, 12)",
+     "color": "rgb(255, 255, 255)",
+     "border": "color(srgb 0.263843 0.284706 0.275765)",
+     "badge": null,
+     "frame_bg": "rgb(8, 15, 12)"
+    },
+    "issues": [],
+    "doc_bg": "rgb(8, 15, 12)",
+    "text_contrast": 19.37,
+    "bg_delta_doc": 0.0
+   },
+   {
+    "engine": "webkit",
+    "doc": "linear-light",
+    "scheme": "light",
+    "css": {
+     "kind": "anchor",
+     "bg": "rgb(255, 255, 255)",
+     "color": "rgb(0, 0, 0)",
+     "border": "color(srgb 0.76 0.76 0.76)",
+     "badge": null,
+     "frame_bg": "rgb(255, 255, 255)"
+    },
+    "issues": [],
+    "doc_bg": "rgb(255, 255, 255)",
+    "text_contrast": 21.0,
+    "bg_delta_doc": 0.0
+   },
+   {
+    "engine": "webkit",
+    "doc": "linear-light",
+    "scheme": "dark",
+    "css": {
+     "kind": "anchor",
+     "bg": "rgb(255, 255, 255)",
+     "color": "rgb(0, 0, 0)",
+     "border": "color(srgb 0.76 0.76 0.76)",
+     "badge": null,
+     "frame_bg": "rgb(255, 255, 255)"
+    },
+    "issues": [],
+    "doc_bg": "rgb(255, 255, 255)",
+    "text_contrast": 21.0,
+    "bg_delta_doc": 0.0
+   },
+   {
+    "engine": "webkit",
+    "doc": "raw-dark",
+    "scheme": "light",
+    "css": {
+     "kind": "dock",
+     "bg": "rgb(16, 17, 20)",
+     "color": "rgb(255, 255, 255)",
+     "border": "oklch(0.88898 0.0037 78.599998)",
+     "badge": null,
+     "frame_bg": "rgb(16, 17, 20)"
+    },
+    "issues": [],
+    "doc_bg": "rgb(16, 17, 20)",
+    "text_contrast": 18.88,
+    "bg_delta_doc": 0.0
+   },
+   {
+    "engine": "webkit",
+    "doc": "raw-dark",
+    "scheme": "dark",
+    "css": {
+     "kind": "dock",
+     "bg": "rgb(16, 17, 20)",
+     "color": "rgb(255, 255, 255)",
+     "border": "oklch(0.328 0.00714 71.400002)",
+     "badge": null,
+     "frame_bg": "rgb(16, 17, 20)"
+    },
+    "issues": [],
+    "doc_bg": "rgb(16, 17, 20)",
+    "text_contrast": 18.88,
+    "bg_delta_doc": 0.0
+   }
+  ],
+  "saved": [
+   {
+    "engine": "webkit",
+    "tabs": [
+     "saved"
+    ],
+    "saved_current": "page",
+    "saved_hidden": false,
+    "items": [
+     "/a/7a91fe9000ab42a399d86fd787bbd589",
+     "/a/ded16ab5a2864b4387f59cd8a7dbb319",
+     "/a/af92b28a9bc047e4b1c88eacf2db9b72"
+    ],
+    "url": "/?view=saved",
+    "issues": []
+   }
+  ]
+ },
+ "seconds": 138,
+ "failed": {
+  "dock": 0,
+  "occ": 0,
+  "modal": 0,
+  "theme": 0,
+  "saved": 0
+ }
+}

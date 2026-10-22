@@ -5,7 +5,8 @@ Nunca usa producción ni credenciales: cuentas y sesiones se crean en un SQLite 
 import sys, tempfile
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
+import os
+ROOT = Path(os.environ.get('MARGEN_ROOT') or Path(__file__).resolve().parents[2]).resolve()
 sys.path[:0] = [str(ROOT), str(ROOT / 'scripts')]
 from fastapi.testclient import TestClient
 from check_media_embeds import certificate, serve_portal
