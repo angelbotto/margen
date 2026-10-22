@@ -285,7 +285,7 @@ def run(src, out):
                 report['treemap'].append(r)
                 ok = r['areaError'] < 1 and r['proportional'] and r['paintedTotal'] == r['total'] and r['buttons'] == 26 and not r['zeroPainted'] and r['minSide'] >= 9.9 and not r['hidden'] and (not r['others'] or r['membersInTip'] >= 2)
                 if not ok: failures.append(f'treemap {width} {title}: {r}')
-            # Mapa de calor 31 × 31 sin umbrales (cuantiles), con huecos: sin desplazamiento ni solapes.
+            # Dense heatmap: readable cells may need a labelled local scroller, never page overflow.
             heat = page.evaluate("""(sel) => {
               const f = document.createElement('figure'); f.className = 'ancho'; f.dataset.grafica = 'calor'; f.dataset.unidad = 'eventos';
               const head = '<tr><th>Día</th>' + Array.from({length: 31}, (_, i) => `<th>H${i + 1}</th>`).join('') + '</tr>';
@@ -296,11 +296,14 @@ def run(src, out):
               const svg = f.querySelector('svg.mg-svg'), box = f.querySelector('.grafica-caja'), texts = [...svg.querySelectorAll('text')].map(t => t.getBoundingClientRect()), sr = svg.getBoundingClientRect();
               let overlaps = 0; for (let i = 0; i < texts.length; i++) for (let j = i + 1; j < texts.length; j++) { const a = texts[i], b = texts[j]; if (Math.min(a.right, b.right) - Math.max(a.left, b.left) > 1.5 && Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 1.5) overlaps++; }
               const outside = texts.filter(r => r.left < sr.left - 1 || r.right > sr.right + 1).length;
-              const r = {cells: svg.querySelectorAll('[data-mg-i]').length, scroll: box.scrollWidth > box.clientWidth + 1, overlaps, outside, legend: f.querySelector('.calor-leyenda').getAttribute('aria-label')};
+              const r = {cells: svg.querySelectorAll('[data-mg-i]').length, scroll: box.scrollWidth > box.clientWidth + 1,
+                labelled: box.getAttribute('role') === 'region' && box.tabIndex === 0 && !!box.getAttribute('aria-label'),
+                pageOverflow: document.documentElement.scrollWidth > innerWidth + 1,
+                overlaps, outside, legend: f.querySelector('.calor-leyenda').getAttribute('aria-label')};
               NotaGraficas.get(f).destroy(); f.remove(); return r;
             }""", SEL)
             heat.update({'width': width}); report['heatmap'] = report.get('heatmap', []) + [heat]
-            if heat['cells'] != 961 or heat['scroll'] or heat['overlaps'] or heat['outside'] or 'cuantiles' not in heat['legend']: failures.append(f'calor 31×31 {width}: {heat}')
+            if heat['cells'] != 961 or (heat['scroll'] and not heat['labelled']) or heat['pageOverflow'] or heat['overlaps'] or heat['outside'] or 'cuantiles' not in heat['legend']: failures.append(f'calor 31×31 {width}: {heat}')
             ctx.close()
         browser.close()
     report['errors'] and failures.extend(report['errors'])
