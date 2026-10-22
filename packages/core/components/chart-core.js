@@ -515,8 +515,10 @@
   function legendOf(figure) {
     const swatch = node => {
       if (!node) return '';
-      if (node.tagName.toLowerCase() === 'svg') return getComputedStyle(node.querySelector('path') || node).fill;
-      return getComputedStyle(node).backgroundColor;
+      if (node.tagName.toLowerCase() === 'svg') { const p = getComputedStyle(node.querySelector('path') || node); return p.stroke && p.stroke !== 'none' ? p.stroke : p.fill; }
+      // Muestra de serie: trazo superior (.mg-muestra); muestra de calor: fondo.
+      const s = getComputedStyle(node);
+      return parseFloat(s.borderTopWidth) > 0 ? s.borderTopColor : s.backgroundColor;
     };
     return [...figure.querySelectorAll('.mg-leyenda button, .calor-leyenda li')].map(el => ({
       name: el.textContent.trim().replace(/\s+/g, ' '), color: swatch(el.querySelector('[aria-hidden="true"]'))

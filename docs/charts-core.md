@@ -54,6 +54,14 @@ Los formatos se nombran como en Evidence y se declaran con `data-formato` en la 
 
 - **Descargar CSV** usa la cabecera de la tabla y los `data-valor` crudos (o `time[datetime]`). Una celda vacía se exporta vacía. Los textos que empiezan como fórmula (`= + - @`) llevan `'` delante. Los números fuente no cambian. El archivo va en UTF-8 con BOM.
 - **Descargar SVG** genera un SVG autónomo. Los estilos computados quedan en línea, sin `var()`, `currentColor` ni clases, y sin referencias externas. Incluye `<title>` y un `<desc>` con la unidad y la fuente (`figcaption`) y un fondo `--grafica-papel` resuelto. Los múltiplos exportan sus paneles en un solo SVG.
+- El SVG exportado se entiende solo: `legendOf(figura)` lee la leyenda visible (series de `.mg-leyenda` y niveles de `.calor-leyenda`) y `standaloneSvg` la dibuja bajo la gráfica, con sus colores resueltos, y la nombra en el `<desc>` («Leyenda: Norte, Centro, Sur»). La raíz lleva `role="img"` y `aria-label` igual al título: el archivo no es interactivo, así que no promete flechas ni Enter. Los colores salen tal como los computa el navegador (puede ser `oklch()`).
+
+## Casos límite
+
+- **Calor constante o todo en cero:** un solo nivel neutro (`--calor-0` si todo vale 0; `--calor-2` en otro caso), nunca el máximo. La leyenda dice «Todas las celdas: 0 · sin variación», sin inventar un rango. Si los cuantiles solo dan dos cortes (muchos ceros y un pico), el máximo forma su propio nivel y el resto queda en el mínimo.
+- **Meta con negativos:** valor y meta pueden ser negativos. El eje se extiende por debajo de 0 y la barra va del 0 al valor en su dirección. Los umbrales siguen siendo no negativos y crecientes.
+- **Líneas con un único valor no negativo** (p. ej. conteos todos en 0): el eje empieza en 0.
+- **Calor denso:** si la celda mínima de 8 px no cabe, primero cede el rótulo de fila (mínimo 40 px, truncado con «…»). Si aun así no cabe, el SVG conserva su ancho y la caja se desplaza en horizontal con `role="region"`, `tabindex="0"` y `aria-label` «…, desplazable horizontalmente». 26 columnas caben a 320 px; 31 columnas con rótulo largo se desplazan.
 
 ## Treemap (`attention-map.js`)
 
@@ -66,4 +74,5 @@ Cuando la cola es demasiado pequeña para verse o enfocarse (lado < 10 px o áre
 - `node --test scripts/test_chart_core.mjs` prueba `nice`, el formato (0, negativos, 1e12, `null`, porcentajes, monedas, fechas y duraciones), los ticks, `squarify` (áreas exactas, sin solapes, 26 categorías, ceros), la paleta y `fit`/`wrap`.
 - `npx vitest run packages/core/charts-responsive.test.tsx`
 - `scripts/check_charts_atlas.py <atlas.html> <salida.json>` usa Playwright. Recorre 320, 390 y 1440 px con Editorial, Catabum y Kaira en claro y oscuro, y comprueba teclado, táctil, tip, resize, tema, páginas, listeners, tablas tras `destroy`, exportes, treemaps extremos y el mapa de calor de 31 × 31.
+- `scripts/test_chart_edges.py` (Playwright, sin red) cubre los casos límite y el SVG exportado en Chromium y WebKit, a 320 y 1440 px, en claro y oscuro. `MARGEN_BROWSER=webkit` limita el motor.
 - `scripts/measure_charts.py <atlas.html> <salida.json>` mide el desbordamiento, el tamaño del texto, los solapes y el número de marcas de cada figura.
