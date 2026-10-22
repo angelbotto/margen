@@ -135,9 +135,10 @@
  .pie-documento .reacciones { grid-area:reactions; }
  .pie-documento .pie-plataforma { grid-area:platform; align-self:end; text-align:right; }
 }
-/* WebKit's native select can contribute its unpainted option text to the
-   ancestor scroll area. Clip the control contents, preserving its focus outline. */
-.evidencia-controles select { overflow:hidden; }
+/* WebKitGTK can include unpainted native option text in ancestor overflow.
+   Layout containment keeps that internal layout inside the select without
+   clipping its focus outline or its native option popup. */
+.evidencia-controles select { overflow:hidden; contain:layout; }
 /* Reactions are local to this browser: no shared counts are shown. */
 .reacciones { display:grid; gap:8px; }
 .reacciones-botones { display:flex; flex-wrap:wrap; gap:4px; }
