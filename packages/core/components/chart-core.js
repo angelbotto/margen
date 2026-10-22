@@ -107,7 +107,7 @@
     else if (p.kind === 'duration') text = duration(value * (p.base === 'h' ? 3600 : p.base === 'min' ? 60 : 1), locale, p.level);
     else if (p.kind === 'pct') text = nf(locale, {style: 'percent', maximumFractionDigits: p.digits ?? 1}).format(value);
     else if (p.kind === 'pts') text = nf(locale, {style: 'percent', maximumFractionDigits: p.digits ?? 1}).format(value / 100);
-    else if (CURRENCIES[p.kind]) text = nf(locale, {style: 'currency', currency: CURRENCIES[p.kind], currencyDisplay: 'narrowSymbol', ...(p.compact ? {notation: 'compact', maximumFractionDigits: p.digits ?? 1} : {maximumFractionDigits: p.digits ?? 0, minimumFractionDigits: p.digits ?? 0})}).format(value);
+    else if (CURRENCIES[p.kind]) text = nf(locale, {style: 'currency', currency: CURRENCIES[p.kind], ...(p.compact ? {notation: 'compact', maximumFractionDigits: p.digits ?? 1} : {maximumFractionDigits: p.digits ?? 0, minimumFractionDigits: p.digits ?? 0})}).format(value);
     else if (p.kind === 'num') text = nf(locale, p.compact ? {notation: 'compact', maximumFractionDigits: p.digits ?? 1} : {maximumFractionDigits: p.digits ?? 0, minimumFractionDigits: p.digits ?? 0}).format(value);
     else {
       const a = Math.abs(value);
@@ -124,7 +124,7 @@
     const scale = p.kind === 'pct' ? 100 : 1;
     const decimals = Math.max(0, Math.min(10, -Math.floor(Math.log10(step * scale) + 1e-9)));
     const big = Math.max(...ticks.map(Math.abs)) >= 1e5;
-    const base = CURRENCIES[p.kind] ? {style: 'currency', currency: CURRENCIES[p.kind], currencyDisplay: 'narrowSymbol'} : p.kind === 'pct' ? {style: 'percent'} : {};
+    const base = CURRENCIES[p.kind] ? {style: 'currency', currency: CURRENCIES[p.kind]} : p.kind === 'pct' ? {style: 'percent'} : {};
     for (let extra = 0; extra < 4; extra++) {
       const opts = big || p.compact ? {...base, notation: 'compact', maximumFractionDigits: extra} : {...base, maximumFractionDigits: decimals + extra, minimumFractionDigits: decimals};
       const f = nf(locale, opts), labels = ticks.map(v => f.format(v));
