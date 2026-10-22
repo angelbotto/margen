@@ -192,7 +192,7 @@ with sync_playwright() as p:
     phase['now'] = 'footer'; n_pop = len(popups); n0 = len(results['external_requests'])
     fr.locator('#l-https').click(); new = popups_since(n_pop); d = dialog(); results['footer_preview'] = d
     pg.screenshot(path=str(SHOTS / f'{ENGINE}-footer-preview.png'))
-    check('footer https click shows portal preview, no tab, no request yet', not new and not ext_since(n0) and d['open'] and d['intent'] == 'link' and d['place'] == 'example.org' and d['link'] == 'https://example.org/perfil' and 'media-source' in d['active'], {'d': d, 'new': [x.url for x in new]}, 'high')
+    check('footer https click shows portal preview, no tab, no request yet', not new and not ext_since(n0) and d['open'] and d['intent'] == 'link' and d['place'] == 'example.org' and d['link'] == 'https://example.org/perfil' and 'icon|' in d['active'], {'d': d, 'new': [x.url for x in new]}, 'high')
     pg.locator('.media-dialog .media-source').click(); new = popups_since(n_pop); info = None
     if new:
         try: new[0].wait_for_load_state(); info = new[0].evaluate('()=>({url:location.href,...window.__info})')

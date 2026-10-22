@@ -58,7 +58,15 @@ class EditorialAtlas(unittest.TestCase):
  def index_pixels(self,page,clip):
   shown=page.screenshot(clip=clip);page.evaluate('document.querySelectorAll(".indice").forEach(e=>e.style.visibility="hidden")')
   hidden=page.screenshot(clip=clip);page.evaluate('document.querySelectorAll(".indice").forEach(e=>e.style.visibility="")')
-  return page.evaluate(DIFF,[base64.b64encode(shown).decode(),base64.b64encode(hidden).decode()])
+  diff=page.evaluate(DIFF,[base64.b64encode(shown).decode(),base64.b64encode(hidden).decode()])
+  if diff>=.01:
+   proof=Path('/tmp/margen-atlas-layer-proof');proof.mkdir(exist_ok=True)
+   if not (proof/'shown.png').exists():
+    (proof/'shown.png').write_bytes(shown);(proof/'hidden.png').write_bytes(hidden)
+    page.screenshot(path=str(proof/'viewport.png'))
+    state=page.evaluate('''()=>({scrollY,active:document.activeElement.tagName,indices:[...document.querySelectorAll('.indice')].map(e=>({rect:e.getBoundingClientRect().toJSON(),mask:getComputedStyle(e).maskImage,z:getComputedStyle(e).zIndex})),surfaces:[...document.querySelectorAll('#detalle,#propio,#datos')].map(e=>({id:e.id,rect:e.getBoundingClientRect().toJSON(),background:getComputedStyle(e).backgroundColor,z:getComputedStyle(e).zIndex}))})''')
+    (proof/'state.json').write_text(json.dumps({'diff':diff,'clip':clip,**state},indent=2))
+  return diff
 
  def test_wide_surfaces_cover_the_index(self):
   for width in (1440,1328):
