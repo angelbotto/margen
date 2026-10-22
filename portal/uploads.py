@@ -59,6 +59,7 @@ DENIED_NAMES = {"package.json", "package-lock.json", "yarn.lock", "pnpm-lock.yam
                 "_redirects", "_headers", ".htaccess", "vercel.json", "dockerfile", "makefile"}
 SKIPPED = re.compile(r"(^|/)(__MACOSX/|\.DS_Store$|Thumbs\.db$)")
 PDF_SLOTS = threading.BoundedSemaphore(2)
+UPLOAD_SLOTS = threading.BoundedSemaphore(2)
 
 
 def reject(message):
@@ -113,8 +114,28 @@ def text_of(raw, label):
 
 
 def title_of(content, fallback):
-    found = re.search(r"<title[^>]*>(.*?)</title>", content, re.I | re.S) or re.search(r"<h1[^>]*>(.*?)</h1>", content, re.I | re.S)
-    text = " ".join(html_module.unescape(re.sub(r"<[^>]+>", " ", found[1])).split()) if found else ""
+    class Heading(HTMLParser):
+        def __init__(self):
+            super().__init__()
+            self.active = None
+            self.values = {"title": "", "h1": ""}
+
+        def handle_starttag(self, tag, attrs):
+            if tag in self.values and not self.values[tag]:
+                self.active = tag
+
+        def handle_endtag(self, tag):
+            if tag == self.active:
+                self.active = None
+
+        def handle_data(self, data):
+            if self.active:
+                self.values[self.active] = (self.values[self.active] + data[:200])[:200]
+
+    parser = Heading()
+    # Metadata extraction is bounded even for adversarial unfinished tags.
+    parser.feed(content[:32768])
+    text = " ".join((parser.values["title"] or parser.values["h1"]).split())
     return (text or fallback)[:200]
 
 
@@ -123,13 +144,14 @@ def with_document_id(content, document_id):
     if DOCUMENT_ID.search(content):
         return content
     meta = '<meta name="nota-documento" content="' + document_id + '">'
-    head = re.search(r"<head(?:\s[^>]*)?>", content, re.I)
+    head = re.search(r"<head(?:\s[^>]{0,2048})?>", content[:32768], re.I)
     doctype = re.match(r"\s*<!doctype[^>]*>", content, re.I)
     position = head.end() if head else doctype.end() if doctype else 0
     return content[:position] + meta + content[position:]
 
 
 def warnings_for(content):
+    content = content[:32768]  # Advisory only; CSP enforces the entire document.
     found = []
     if re.search(r"""\b(?:src|href)\s*=\s*["']?(?:https?:)?//""", content, re.I):
         found.append("Hay recursos remotos: el lector no los descarga y la mayoría quedarán bloqueados.")
@@ -336,6 +358,8 @@ class Tags(HTMLParser):
         self.tags, self.styles = [], []
 
     def handle_starttag(self, tag, attrs):
+        if len(self.tags) >= 30000:
+            reject("La página contiene demasiados elementos para importar (máximo 30 000).")
         self.tags.append((self.getpos(), self.get_starttag_text(), tag, attrs))
 
     handle_startendtag = handle_starttag
@@ -352,11 +376,24 @@ class Site:
         self.contents, self.entry = contents, entry
         self.used, self.missing, self.pages = set(), set(), set()
         self.warnings = []
+        self.remaining = LIMITS["output_bytes"] - len(contents[entry])
+        self.encoded = {}
+        self.css_imports = 0
+
+    def spend(self, size):
+        # Conservative work/output budget, charged BEFORE each expansion, including
+        # repeated references. A compressed-size check cannot bound this work.
+        self.remaining -= size
+        if self.remaining < 0:
+            reject("El sitio con sus recursos incrustados supera el límite de expansión de 20 MB.")
 
     def data_uri(self, path):
         self.used.add(path)
         kind = ASSET_TYPES.get(PurePosixPath(path).suffix.lower()) or mimetypes.guess_type(path)[0] or "application/octet-stream"
-        return "data:" + kind + ";base64," + base64.b64encode(self.contents[path]).decode()
+        self.spend(5 + len(kind) + 8 + ((len(self.contents[path]) + 2) // 3) * 4)
+        if path not in self.encoded:
+            self.encoded[path] = "data:" + kind + ";base64," + base64.b64encode(self.contents[path]).decode()
+        return self.encoded[path]
 
     def asset(self, ref, base):
         if not is_local(ref):
@@ -371,7 +408,11 @@ class Site:
         return self.data_uri(path)
 
     def css(self, text, base, depth=0):
+        self.spend(len(text.encode()))
         def imported(match):
+            self.css_imports += 1
+            if self.css_imports > 128:
+                reject("El sitio contiene demasiadas importaciones CSS (máximo 128).")
             ref = match[1] or match[2]
             path = resolve(ref, base) if is_local(ref) else None
             if path in self.contents and path.endswith(".css") and depth < 4:
@@ -411,6 +452,7 @@ class Site:
                 if (values.get("type") or "").lower() == "module" and re.search(rb"^\s*(import|export)\b", self.contents[path], re.M):
                     self.warnings.append("Los módulos JavaScript que importan otros archivos no se pueden incrustar: " + path[:120] + ".")
                 code = text_of(self.contents[path], path)
+                self.spend(len(self.contents[path]))
                 attrs = [(k, v) for k, v in attrs if k != "src"]
                 suffix = re.sub(r"</script", r"<\\/script", code, flags=re.I)
                 changed = True
@@ -471,9 +513,22 @@ class Site:
                 start = offset(pos)
                 if content[start:start + len(data)] == data:
                     edits.append((start, start + len(data), new))
-        for start, end, new in sorted(edits, reverse=True):
-            content = content[:start] + new + content[end:]
-        return content
+        # Join once. Repeated full-string slicing used quadratic memory/CPU.
+        chunks, cursor, total = [], 0, 0
+        for start, end, new in sorted(edits):
+            if start < cursor:
+                reject("No se pudieron resolver los recursos de esta página.")
+            before = content[cursor:start]
+            total += len(before.encode()) + len(new.encode())
+            if total > LIMITS["output_bytes"]:
+                reject("El sitio con sus recursos incrustados supera 20 MB.")
+            chunks.extend((before, new))
+            cursor = end
+        total += len(content[cursor:].encode())
+        if total > LIMITS["output_bytes"]:
+            reject("El sitio con sus recursos incrustados supera 20 MB.")
+        chunks.append(content[cursor:])
+        return "".join(chunks)
 
 
 def entry_of(contents, requested):
@@ -565,36 +620,49 @@ def mount(app, store, account, payload, clean, artifact_for, publish):
     @app.post("/api/uploads/inspect")
     async def inspect_upload(request: Request):
         account(request)
-        name, raw, entry = decode(await payload(request))
-        return await run_in_threadpool(inspect, name, raw, entry)
+        if not UPLOAD_SLOTS.acquire(blocking=False):
+            raise HTTPException(503, "Hay otros archivos en proceso. Intenta en un momento.")
+        try:
+            name, raw, entry = decode(await payload(request))
+            return await run_in_threadpool(inspect, name, raw, entry)
+        finally:
+            UPLOAD_SLOTS.release()
 
     @app.post("/api/uploads")
     async def upload(request: Request):
         u = account(request)
-        body = await payload(request)
-        if "visibility" in body:
-            reject("Las subidas son privadas. Cambia el acceso desde Compartir.")
-        name, raw, entry = decode(body)
-        aid = body.get("artifact")
-        title = clean(body["title"], 200) if body.get("title") is not None else None
-        if aid is not None:
-            if not isinstance(aid, str) or not re.fullmatch(r"[a-f0-9]{32}", aid):
-                raise HTTPException(404, "Documento no encontrado.")
-            with store.db() as db:
-                document_id = artifact_for(db, aid, u, "edit")["document_id"]
-        else:
-            document_id = "upload-" + uuid.uuid4().hex[:24]
-        content, attachments, fallback = await run_in_threadpool(build, name, raw, entry, document_id, title)
-        found = DOCUMENT_ID.search(content)
-        if aid is not None and found and found[1] != document_id:
-            raise HTTPException(409, "El archivo declara otro documento-id (" + found[1] + "). Súbelo como documento nuevo.")
-        if "attachments" in body:
-            if attachments:
-                reject("El PDF ya conserva su original; no añadas adjuntos.")
-            # Originales PDF/PPTX junto al HTML; publish() los valida con formats.attachments.
-            attachments = body["attachments"]
-        forwarded = {"html": content, "title": title or fallback, "space": body.get("space", "Personal"), "attachments": attachments}
-        for key in ("expected_current", "source", "mode"):
-            if key in body:
-                forwarded[key] = body[key]
-        return await publish(request, aid, forwarded)
+        if not UPLOAD_SLOTS.acquire(blocking=False):
+            raise HTTPException(503, "Hay otros archivos en proceso. Intenta en un momento.")
+        try:
+            body = await payload(request)
+            if "visibility" in body:
+                reject("Las subidas son privadas. Cambia el acceso desde Compartir.")
+            name, raw, entry = decode(body)
+            aid = body.get("artifact")
+            title = clean(body["title"], 200) if body.get("title") is not None else None
+            if aid is not None:
+                if not isinstance(aid, str) or not re.fullmatch(r"[a-f0-9]{32}", aid):
+                    raise HTTPException(404, "Documento no encontrado.")
+                with store.db() as db:
+                    artifact = artifact_for(db, aid, u, "edit")
+                    document_id = artifact["document_id"]
+                    if body.get("expected_current") != artifact["current_version"]:
+                        raise HTTPException(409, "Lee la versión actual y envía expected_current antes de subir una revisión.")
+            else:
+                document_id = "upload-" + uuid.uuid4().hex[:24]
+            content, attachments, fallback = await run_in_threadpool(build, name, raw, entry, document_id, title)
+            found = DOCUMENT_ID.search(content)
+            if aid is not None and found and found[1] != document_id:
+                raise HTTPException(409, "El archivo declara otro documento-id (" + found[1] + "). Súbelo como documento nuevo.")
+            if "attachments" in body:
+                if attachments:
+                    reject("El PDF ya conserva su original; no añadas adjuntos.")
+                # Originales PDF/PPTX junto al HTML; publish() los valida con formats.attachments.
+                attachments = body["attachments"]
+            forwarded = {"html": content, "title": title or fallback, "space": body.get("space", "Personal"), "attachments": attachments}
+            for key in ("expected_current", "source", "mode"):
+                if key in body:
+                    forwarded[key] = body[key]
+            return await publish(request, aid, forwarded)
+        finally:
+            UPLOAD_SLOTS.release()

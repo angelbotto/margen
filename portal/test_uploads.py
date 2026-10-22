@@ -108,9 +108,9 @@ class UploadTests(unittest.TestCase):
         self.assertIn('content="' + docid + '"', self.stored(second.json()["version"]))
         self.assertEqual(len(self.owner.get(path).json()["versions"]), 2)
         original = [{"name": "original.pptx", "data": b64(b"not a pptx")}]
-        self.assertEqual(self.upload("propio.html", PLAIN, artifact=created["id"], attachments=original).status_code, 422)
+        self.assertEqual(self.upload("propio.html", PLAIN, artifact=created["id"], expected_current=second.json()["version"], attachments=original).status_code, 422)
         original = [{"name": "original.pdf", "data": b64(b"%PDF-1.4 original")}]
-        third = self.upload("propio.html", PLAIN + "<p>3</p>", artifact=created["id"], attachments=original).json()
+        third = self.upload("propio.html", PLAIN + "<p>3</p>", artifact=created["id"], expected_current=second.json()["version"], attachments=original).json()
         self.assertEqual(self.owner.get(path + "/attachments/" + third["version"] + "/original.pdf").content, b"%PDF-1.4 original")
         self.assertEqual(self.other.get(path + "/attachments/" + third["version"] + "/original.pdf").status_code, 404)
 
@@ -227,7 +227,7 @@ class UploadTests(unittest.TestCase):
         self.assertEqual(self.owner.get(original).content, pdf(2))
         self.assertEqual(self.other.get(original).status_code, 404)
         self.assertEqual(self.guest.get(original).status_code, 404)
-        html = self.upload("nuevo.html", PLAIN, artifact=created["id"]).json()
+        html = self.upload("nuevo.html", PLAIN, artifact=created["id"], expected_current=created["version"]).json()
         self.assertEqual(html["id"], created["id"])
         self.assertEqual(self.owner.get(path + "/attachments/" + html["version"] + "/original.pdf").status_code, 404)
         self.assertEqual(self.upload("largo.pdf", pdf(81)).status_code, 422)

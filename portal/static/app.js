@@ -857,6 +857,19 @@
   }
   async function load(append = false) {
     window.MargenDevelopers.destroy();
+    if (view === "saved") {
+      listController?.abort(); graphController?.abort(); graphInstance?.destroy();
+      requestNumber++; nextCursor = null;
+      previews.disconnect(); covers.disconnect(); workspace.destroy();
+      for (const id of ["feed-end", "table-preferences", "context-tools", "browse-bar", "library-filters", "overview"])
+        $("#" + id).hidden = true;
+      $(".tools").hidden = true;
+      const panel = make("div", undefined, "reader-saved-panel");
+      $("#results").className = "workspace-view";
+      $("#results").replaceChildren(panel);
+      $("#results").removeAttribute("aria-busy");
+      return window.MargenReaderActions.renderSaved(panel);
+    }
     if (["themes", "components", "developers"].includes(view)) {
       listController?.abort(); graphController?.abort(); graphInstance?.destroy();
       previews.disconnect(); covers.disconnect(); workspace.destroy();
@@ -1035,6 +1048,7 @@
           insights: "Visitas",
           work: "Mi trabajo",
           mine: "Mis artefactos",
+          saved: "Guardados",
           all: "Todos los artefactos",
           shared: "Compartidos conmigo",
           inbox: "Conversaciones en contexto.",
@@ -1046,6 +1060,7 @@
         }[view];
         $("#library-description").textContent =
           {
+            saved: "Tu lista privada para volver a leer. Cada documento conserva sus permisos.",
             mine: "Solo documentos de tu cuenta. Los de otras personas están en Compartidos conmigo.",
             all: "Vista de administración. Cada documento conserva su propietario y sus permisos.",
             shared: "Documentos que otras personas comparten contigo o con los dominios de tu cuenta.",
@@ -1175,6 +1190,7 @@
     insights: "chart",
     work: "note",
     mine: "folder",
+    saved: "bookmark",
     shared: "share",
     inbox: "comment",
     public: "globe",
@@ -1714,6 +1730,10 @@
     mounted: () => (current && mounted?.artifact === current.id ? mounted : null),
     origin: location.origin,
   });
+  const readerActions = window.MargenReaderActions.create({
+    frame: () => $("#artifact-frame"), dock: () => $("#reader-dock"), toast,
+  });
+  addEventListener("pagehide", () => readerActions.reset());
   addEventListener("message", async (event) => {
     if (
       !current ||
@@ -1736,6 +1756,7 @@
         "action",
         "preferences",
         "controls-ready",
+        "reader-actions-anchor",
         "surface",
         "embed",
         "open-source",
@@ -1746,7 +1767,9 @@
     const source = event.source;
     try {
       let result;
-      if (["action", "preferences", "controls-ready"].includes(op)) {
+      if (op === "reader-actions-anchor") {
+        result = readerActions.anchor(data);
+      } else if (["action", "preferences", "controls-ready"].includes(op)) {
         result = await readerWorkspace.handle(op, data);
       } else if (op === "embed" || op === "open-source" || op === "external") {
         result = media.handle(op, data);
@@ -1989,6 +2012,8 @@
       const version = current.versions.find((v) => v.id === select.value);
       backVersion(current.id, select.value, version?.appearance ?? null);
       media.reset();
+      readerActions.reset();
+      readerActions.load(current);
       mounted = { artifact: current.id, version: select.value, first: true };
       $("#artifact-frame").src =
         "/api/artifacts/" +
