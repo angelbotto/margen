@@ -55,6 +55,7 @@ STATE = r"""id => {
     bars: [...svg.querySelectorAll('rect.grafica-barra')].map(r => ({x: +r.getAttribute('x'), w: +r.getAttribute('width')})),
     xMin: +svg.dataset.xMin, zeroX: (() => { const z = svg.querySelector('[data-tick-x="0"]'); return z ? +z.getAttribute('x1') : null; })(),
     outside: [...svg.querySelectorAll('rect,text')].filter(n => { const r = n.getBoundingClientRect(); return r.width && (r.right > sr.right + 1 || r.left < sr.left - 1); }).length,
+    outsideItems: [...svg.querySelectorAll('rect,text')].flatMap(n => { const r = n.getBoundingClientRect(); return r.width && (r.right > sr.right + 1 || r.left < sr.left - 1) ? [{text:n.textContent,left:r.left-sr.left,right:r.right-sr.right,font:getComputedStyle(n).font}] : []; }),
     scroll: box.scrollWidth > box.clientWidth + 1, role: box.getAttribute('role'), tab: box.tabIndex, label: box.getAttribute('aria-label') || '',
     pageOverflow: document.documentElement.scrollWidth > innerWidth + 1,
   };
@@ -93,6 +94,8 @@ class ChartEdges(unittest.TestCase):
         page.goto(self.url)
         page.evaluate("t => { document.documentElement.setAttribute('data-theme', t); document.dispatchEvent(new CustomEvent('nota:tema')); }", mode)
         page.wait_for_function("document.querySelectorAll('figure[data-grafica] svg.mg-svg, figure[data-grafica] .grafica-error').length === 9")
+        page.evaluate('document.fonts.ready')
+        page.evaluate('new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))')
         page.wait_for_timeout(150)
         return ctx, page, errors
 
@@ -140,7 +143,7 @@ class ChartEdges(unittest.TestCase):
         self.assertEqual(min(s['lineas']['yTicks']), 0)
         # Calor denso: nada fuera del SVG. A 320 px, 26 columnas caben cediendo el rótulo; 31 se desplazan declaradas.
         for fid in ['denso', 'muy-denso']:
-            self.assertEqual(s[fid]['outside'], 0, fid)
+            self.assertEqual(s[fid]['outside'], 0, (fid, s[fid]))
         self.assertFalse(s['denso']['scroll'])
         if width == 320:
             self.assertTrue(s['muy-denso']['scroll'])

@@ -182,6 +182,9 @@
   // ---------- Texto ----------
   let ctx;
   const widths = new Map();
+  // A CSS font string stays the same when its webfont replaces a fallback.
+  // Measurements cached before that replacement must not survive the load.
+  document.fonts?.addEventListener('loadingdone', () => widths.clear());
   function textWidth(text, font = '12px monospace') {
     const key = font + '\u0000' + text;
     if (widths.has(key)) return widths.get(key);
@@ -254,7 +257,9 @@
     document.addEventListener('nota:tema', schedule, {signal: abort.signal});
     document.addEventListener('nota:pagina', schedule, {signal: abort.signal});
     el.closest('details')?.addEventListener('toggle', schedule, {signal: abort.signal});
-    document.fonts?.ready?.then(() => { if (!dead) { key = ''; schedule(); } });
+    const fontsReady = () => { widths.clear(); if (!dead) { key = ''; schedule(); } };
+    document.fonts?.ready?.then(fontsReady);
+    document.fonts?.addEventListener('loadingdone', fontsReady, {signal: abort.signal});
     run();
     return {
       refresh() { key = ''; run(); },
