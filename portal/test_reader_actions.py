@@ -153,6 +153,21 @@ class ReaderActionsTests(unittest.TestCase):
         self.assertEqual(self.act(outsider, {'liked': True}).status_code, 404)
         self.assertEqual(self.state(TestClient(self.app, base_url=ORIGIN)).status_code, 404)
 
+    def test_alias_merge_counts_one_person_and_preserves_distinct_saves(self):
+        self.act(self.reader, {'saved': True, 'liked': True})
+        self.act(self.second, {'saved': True, 'liked': True})
+        later = self.publish(self.author, 'Otro informe')
+        self.author.put('/api/artifacts/' + later + '/access', json={'visibility': 'public'})
+        self.act(self.second, {'saved': True, 'liked': True}, aid=later)
+        with patch.dict('os.environ', {'BOTTIFACT_OWNER_ALIASES': 'reader@example.com,second@example.com'}):
+            self.store.merge_admin_aliases()
+            self.store.merge_admin_aliases()  # migration is idempotent
+            self.assertEqual(self.reader.get('/api/artifacts/' + self.doc + '/reader-actions').json()['likes'], 1)
+            self.assertEqual(set(self.saved_ids(self.reader)), {self.doc, later})
+            self.assertEqual(self.second.get('/api/artifacts/' + later + '/reader-actions').json()['liked'], True)
+            self.act(self.reader, {'liked': False})
+            self.assertEqual(self.reader.get('/api/artifacts/' + self.doc + '/reader-actions').json()['likes'], 0)
+
     def test_saved_list_is_recent_first_and_offers_a_return_path(self):
         later = self.publish(self.author, 'Segundo')
         self.author.put('/api/artifacts/' + later + '/access', json={'visibility': 'invited', 'grants': [{'email': 'reader@example.com', 'role': 'viewer'}]})

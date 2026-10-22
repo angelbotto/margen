@@ -140,6 +140,10 @@ class Store:
                 for table in ['review_reads','thread_reads','notifications','notification_settings','reader_saves','reader_likes']:
                     # Las claves únicas del usuario canónico prevalecen; el historial original queda auditable.
                     db.execute(f'UPDATE OR IGNORE {table} SET user=? WHERE user=?',(uid,old['id']))
+                # Account actions represent one person, not historical alias activity.
+                # Only duplicate rows remain after UPDATE OR IGNORE above.
+                for table in ['reader_saves', 'reader_likes']:
+                    db.execute(f'DELETE FROM {table} WHERE user=?', (old['id'],))
                 db.execute('UPDATE delivery_batches SET user=? WHERE user=?',(uid,old['id']))
                 # Los duplicados se conservan con su dueño histórico; la administración los ve.
                 db.execute('UPDATE bookmarks SET owner=? WHERE owner=? AND url NOT IN (SELECT url FROM bookmarks WHERE owner=?)', (uid,old['id'],uid))
