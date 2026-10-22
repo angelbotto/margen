@@ -1,0 +1,122 @@
+[
+ {
+  "doc": "blueprint-light-short",
+  "inner": {
+   "html": "rgb(243, 248, 255)",
+   "body": "rgb(243, 248, 255)",
+   "bodyImage": "linear-gradient(rgba(24, 83, 160, 0.086) 1px, rgba(0, 0, 0, ",
+   "backed": true,
+   "theme": "blueprint-light",
+   "family": "blueprint",
+   "bodyBottom": 800,
+   "vh": 800
+  },
+  "pixels": {
+   "bottomCenter": [
+    235,
+    240,
+    247
+   ],
+   "midLeft": [
+    243,
+    248,
+    255
+   ],
+   "bottomLeft": [
+    243,
+    248,
+    255
+   ]
+  }
+ },
+ {
+  "doc": "margen-custom-body-gradient-short",
+  "inner": {
+   "html": "rgb(255, 255, 255)",
+   "body": "rgb(255, 255, 255)",
+   "bodyImage": "none",
+   "backed": true,
+   "theme": "linear-light",
+   "family": "linear",
+   "bodyBottom": 800,
+   "vh": 800
+  },
+  "pixels": {
+   "bottomCenter": [
+    247,
+    247,
+    247
+   ],
+   "midLeft": [
+    255,
+    255,
+    255
+   ],
+   "bottomLeft": [
+    255,
+    255,
+    255
+   ]
+  }
+ },
+ {
+  "doc": "foreign-papel-body-gradient",
+  "inner": {
+   "html": "rgb(250, 250, 250)",
+   "body": "rgb(250, 250, 250)",
+   "bodyImage": "radial-gradient(circle at 50% 100%, rgb(255, 0, 0) 0px, rgb(",
+   "backed": true,
+   "theme": null,
+   "family": null,
+   "bodyBottom": 34,
+   "vh": 800
+  },
+  "pixels": {
+   "bottomCenter": [
+    242,
+    242,
+    242
+   ],
+   "midLeft": [
+    250,
+    250,
+    250
+   ],
+   "bottomLeft": [
+    250,
+    250,
+    250
+   ]
+  }
+ },
+ {
+  "doc": "foreign-body-image-fixed",
+  "inner": {
+   "html": "rgb(255, 255, 255)",
+   "body": "rgb(255, 255, 255)",
+   "bodyImage": "linear-gradient(rgb(0, 0, 255), rgb(0, 0, 255))",
+   "backed": true,
+   "theme": null,
+   "family": null,
+   "bodyBottom": 34,
+   "vh": 800
+  },
+  "pixels": {
+   "bottomCenter": [
+    247,
+    247,
+    247
+   ],
+   "midLeft": [
+    255,
+    255,
+    255
+   ],
+   "bottomLeft": [
+    255,
+    255,
+    255
+   ]
+  }
+ }
+]

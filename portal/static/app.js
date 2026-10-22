@@ -1839,8 +1839,11 @@
         location.assign(data.path);
         result = { ok: true };
       } else if (op === "surface") {
-        result = { ok: readerSurface(data?.color, firstSurface && current.id) };
-        firstSurface = false;
+        // A report from the document being replaced (or any other version) never paints this mount.
+        if (!mounted || data?.version !== mounted.version) throw Error("Superficie de otra versión.");
+        result = { ok: readerSurface(data?.color) };
+        if (mounted.first) rememberSurface(mounted, result.ok ? data.color : null);
+        mounted.first = false;
       } else if (op === "context") {
         if (!contextRequested) throw Error("Solicitud de contexto vencida.");
         contextRequested = false;
@@ -1950,30 +1953,52 @@
     }
   });
   // Backs the frame with the document's surface; only an RGB triple is accepted, never CSS text.
-  // Only the first report of each mount is remembered: it is the surface of the first paint.
-  const surfaceKey = (aid) => "margen-reader-surface:" + aid;
-  let firstSurface = false;
-  function readerSurface(color, remember) {
+  // Surfaces are remembered per artifact version, and only the first report of each mount:
+  // it is the surface of that version's first paint.
+  const surfaceKey = (aid, vid) => "margen-reader-surface:" + aid + ":" + vid;
+  const publishedKey = (aid) => "margen-reader-published:" + aid;
+  let mounted = null;
+  let mountVersion = () => {};
+  const validSurface = (color) =>
+    Array.isArray(color) &&
+    color.length === 3 &&
+    color.every((c) => Number.isInteger(c) && c >= 0 && c <= 255);
+  function readerSurface(color) {
     const frame = $("#artifact-frame");
-    const valid =
-      Array.isArray(color) &&
-      color.length === 3 &&
-      color.every((c) => Number.isInteger(c) && c >= 0 && c <= 255);
+    const valid = validSurface(color);
     if (valid)
       frame.style.setProperty("--reader-surface", "rgb(" + color.join(",") + ")");
     else frame.style.removeProperty("--reader-surface");
-    if (remember)
-      try {
-        if (valid) localStorage.setItem(surfaceKey(remember), JSON.stringify(color));
-        else localStorage.removeItem(surfaceKey(remember));
-      } catch {}
     return valid;
+  }
+  function rememberSurface({ artifact, version }, color) {
+    try {
+      if (color) localStorage.setItem(surfaceKey(artifact, version), JSON.stringify(color));
+      else localStorage.removeItem(surfaceKey(artifact, version));
+    } catch {}
+  }
+  // Before a version reports, back it with its own declared mode and its own remembered surface,
+  // never with the previous version's. `appearance` undefined means not known yet (before the API).
+  function backVersion(aid, vid, appearance) {
+    const frame = $("#artifact-frame");
+    const declared = appearance?.mode;
+    const mode = declared === "system"
+      ? (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+      : declared;
+    if (mode === "light" || mode === "dark") frame.dataset.surface = mode;
+    else delete frame.dataset.surface;
+    let remembered = null;
+    try { if (vid) remembered = JSON.parse(localStorage.getItem(surfaceKey(aid, vid))); } catch {}
+    const dark = (c) => c[0] * 0.2126 + c[1] * 0.7152 + c[2] * 0.0722 < 128;
+    if (validSurface(remembered) && frame.dataset.surface && dark(remembered) !== (mode === "dark"))
+      remembered = null;
+    readerSurface(remembered);
   }
   async function reader(aid) {
     document.body.classList.add("reading");
-    let remembered = null;
-    try { remembered = JSON.parse(localStorage.getItem(surfaceKey(aid))); } catch {}
-    readerSurface(remembered);
+    let guess = new URLSearchParams(location.search).get("version");
+    try { guess ||= localStorage.getItem(publishedKey(aid)); } catch {}
+    backVersion(aid, guess);
     $("#library").hidden = true;
     $("#reader").hidden = false;
     try {
@@ -1993,18 +2018,7 @@
       }));
       return;
     }
-    // Until the document reports its surface, back it with its declared first-paint mode.
-    // A surface remembered from an earlier visit stays only while it agrees with that mode.
-    const declared = current.appearance?.mode;
-    const mode = declared === "system"
-      ? (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
-      : declared;
-    const frame = $("#artifact-frame");
-    if (mode === "light" || mode === "dark") frame.dataset.surface = mode;
-    else delete frame.dataset.surface;
-    const dark = (c) => c[0] * 0.2126 + c[1] * 0.7152 + c[2] * 0.0722 < 128;
-    if (frame.dataset.surface && readerSurface(remembered) && dark(remembered) !== (mode === "dark"))
-      readerSurface(null);
+    try { localStorage.setItem(publishedKey(aid), current.current_version); } catch {}
     const owner = user?.id === current.owner;
     $("#owner-tools").hidden = !owner;
     $("#edit-document").hidden = !owner;
@@ -2035,7 +2049,9 @@
       $("#reader-dock").hidden = false;
       versionControls();
       contextRequested = false;
-      firstSurface = true;
+      const version = current.versions.find((v) => v.id === select.value);
+      backVersion(current.id, select.value, version?.appearance ?? null);
+      mounted = { artifact: current.id, version: select.value, first: true };
       $("#artifact-frame").src =
         "/api/artifacts/" +
         current.id +
@@ -2044,6 +2060,7 @@
         location.hash;
     };
     select.addEventListener("change", mount);
+    mountVersion = mount;
     $("#artifact-frame").addEventListener(
       "load",
       () => {
@@ -2210,12 +2227,11 @@
   $("#edit-document").addEventListener("click", safe(async () => {
     await window.MargenBlockEditor.open({api, artifact: current, onPublished: async () => {
       current = await api("/api/artifacts/" + current.id);
-      $("#artifact-frame").src = "/api/artifacts/" + current.id + "/render?version=" + current.current_version;
       $("#doc-title").textContent = current.title;
       document.title = current.title + " · Margen";
       const select = $("#version"); select.replaceChildren();
       current.versions.forEach(v => { const option = new Option((v.id === current.current_version ? "Publicada · " : v.state === "draft" ? "Borrador · " : "Anterior · ") + new Date(v.created * 1000).toLocaleString("es"), v.id); select.append(option); });
-      select.value = current.current_version; versionControls();
+      select.value = current.current_version; mountVersion();
     }});
   }));
   $("#history-document").addEventListener("click", safe(async () => {

@@ -53,13 +53,15 @@
     if(!path)return;event.preventDefault();send('navigate',{path}).catch(()=>{});
   },true);
   // The host backs the frame with the document's own surface. Only a parsed opaque RGB triple leaves; null keeps the host default.
-  let surface;
+  // The version this document is, so the host never paints a replaced version's report.
+  let surface;const version=new URLSearchParams(location.search).get('version');
   const root=document.documentElement;
   const opaque=node=>{const m=/^rgba?\((\d{1,3}), (\d{1,3}), (\d{1,3})(?:, ([\d.]+))?\)$/.exec(getComputedStyle(node).backgroundColor);return m&&(m[4]===undefined||m[4]==='1')?[+m[1],+m[2],+m[3]]:null;};
   // An opaque root for Margen paper, kept only when it paints exactly what the body would propagate.
+  // A body image (gradient, texture, fixed) would stop reaching the canvas once the root has a background.
   const backRoot=()=>{
     root.removeAttribute('data-margen-surface');
-    const body=document.body&&!opaque(root)&&opaque(document.body);
+    const body=document.body&&!opaque(root)&&getComputedStyle(document.body).backgroundImage==='none'&&opaque(document.body);
     if(!body)return;
     root.setAttribute('data-margen-surface','');
     if(String(opaque(root))!==String(body))root.removeAttribute('data-margen-surface');
@@ -67,7 +69,7 @@
   const reportSurface=()=>{
     backRoot();
     const color=opaque(root)||(document.body&&opaque(document.body));
-    if(String(color)===surface)return;surface=String(color);send('surface',{color}).catch(()=>{});
+    if(String(color)===surface)return;surface=String(color);send('surface',{color,version}).catch(()=>{});
   };
   document.addEventListener('nota:tema',()=>requestAnimationFrame(reportSurface));
   window.matchMedia?.('(prefers-color-scheme: dark)').addEventListener('change',()=>requestAnimationFrame(reportSurface));

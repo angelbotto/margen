@@ -99,6 +99,23 @@ class PortalTests(unittest.TestCase):
         self.assertEqual(self.owner.get(self.path).json()['appearance'],{'mode':None})
         self.assertNotIn('<html data-theme',self.owner.get(self.path+'/render').text)
 
+    def test_each_version_declares_its_own_first_paint_surface(self):
+        registry='<script>/* REGISTRO TEMAS */ const themeRegistry = {"familias":[{"id":"editorial","light":"light","dark":"dark"}]};</script>'
+        doc=lambda mode:'<!-- generado por Margen -->\n<!DOCTYPE html>'+HTML+'<meta name="nota-tema-inicial" content="editorial"><meta name="nota-modo-inicial" content="'+mode+'">'+registry
+        a=self.owner.post('/api/artifacts',json={'title':'Claro','html':doc('light')}).json()
+        path='/api/artifacts/'+a['id']
+        draft=self.owner.post(path+'/versions',json={'title':'Claro','html':doc('dark'),'mode':'draft'}).json()
+        body=self.owner.get(path).json()
+        self.assertEqual(body['current_version'],a['version'])
+        self.assertEqual(body['appearance'],{'mode':'light'})
+        self.assertEqual({v['id']:v['appearance'] for v in body['versions']},{a['version']:{'mode':'light'},draft['version']:{'mode':'dark'}})
+        self.assertNotIn('sha',body['versions'][0])
+        for version,mode in ((draft['version'],'dark'),(a['version'],'light')):
+            rendered=self.owner.get(path+'/render?version='+version).text
+            # The doctype stays ahead of every host insertion, so the frame keeps standards mode.
+            self.assertTrue(rendered.startswith('<!-- generado por Margen -->\n<!DOCTYPE html><html data-theme="'+mode+'"><script>'),rendered[:120])
+        self.assertEqual(self.owner.get(self.path).json()['versions'][0]['appearance'],{'mode':None})
+
     def test_private_authorization_and_direct_render(self):
         self.assertEqual(self.owner.get(self.path).json()['visibility'],'private')
         for c in [self.other,self.guest]:
