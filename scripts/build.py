@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 """Genera fragmentos autocontenidos desde las fuentes del skill, sin red."""
 from identity import mark as margen_mark, favicon as margen_favicon
+from build_syntax import generate as generate_syntax
 from pathlib import Path
 import json, base64, hashlib, re, html as html_escape
 ROOT = Path(__file__).resolve().parents[1]
+# code.js is generated from packages/core/syntax/runtime.js, syntax.css and pinned Prism files.
+generate_syntax()
 interface_path=ROOT/'packages/core/components/interface.js'
 interface_source=interface_path.read_text()
 identity_block='// IDENTITY START\n  const identityMarkup = '+json.dumps(margen_mark())+';\n  const faviconMarkup = '+json.dumps(margen_favicon())+';\n  // IDENTITY END'

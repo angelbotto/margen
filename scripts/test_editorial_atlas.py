@@ -109,6 +109,8 @@ class EditorialAtlas(unittest.TestCase):
 
  def test_thousand_lines_numbers_and_copy(self):
   page,errors=self.page(html=self.chapters);page.locator('#detalle summary').click()
+  # Large blocks are built in slices after the details opens; wait instead of blocking the reader.
+  page.wait_for_function('document.querySelectorAll("#mil .codigo-linea").length===1000')
   rows=page.locator('#mil .codigo-linea');self.assertEqual(rows.count(),1000)
   tops=rows.evaluate_all('es=>[es[0],es[998],es[999]].map(e=>e.getBoundingClientRect().top)')
   self.assertAlmostEqual(tops[2]-tops[1],22,delta=.1)

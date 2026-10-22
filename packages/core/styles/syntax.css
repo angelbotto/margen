@@ -1,0 +1,49 @@
+/* Margen · colores de código. Lo inserta code.js una sola vez (style[data-margen-codigo]); sin JavaScript
+   no hay tokens que pintar. Cada categoría es una variable semántica que resuelve contra la paleta activa,
+   así que alternar tema o modo no vuelve a tokenizar. Un tema puede redefinirlas en .codigo/.terminal. */
+.codigo,.terminal {
+ --codigo-comentario:var(--tinta-3);
+ --codigo-cadena:var(--verde);
+ --codigo-clave:var(--naranja);
+ --codigo-propiedad:var(--azul);
+ --codigo-funcion:color-mix(in oklab,var(--azul) 50%,var(--tinta));
+ --codigo-numero:var(--sintaxis-numero,var(--azul));
+ --codigo-etiqueta:var(--rojo);
+ --codigo-puntuacion:var(--tinta-2);
+ --codigo-escape:var(--naranja);
+ --codigo-regex:var(--rojo);
+ --codigo-insertado:var(--verde);
+ --codigo-eliminado:var(--rojo);
+}
+.codigo .com { color:var(--codigo-comentario); font-style:italic; }
+.codigo .str { color:var(--codigo-cadena); }
+.codigo .kw { color:var(--codigo-clave); }
+.codigo .codigo-atributo,.codigo .codigo-variable { color:var(--codigo-propiedad); }
+.codigo .codigo-funcion { color:var(--codigo-funcion); }
+.codigo .codigo-numero { color:var(--codigo-numero); }
+.codigo .codigo-etiqueta { color:var(--codigo-etiqueta); }
+.codigo .codigo-puntuacion { color:var(--codigo-puntuacion); }
+.codigo .codigo-escape { color:var(--codigo-escape); }
+.codigo .codigo-regex { color:var(--codigo-regex); }
+.codigo .codigo-insertado { color:var(--codigo-insertado); }
+.codigo .codigo-eliminado { color:var(--codigo-eliminado); }
+.codigo .codigo-alerta { color:var(--rojo); }
+.codigo .codigo-linea:has(> .codigo-insertado:first-child) { background:color-mix(in srgb,var(--verde) 7%,transparent); }
+.codigo .codigo-linea:has(> .codigo-eliminado:first-child) { background:color-mix(in srgb,var(--rojo) 7%,transparent); }
+/* Atenuación opcional (data-atenuar en el code): el resto pierde color, no contraste. */
+.codigo code[data-atenuar] .codigo-linea:not(.destacada),
+.codigo code[data-atenuar] .codigo-linea:not(.destacada) * { color:var(--codigo-comentario); font-style:normal; }
+.codigo code[data-atenuar] .codigo-linea:not(.destacada) mark { color:inherit; }
+/* Desbordamiento lateral: el borde se atenúa solo hacia donde aún queda código. */
+.codigo pre[data-desborde] { --codigo-fade:min(12%,40px); -webkit-mask-image:linear-gradient(90deg,var(--codigo-fade-i,#000),#000 var(--codigo-fade),#000 calc(100% - var(--codigo-fade)),var(--codigo-fade-f,#000)); mask-image:linear-gradient(90deg,var(--codigo-fade-i,#000),#000 var(--codigo-fade),#000 calc(100% - var(--codigo-fade)),var(--codigo-fade-f,#000)); }
+.codigo pre[data-desborde~=inicio] { --codigo-fade-i:transparent; }
+.codigo pre[data-desborde~=fin] { --codigo-fade-f:transparent; }
+.codigo pre[data-desborde]:focus-visible { -webkit-mask-image:none; mask-image:none; }
+.codigo .cab > .codigo-aviso { grid-column:1/-1; color:var(--tinta-3); font-size:12px; }
+.terminal .codigo-puntuacion,.terminal .codigo-funcion,.terminal .codigo-etiqueta { color:inherit; }
+@media (forced-colors:active) { .codigo pre[data-desborde] { -webkit-mask-image:none; mask-image:none; } }
+@media print {
+ .codigo pre[data-desborde] { -webkit-mask-image:none; mask-image:none; }
+ .codigo :is(.com,.str,.kw,.codigo-atributo,.codigo-variable,.codigo-funcion,.codigo-numero,.codigo-etiqueta,.codigo-puntuacion,.codigo-escape,.codigo-regex,.codigo-insertado,.codigo-eliminado) { color:#51473e; }
+ .codigo .kw,.codigo .codigo-funcion { font-weight:600; color:#231e1a; }
+}

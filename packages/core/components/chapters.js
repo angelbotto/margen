@@ -79,6 +79,11 @@
     if(destino && destino!==pags[i])revelar(destino,conFoco);
   }
 
+  // Para módulos que difieren trabajo hasta que su página se muestra; avisa con nota:pagina.
+  window.NotaPaginas = {
+    actual: function () { return pags[actual].id; },
+    visible: function (el) { return !pags.some(function (p) { return p.hidden && p.contains(el); }); }
+  };
   botones.forEach(function (b, k) { b.addEventListener("click", function () { ir(k, true); }); });
   if (prev) prev.addEventListener("click", function () { ir(actual - 1, true); });
   if (next) next.addEventListener("click", function () { ir(actual + 1, true); });
