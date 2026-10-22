@@ -1,0 +1,3691 @@
+{
+ "date": "2026-10-22",
+ "reference": "https://www.cmrg.me",
+ "method": "Playwright Chromium (python, headless), dark color scheme, DPR 1",
+ "deployment_identity": {
+  "www_vs_v2": "v2.cmrg.me served the same /_next/static chunk list as www (diffed); treated as the same deployment, not substituted",
+  "server": "Vercel (response header)",
+  "cmrg.me": "308 -> https://www.cmrg.me/"
+ },
+ "discovery": {
+  "sitemap_routes": 16,
+  "crawl": "BFS over every <a href> on every visited route at 1440, normalised (host www/v2/apex, no query, no hash, no trailing slash)",
+  "new_internal_routes_beyond_sitemap": 0
+ },
+ "routes": [
+  {
+   "path": "/",
+   "type": "home",
+   "status": 200,
+   "visited": true,
+   "viewports": [
+    "1440x900",
+    "1280x800",
+    "390x844",
+    "320x640"
+   ],
+   "deep_component_probe": true,
+   "doc_height_1440": 3189,
+   "doc_height_390": 4763,
+   "screens_covered_1440": "4 of 4 viewports",
+   "screens_covered_390": "6 of 6 viewports",
+   "component_counts_1440": {
+    "nav": 1,
+    "header": 1,
+    "footer": 1,
+    "main": 1,
+    "h1": 1,
+    "h2": 7,
+    "h3": 12,
+    "img": 12,
+    "svg": 83,
+    "button": 4,
+    "time": 8,
+    "ul": 3,
+    "mask": 20,
+    "sticky": 1,
+    "fixed": 3
+   },
+   "code_languages": [],
+   "interactive_labels": [
+    ":where(number-flow-react){line-height:1}",
+    "4508.40km",
+    "x"
+   ],
+   "font_families_with_text_1440": {
+    "serif": 21,
+    "Geist Mono": 61,
+    "fancy": 31,
+    "Geist": 46,
+    "Times": 6,
+    "Reenie Beanie": 123
+   },
+   "horizontal_tracks_1440": [],
+   "horizontal_tracks_390": [],
+   "videos": [],
+   "canvas": [],
+   "rough_annotations": 8,
+   "blur_filters_sample": [
+    {
+     "tag": "svg",
+     "f": "blur(4px)",
+     "txt": ""
+    },
+    {
+     "tag": "img",
+     "f": "blur(16px) saturate(0.5)",
+     "txt": ""
+    },
+    {
+     "tag": "img",
+     "f": "blur(16px) saturate(0.5)",
+     "txt": ""
+    },
+    {
+     "tag": "img",
+     "f": "blur(16px) saturate(0.5)",
+     "txt": ""
+    },
+    {
+     "tag": "img",
+     "f": "blur(16px) saturate(0.5)",
+     "txt": ""
+    },
+    {
+     "tag": "img",
+     "f": "blur(16px) saturate(0.5)",
+     "txt": ""
+    },
+    {
+     "tag": "img",
+     "f": "blur(16px) saturate(0.5)",
+     "txt": ""
+    }
+   ],
+   "backdrop_filters_sample": [],
+   "masked_elements": 20,
+   "time_styles": [
+    {
+     "txt": "aug 11, 2026",
+     "ff": "\"Geist Mono\"",
+     "fs": "12.1px",
+     "col": "lab(41.9789 2.99999 7.07102)"
+    },
+    {
+     "txt": "apr 8, 2024",
+     "ff": "\"Geist Mono\"",
+     "fs": "12.1px",
+     "col": "lab(41.9789 2.99999 7.07102)"
+    },
+    {
+     "txt": "mar 19, 2024",
+     "ff": "\"Geist Mono\"",
+     "fs": "12.1px",
+     "col": "lab(41.9789 2.99999 7.07102)"
+    },
+    {
+     "txt": "mar 15, 2024",
+     "ff": "\"Geist Mono\"",
+     "fs": "12.1px",
+     "col": "lab(41.9789 2.99999 7.07102)"
+    },
+    {
+     "txt": "mar 15, 2024",
+     "ff": "\"Geist Mono\"",
+     "fs": "12.1px",
+     "col": "lab(41.9789 2.99999 7.07102)"
+    },
+    {
+     "txt": "jan 24, 2024",
+     "ff": "\"Geist Mono\"",
+     "fs": "12.1px",
+     "col": "lab(41.9789 2.99999 7.07102)"
+    }
+   ],
+   "h1": "44.5px",
+   "internal_hrefs": [
+    "/#top",
+    "/about",
+    "/blog",
+    "/blog/access-to-your-tailwind-theme-on-the-go",
+    "/blog/contentlayer-git-nextjs",
+    "/blog/htnx-a-htmx-like-experience-in-nextjs",
+    "/blog/programar-e-uma-merda",
+    "/blog/react-19-part-1-the-backstory",
+    "/blog/react-19-part-2-the-code",
+    "/guestbook",
+    "/now",
+    "/shelf",
+    "/shelf#album-amo-2019",
+    "/shelf#album-mignonne-1978",
+    "/shelf#book-s-2013",
+    "/shelf#book-the-little-prince-1943",
+    "/shelf#movie-chungking-express-1994",
+    "/shelf#series-mr-robot-2015",
+    "/thanks",
+    "/work"
+   ],
+   "private_screenshots": [
+    "~/.local/share/margen-review/atlas-reference-20261022/route-home-1440-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-home-1440-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-home-1440-02.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-home-1440-03.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-home-390-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-home-390-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-home-390-02.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-home-390-03.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-home-390-04.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-home-390-05.png"
+   ]
+  },
+  {
+   "path": "/blog",
+   "type": "blog-index",
+   "status": 200,
+   "visited": true,
+   "viewports": [
+    "1440x900",
+    "390x844"
+   ],
+   "deep_component_probe": false,
+   "doc_height_1440": 2477,
+   "doc_height_390": 3126,
+   "screens_covered_1440": "3 of 3 viewports",
+   "screens_covered_390": "4 of 4 viewports",
+   "component_counts_1440": {
+    "nav": 1,
+    "header": 1,
+    "footer": 1,
+    "main": 1,
+    "article": 8,
+    "h1": 1,
+    "h2": 4,
+    "h3": 8,
+    "svg": 12,
+    "button": 3,
+    "input": 2,
+    "form": 1,
+    "time": 10,
+    "ul": 1,
+    "backdrop": 2,
+    "mask": 18,
+    "sticky": 1,
+    "fixed": 3
+   },
+   "code_languages": [],
+   "interactive_labels": [
+    "search blog posts",
+    "hi@cmrg.me",
+    "subscribe"
+   ],
+   "font_families_with_text_1440": {
+    "Geist": 13,
+    "serif": 9,
+    "Geist Mono": 18,
+    "Times": 2,
+    "fancy": 5,
+    "Reenie Beanie": 113
+   },
+   "horizontal_tracks_1440": [],
+   "horizontal_tracks_390": [],
+   "videos": [],
+   "canvas": [
+    {
+     "rect": [
+      211,
+      1584,
+      1018,
+      335
+     ],
+     "aria": null
+    }
+   ],
+   "rough_annotations": 2,
+   "blur_filters_sample": [
+    {
+     "tag": "span",
+     "f": "blur(0px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "svg",
+     "f": "blur(4px)",
+     "txt": ""
+    }
+   ],
+   "backdrop_filters_sample": [
+    {
+     "tag": "input",
+     "bd": "blur(8px) saturate(2)",
+     "rect": [
+      952,
+      249,
+      32,
+      32
+     ]
+    },
+    {
+     "tag": "input",
+     "bd": "blur(8px) saturate(2)",
+     "rect": [
+      732,
+      1850,
+      373,
+      32
+     ]
+    }
+   ],
+   "masked_elements": 18,
+   "time_styles": [
+    {
+     "txt": "aug 11, 2026",
+     "ff": "\"Geist Mono\"",
+     "fs": "12.1px",
+     "col": "lab(41.9789 2.99999 7.07102)"
+    },
+    {
+     "txt": "apr 8, 2024",
+     "ff": "\"Geist Mono\"",
+     "fs": "12.1px",
+     "col": "lab(41.9789 2.99999 7.07102)"
+    },
+    {
+     "txt": "mar 19, 2024",
+     "ff": "\"Geist Mono\"",
+     "fs": "12.1px",
+     "col": "lab(41.9789 2.99999 7.07102)"
+    },
+    {
+     "txt": "mar 15, 2024",
+     "ff": "\"Geist Mono\"",
+     "fs": "12.1px",
+     "col": "lab(41.9789 2.99999 7.07102)"
+    },
+    {
+     "txt": "mar 15, 2024",
+     "ff": "\"Geist Mono\"",
+     "fs": "12.1px",
+     "col": "lab(41.9789 2.99999 7.07102)"
+    },
+    {
+     "txt": "jan 24, 2024",
+     "ff": "\"Geist Mono\"",
+     "fs": "12.1px",
+     "col": "lab(41.9789 2.99999 7.07102)"
+    }
+   ],
+   "h1": "44.5px",
+   "internal_hrefs": [
+    "/#top",
+    "/about",
+    "/blog",
+    "/blog/access-to-your-tailwind-theme-on-the-go",
+    "/blog/contentlayer-git-nextjs",
+    "/blog/htnx-a-htmx-like-experience-in-nextjs",
+    "/blog/programar-e-uma-merda",
+    "/blog/quix-a-lightning-fast-vtex-io-cli-experiment",
+    "/blog/react-19-part-1-the-backstory",
+    "/blog/react-19-part-2-the-code",
+    "/blog/thm-autoreadme",
+    "/now",
+    "/shelf",
+    "/work"
+   ],
+   "private_screenshots": [
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog-1440-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog-1440-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog-1440-02.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog-390-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog-390-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog-390-02.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog-390-03.png"
+   ]
+  },
+  {
+   "path": "/about",
+   "type": "section-page",
+   "status": 200,
+   "visited": true,
+   "viewports": [
+    "1440x900",
+    "390x844"
+   ],
+   "deep_component_probe": false,
+   "doc_height_1440": 5004,
+   "doc_height_390": 6950,
+   "screens_covered_1440": "6 of 6 viewports",
+   "screens_covered_390": "8 of 9 viewports",
+   "component_counts_1440": {
+    "nav": 1,
+    "header": 4,
+    "footer": 1,
+    "main": 1,
+    "aside": 1,
+    "h1": 1,
+    "h2": 10,
+    "figure": 9,
+    "img": 16,
+    "svg": 7,
+    "canvas": 1,
+    "button": 1,
+    "time": 46,
+    "ol": 2,
+    "ul": 2,
+    "mask": 55,
+    "sticky": 1,
+    "fixed": 3
+   },
+   "code_languages": [],
+   "interactive_labels": [],
+   "font_families_with_text_1440": {
+    "serif": 8,
+    "Geist": 104,
+    "Reenie Beanie": 145,
+    "Geist Mono": 159,
+    "fancy": 44
+   },
+   "horizontal_tracks_1440": [
+    {
+     "tag": "ul",
+     "cls": "flex! h-full scroll-fade-x gap-3 overflow-x-auto overscroll-x-contain py-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visi",
+     "rect": [
+      208,
+      2677,
+      1024,
+      256
+     ],
+     "sw": 2741,
+     "mask": "linear-gradient(to right, rgba(0, 0, 0, 0) 0px, rgb(0, 0, 0) calc(0% + (0 * min(12%, 40px))), rgb(0, 0, 0) calc(100% - min(12%, 40px)), rgba(0, 0, 0, 0) 100%)",
+     "snap": "none",
+     "items": 9,
+     "firstChild": {
+      "rect": [
+       220,
+       2689,
+       232,
+       232
+      ],
+      "radius": "0px",
+      "shadow": "none"
+     }
+    }
+   ],
+   "horizontal_tracks_390": [
+    {
+     "tag": "ul",
+     "cls": "flex! h-full scroll-fade-x gap-3 overflow-x-auto overscroll-x-contain py-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visi",
+     "rect": [
+      20,
+      3378,
+      350,
+      256
+     ],
+     "sw": 2741,
+     "mask": "linear-gradient(to right, rgba(0, 0, 0, 0) 0px, rgb(0, 0, 0) calc(0% + (0 * min(12%, 40px))), rgb(0, 0, 0) calc(100% - min(12%, 40px)), rgba(0, 0, 0, 0) 100%)",
+     "snap": "none",
+     "items": 9,
+     "firstChild": {
+      "rect": [
+       32,
+       3390,
+       232,
+       232
+      ],
+      "radius": "0px",
+      "shadow": "none"
+     }
+    }
+   ],
+   "videos": [],
+   "canvas": [
+    {
+     "rect": [
+      208,
+      1170,
+      728,
+      560
+     ],
+     "aria": "globe showing logged flight routes"
+    },
+    {
+     "rect": [
+      216,
+      3639,
+      96,
+      96
+     ],
+     "aria": null
+    },
+    {
+     "rect": [
+      555,
+      3639,
+      96,
+      96
+     ],
+     "aria": null
+    },
+    {
+     "rect": [
+      893,
+      3639,
+      96,
+      96
+     ],
+     "aria": null
+    },
+    {
+     "rect": [
+      216,
+      3759,
+      96,
+      96
+     ],
+     "aria": null
+    },
+    {
+     "rect": [
+      555,
+      3759,
+      96,
+      96
+     ],
+     "aria": null
+    },
+    {
+     "rect": [
+      893,
+      3759,
+      96,
+      96
+     ],
+     "aria": null
+    }
+   ],
+   "rough_annotations": 3,
+   "blur_filters_sample": [
+    {
+     "tag": "li",
+     "f": "blur(0px)",
+     "txt": "so... what do you do?"
+    },
+    {
+     "tag": "li",
+     "f": "blur(0px)",
+     "txt": "i'm a software engineer"
+    },
+    {
+     "tag": "li",
+     "f": "blur(0px)",
+     "txt": "that's it?"
+    },
+    {
+     "tag": "li",
+     "f": "blur(0px)",
+     "txt": "no, but the other answer takes"
+    },
+    {
+     "tag": "img",
+     "f": "blur(16px) brightness(0.75) saturate(1.25)",
+     "txt": ""
+    },
+    {
+     "tag": "p",
+     "f": "blur(8px)",
+     "txt": "1st"
+    },
+    {
+     "tag": "img",
+     "f": "blur(16px) brightness(0.75) saturate(1.25)",
+     "txt": ""
+    },
+    {
+     "tag": "p",
+     "f": "blur(8px)",
+     "txt": "2nd"
+    },
+    {
+     "tag": "img",
+     "f": "blur(16px) brightness(0.75) saturate(1.25)",
+     "txt": ""
+    },
+    {
+     "tag": "p",
+     "f": "blur(8px) saturate(4)",
+     "txt": "3rd"
+    }
+   ],
+   "backdrop_filters_sample": [],
+   "masked_elements": 57,
+   "time_styles": [
+    {
+     "txt": "jun 27, 2026",
+     "ff": "\"Geist Mono\"",
+     "fs": "12.1px",
+     "col": "lab(41.9789 2.99999 7.07102)"
+    },
+    {
+     "txt": "jun 19, 2026",
+     "ff": "\"Geist Mono\"",
+     "fs": "12.1px",
+     "col": "lab(41.9789 2.99999 7.07102)"
+    },
+    {
+     "txt": "apr 25, 2026",
+     "ff": "\"Geist Mono\"",
+     "fs": "12.1px",
+     "col": "lab(41.9789 2.99999 7.07102)"
+    },
+    {
+     "txt": "apr 24, 2026",
+     "ff": "\"Geist Mono\"",
+     "fs": "12.1px",
+     "col": "lab(41.9789 2.99999 7.07102)"
+    },
+    {
+     "txt": "apr 24, 2026",
+     "ff": "\"Geist Mono\"",
+     "fs": "12.1px",
+     "col": "lab(41.9789 2.99999 7.07102)"
+    },
+    {
+     "txt": "apr 20, 2026",
+     "ff": "\"Geist Mono\"",
+     "fs": "12.1px",
+     "col": "lab(41.9789 2.99999 7.07102)"
+    }
+   ],
+   "h1": "44.5px",
+   "internal_hrefs": [
+    "/#top",
+    "/about",
+    "/blog",
+    "/now",
+    "/shelf",
+    "/shelf#book-dieter-rams-the-complete-works-2020",
+    "/shelf#book-trabalhadores-1993",
+    "/shelf#book-virgil-abloh-figures-of-speech-2019",
+    "/work",
+    "/work#dashboard-rewrite"
+   ],
+   "private_screenshots": [
+    "~/.local/share/margen-review/atlas-reference-20261022/route-about-1440-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-about-1440-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-about-1440-02.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-about-1440-03.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-about-1440-04.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-about-1440-05.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-about-390-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-about-390-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-about-390-02.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-about-390-03.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-about-390-04.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-about-390-05.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-about-390-06.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-about-390-07.png"
+   ]
+  },
+  {
+   "path": "/now",
+   "type": "section-page",
+   "status": 200,
+   "visited": true,
+   "viewports": [
+    "1440x900",
+    "390x844"
+   ],
+   "deep_component_probe": false,
+   "doc_height_1440": 4019,
+   "doc_height_390": 5688,
+   "screens_covered_1440": "5 of 5 viewports",
+   "screens_covered_390": "7 of 7 viewports",
+   "component_counts_1440": {
+    "nav": 1,
+    "header": 1,
+    "footer": 1,
+    "main": 1,
+    "h1": 1,
+    "h2": 9,
+    "h3": 3,
+    "figure": 1,
+    "img": 6,
+    "svg": 8,
+    "button": 1,
+    "time": 9,
+    "ol": 3,
+    "ul": 4,
+    "mask": 13,
+    "sticky": 1,
+    "fixed": 3
+   },
+   "code_languages": [],
+   "interactive_labels": [],
+   "font_families_with_text_1440": {
+    "serif": 10,
+    "Geist": 66,
+    "Geist Mono": 53,
+    "Reenie Beanie": 177,
+    "fancy": 7
+   },
+   "horizontal_tracks_1440": [],
+   "horizontal_tracks_390": [],
+   "videos": [],
+   "canvas": [
+    {
+     "rect": [
+      216,
+      2775,
+      96,
+      96
+     ],
+     "aria": null
+    },
+    {
+     "rect": [
+      555,
+      2775,
+      96,
+      96
+     ],
+     "aria": null
+    },
+    {
+     "rect": [
+      893,
+      2775,
+      96,
+      96
+     ],
+     "aria": null
+    },
+    {
+     "rect": [
+      216,
+      2895,
+      96,
+      96
+     ],
+     "aria": null
+    },
+    {
+     "rect": [
+      555,
+      2895,
+      96,
+      96
+     ],
+     "aria": null
+    },
+    {
+     "rect": [
+      893,
+      2895,
+      96,
+      96
+     ],
+     "aria": null
+    }
+   ],
+   "rough_annotations": 4,
+   "blur_filters_sample": [
+    {
+     "tag": "li",
+     "f": "blur(0px)",
+     "txt": "what has your attention right "
+    },
+    {
+     "tag": "li",
+     "f": "blur(0px)",
+     "txt": "right now right now?"
+    },
+    {
+     "tag": "li",
+     "f": "blur(0px)",
+     "txt": "let's say these days"
+    },
+    {
+     "tag": "li",
+     "f": "blur(0px)",
+     "txt": "much better"
+    },
+    {
+     "tag": "span",
+     "f": "blur(8px) brightness(1.5) contrast(1.5)",
+     "txt": "redacted"
+    },
+    {
+     "tag": "img",
+     "f": "blur(16px) brightness(0.75) saturate(1.25)",
+     "txt": ""
+    },
+    {
+     "tag": "p",
+     "f": "blur(8px)",
+     "txt": "1st"
+    },
+    {
+     "tag": "img",
+     "f": "blur(16px) brightness(0.75) saturate(1.25)",
+     "txt": ""
+    },
+    {
+     "tag": "p",
+     "f": "blur(8px)",
+     "txt": "2nd"
+    },
+    {
+     "tag": "img",
+     "f": "blur(16px) brightness(0.75) saturate(1.25)",
+     "txt": ""
+    }
+   ],
+   "backdrop_filters_sample": [],
+   "masked_elements": 13,
+   "time_styles": [
+    {
+     "txt": "august 31",
+     "ff": "\"Geist Mono\"",
+     "fs": "12.1px",
+     "col": "color(srgb 0.493546 0.47183 0.451926)"
+    },
+    {
+     "txt": "2026",
+     "ff": "\"Geist Mono\"",
+     "fs": "12.1px",
+     "col": "oklab(0.5 0.00844708 0.0181369 / 0.6)"
+    },
+    {
+     "txt": "2015",
+     "ff": "\"Geist Mono\"",
+     "fs": "12.1px",
+     "col": "oklab(0.5 0.00844708 0.0181369 / 0.6)"
+    },
+    {
+     "txt": "2011",
+     "ff": "\"Geist Mono\"",
+     "fs": "12.1px",
+     "col": "oklab(0.5 0.00844708 0.0181369 / 0.6)"
+    },
+    {
+     "txt": "2004",
+     "ff": "\"Geist Mono\"",
+     "fs": "12.1px",
+     "col": "oklab(0.5 0.00844708 0.0181369 / 0.6)"
+    },
+    {
+     "txt": "2015",
+     "ff": "\"Geist Mono\"",
+     "fs": "12.1px",
+     "col": "oklab(0.5 0.00844708 0.0181369 / 0.6)"
+    }
+   ],
+   "h1": "44.5px",
+   "internal_hrefs": [
+    "/#top",
+    "/about",
+    "/blog",
+    "/now",
+    "/shelf",
+    "/work"
+   ],
+   "private_screenshots": [
+    "~/.local/share/margen-review/atlas-reference-20261022/route-now-1440-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-now-1440-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-now-1440-02.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-now-1440-03.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-now-1440-04.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-now-390-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-now-390-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-now-390-02.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-now-390-03.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-now-390-04.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-now-390-05.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-now-390-06.png"
+   ]
+  },
+  {
+   "path": "/guestbook",
+   "type": "section-page",
+   "status": 200,
+   "visited": true,
+   "viewports": [
+    "1440x900",
+    "390x844"
+   ],
+   "deep_component_probe": false,
+   "doc_height_1440": 1215,
+   "doc_height_390": 1444,
+   "screens_covered_1440": "2 of 2 viewports",
+   "screens_covered_390": "2 of 2 viewports",
+   "component_counts_1440": {
+    "nav": 1,
+    "header": 2,
+    "footer": 2,
+    "main": 1,
+    "h1": 1,
+    "h2": 5,
+    "figure": 50,
+    "img": 50,
+    "svg": 25,
+    "button": 24,
+    "input": 2,
+    "form": 1,
+    "time": 2,
+    "ul": 1,
+    "backdrop": 2,
+    "sticky": 1,
+    "fixed": 2
+   },
+   "code_languages": [],
+   "interactive_labels": [
+    "Undo",
+    "Redo",
+    "Clear",
+    "Pen",
+    "Marker",
+    "Brush",
+    "Eraser",
+    "Size",
+    "Ink colour — #fef8f2",
+    "Hide tools",
+    "Back to tools",
+    "#fef8f2",
+    "#948475",
+    "#13110f",
+    "#b3594f",
+    "#f1733d",
+    "#ba9659",
+    "#778463",
+    "#647095",
+    "Back to swatches",
+    "Hex colour",
+    "Pick a colour from the screen",
+    "who's the artist? what's the message?",
+    "say cheese"
+   ],
+   "font_families_with_text_1440": {
+    "Reenie Beanie": 53,
+    "serif": 1,
+    "Inter": 3,
+    "Geist": 1
+   },
+   "horizontal_tracks_1440": [],
+   "horizontal_tracks_390": [],
+   "videos": [],
+   "canvas": [],
+   "rough_annotations": 0,
+   "blur_filters_sample": [
+    {
+     "tag": "div",
+     "f": "blur(0px)",
+     "txt": "parzival says hi, love the oth"
+    },
+    {
+     "tag": "div",
+     "f": "blur(0px)",
+     "txt": "g"
+    },
+    {
+     "tag": "div",
+     "f": "blur(0px)",
+     "txt": "Nate, with love"
+    },
+    {
+     "tag": "div",
+     "f": "blur(0px)",
+     "txt": "juliennn"
+    },
+    {
+     "tag": "div",
+     "f": "blur(0px)",
+     "txt": "Raphel from france"
+    },
+    {
+     "tag": "div",
+     "f": "blur(0px)",
+     "txt": "Vyse"
+    },
+    {
+     "tag": "div",
+     "f": "blur(0px)",
+     "txt": "❤️"
+    },
+    {
+     "tag": "div",
+     "f": "blur(0px)",
+     "txt": "xxxxxx"
+    },
+    {
+     "tag": "div",
+     "f": "blur(0px)",
+     "txt": "Daste"
+    },
+    {
+     "tag": "div",
+     "f": "blur(0px)",
+     "txt": "this is a fog"
+    }
+   ],
+   "backdrop_filters_sample": [
+    {
+     "tag": "section",
+     "bd": "blur(8px)",
+     "rect": [
+      432,
+      433,
+      576,
+      467
+     ]
+    },
+    {
+     "tag": "input",
+     "bd": "blur(8px) saturate(2)",
+     "rect": [
+      448,
+      852,
+      436,
+      32
+     ]
+    }
+   ],
+   "masked_elements": 0,
+   "time_styles": [],
+   "h1": "96px",
+   "internal_hrefs": [
+    "/#top",
+    "/about",
+    "/blog",
+    "/now",
+    "/shelf",
+    "/work"
+   ],
+   "private_screenshots": [
+    "~/.local/share/margen-review/atlas-reference-20261022/route-guestbook-1440-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-guestbook-1440-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-guestbook-390-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-guestbook-390-01.png"
+   ]
+  },
+  {
+   "path": "/work",
+   "type": "section-page",
+   "status": 200,
+   "visited": true,
+   "viewports": [
+    "1440x900",
+    "390x844"
+   ],
+   "deep_component_probe": false,
+   "doc_height_1440": 4186,
+   "doc_height_390": 5477,
+   "screens_covered_1440": "5 of 5 viewports",
+   "screens_covered_390": "7 of 7 viewports",
+   "component_counts_1440": {
+    "nav": 1,
+    "header": 1,
+    "footer": 1,
+    "main": 1,
+    "article": 5,
+    "h1": 1,
+    "h2": 7,
+    "h3": 5,
+    "figure": 13,
+    "img": 29,
+    "svg": 6,
+    "button": 1,
+    "time": 24,
+    "ol": 1,
+    "ul": 2,
+    "mask": 4,
+    "sticky": 1,
+    "fixed": 3
+   },
+   "code_languages": [],
+   "interactive_labels": [],
+   "font_families_with_text_1440": {
+    "serif": 10,
+    "Geist": 56,
+    "Reenie Beanie": 182,
+    "Geist Mono": 53
+   },
+   "horizontal_tracks_1440": [
+    {
+     "tag": "ul",
+     "cls": "flex! h-full scroll-fade-x gap-3 overflow-x-auto overscroll-x-contain py-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visi",
+     "rect": [
+      208,
+      2009,
+      1024,
+      256
+     ],
+     "sw": 4550,
+     "mask": "linear-gradient(to right, rgba(0, 0, 0, 0) 0px, rgb(0, 0, 0) calc(0% + (0 * min(12%, 40px))), rgb(0, 0, 0) calc(100% - min(12%, 40px)), rgba(0, 0, 0, 0) 100%)",
+     "snap": "none",
+     "items": 13,
+     "firstChild": {
+      "rect": [
+       220,
+       2021,
+       348,
+       232
+      ],
+      "radius": "0px",
+      "shadow": "none"
+     }
+    }
+   ],
+   "horizontal_tracks_390": [
+    {
+     "tag": "ul",
+     "cls": "flex! h-full scroll-fade-x gap-3 overflow-x-auto overscroll-x-contain py-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visi",
+     "rect": [
+      20,
+      2687,
+      350,
+      256
+     ],
+     "sw": 4550,
+     "mask": "linear-gradient(to right, rgba(0, 0, 0, 0) 0px, rgb(0, 0, 0) calc(0% + (0 * min(12%, 40px))), rgb(0, 0, 0) calc(100% - min(12%, 40px)), rgba(0, 0, 0, 0) 100%)",
+     "snap": "none",
+     "items": 13,
+     "firstChild": {
+      "rect": [
+       32,
+       2699,
+       348,
+       232
+      ],
+      "radius": "0px",
+      "shadow": "none"
+     }
+    }
+   ],
+   "videos": [],
+   "canvas": [],
+   "rough_annotations": 3,
+   "blur_filters_sample": [],
+   "backdrop_filters_sample": [],
+   "masked_elements": 5,
+   "time_styles": [
+    {
+     "txt": "2025",
+     "ff": "\"Geist Mono\"",
+     "fs": "11px",
+     "col": "lab(41.9789 2.99999 7.07102)"
+    },
+    {
+     "txt": "2024",
+     "ff": "\"Geist Mono\"",
+     "fs": "11px",
+     "col": "lab(41.9789 2.99999 7.07102)"
+    },
+    {
+     "txt": "2025",
+     "ff": "\"Geist Mono\"",
+     "fs": "11px",
+     "col": "lab(41.9789 2.99999 7.07102)"
+    },
+    {
+     "txt": "2024",
+     "ff": "\"Geist Mono\"",
+     "fs": "11px",
+     "col": "lab(41.9789 2.99999 7.07102)"
+    },
+    {
+     "txt": "2025",
+     "ff": "\"Geist Mono\"",
+     "fs": "11px",
+     "col": "lab(41.9789 2.99999 7.07102)"
+    },
+    {
+     "txt": "2024",
+     "ff": "\"Geist Mono\"",
+     "fs": "11px",
+     "col": "lab(41.9789 2.99999 7.07102)"
+    }
+   ],
+   "h1": "44.5px",
+   "internal_hrefs": [
+    "/#top",
+    "/about",
+    "/blog",
+    "/blog/htnx-a-htmx-like-experience-in-nextjs",
+    "/blog/react-19-part-1-the-backstory",
+    "/blog/react-19-part-2-the-code",
+    "/now",
+    "/shelf",
+    "/work"
+   ],
+   "private_screenshots": [
+    "~/.local/share/margen-review/atlas-reference-20261022/route-work-1440-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-work-1440-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-work-1440-02.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-work-1440-03.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-work-1440-04.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-work-390-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-work-390-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-work-390-02.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-work-390-03.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-work-390-04.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-work-390-05.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-work-390-06.png"
+   ]
+  },
+  {
+   "path": "/shelf",
+   "type": "section-page",
+   "status": 200,
+   "visited": true,
+   "viewports": [
+    "1440x900",
+    "390x844"
+   ],
+   "deep_component_probe": false,
+   "doc_height_1440": 5543,
+   "doc_height_390": 5844,
+   "screens_covered_1440": "7 of 7 viewports",
+   "screens_covered_390": "7 of 7 viewports",
+   "component_counts_1440": {
+    "nav": 1,
+    "header": 37,
+    "footer": 1,
+    "main": 1,
+    "article": 36,
+    "h1": 1,
+    "h2": 8,
+    "h3": 36,
+    "img": 122,
+    "svg": 324,
+    "button": 38,
+    "input": 1,
+    "form": 1,
+    "time": 2,
+    "ol": 4,
+    "ul": 1,
+    "backdrop": 1,
+    "mask": 60,
+    "sticky": 1,
+    "fixed": 3
+   },
+   "code_languages": [],
+   "interactive_labels": [
+    "turn the book Trabalhadores",
+    "turn the book Animal Farm",
+    "turn the book On Bullshit",
+    "turn the book 1984",
+    "turn the book Virgil Abloh: Figures of S",
+    "turn the book How to Lie with Statistics",
+    "turn the book Dieter Rams: The Complete ",
+    "turn the book The Bicentennial Man",
+    "turn the book S.",
+    "turn the book The Little Prince",
+    "take out the vinyl record for MIGNONNE",
+    "take out the vinyl record for Mind Over ",
+    "take out the vinyl record for From Zero",
+    "take out the vinyl record for Slow Bloom",
+    "take out the vinyl record for Between Me",
+    "take out the vinyl record for amo",
+    "take out the vinyl record for Holy Hell",
+    "take out the vinyl record for Black Mess",
+    "take out the vinyl record for Collision ",
+    "take out the vinyl record for The Life o",
+    "take out the vinyl record for My Beautif",
+    "take out the vinyl record for The Colleg",
+    "take out the vinyl record for Random Acc",
+    "rotate the poster for Eyes Wide Shut lef",
+    "rotate the poster for Chungking Express ",
+    "rotate the poster for Parasite left",
+    "rotate the poster for Sinners left",
+    "rotate the poster for Bo Burnham: Inside",
+    "rotate the poster for The Grand Budapest",
+    "rotate the poster for Blade Runner 2049 "
+   ],
+   "font_families_with_text_1440": {
+    "serif": 41,
+    "Geist": 93,
+    "Geist Mono": 40,
+    "fancy": 1,
+    "Reenie Beanie": 93
+   },
+   "horizontal_tracks_1440": [],
+   "horizontal_tracks_390": [],
+   "videos": [],
+   "canvas": [
+    {
+     "rect": [
+      211,
+      4553,
+      1018,
+      335
+     ],
+     "aria": null
+    }
+   ],
+   "rough_annotations": 1,
+   "blur_filters_sample": [
+    {
+     "tag": "img",
+     "f": "blur(16px) saturate(0.5)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(40px)",
+     "txt": ""
+    },
+    {
+     "tag": "img",
+     "f": "blur(16px) saturate(0.5)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(40px)",
+     "txt": ""
+    },
+    {
+     "tag": "img",
+     "f": "blur(16px) saturate(0.5)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(40px)",
+     "txt": ""
+    },
+    {
+     "tag": "img",
+     "f": "blur(16px) saturate(0.5)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(40px)",
+     "txt": ""
+    },
+    {
+     "tag": "img",
+     "f": "blur(16px) saturate(0.5)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(40px)",
+     "txt": ""
+    }
+   ],
+   "backdrop_filters_sample": [
+    {
+     "tag": "textarea",
+     "bd": "blur(8px) saturate(2)",
+     "rect": [
+      732,
+      4785,
+      392,
+      75
+     ]
+    }
+   ],
+   "masked_elements": 64,
+   "time_styles": [],
+   "h1": "44.5px",
+   "internal_hrefs": [
+    "#album-amo-2019",
+    "#book-s-2013",
+    "#movie-chungking-express-1994",
+    "/#top",
+    "/about",
+    "/blog",
+    "/now",
+    "/shelf",
+    "/work"
+   ],
+   "private_screenshots": [
+    "~/.local/share/margen-review/atlas-reference-20261022/route-shelf-1440-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-shelf-1440-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-shelf-1440-02.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-shelf-1440-03.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-shelf-1440-04.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-shelf-1440-05.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-shelf-1440-06.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-shelf-390-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-shelf-390-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-shelf-390-02.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-shelf-390-03.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-shelf-390-04.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-shelf-390-05.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-shelf-390-06.png"
+   ]
+  },
+  {
+   "path": "/thanks",
+   "type": "section-page",
+   "status": 200,
+   "visited": true,
+   "viewports": [
+    "1440x900",
+    "390x844"
+   ],
+   "deep_component_probe": false,
+   "doc_height_1440": 3398,
+   "doc_height_390": 4786,
+   "screens_covered_1440": "4 of 4 viewports",
+   "screens_covered_390": "6 of 6 viewports",
+   "component_counts_1440": {
+    "nav": 1,
+    "header": 1,
+    "footer": 1,
+    "main": 1,
+    "article": 1,
+    "h1": 1,
+    "h2": 3,
+    "img": 17,
+    "svg": 9,
+    "code_inline": 1,
+    "button": 1,
+    "time": 2,
+    "ul": 1,
+    "sticky": 1,
+    "fixed": 3
+   },
+   "code_languages": [],
+   "interactive_labels": [],
+   "font_families_with_text_1440": {
+    "serif": 1,
+    "Geist": 53,
+    "Geist Mono": 1,
+    "Reenie Beanie": 120
+   },
+   "horizontal_tracks_1440": [],
+   "horizontal_tracks_390": [],
+   "videos": [],
+   "canvas": [],
+   "rough_annotations": 6,
+   "blur_filters_sample": [],
+   "backdrop_filters_sample": [],
+   "masked_elements": 0,
+   "time_styles": [],
+   "h1": "44.5px",
+   "internal_hrefs": [
+    "/#top",
+    "/about",
+    "/blog",
+    "/guestbook",
+    "/now",
+    "/shelf",
+    "/shelf#book-s-2013",
+    "/work"
+   ],
+   "private_screenshots": [
+    "~/.local/share/margen-review/atlas-reference-20261022/route-thanks-1440-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-thanks-1440-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-thanks-1440-02.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-thanks-1440-03.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-thanks-390-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-thanks-390-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-thanks-390-02.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-thanks-390-03.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-thanks-390-04.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-thanks-390-05.png"
+   ]
+  },
+  {
+   "path": "/blog/programar-e-uma-merda",
+   "type": "article",
+   "status": 200,
+   "visited": true,
+   "viewports": [
+    "1440x900",
+    "1280x800",
+    "390x844",
+    "320x640"
+   ],
+   "deep_component_probe": true,
+   "doc_height_1440": 10654,
+   "doc_height_390": 13914,
+   "screens_covered_1440": "8 of 12 viewports",
+   "screens_covered_390": "8 of 17 viewports",
+   "component_counts_1440": {
+    "nav": 1,
+    "header": 1,
+    "footer": 2,
+    "main": 1,
+    "article": 1,
+    "aside": 1,
+    "h1": 1,
+    "h2": 9,
+    "figure": 7,
+    "img": 1,
+    "svg": 46,
+    "pre": 7,
+    "figure_code": 7,
+    "code_inline": 6,
+    "blockquote": 1,
+    "button": 14,
+    "input": 1,
+    "form": 1,
+    "time": 3,
+    "ol": 2,
+    "ul": 1,
+    "backdrop": 8,
+    "mask": 59,
+    "sticky": 2,
+    "fixed": 4
+   },
+   "code_languages": [
+    "cpp",
+    "perl",
+    "text"
+   ],
+   "interactive_labels": [
+    "Noice: 32 total reactions. 0 of 5 added ",
+    "Hang loose: 21 total reactions. 0 of 5 a",
+    "Eyes: 20 total reactions. 0 of 5 added t",
+    "Nice: 20 total reactions. 0 of 5 added t",
+    "Middle finger: 23 total reactions. 0 of ",
+    "Copy code",
+    "hi@cmrg.me",
+    "subscribe"
+   ],
+   "font_families_with_text_1440": {
+    "Geist": 102,
+    "serif": 6,
+    "fancy": 19,
+    "Geist Mono": 143,
+    "Reenie Beanie": 90
+   },
+   "horizontal_tracks_1440": [],
+   "horizontal_tracks_390": [],
+   "videos": [],
+   "canvas": [],
+   "rough_annotations": 10,
+   "blur_filters_sample": [
+    {
+     "tag": "span",
+     "f": "blur(0px)",
+     "txt": ""
+    },
+    {
+     "tag": "a",
+     "f": "blur(4px)",
+     "txt": "#"
+    },
+    {
+     "tag": "span",
+     "f": "blur(8px)",
+     "txt": "32"
+    },
+    {
+     "tag": "span",
+     "f": "blur(6px)",
+     "txt": "32"
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    }
+   ],
+   "backdrop_filters_sample": [
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      456,
+      3826,
+      53,
+      22
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      456,
+      3850,
+      78,
+      22
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      734,
+      4995,
+      86,
+      22
+     ]
+    },
+    {
+     "tag": "pre",
+     "bd": "blur(12px)",
+     "rect": [
+      336,
+      5245,
+      768,
+      54
+     ]
+    },
+    {
+     "tag": "pre",
+     "bd": "blur(12px)",
+     "rect": [
+      336,
+      6392,
+      768,
+      54
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      565,
+      6538,
+      111,
+      22
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      873,
+      6594,
+      95,
+      22
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      687,
+      6694,
+      53,
+      22
+     ]
+    },
+    {
+     "tag": "pre",
+     "bd": "blur(12px)",
+     "rect": [
+      336,
+      7241,
+      768,
+      164
+     ]
+    },
+    {
+     "tag": "pre",
+     "bd": "blur(12px)",
+     "rect": [
+      336,
+      7561,
+      768,
+      54
+     ]
+    }
+   ],
+   "masked_elements": 64,
+   "time_styles": [
+    {
+     "txt": "august 11, 2026",
+     "ff": "\"Geist Mono\"",
+     "fs": "13.7px",
+     "col": "lab(56.2331 4.56151 10.6581)"
+    }
+   ],
+   "h1": "44.5px",
+   "internal_hrefs": [
+    "#a-gente-não-começou-maluco-estão-deixando-a-gente-maluco",
+    "#e-ainda-tem-a-internet-que-é-um-inferno-à-parte",
+    "#sempre-haverá-escuridão",
+    "#title",
+    "#toda-equipe-de-programação-é-composta-de-e-por-malucos",
+    "#todo-código-é-ruim",
+    "/#top",
+    "/about",
+    "/blog",
+    "/blog/programar-e-uma-merda",
+    "/now",
+    "/shelf",
+    "/work"
+   ],
+   "private_screenshots": [
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_programar-e-uma-merda-1440-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_programar-e-uma-merda-1440-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_programar-e-uma-merda-1440-02.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_programar-e-uma-merda-1440-03.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_programar-e-uma-merda-1440-04.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_programar-e-uma-merda-1440-05.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_programar-e-uma-merda-1440-06.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_programar-e-uma-merda-1440-07.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_programar-e-uma-merda-390-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_programar-e-uma-merda-390-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_programar-e-uma-merda-390-02.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_programar-e-uma-merda-390-03.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_programar-e-uma-merda-390-04.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_programar-e-uma-merda-390-05.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_programar-e-uma-merda-390-06.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_programar-e-uma-merda-390-07.png"
+   ]
+  },
+  {
+   "path": "/blog/react-19-part-2-the-code",
+   "type": "article",
+   "status": 200,
+   "visited": true,
+   "viewports": [
+    "1440x900",
+    "1280x800",
+    "390x844",
+    "320x640"
+   ],
+   "deep_component_probe": true,
+   "doc_height_1440": 11495,
+   "doc_height_390": 12830,
+   "screens_covered_1440": "8 of 13 viewports",
+   "screens_covered_390": "8 of 16 viewports",
+   "component_counts_1440": {
+    "nav": 1,
+    "header": 2,
+    "footer": 3,
+    "main": 1,
+    "article": 2,
+    "aside": 1,
+    "h1": 1,
+    "h2": 8,
+    "h3": 5,
+    "figure": 13,
+    "img": 7,
+    "svg": 65,
+    "pre": 13,
+    "figure_code": 13,
+    "code_inline": 27,
+    "blockquote": 8,
+    "button": 20,
+    "input": 1,
+    "form": 1,
+    "time": 4,
+    "ol": 1,
+    "ul": 2,
+    "backdrop": 14,
+    "mask": 181,
+    "sticky": 2,
+    "fixed": 4
+   },
+   "code_languages": [
+    "ts"
+   ],
+   "interactive_labels": [
+    "Noice: 1436 total reactions. 0 of 5 adde",
+    "Hang loose: 564 total reactions. 0 of 5 ",
+    "Eyes: 534 total reactions. 0 of 5 added ",
+    "Nice: 775 total reactions. 0 of 5 added ",
+    "Middle finger: 197 total reactions. 0 of",
+    "Copy code",
+    "hi@cmrg.me",
+    "subscribe"
+   ],
+   "font_families_with_text_1440": {
+    "Geist": 91,
+    "serif": 11,
+    "fancy": 26,
+    "Geist Mono": 1102
+   },
+   "horizontal_tracks_1440": [],
+   "horizontal_tracks_390": [],
+   "videos": [],
+   "canvas": [],
+   "rough_annotations": 11,
+   "blur_filters_sample": [
+    {
+     "tag": "span",
+     "f": "blur(0px)",
+     "txt": ""
+    },
+    {
+     "tag": "a",
+     "f": "blur(4px)",
+     "txt": "#"
+    },
+    {
+     "tag": "span",
+     "f": "blur(8px)",
+     "txt": "1,436"
+    },
+    {
+     "tag": "span",
+     "f": "blur(6px)",
+     "txt": "1,436"
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    }
+   ],
+   "backdrop_filters_sample": [
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      905,
+      892,
+      53,
+      22
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      507,
+      1027,
+      37,
+      22
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      579,
+      1027,
+      53,
+      22
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      639,
+      1027,
+      95,
+      22
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      772,
+      1027,
+      62,
+      22
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      772,
+      1051,
+      103,
+      22
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      882,
+      1051,
+      95,
+      22
+     ]
+    },
+    {
+     "tag": "pre",
+     "bd": "blur(12px)",
+     "rect": [
+      336,
+      1166,
+      768,
+      120
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      671,
+      1327,
+      111,
+      22
+     ]
+    },
+    {
+     "tag": "pre",
+     "bd": "blur(12px)",
+     "rect": [
+      336,
+      1490,
+      768,
+      318
+     ]
+    }
+   ],
+   "masked_elements": 178,
+   "time_styles": [
+    {
+     "txt": "april 8, 2024",
+     "ff": "\"Geist Mono\"",
+     "fs": "13.7px",
+     "col": "lab(56.2331 4.56151 10.6581)"
+    },
+    {
+     "txt": "apr 15, 2024",
+     "ff": "\"Geist Mono\"",
+     "fs": "13.7px",
+     "col": "lab(69.9317 3.71015 8.80728)"
+    }
+   ],
+   "h1": "44.5px",
+   "internal_hrefs": [
+    "#build-step",
+    "#conclusion",
+    "#extras",
+    "#how-the-runtime-works",
+    "#rendertopipeablestream",
+    "#the-assets",
+    "#the-components",
+    "#the-pages",
+    "#the-rsc-register",
+    "#the-rsc-server",
+    "#the-ssr-server",
+    "#title",
+    "/#top",
+    "/about",
+    "/blog",
+    "/blog/react-19-part-1-the-backstory",
+    "/blog/react-19-part-2-the-code",
+    "/now",
+    "/shelf",
+    "/work"
+   ],
+   "private_screenshots": [
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-2-the-code-1440-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-2-the-code-1440-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-2-the-code-1440-02.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-2-the-code-1440-03.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-2-the-code-1440-04.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-2-the-code-1440-05.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-2-the-code-1440-06.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-2-the-code-1440-07.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-2-the-code-390-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-2-the-code-390-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-2-the-code-390-02.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-2-the-code-390-03.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-2-the-code-390-04.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-2-the-code-390-05.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-2-the-code-390-06.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-2-the-code-390-07.png"
+   ]
+  },
+  {
+   "path": "/blog/react-19-part-1-the-backstory",
+   "type": "article",
+   "status": 200,
+   "visited": true,
+   "viewports": [
+    "1440x900",
+    "390x844"
+   ],
+   "deep_component_probe": false,
+   "doc_height_1440": 8485,
+   "doc_height_390": 10421,
+   "screens_covered_1440": "8 of 10 viewports",
+   "screens_covered_390": "8 of 13 viewports",
+   "component_counts_1440": {
+    "nav": 1,
+    "header": 1,
+    "footer": 2,
+    "main": 1,
+    "article": 1,
+    "aside": 1,
+    "h1": 1,
+    "h2": 12,
+    "h3": 3,
+    "figure": 3,
+    "img": 22,
+    "svg": 51,
+    "pre": 3,
+    "figure_code": 3,
+    "code_inline": 13,
+    "blockquote": 5,
+    "button": 10,
+    "input": 1,
+    "form": 1,
+    "time": 3,
+    "ol": 1,
+    "ul": 1,
+    "backdrop": 4,
+    "mask": 79,
+    "sticky": 2,
+    "fixed": 6
+   },
+   "code_languages": [
+    "json",
+    "ts"
+   ],
+   "interactive_labels": [
+    "Noice: 1415 total reactions. 0 of 5 adde",
+    "Hang loose: 514 total reactions. 0 of 5 ",
+    "Eyes: 523 total reactions. 0 of 5 added ",
+    "Nice: 803 total reactions. 0 of 5 added ",
+    "Middle finger: 145 total reactions. 0 of",
+    "Copy code",
+    "hi@cmrg.me",
+    "subscribe"
+   ],
+   "font_families_with_text_1440": {
+    "Geist": 146,
+    "serif": 12,
+    "fancy": 25,
+    "Geist Mono": 308,
+    "Reenie Beanie": 71
+   },
+   "horizontal_tracks_1440": [],
+   "horizontal_tracks_390": [],
+   "videos": [],
+   "canvas": [
+    {
+     "rect": [
+      211,
+      7554,
+      1018,
+      335
+     ],
+     "aria": null
+    }
+   ],
+   "rough_annotations": 13,
+   "blur_filters_sample": [
+    {
+     "tag": "span",
+     "f": "blur(0px)",
+     "txt": ""
+    },
+    {
+     "tag": "a",
+     "f": "blur(4px)",
+     "txt": "#"
+    },
+    {
+     "tag": "svg",
+     "f": "blur(4px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(8px)",
+     "txt": "1,415"
+    },
+    {
+     "tag": "span",
+     "f": "blur(6px)",
+     "txt": "1,415"
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    }
+   ],
+   "backdrop_filters_sample": [
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      747,
+      2127,
+      161,
+      22
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      736,
+      2802,
+      111,
+      22
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      579,
+      3087,
+      177,
+      22
+     ]
+    },
+    {
+     "tag": "div",
+     "bd": "blur(0px)",
+     "rect": [
+      0,
+      6300,
+      1440,
+      900
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      540,
+      4349,
+      86,
+      22
+     ]
+    },
+    {
+     "tag": "pre",
+     "bd": "blur(12px)",
+     "rect": [
+      336,
+      4536,
+      768,
+      142
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      456,
+      4767,
+      194,
+      22
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      580,
+      4791,
+      95,
+      22
+     ]
+    },
+    {
+     "tag": "pre",
+     "bd": "blur(12px)",
+     "rect": [
+      336,
+      4906,
+      768,
+      120
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      521,
+      5067,
+      103,
+      22
+     ]
+    }
+   ],
+   "masked_elements": 72,
+   "time_styles": [
+    {
+     "txt": "march 19, 2024",
+     "ff": "\"Geist Mono\"",
+     "fs": "13.7px",
+     "col": "lab(56.2331 4.56151 10.6581)"
+    }
+   ],
+   "h1": "44.5px",
+   "internal_hrefs": [
+    "#conclusion",
+    "#enter-esm-and-some-mixed-feelings",
+    "#first-thoughts",
+    "#how-did-it-all-start",
+    "#lets-do-it",
+    "#simplicity-vs-webpack",
+    "#taking-matters-into-my-own-hands",
+    "#the-bad-news",
+    "#the-final-steps",
+    "#the-first-steps",
+    "#the-last-challenge-a-few-lessons-learned",
+    "#title",
+    "/#top",
+    "/about",
+    "/blog",
+    "/blog/react-19-part-1-the-backstory",
+    "/blog/react-19-part-2-the-code",
+    "/now",
+    "/shelf",
+    "/work"
+   ],
+   "private_screenshots": [
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-1-the-backstory-1440-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-1-the-backstory-1440-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-1-the-backstory-1440-02.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-1-the-backstory-1440-03.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-1-the-backstory-1440-04.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-1-the-backstory-1440-05.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-1-the-backstory-1440-06.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-1-the-backstory-1440-07.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-1-the-backstory-390-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-1-the-backstory-390-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-1-the-backstory-390-02.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-1-the-backstory-390-03.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-1-the-backstory-390-04.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-1-the-backstory-390-05.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-1-the-backstory-390-06.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_react-19-part-1-the-backstory-390-07.png"
+   ]
+  },
+  {
+   "path": "/blog/access-to-your-tailwind-theme-on-the-go",
+   "type": "article",
+   "status": 200,
+   "visited": true,
+   "viewports": [
+    "1440x900",
+    "390x844"
+   ],
+   "deep_component_probe": false,
+   "doc_height_1440": 5310,
+   "doc_height_390": 5788,
+   "screens_covered_1440": "6 of 6 viewports",
+   "screens_covered_390": "7 of 7 viewports",
+   "component_counts_1440": {
+    "nav": 1,
+    "header": 1,
+    "footer": 2,
+    "main": 1,
+    "article": 1,
+    "aside": 1,
+    "h1": 1,
+    "h2": 7,
+    "h3": 4,
+    "figure": 6,
+    "img": 5,
+    "svg": 42,
+    "pre": 6,
+    "figure_code": 6,
+    "code_inline": 8,
+    "button": 13,
+    "input": 1,
+    "form": 1,
+    "time": 3,
+    "ol": 1,
+    "ul": 1,
+    "backdrop": 7,
+    "mask": 61,
+    "sticky": 2,
+    "fixed": 4
+   },
+   "code_languages": [
+    "css",
+    "ts",
+    "tsx"
+   ],
+   "interactive_labels": [
+    "Noice: 401 total reactions. 0 of 5 added",
+    "Hang loose: 150 total reactions. 0 of 5 ",
+    "Eyes: 155 total reactions. 0 of 5 added ",
+    "Nice: 192 total reactions. 0 of 5 added ",
+    "Middle finger: 36 total reactions. 0 of ",
+    "Copy code",
+    "hi@cmrg.me",
+    "subscribe"
+   ],
+   "font_families_with_text_1440": {
+    "Geist": 33,
+    "serif": 10,
+    "fancy": 22,
+    "Geist Mono": 388
+   },
+   "horizontal_tracks_1440": [],
+   "horizontal_tracks_390": [],
+   "videos": [],
+   "canvas": [
+    {
+     "rect": [
+      211,
+      4378,
+      1018,
+      335
+     ],
+     "aria": null
+    }
+   ],
+   "rough_annotations": 9,
+   "blur_filters_sample": [
+    {
+     "tag": "span",
+     "f": "blur(0px)",
+     "txt": ""
+    },
+    {
+     "tag": "a",
+     "f": "blur(4px)",
+     "txt": "#"
+    },
+    {
+     "tag": "span",
+     "f": "blur(8px)",
+     "txt": "401"
+    },
+    {
+     "tag": "span",
+     "f": "blur(6px)",
+     "txt": "401"
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    }
+   ],
+   "backdrop_filters_sample": [
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      520,
+      303,
+      219,
+      22
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      456,
+      633,
+      219,
+      22
+     ]
+    },
+    {
+     "tag": "pre",
+     "bd": "blur(12px)",
+     "rect": [
+      336,
+      907,
+      768,
+      208
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      460,
+      1180,
+      161,
+      22
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      492,
+      1315,
+      219,
+      22
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      645,
+      1363,
+      161,
+      22
+     ]
+    },
+    {
+     "tag": "pre",
+     "bd": "blur(12px)",
+     "rect": [
+      336,
+      1518,
+      768,
+      142
+     ]
+    },
+    {
+     "tag": "pre",
+     "bd": "blur(12px)",
+     "rect": [
+      336,
+      1815,
+      768,
+      274
+     ]
+    },
+    {
+     "tag": "pre",
+     "bd": "blur(12px)",
+     "rect": [
+      336,
+      2292,
+      768,
+      120
+     ]
+    },
+    {
+     "tag": "pre",
+     "bd": "blur(12px)",
+     "rect": [
+      336,
+      2639,
+      768,
+      428
+     ]
+    }
+   ],
+   "masked_elements": 67,
+   "time_styles": [
+    {
+     "txt": "march 15, 2024",
+     "ff": "\"Geist Mono\"",
+     "fs": "13.7px",
+     "col": "lab(56.2331 4.56151 10.6581)"
+    }
+   ],
+   "h1": "44.5px",
+   "internal_hrefs": [
+    "#basic-configuration",
+    "#choosing-what-to-expose",
+    "#from-a-gist-to-a-plugin",
+    "#how-it-works",
+    "#more-control",
+    "#the-original-use-case",
+    "#the-plugin",
+    "#title",
+    "#using-the-variables",
+    "#what-it-solves",
+    "/#top",
+    "/about",
+    "/blog",
+    "/blog/access-to-your-tailwind-theme-on-the-go",
+    "/now",
+    "/shelf",
+    "/work"
+   ],
+   "private_screenshots": [
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_access-to-your-tailwind-theme-on-the-go-1440-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_access-to-your-tailwind-theme-on-the-go-1440-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_access-to-your-tailwind-theme-on-the-go-1440-02.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_access-to-your-tailwind-theme-on-the-go-1440-03.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_access-to-your-tailwind-theme-on-the-go-1440-04.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_access-to-your-tailwind-theme-on-the-go-1440-05.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_access-to-your-tailwind-theme-on-the-go-390-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_access-to-your-tailwind-theme-on-the-go-390-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_access-to-your-tailwind-theme-on-the-go-390-02.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_access-to-your-tailwind-theme-on-the-go-390-03.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_access-to-your-tailwind-theme-on-the-go-390-04.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_access-to-your-tailwind-theme-on-the-go-390-05.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_access-to-your-tailwind-theme-on-the-go-390-06.png"
+   ]
+  },
+  {
+   "path": "/blog/contentlayer-git-nextjs",
+   "type": "article",
+   "status": 200,
+   "visited": true,
+   "viewports": [
+    "1440x900",
+    "390x844"
+   ],
+   "deep_component_probe": false,
+   "doc_height_1440": 6061,
+   "doc_height_390": 6712,
+   "screens_covered_1440": "7 of 7 viewports",
+   "screens_covered_390": "8 of 8 viewports",
+   "component_counts_1440": {
+    "nav": 1,
+    "header": 1,
+    "footer": 2,
+    "main": 1,
+    "article": 1,
+    "aside": 1,
+    "h1": 1,
+    "h2": 10,
+    "h3": 1,
+    "figure": 3,
+    "img": 14,
+    "svg": 43,
+    "pre": 3,
+    "figure_code": 3,
+    "code_inline": 6,
+    "blockquote": 4,
+    "button": 10,
+    "input": 6,
+    "form": 1,
+    "time": 3,
+    "ol": 2,
+    "ul": 8,
+    "backdrop": 4,
+    "mask": 49,
+    "sticky": 2,
+    "fixed": 6
+   },
+   "code_languages": [
+    "ts"
+   ],
+   "interactive_labels": [
+    "Noice: 672 total reactions. 0 of 5 added",
+    "Hang loose: 259 total reactions. 0 of 5 ",
+    "Eyes: 236 total reactions. 0 of 5 added ",
+    "Nice: 331 total reactions. 0 of 5 added ",
+    "Middle finger: 53 total reactions. 0 of ",
+    "",
+    "Copy code",
+    "hi@cmrg.me",
+    "subscribe"
+   ],
+   "font_families_with_text_1440": {
+    "Geist": 66,
+    "serif": 8,
+    "fancy": 21,
+    "Geist Mono": 140
+   },
+   "horizontal_tracks_1440": [],
+   "horizontal_tracks_390": [],
+   "videos": [],
+   "canvas": [
+    {
+     "rect": [
+      211,
+      5130,
+      1018,
+      335
+     ],
+     "aria": null
+    }
+   ],
+   "rough_annotations": 6,
+   "blur_filters_sample": [
+    {
+     "tag": "span",
+     "f": "blur(0px)",
+     "txt": ""
+    },
+    {
+     "tag": "a",
+     "f": "blur(4px)",
+     "txt": "#"
+    },
+    {
+     "tag": "span",
+     "f": "blur(8px)",
+     "txt": "672"
+    },
+    {
+     "tag": "span",
+     "f": "blur(6px)",
+     "txt": "672"
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    }
+   ],
+   "backdrop_filters_sample": [
+    {
+     "tag": "div",
+     "bd": "blur(0px)",
+     "rect": [
+      0,
+      5161,
+      1440,
+      900
+     ]
+    },
+    {
+     "tag": "div",
+     "bd": "blur(0px)",
+     "rect": [
+      0,
+      5161,
+      1440,
+      900
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      808,
+      3412,
+      86,
+      22
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      483,
+      3436,
+      95,
+      22
+     ]
+    },
+    {
+     "tag": "pre",
+     "bd": "blur(12px)",
+     "rect": [
+      336,
+      3566,
+      768,
+      208
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      474,
+      3857,
+      86,
+      22
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      796,
+      3857,
+      78,
+      22
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      622,
+      3987,
+      86,
+      22
+     ]
+    },
+    {
+     "tag": "pre",
+     "bd": "blur(12px)",
+     "rect": [
+      336,
+      4078,
+      768,
+      164
+     ]
+    },
+    {
+     "tag": "pre",
+     "bd": "blur(12px)",
+     "rect": [
+      336,
+      4397,
+      768,
+      120
+     ]
+    }
+   ],
+   "masked_elements": 44,
+   "time_styles": [
+    {
+     "txt": "march 15, 2024",
+     "ff": "\"Geist Mono\"",
+     "fs": "13.7px",
+     "col": "lab(56.2331 4.56151 10.6581)"
+    }
+   ],
+   "h1": "44.5px",
+   "internal_hrefs": [
+    "#blogging-platforms",
+    "#final-thoughts",
+    "#footnote-label",
+    "#how-do-you-glue-it-all-together",
+    "#how-it-worked",
+    "#the-plan",
+    "#title",
+    "#user-content-fn-1",
+    "#user-content-fnref-1",
+    "#why-did-i-choose-to-go-this-way",
+    "/#top",
+    "/about",
+    "/blog",
+    "/blog/contentlayer-git-nextjs",
+    "/now",
+    "/shelf",
+    "/work"
+   ],
+   "private_screenshots": [
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_contentlayer-git-nextjs-1440-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_contentlayer-git-nextjs-1440-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_contentlayer-git-nextjs-1440-02.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_contentlayer-git-nextjs-1440-03.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_contentlayer-git-nextjs-1440-04.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_contentlayer-git-nextjs-1440-05.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_contentlayer-git-nextjs-1440-06.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_contentlayer-git-nextjs-390-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_contentlayer-git-nextjs-390-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_contentlayer-git-nextjs-390-02.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_contentlayer-git-nextjs-390-03.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_contentlayer-git-nextjs-390-04.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_contentlayer-git-nextjs-390-05.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_contentlayer-git-nextjs-390-06.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_contentlayer-git-nextjs-390-07.png"
+   ]
+  },
+  {
+   "path": "/blog/htnx-a-htmx-like-experience-in-nextjs",
+   "type": "article",
+   "status": 200,
+   "visited": true,
+   "viewports": [
+    "1440x900",
+    "390x844"
+   ],
+   "deep_component_probe": false,
+   "doc_height_1440": 9037,
+   "doc_height_390": 9687,
+   "screens_covered_1440": "8 of 11 viewports",
+   "screens_covered_390": "8 of 12 viewports",
+   "component_counts_1440": {
+    "nav": 1,
+    "header": 1,
+    "footer": 2,
+    "main": 1,
+    "article": 1,
+    "aside": 1,
+    "h1": 1,
+    "h2": 9,
+    "h3": 4,
+    "figure": 7,
+    "img": 6,
+    "video": 1,
+    "svg": 53,
+    "pre": 7,
+    "figure_code": 7,
+    "code_inline": 21,
+    "blockquote": 4,
+    "button": 18,
+    "input": 2,
+    "form": 1,
+    "time": 3,
+    "ol": 1,
+    "ul": 4,
+    "backdrop": 8,
+    "mask": 123,
+    "sticky": 2,
+    "fixed": 5
+   },
+   "code_languages": [
+    "tsx"
+   ],
+   "interactive_labels": [
+    "Noice: 672 total reactions. 0 of 5 added",
+    "Hang loose: 210 total reactions. 0 of 5 ",
+    "Eyes: 246 total reactions. 0 of 5 added ",
+    "Nice: 330 total reactions. 0 of 5 added ",
+    "Middle finger: 39 total reactions. 0 of ",
+    "Play or pause Demo video!",
+    "Play video",
+    "",
+    "Unmute video",
+    "Enter fullscreen",
+    "Copy code",
+    "hi@cmrg.me",
+    "subscribe"
+   ],
+   "font_families_with_text_1440": {
+    "Geist": 75,
+    "serif": 12,
+    "fancy": 24,
+    "Geist Mono": 598
+   },
+   "horizontal_tracks_1440": [],
+   "horizontal_tracks_390": [],
+   "videos": [
+    {
+     "rect": [
+      208,
+      390,
+      1024,
+      679
+     ],
+     "autoplay": false,
+     "muted": true,
+     "loop": false,
+     "controls": false,
+     "playsinline": true,
+     "poster": false,
+     "preload": "metadata",
+     "radius": "0px"
+    }
+   ],
+   "canvas": [],
+   "rough_annotations": 11,
+   "blur_filters_sample": [
+    {
+     "tag": "span",
+     "f": "blur(0px)",
+     "txt": ""
+    },
+    {
+     "tag": "a",
+     "f": "blur(4px)",
+     "txt": "#"
+    },
+    {
+     "tag": "span",
+     "f": "blur(8px)",
+     "txt": "672"
+    },
+    {
+     "tag": "span",
+     "f": "blur(6px)",
+     "txt": "672"
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    }
+   ],
+   "backdrop_filters_sample": [
+    {
+     "tag": "div",
+     "bd": "blur(0px)",
+     "rect": [
+      0,
+      6300,
+      1440,
+      900
+     ]
+    },
+    {
+     "tag": "div",
+     "bd": "blur(1px)",
+     "rect": [
+      208,
+      951,
+      1024,
+      120
+     ]
+    },
+    {
+     "tag": "div",
+     "bd": "blur(2px)",
+     "rect": [
+      208,
+      951,
+      1024,
+      120
+     ]
+    },
+    {
+     "tag": "div",
+     "bd": "blur(4px)",
+     "rect": [
+      208,
+      951,
+      1024,
+      120
+     ]
+    },
+    {
+     "tag": "div",
+     "bd": "blur(6px)",
+     "rect": [
+      208,
+      951,
+      1024,
+      120
+     ]
+    },
+    {
+     "tag": "div",
+     "bd": "blur(8px)",
+     "rect": [
+      208,
+      951,
+      1024,
+      120
+     ]
+    },
+    {
+     "tag": "div",
+     "bd": "blur(12px)",
+     "rect": [
+      208,
+      951,
+      1024,
+      120
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      568,
+      1853,
+      103,
+      22
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      456,
+      1964,
+      45,
+      22
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      472,
+      2092,
+      86,
+      22
+     ]
+    }
+   ],
+   "masked_elements": 130,
+   "time_styles": [
+    {
+     "txt": "january 24, 2024",
+     "ff": "\"Geist Mono\"",
+     "fs": "13.7px",
+     "col": "lab(56.2331 4.56151 10.6581)"
+    }
+   ],
+   "h1": "44.5px",
+   "internal_hrefs": [
+    "#backstory",
+    "#conclusion",
+    "#enter-trigger",
+    "#indicators",
+    "#lets-try-this",
+    "#overall-structure",
+    "#structure",
+    "#target-is-here",
+    "#title",
+    "#types",
+    "#usage",
+    "#we-need-to-swap",
+    "/#top",
+    "/about",
+    "/blog",
+    "/blog/htnx-a-htmx-like-experience-in-nextjs",
+    "/now",
+    "/shelf",
+    "/work"
+   ],
+   "private_screenshots": [
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_htnx-a-htmx-like-experience-in-nextjs-1440-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_htnx-a-htmx-like-experience-in-nextjs-1440-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_htnx-a-htmx-like-experience-in-nextjs-1440-02.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_htnx-a-htmx-like-experience-in-nextjs-1440-03.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_htnx-a-htmx-like-experience-in-nextjs-1440-04.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_htnx-a-htmx-like-experience-in-nextjs-1440-05.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_htnx-a-htmx-like-experience-in-nextjs-1440-06.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_htnx-a-htmx-like-experience-in-nextjs-1440-07.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_htnx-a-htmx-like-experience-in-nextjs-390-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_htnx-a-htmx-like-experience-in-nextjs-390-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_htnx-a-htmx-like-experience-in-nextjs-390-02.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_htnx-a-htmx-like-experience-in-nextjs-390-03.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_htnx-a-htmx-like-experience-in-nextjs-390-04.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_htnx-a-htmx-like-experience-in-nextjs-390-05.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_htnx-a-htmx-like-experience-in-nextjs-390-06.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_htnx-a-htmx-like-experience-in-nextjs-390-07.png"
+   ]
+  },
+  {
+   "path": "/blog/quix-a-lightning-fast-vtex-io-cli-experiment",
+   "type": "article",
+   "status": 200,
+   "visited": true,
+   "viewports": [
+    "1440x900",
+    "390x844"
+   ],
+   "deep_component_probe": false,
+   "doc_height_1440": 3530,
+   "doc_height_390": 4086,
+   "screens_covered_1440": "4 of 4 viewports",
+   "screens_covered_390": "5 of 5 viewports",
+   "component_counts_1440": {
+    "nav": 1,
+    "header": 1,
+    "footer": 2,
+    "main": 1,
+    "article": 1,
+    "aside": 1,
+    "h1": 1,
+    "h2": 8,
+    "h3": 1,
+    "figure": 2,
+    "img": 4,
+    "svg": 37,
+    "pre": 2,
+    "figure_code": 2,
+    "code_inline": 6,
+    "blockquote": 2,
+    "button": 9,
+    "input": 1,
+    "form": 1,
+    "time": 3,
+    "ol": 1,
+    "ul": 2,
+    "backdrop": 3,
+    "mask": 40,
+    "sticky": 2,
+    "fixed": 5
+   },
+   "code_languages": [
+    "sh"
+   ],
+   "interactive_labels": [
+    "Noice: 253 total reactions. 0 of 5 added",
+    "Hang loose: 79 total reactions. 0 of 5 a",
+    "Eyes: 95 total reactions. 0 of 5 added t",
+    "Nice: 132 total reactions. 0 of 5 added ",
+    "Middle finger: 12 total reactions. 0 of ",
+    "Copy code",
+    "hi@cmrg.me",
+    "subscribe"
+   ],
+   "font_families_with_text_1440": {
+    "Geist": 39,
+    "serif": 6,
+    "fancy": 19,
+    "Geist Mono": 40
+   },
+   "horizontal_tracks_1440": [],
+   "horizontal_tracks_390": [],
+   "videos": [],
+   "canvas": [
+    {
+     "rect": [
+      211,
+      2599,
+      1018,
+      335
+     ],
+     "aria": null
+    }
+   ],
+   "rough_annotations": 5,
+   "blur_filters_sample": [
+    {
+     "tag": "span",
+     "f": "blur(0px)",
+     "txt": ""
+    },
+    {
+     "tag": "a",
+     "f": "blur(4px)",
+     "txt": "#"
+    },
+    {
+     "tag": "span",
+     "f": "blur(8px)",
+     "txt": "253"
+    },
+    {
+     "tag": "span",
+     "f": "blur(6px)",
+     "txt": "253"
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    }
+   ],
+   "backdrop_filters_sample": [
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      588,
+      967,
+      45,
+      22
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      600,
+      1031,
+      53,
+      22
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      688,
+      1031,
+      37,
+      22
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      559,
+      1284,
+      78,
+      22
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      731,
+      1284,
+      86,
+      22
+     ]
+    },
+    {
+     "tag": "pre",
+     "bd": "blur(12px)",
+     "rect": [
+      336,
+      1471,
+      768,
+      98
+     ]
+    },
+    {
+     "tag": "pre",
+     "bd": "blur(12px)",
+     "rect": [
+      336,
+      1700,
+      768,
+      54
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      643,
+      1872,
+      45,
+      22
+     ]
+    },
+    {
+     "tag": "div",
+     "bd": "blur(0px)",
+     "rect": [
+      0,
+      2630,
+      1440,
+      900
+     ]
+    },
+    {
+     "tag": "input",
+     "bd": "blur(8px) saturate(2)",
+     "rect": [
+      732,
+      2865,
+      373,
+      32
+     ]
+    }
+   ],
+   "masked_elements": 39,
+   "time_styles": [
+    {
+     "txt": "november 19, 2023",
+     "ff": "\"Geist Mono\"",
+     "fs": "13.7px",
+     "col": "lab(56.2331 4.56151 10.6581)"
+    }
+   ],
+   "h1": "44.5px",
+   "internal_hrefs": [
+    "#benchmarks-and-reverse-engineering",
+    "#commands",
+    "#license",
+    "#results",
+    "#the-experiment",
+    "#title",
+    "/#top",
+    "/about",
+    "/blog",
+    "/blog/quix-a-lightning-fast-vtex-io-cli-experiment",
+    "/now",
+    "/shelf",
+    "/work"
+   ],
+   "private_screenshots": [
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_quix-a-lightning-fast-vtex-io-cli-experiment-1440-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_quix-a-lightning-fast-vtex-io-cli-experiment-1440-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_quix-a-lightning-fast-vtex-io-cli-experiment-1440-02.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_quix-a-lightning-fast-vtex-io-cli-experiment-1440-03.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_quix-a-lightning-fast-vtex-io-cli-experiment-390-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_quix-a-lightning-fast-vtex-io-cli-experiment-390-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_quix-a-lightning-fast-vtex-io-cli-experiment-390-02.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_quix-a-lightning-fast-vtex-io-cli-experiment-390-03.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_quix-a-lightning-fast-vtex-io-cli-experiment-390-04.png"
+   ]
+  },
+  {
+   "path": "/blog/thm-autoreadme",
+   "type": "article",
+   "status": 200,
+   "visited": true,
+   "viewports": [
+    "1440x900",
+    "390x844"
+   ],
+   "deep_component_probe": false,
+   "doc_height_1440": 2670,
+   "doc_height_390": 3196,
+   "screens_covered_1440": "3 of 3 viewports",
+   "screens_covered_390": "4 of 4 viewports",
+   "component_counts_1440": {
+    "nav": 1,
+    "header": 1,
+    "footer": 2,
+    "main": 1,
+    "article": 1,
+    "aside": 1,
+    "h1": 1,
+    "h2": 7,
+    "h3": 1,
+    "figure": 1,
+    "img": 3,
+    "svg": 33,
+    "pre": 1,
+    "figure_code": 1,
+    "code_inline": 4,
+    "blockquote": 1,
+    "button": 8,
+    "input": 1,
+    "form": 1,
+    "time": 3,
+    "ol": 2,
+    "ul": 1,
+    "backdrop": 2,
+    "mask": 26,
+    "sticky": 2,
+    "fixed": 4
+   },
+   "code_languages": [
+    "py"
+   ],
+   "interactive_labels": [
+    "Noice: 86 total reactions. 0 of 5 added ",
+    "Hang loose: 31 total reactions. 0 of 5 a",
+    "Eyes: 32 total reactions. 0 of 5 added t",
+    "Nice: 38 total reactions. 0 of 5 added t",
+    "Middle finger: 6 total reactions. 0 of 5",
+    "Copy code",
+    "hi@cmrg.me",
+    "subscribe"
+   ],
+   "font_families_with_text_1440": {
+    "Geist": 29,
+    "serif": 5,
+    "fancy": 17,
+    "Geist Mono": 73
+   },
+   "horizontal_tracks_1440": [],
+   "horizontal_tracks_390": [],
+   "videos": [],
+   "canvas": [
+    {
+     "rect": [
+      211,
+      1738,
+      1018,
+      335
+     ],
+     "aria": null
+    }
+   ],
+   "rough_annotations": 4,
+   "blur_filters_sample": [
+    {
+     "tag": "span",
+     "f": "blur(0px)",
+     "txt": ""
+    },
+    {
+     "tag": "a",
+     "f": "blur(4px)",
+     "txt": "#"
+    },
+    {
+     "tag": "span",
+     "f": "blur(8px)",
+     "txt": "86"
+    },
+    {
+     "tag": "span",
+     "f": "blur(6px)",
+     "txt": "86"
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    },
+    {
+     "tag": "span",
+     "f": "blur(2px)",
+     "txt": ""
+    }
+   ],
+   "backdrop_filters_sample": [
+    {
+     "tag": "pre",
+     "bd": "blur(12px)",
+     "rect": [
+      336,
+      871,
+      768,
+      164
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      585,
+      1076,
+      29,
+      22
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      456,
+      1100,
+      29,
+      22
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      591,
+      1289,
+      301,
+      22
+     ]
+    },
+    {
+     "tag": "code",
+     "bd": "saturate(1.5)",
+     "rect": [
+      625,
+      1328,
+      326,
+      22
+     ]
+    },
+    {
+     "tag": "input",
+     "bd": "blur(8px) saturate(2)",
+     "rect": [
+      732,
+      2005,
+      373,
+      32
+     ]
+    }
+   ],
+   "masked_elements": 26,
+   "time_styles": [
+    {
+     "txt": "may 18, 2021",
+     "ff": "\"Geist Mono\"",
+     "fs": "13.7px",
+     "col": "lab(56.2331 4.56151 10.6581)"
+    }
+   ],
+   "h1": "44.5px",
+   "internal_hrefs": [
+    "#how-it-works",
+    "#title",
+    "#usage",
+    "#what-it-does",
+    "#why-it-exists",
+    "/#top",
+    "/about",
+    "/blog",
+    "/blog/thm-autoreadme",
+    "/now",
+    "/shelf",
+    "/work"
+   ],
+   "private_screenshots": [
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_thm-autoreadme-1440-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_thm-autoreadme-1440-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_thm-autoreadme-1440-02.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_thm-autoreadme-390-00.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_thm-autoreadme-390-01.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_thm-autoreadme-390-02.png",
+    "~/.local/share/margen-review/atlas-reference-20261022/route-blog_thm-autoreadme-390-03.png"
+   ]
+  }
+ ],
+ "excluded": [
+  {
+   "target": "/api/*, /monitoring",
+   "reason": "robots.txt Disallow; not linked"
+  },
+  {
+   "target": "#fragment and /shelf#..., /work#... links",
+   "reason": "anchors inside visited routes, not separate pages (hash scroll covered by TOC/permalink checks on articles)"
+  },
+  {
+   "target": "https://v1.cmrg.me",
+   "reason": "historical v1 site, separate app (HTTP 200) linked from footer; outside current design"
+  },
+  {
+   "target": "https://htnx.cmrg.me",
+   "reason": "separate demo app linked from an article"
+  },
+  {
+   "target": "https://cmrg-k5dhhqgp2-[author-handle].vercel.app/",
+   "reason": "Vercel preview deployment linked from an article"
+  },
+  {
+   "target": "external hosts",
+   "reason": "third-party destinations",
+   "hosts": [
+    "astro.build",
+    "barvian.me",
+    "benji.org",
+    "bun.sh",
+    "clerk.com",
+    "cmrg-k5dhhqgp2-[author-handle].vercel.app",
+    "contentlayer.dev",
+    "en.wikipedia.org",
+    "expressjs.com",
+    "gist.github.com",
+    "git-scm.com",
+    "github.com",
+    "htmx.org",
+    "htnx.cmrg.me",
+    "i.giphy.com",
+    "mdxjs.com",
+    "nextjs-migration-story.vercel.app",
+    "nextjs.org",
+    "nownownow.com",
+    "number-flow.barvian.me",
+    "open.spotify.com",
+    "penseavanti.com.br",
+    "rauno.me",
+    "react-server-talk.vercel.app",
+    "react.dev",
+    "substack.thisweekinreact.com",
+    "tailwindcss.com",
+    "tryhackme.com",
+    "twitter.com",
+    "upx.github.io",
+    "v1.cmrg.me",
+    "www.duda.co",
+    "www.floguo.com",
+    "www.linkedin.com",
+    "www.mery.codes",
+    "www.notion.so",
+    "www.paulgraham.com",
+    "www.pawlean.com",
+    "www.stilldrinking.org",
+    "www.vtex.com",
+    "www.workingtheorys.com",
+    "www.wtfpl.net",
+    "www.youtube.com",
+    "x.com",
+    "youtu.be"
+   ]
+  },
+  {
+   "target": "reaction buttons click, guestbook submit, newsletter/subscribe submit, search submit",
+   "reason": "would mutate public data or send data; only hover/labels/geometry observed"
+  },
+  {
+   "target": "audio/sound playback",
+   "reason": "not audited in this pass (button observed in footer)"
+  },
+  {
+   "target": "light color scheme",
+   "reason": "site renders the same dark main background under prefers-color-scheme: light (measured)"
+  }
+ ]
+}

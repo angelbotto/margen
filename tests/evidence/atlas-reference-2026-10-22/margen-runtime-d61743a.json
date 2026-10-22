@@ -1,0 +1,3052 @@
+{
+ "date": "2026-10-22",
+ "base": "d61743a",
+ "fixture": "synthetic: 7 sections, CSS code.ancho, details.ancho (closed, opened with Enter) containing 120-line JS code, galeria-fotografica from docs/components.md, theme editorial",
+ "results": {
+  "dark@1440": {
+   "details_open_by_keyboard": true,
+   "details": {
+    "indice": {
+     "pos": "fixed",
+     "z": "2",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      72,
+      128,
+      360,
+      354
+     ]
+    },
+    "gallery": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      112,
+      3911,
+      1216,
+      328
+     ]
+    },
+    "track": {
+     "pos": "static",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "linear-gradient(to right, rgba(0, 0, 0, 0), rgb(0, 0, 0) 0px, rgb(0, 0, 0) calc(100% - 40px), rgba(0, 0, 0, 0))",
+     "rect": [
+      148,
+      3947,
+      1144,
+      256
+     ]
+    },
+    "details": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      208,
+      160,
+      1024,
+      2780
+     ]
+    },
+    "detailsCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      208,
+      224,
+      1024,
+      2700
+     ]
+    },
+    "detailsPre": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "color(srgb 0.137255 0.117647 0.101961 / 0.25)",
+     "backdrop": "blur(12px)",
+     "mask": "none",
+     "rect": [
+      208,
+      251,
+      1024,
+      2672
+     ]
+    },
+    "shortCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      336,
+      -12,
+      768,
+      148
+     ]
+    },
+    "hits": [
+     {
+      "text": "El código, con el detalle que falt",
+      "x": 232,
+      "y": 167,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Qué había en la referencia.",
+      "x": 232,
+      "y": 209,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Los títulos y el texto vuelven a r",
+      "x": 232,
+      "y": 251,
+      "tocOnTop": false,
+      "top": "pre.",
+      "under": "details#largo"
+     },
+     {
+      "text": "Más cuidado en las piezas pequeñas",
+      "x": 232,
+      "y": 293,
+      "tocOnTop": false,
+      "top": "span.codigo-linea",
+      "under": "details#largo"
+     },
+     {
+      "text": "Los componentes muestran lo que ha",
+      "x": 232,
+      "y": 335,
+      "tocOnTop": false,
+      "top": "span.codigo-linea",
+      "under": "details#largo"
+     },
+     {
+      "text": "Qué impide decir «igual al 100 %».",
+      "x": 232,
+      "y": 377,
+      "tocOnTop": false,
+      "top": "span.codigo-linea",
+      "under": "details#largo"
+     },
+     {
+      "text": "Qué quedó publicado y cómo revisar",
+      "x": 232,
+      "y": 419,
+      "tocOnTop": false,
+      "top": "span.codigo-linea",
+      "under": "details#largo"
+     },
+     {
+      "text": "Final",
+      "x": 232,
+      "y": 461,
+      "tocOnTop": false,
+      "top": "span.codigo-linea",
+      "under": "details#largo"
+     }
+    ],
+    "detailsWidth": 1024,
+    "lineNumberSample": {
+     "lines": 0,
+     "h": 2640
+    },
+    "hscroll": false
+   },
+   "details_deep": {
+    "indice": {
+     "pos": "fixed",
+     "z": "2",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      72,
+      128,
+      360,
+      354
+     ]
+    },
+    "gallery": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      112,
+      2851,
+      1216,
+      328
+     ]
+    },
+    "track": {
+     "pos": "static",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "linear-gradient(to right, rgba(0, 0, 0, 0), rgb(0, 0, 0) 0px, rgb(0, 0, 0) calc(100% - 40px), rgba(0, 0, 0, 0))",
+     "rect": [
+      148,
+      2887,
+      1144,
+      256
+     ]
+    },
+    "details": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      208,
+      -900,
+      1024,
+      2780
+     ]
+    },
+    "detailsCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      208,
+      -836,
+      1024,
+      2700
+     ]
+    },
+    "detailsPre": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "color(srgb 0.137255 0.117647 0.101961 / 0.25)",
+     "backdrop": "blur(12px)",
+     "mask": "none",
+     "rect": [
+      208,
+      -809,
+      1024,
+      2672
+     ]
+    },
+    "shortCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      336,
+      -1072,
+      768,
+      148
+     ]
+    },
+    "hits": [
+     {
+      "text": "El código, con el detalle que falt",
+      "x": 232,
+      "y": 167,
+      "tocOnTop": false,
+      "top": "span.codigo-linea",
+      "under": "details#largo"
+     },
+     {
+      "text": "Qué había en la referencia.",
+      "x": 232,
+      "y": 209,
+      "tocOnTop": false,
+      "top": "span.codigo-linea",
+      "under": "details#largo"
+     },
+     {
+      "text": "Los títulos y el texto vuelven a r",
+      "x": 232,
+      "y": 251,
+      "tocOnTop": false,
+      "top": "span.codigo-linea",
+      "under": "details#largo"
+     },
+     {
+      "text": "Más cuidado en las piezas pequeñas",
+      "x": 232,
+      "y": 293,
+      "tocOnTop": false,
+      "top": "span.codigo-linea",
+      "under": "details#largo"
+     },
+     {
+      "text": "Los componentes muestran lo que ha",
+      "x": 232,
+      "y": 335,
+      "tocOnTop": false,
+      "top": "span.codigo-linea",
+      "under": "details#largo"
+     },
+     {
+      "text": "Qué impide decir «igual al 100 %».",
+      "x": 232,
+      "y": 377,
+      "tocOnTop": false,
+      "top": "span.codigo-linea",
+      "under": "details#largo"
+     },
+     {
+      "text": "Qué quedó publicado y cómo revisar",
+      "x": 232,
+      "y": 419,
+      "tocOnTop": false,
+      "top": "span.codigo-linea",
+      "under": "details#largo"
+     },
+     {
+      "text": "Final",
+      "x": 232,
+      "y": 461,
+      "tocOnTop": false,
+      "top": "span.codigo-linea",
+      "under": "details#largo"
+     }
+    ],
+    "detailsWidth": 1024,
+    "lineNumberSample": {
+     "lines": 0,
+     "h": 2640
+    },
+    "hscroll": false
+   },
+   "gallery": {
+    "indice": {
+     "pos": "fixed",
+     "z": "2",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      72,
+      128,
+      360,
+      354
+     ]
+    },
+    "gallery": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      112,
+      160,
+      1216,
+      328
+     ]
+    },
+    "track": {
+     "pos": "static",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "linear-gradient(to right, rgba(0, 0, 0, 0), rgb(0, 0, 0) 0px, rgb(0, 0, 0) calc(100% - 40px), rgba(0, 0, 0, 0))",
+     "rect": [
+      148,
+      196,
+      1144,
+      256
+     ]
+    },
+    "details": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      208,
+      -3591,
+      1024,
+      2780
+     ]
+    },
+    "detailsCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      208,
+      -3527,
+      1024,
+      2700
+     ]
+    },
+    "detailsPre": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "color(srgb 0.137255 0.117647 0.101961 / 0.25)",
+     "backdrop": "blur(12px)",
+     "mask": "none",
+     "rect": [
+      208,
+      -3500,
+      1024,
+      2672
+     ]
+    },
+    "shortCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      336,
+      -3763,
+      768,
+      148
+     ]
+    },
+    "hits": [
+     {
+      "text": "El código, con el detalle que falt",
+      "x": 232,
+      "y": 167,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Qué había en la referencia.",
+      "x": 232,
+      "y": 209,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Los títulos y el texto vuelven a r",
+      "x": 232,
+      "y": 251,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Más cuidado en las piezas pequeñas",
+      "x": 232,
+      "y": 293,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Los componentes muestran lo que ha",
+      "x": 232,
+      "y": 335,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Qué impide decir «igual al 100 %».",
+      "x": 232,
+      "y": 377,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Qué quedó publicado y cómo revisar",
+      "x": 232,
+      "y": 419,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Final",
+      "x": 232,
+      "y": 461,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     }
+    ],
+    "detailsWidth": 1024,
+    "lineNumberSample": {
+     "lines": 0,
+     "h": 2640
+    },
+    "hscroll": false
+   },
+   "index_focus_overlap": {
+    "indice": {
+     "pos": "fixed",
+     "z": "4",
+     "isolation": "auto",
+     "bg": "rgb(19, 17, 15)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      72,
+      128,
+      360,
+      354
+     ]
+    },
+    "gallery": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      112,
+      160,
+      1216,
+      328
+     ]
+    },
+    "track": {
+     "pos": "static",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "linear-gradient(to right, rgba(0, 0, 0, 0), rgb(0, 0, 0) 0px, rgb(0, 0, 0) calc(100% - 40px), rgba(0, 0, 0, 0))",
+     "rect": [
+      148,
+      196,
+      1144,
+      256
+     ]
+    },
+    "details": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      208,
+      -3591,
+      1024,
+      2780
+     ]
+    },
+    "detailsCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      208,
+      -3527,
+      1024,
+      2700
+     ]
+    },
+    "detailsPre": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "color(srgb 0.137255 0.117647 0.101961 / 0.25)",
+     "backdrop": "blur(12px)",
+     "mask": "none",
+     "rect": [
+      208,
+      -3500,
+      1024,
+      2672
+     ]
+    },
+    "shortCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      336,
+      -3763,
+      768,
+      148
+     ]
+    },
+    "hits": [
+     {
+      "text": "El código, con el detalle que falt",
+      "x": 232,
+      "y": 167,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Qué había en la referencia.",
+      "x": 232,
+      "y": 209,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Los títulos y el texto vuelven a r",
+      "x": 232,
+      "y": 251,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Más cuidado en las piezas pequeñas",
+      "x": 232,
+      "y": 293,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Los componentes muestran lo que ha",
+      "x": 232,
+      "y": 335,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Qué impide decir «igual al 100 %».",
+      "x": 232,
+      "y": 377,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Qué quedó publicado y cómo revisar",
+      "x": 232,
+      "y": 419,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Final",
+      "x": 232,
+      "y": 461,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     }
+    ],
+    "detailsWidth": 1024,
+    "lineNumberSample": {
+     "lines": 0,
+     "h": 2640
+    },
+    "hscroll": false
+   }
+  },
+  "dark@1280": {
+   "details_open_by_keyboard": true,
+   "details": {
+    "indice": {
+     "pos": "fixed",
+     "z": "2",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      128,
+      328,
+      354
+     ]
+    },
+    "gallery": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      32,
+      3911,
+      1216,
+      323
+     ]
+    },
+    "track": {
+     "pos": "static",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "linear-gradient(to right, rgba(0, 0, 0, 0), rgb(0, 0, 0) 0px, rgb(0, 0, 0) calc(100% - 40px), rgba(0, 0, 0, 0))",
+     "rect": [
+      66,
+      3944,
+      1149,
+      256
+     ]
+    },
+    "details": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      128,
+      160,
+      1024,
+      2780
+     ]
+    },
+    "detailsCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      128,
+      224,
+      1024,
+      2700
+     ]
+    },
+    "detailsPre": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "color(srgb 0.137255 0.117647 0.101961 / 0.25)",
+     "backdrop": "blur(12px)",
+     "mask": "none",
+     "rect": [
+      128,
+      251,
+      1024,
+      2672
+     ]
+    },
+    "shortCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      256,
+      -12,
+      768,
+      148
+     ]
+    },
+    "hits": [
+     {
+      "text": "El código, con el detalle que falt",
+      "x": 184,
+      "y": 167,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Qué había en la referencia.",
+      "x": 184,
+      "y": 209,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Los títulos y el texto vuelven a r",
+      "x": 184,
+      "y": 251,
+      "tocOnTop": false,
+      "top": "pre.",
+      "under": "details#largo"
+     },
+     {
+      "text": "Más cuidado en las piezas pequeñas",
+      "x": 184,
+      "y": 293,
+      "tocOnTop": false,
+      "top": "span.kw",
+      "under": "details#largo"
+     },
+     {
+      "text": "Los componentes muestran lo que ha",
+      "x": 184,
+      "y": 335,
+      "tocOnTop": false,
+      "top": "span.kw",
+      "under": "details#largo"
+     },
+     {
+      "text": "Qué impide decir «igual al 100 %».",
+      "x": 184,
+      "y": 377,
+      "tocOnTop": false,
+      "top": "span.codigo-linea",
+      "under": "details#largo"
+     },
+     {
+      "text": "Qué quedó publicado y cómo revisar",
+      "x": 184,
+      "y": 419,
+      "tocOnTop": false,
+      "top": "span.kw",
+      "under": "details#largo"
+     },
+     {
+      "text": "Final",
+      "x": 184,
+      "y": 461,
+      "tocOnTop": false,
+      "top": "span.kw",
+      "under": "details#largo"
+     }
+    ],
+    "detailsWidth": 1024,
+    "lineNumberSample": {
+     "lines": 0,
+     "h": 2640
+    },
+    "hscroll": false
+   },
+   "details_deep": {
+    "indice": {
+     "pos": "fixed",
+     "z": "2",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      128,
+      328,
+      354
+     ]
+    },
+    "gallery": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      32,
+      2851,
+      1216,
+      323
+     ]
+    },
+    "track": {
+     "pos": "static",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "linear-gradient(to right, rgba(0, 0, 0, 0), rgb(0, 0, 0) 0px, rgb(0, 0, 0) calc(100% - 40px), rgba(0, 0, 0, 0))",
+     "rect": [
+      66,
+      2884,
+      1149,
+      256
+     ]
+    },
+    "details": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      128,
+      -900,
+      1024,
+      2780
+     ]
+    },
+    "detailsCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      128,
+      -836,
+      1024,
+      2700
+     ]
+    },
+    "detailsPre": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "color(srgb 0.137255 0.117647 0.101961 / 0.25)",
+     "backdrop": "blur(12px)",
+     "mask": "none",
+     "rect": [
+      128,
+      -809,
+      1024,
+      2672
+     ]
+    },
+    "shortCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      256,
+      -1072,
+      768,
+      148
+     ]
+    },
+    "hits": [
+     {
+      "text": "El código, con el detalle que falt",
+      "x": 184,
+      "y": 167,
+      "tocOnTop": false,
+      "top": "span.kw",
+      "under": "details#largo"
+     },
+     {
+      "text": "Qué había en la referencia.",
+      "x": 184,
+      "y": 209,
+      "tocOnTop": false,
+      "top": "span.kw",
+      "under": "details#largo"
+     },
+     {
+      "text": "Los títulos y el texto vuelven a r",
+      "x": 184,
+      "y": 251,
+      "tocOnTop": false,
+      "top": "span.kw",
+      "under": "details#largo"
+     },
+     {
+      "text": "Más cuidado en las piezas pequeñas",
+      "x": 184,
+      "y": 293,
+      "tocOnTop": false,
+      "top": "span.kw",
+      "under": "details#largo"
+     },
+     {
+      "text": "Los componentes muestran lo que ha",
+      "x": 184,
+      "y": 335,
+      "tocOnTop": false,
+      "top": "span.kw",
+      "under": "details#largo"
+     },
+     {
+      "text": "Qué impide decir «igual al 100 %».",
+      "x": 184,
+      "y": 377,
+      "tocOnTop": false,
+      "top": "span.kw",
+      "under": "details#largo"
+     },
+     {
+      "text": "Qué quedó publicado y cómo revisar",
+      "x": 184,
+      "y": 419,
+      "tocOnTop": false,
+      "top": "span.kw",
+      "under": "details#largo"
+     },
+     {
+      "text": "Final",
+      "x": 184,
+      "y": 461,
+      "tocOnTop": false,
+      "top": "span.codigo-linea",
+      "under": "details#largo"
+     }
+    ],
+    "detailsWidth": 1024,
+    "lineNumberSample": {
+     "lines": 0,
+     "h": 2640
+    },
+    "hscroll": false
+   },
+   "gallery": {
+    "indice": {
+     "pos": "fixed",
+     "z": "2",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      128,
+      328,
+      354
+     ]
+    },
+    "gallery": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      32,
+      160,
+      1216,
+      323
+     ]
+    },
+    "track": {
+     "pos": "static",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "linear-gradient(to right, rgba(0, 0, 0, 0), rgb(0, 0, 0) 0px, rgb(0, 0, 0) calc(100% - 40px), rgba(0, 0, 0, 0))",
+     "rect": [
+      66,
+      193,
+      1149,
+      256
+     ]
+    },
+    "details": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      128,
+      -3591,
+      1024,
+      2780
+     ]
+    },
+    "detailsCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      128,
+      -3527,
+      1024,
+      2700
+     ]
+    },
+    "detailsPre": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "color(srgb 0.137255 0.117647 0.101961 / 0.25)",
+     "backdrop": "blur(12px)",
+     "mask": "none",
+     "rect": [
+      128,
+      -3500,
+      1024,
+      2672
+     ]
+    },
+    "shortCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      256,
+      -3763,
+      768,
+      148
+     ]
+    },
+    "hits": [
+     {
+      "text": "El código, con el detalle que falt",
+      "x": 184,
+      "y": 167,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Qué había en la referencia.",
+      "x": 184,
+      "y": 209,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Los títulos y el texto vuelven a r",
+      "x": 184,
+      "y": 251,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Más cuidado en las piezas pequeñas",
+      "x": 184,
+      "y": 293,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Los componentes muestran lo que ha",
+      "x": 184,
+      "y": 335,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Qué impide decir «igual al 100 %».",
+      "x": 184,
+      "y": 377,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Qué quedó publicado y cómo revisar",
+      "x": 184,
+      "y": 419,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Final",
+      "x": 184,
+      "y": 461,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     }
+    ],
+    "detailsWidth": 1024,
+    "lineNumberSample": {
+     "lines": 0,
+     "h": 2640
+    },
+    "hscroll": false
+   },
+   "index_focus_overlap": {
+    "indice": {
+     "pos": "fixed",
+     "z": "4",
+     "isolation": "auto",
+     "bg": "rgb(19, 17, 15)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      128,
+      328,
+      354
+     ]
+    },
+    "gallery": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      32,
+      160,
+      1216,
+      323
+     ]
+    },
+    "track": {
+     "pos": "static",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "linear-gradient(to right, rgba(0, 0, 0, 0), rgb(0, 0, 0) 0px, rgb(0, 0, 0) calc(100% - 40px), rgba(0, 0, 0, 0))",
+     "rect": [
+      66,
+      193,
+      1149,
+      256
+     ]
+    },
+    "details": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      128,
+      -3591,
+      1024,
+      2780
+     ]
+    },
+    "detailsCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      128,
+      -3527,
+      1024,
+      2700
+     ]
+    },
+    "detailsPre": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "color(srgb 0.137255 0.117647 0.101961 / 0.25)",
+     "backdrop": "blur(12px)",
+     "mask": "none",
+     "rect": [
+      128,
+      -3500,
+      1024,
+      2672
+     ]
+    },
+    "shortCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      256,
+      -3763,
+      768,
+      148
+     ]
+    },
+    "hits": [
+     {
+      "text": "El código, con el detalle que falt",
+      "x": 184,
+      "y": 167,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Qué había en la referencia.",
+      "x": 184,
+      "y": 209,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Los títulos y el texto vuelven a r",
+      "x": 184,
+      "y": 251,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Más cuidado en las piezas pequeñas",
+      "x": 184,
+      "y": 293,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Los componentes muestran lo que ha",
+      "x": 184,
+      "y": 335,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Qué impide decir «igual al 100 %».",
+      "x": 184,
+      "y": 377,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Qué quedó publicado y cómo revisar",
+      "x": 184,
+      "y": 419,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Final",
+      "x": 184,
+      "y": 461,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     }
+    ],
+    "detailsWidth": 1024,
+    "lineNumberSample": {
+     "lines": 0,
+     "h": 2640
+    },
+    "hscroll": false
+   }
+  },
+  "dark@390": {
+   "details_open_by_keyboard": true,
+   "details": {
+    "indice": {
+     "pos": "static",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      -835,
+      342,
+      344
+     ]
+    },
+    "gallery": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      4334,
+      342,
+      300
+     ]
+    },
+    "track": {
+     "pos": "static",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "linear-gradient(to right, rgba(0, 0, 0, 0), rgb(0, 0, 0) 0px, rgb(0, 0, 0) calc(100% - 35.76px), rgba(0, 0, 0, 0))",
+     "rect": [
+      46,
+      4356,
+      298,
+      256
+     ]
+    },
+    "details": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      160,
+      342,
+      2828
+     ]
+    },
+    "detailsCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      272,
+      342,
+      2700
+     ]
+    },
+    "detailsPre": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "color(srgb 0.137255 0.117647 0.101961 / 0.25)",
+     "backdrop": "blur(12px)",
+     "mask": "none",
+     "rect": [
+      24,
+      299,
+      342,
+      2672
+     ]
+    },
+    "shortCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      -12,
+      342,
+      148
+     ]
+    },
+    "hits": [],
+    "detailsWidth": 342,
+    "lineNumberSample": {
+     "lines": 0,
+     "h": 2640
+    },
+    "hscroll": false
+   },
+   "details_deep": {
+    "indice": {
+     "pos": "static",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      -1895,
+      342,
+      344
+     ]
+    },
+    "gallery": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      3274,
+      342,
+      300
+     ]
+    },
+    "track": {
+     "pos": "static",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "linear-gradient(to right, rgba(0, 0, 0, 0), rgb(0, 0, 0) 0px, rgb(0, 0, 0) calc(100% - 35.76px), rgba(0, 0, 0, 0))",
+     "rect": [
+      46,
+      3296,
+      298,
+      256
+     ]
+    },
+    "details": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      -900,
+      342,
+      2828
+     ]
+    },
+    "detailsCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      -788,
+      342,
+      2700
+     ]
+    },
+    "detailsPre": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "color(srgb 0.137255 0.117647 0.101961 / 0.25)",
+     "backdrop": "blur(12px)",
+     "mask": "none",
+     "rect": [
+      24,
+      -761,
+      342,
+      2672
+     ]
+    },
+    "shortCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      -1072,
+      342,
+      148
+     ]
+    },
+    "hits": [],
+    "detailsWidth": 342,
+    "lineNumberSample": {
+     "lines": 0,
+     "h": 2640
+    },
+    "hscroll": false
+   },
+   "gallery": {
+    "indice": {
+     "pos": "static",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      -5009,
+      342,
+      344
+     ]
+    },
+    "gallery": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      160,
+      342,
+      300
+     ]
+    },
+    "track": {
+     "pos": "static",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "linear-gradient(to right, rgba(0, 0, 0, 0), rgb(0, 0, 0) 0px, rgb(0, 0, 0) calc(100% - 35.76px), rgba(0, 0, 0, 0))",
+     "rect": [
+      46,
+      182,
+      298,
+      256
+     ]
+    },
+    "details": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      -4014,
+      342,
+      2828
+     ]
+    },
+    "detailsCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      -3902,
+      342,
+      2700
+     ]
+    },
+    "detailsPre": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "color(srgb 0.137255 0.117647 0.101961 / 0.25)",
+     "backdrop": "blur(12px)",
+     "mask": "none",
+     "rect": [
+      24,
+      -3875,
+      342,
+      2672
+     ]
+    },
+    "shortCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      -4186,
+      342,
+      148
+     ]
+    },
+    "hits": [],
+    "detailsWidth": 342,
+    "lineNumberSample": {
+     "lines": 0,
+     "h": 2640
+    },
+    "hscroll": false
+   }
+  },
+  "dark@320": {
+   "details_open_by_keyboard": true,
+   "details": {
+    "indice": {
+     "pos": "static",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      -950,
+      272,
+      364
+     ]
+    },
+    "gallery": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      4686,
+      272,
+      300
+     ]
+    },
+    "track": {
+     "pos": "static",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "linear-gradient(to right, rgba(0, 0, 0, 0), rgb(0, 0, 0) 0px, rgb(0, 0, 0) calc(100% - 27.36px), rgba(0, 0, 0, 0))",
+     "rect": [
+      46,
+      4708,
+      228,
+      256
+     ]
+    },
+    "details": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      160,
+      272,
+      2847
+     ]
+    },
+    "detailsCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      272,
+      272,
+      2719
+     ]
+    },
+    "detailsPre": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "color(srgb 0.137255 0.117647 0.101961 / 0.25)",
+     "backdrop": "blur(12px)",
+     "mask": "none",
+     "rect": [
+      24,
+      320,
+      272,
+      2672
+     ]
+    },
+    "shortCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      -11,
+      272,
+      148
+     ]
+    },
+    "hits": [],
+    "detailsWidth": 272,
+    "lineNumberSample": {
+     "lines": 0,
+     "h": 2640
+    },
+    "hscroll": false
+   },
+   "details_deep": {
+    "indice": {
+     "pos": "static",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      -2010,
+      272,
+      364
+     ]
+    },
+    "gallery": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      3626,
+      272,
+      300
+     ]
+    },
+    "track": {
+     "pos": "static",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "linear-gradient(to right, rgba(0, 0, 0, 0), rgb(0, 0, 0) 0px, rgb(0, 0, 0) calc(100% - 27.36px), rgba(0, 0, 0, 0))",
+     "rect": [
+      46,
+      3648,
+      228,
+      256
+     ]
+    },
+    "details": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      -900,
+      272,
+      2847
+     ]
+    },
+    "detailsCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      -788,
+      272,
+      2719
+     ]
+    },
+    "detailsPre": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "color(srgb 0.137255 0.117647 0.101961 / 0.25)",
+     "backdrop": "blur(12px)",
+     "mask": "none",
+     "rect": [
+      24,
+      -740,
+      272,
+      2672
+     ]
+    },
+    "shortCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      -1071,
+      272,
+      148
+     ]
+    },
+    "hits": [],
+    "detailsWidth": 272,
+    "lineNumberSample": {
+     "lines": 0,
+     "h": 2640
+    },
+    "hscroll": false
+   },
+   "gallery": {
+    "indice": {
+     "pos": "static",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      -5476,
+      272,
+      364
+     ]
+    },
+    "gallery": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      160,
+      272,
+      300
+     ]
+    },
+    "track": {
+     "pos": "static",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "linear-gradient(to right, rgba(0, 0, 0, 0), rgb(0, 0, 0) 0px, rgb(0, 0, 0) calc(100% - 27.36px), rgba(0, 0, 0, 0))",
+     "rect": [
+      46,
+      182,
+      228,
+      256
+     ]
+    },
+    "details": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      -4366,
+      272,
+      2847
+     ]
+    },
+    "detailsCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      -4254,
+      272,
+      2719
+     ]
+    },
+    "detailsPre": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "color(srgb 0.137255 0.117647 0.101961 / 0.25)",
+     "backdrop": "blur(12px)",
+     "mask": "none",
+     "rect": [
+      24,
+      -4206,
+      272,
+      2672
+     ]
+    },
+    "shortCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      -4537,
+      272,
+      148
+     ]
+    },
+    "hits": [],
+    "detailsWidth": 272,
+    "lineNumberSample": {
+     "lines": 0,
+     "h": 2640
+    },
+    "hscroll": false
+   }
+  },
+  "light@1440": {
+   "details_open_by_keyboard": true,
+   "details": {
+    "indice": {
+     "pos": "fixed",
+     "z": "2",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      72,
+      128,
+      360,
+      354
+     ]
+    },
+    "gallery": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      112,
+      3911,
+      1216,
+      328
+     ]
+    },
+    "track": {
+     "pos": "static",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "linear-gradient(to right, rgba(0, 0, 0, 0), rgb(0, 0, 0) 0px, rgb(0, 0, 0) calc(100% - 40px), rgba(0, 0, 0, 0))",
+     "rect": [
+      148,
+      3947,
+      1144,
+      256
+     ]
+    },
+    "details": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      208,
+      160,
+      1024,
+      2780
+     ]
+    },
+    "detailsCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      208,
+      224,
+      1024,
+      2700
+     ]
+    },
+    "detailsPre": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "color(srgb 0.964706 0.941176 0.921569 / 0.25)",
+     "backdrop": "blur(12px)",
+     "mask": "none",
+     "rect": [
+      208,
+      251,
+      1024,
+      2672
+     ]
+    },
+    "shortCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      336,
+      -12,
+      768,
+      148
+     ]
+    },
+    "hits": [
+     {
+      "text": "El código, con el detalle que falt",
+      "x": 232,
+      "y": 167,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Qué había en la referencia.",
+      "x": 232,
+      "y": 209,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Los títulos y el texto vuelven a r",
+      "x": 232,
+      "y": 251,
+      "tocOnTop": false,
+      "top": "pre.",
+      "under": "details#largo"
+     },
+     {
+      "text": "Más cuidado en las piezas pequeñas",
+      "x": 232,
+      "y": 293,
+      "tocOnTop": false,
+      "top": "span.codigo-linea",
+      "under": "details#largo"
+     },
+     {
+      "text": "Los componentes muestran lo que ha",
+      "x": 232,
+      "y": 335,
+      "tocOnTop": false,
+      "top": "span.codigo-linea",
+      "under": "details#largo"
+     },
+     {
+      "text": "Qué impide decir «igual al 100 %».",
+      "x": 232,
+      "y": 377,
+      "tocOnTop": false,
+      "top": "span.codigo-linea",
+      "under": "details#largo"
+     },
+     {
+      "text": "Qué quedó publicado y cómo revisar",
+      "x": 232,
+      "y": 419,
+      "tocOnTop": false,
+      "top": "span.codigo-linea",
+      "under": "details#largo"
+     },
+     {
+      "text": "Final",
+      "x": 232,
+      "y": 461,
+      "tocOnTop": false,
+      "top": "span.codigo-linea",
+      "under": "details#largo"
+     }
+    ],
+    "detailsWidth": 1024,
+    "lineNumberSample": {
+     "lines": 0,
+     "h": 2640
+    },
+    "hscroll": false
+   },
+   "details_deep": {
+    "indice": {
+     "pos": "fixed",
+     "z": "2",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      72,
+      128,
+      360,
+      354
+     ]
+    },
+    "gallery": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      112,
+      2851,
+      1216,
+      328
+     ]
+    },
+    "track": {
+     "pos": "static",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "linear-gradient(to right, rgba(0, 0, 0, 0), rgb(0, 0, 0) 0px, rgb(0, 0, 0) calc(100% - 40px), rgba(0, 0, 0, 0))",
+     "rect": [
+      148,
+      2887,
+      1144,
+      256
+     ]
+    },
+    "details": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      208,
+      -900,
+      1024,
+      2780
+     ]
+    },
+    "detailsCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      208,
+      -836,
+      1024,
+      2700
+     ]
+    },
+    "detailsPre": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "color(srgb 0.964706 0.941176 0.921569 / 0.25)",
+     "backdrop": "blur(12px)",
+     "mask": "none",
+     "rect": [
+      208,
+      -809,
+      1024,
+      2672
+     ]
+    },
+    "shortCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      336,
+      -1072,
+      768,
+      148
+     ]
+    },
+    "hits": [
+     {
+      "text": "El código, con el detalle que falt",
+      "x": 232,
+      "y": 167,
+      "tocOnTop": false,
+      "top": "span.codigo-linea",
+      "under": "details#largo"
+     },
+     {
+      "text": "Qué había en la referencia.",
+      "x": 232,
+      "y": 209,
+      "tocOnTop": false,
+      "top": "span.codigo-linea",
+      "under": "details#largo"
+     },
+     {
+      "text": "Los títulos y el texto vuelven a r",
+      "x": 232,
+      "y": 251,
+      "tocOnTop": false,
+      "top": "span.codigo-linea",
+      "under": "details#largo"
+     },
+     {
+      "text": "Más cuidado en las piezas pequeñas",
+      "x": 232,
+      "y": 293,
+      "tocOnTop": false,
+      "top": "span.codigo-linea",
+      "under": "details#largo"
+     },
+     {
+      "text": "Los componentes muestran lo que ha",
+      "x": 232,
+      "y": 335,
+      "tocOnTop": false,
+      "top": "span.codigo-linea",
+      "under": "details#largo"
+     },
+     {
+      "text": "Qué impide decir «igual al 100 %».",
+      "x": 232,
+      "y": 377,
+      "tocOnTop": false,
+      "top": "span.codigo-linea",
+      "under": "details#largo"
+     },
+     {
+      "text": "Qué quedó publicado y cómo revisar",
+      "x": 232,
+      "y": 419,
+      "tocOnTop": false,
+      "top": "span.codigo-linea",
+      "under": "details#largo"
+     },
+     {
+      "text": "Final",
+      "x": 232,
+      "y": 461,
+      "tocOnTop": false,
+      "top": "span.codigo-linea",
+      "under": "details#largo"
+     }
+    ],
+    "detailsWidth": 1024,
+    "lineNumberSample": {
+     "lines": 0,
+     "h": 2640
+    },
+    "hscroll": false
+   },
+   "gallery": {
+    "indice": {
+     "pos": "fixed",
+     "z": "2",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      72,
+      128,
+      360,
+      354
+     ]
+    },
+    "gallery": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      112,
+      160,
+      1216,
+      328
+     ]
+    },
+    "track": {
+     "pos": "static",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "linear-gradient(to right, rgba(0, 0, 0, 0), rgb(0, 0, 0) 0px, rgb(0, 0, 0) calc(100% - 40px), rgba(0, 0, 0, 0))",
+     "rect": [
+      148,
+      196,
+      1144,
+      256
+     ]
+    },
+    "details": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      208,
+      -3591,
+      1024,
+      2780
+     ]
+    },
+    "detailsCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      208,
+      -3527,
+      1024,
+      2700
+     ]
+    },
+    "detailsPre": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "color(srgb 0.964706 0.941176 0.921569 / 0.25)",
+     "backdrop": "blur(12px)",
+     "mask": "none",
+     "rect": [
+      208,
+      -3500,
+      1024,
+      2672
+     ]
+    },
+    "shortCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      336,
+      -3763,
+      768,
+      148
+     ]
+    },
+    "hits": [
+     {
+      "text": "El código, con el detalle que falt",
+      "x": 232,
+      "y": 167,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Qué había en la referencia.",
+      "x": 232,
+      "y": 209,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Los títulos y el texto vuelven a r",
+      "x": 232,
+      "y": 251,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Más cuidado en las piezas pequeñas",
+      "x": 232,
+      "y": 293,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Los componentes muestran lo que ha",
+      "x": 232,
+      "y": 335,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Qué impide decir «igual al 100 %».",
+      "x": 232,
+      "y": 377,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Qué quedó publicado y cómo revisar",
+      "x": 232,
+      "y": 419,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Final",
+      "x": 232,
+      "y": 461,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     }
+    ],
+    "detailsWidth": 1024,
+    "lineNumberSample": {
+     "lines": 0,
+     "h": 2640
+    },
+    "hscroll": false
+   },
+   "index_focus_overlap": {
+    "indice": {
+     "pos": "fixed",
+     "z": "4",
+     "isolation": "auto",
+     "bg": "rgb(254, 248, 242)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      72,
+      128,
+      360,
+      354
+     ]
+    },
+    "gallery": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      112,
+      160,
+      1216,
+      328
+     ]
+    },
+    "track": {
+     "pos": "static",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "linear-gradient(to right, rgba(0, 0, 0, 0), rgb(0, 0, 0) 0px, rgb(0, 0, 0) calc(100% - 40px), rgba(0, 0, 0, 0))",
+     "rect": [
+      148,
+      196,
+      1144,
+      256
+     ]
+    },
+    "details": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      208,
+      -3591,
+      1024,
+      2780
+     ]
+    },
+    "detailsCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      208,
+      -3527,
+      1024,
+      2700
+     ]
+    },
+    "detailsPre": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "color(srgb 0.964706 0.941176 0.921569 / 0.25)",
+     "backdrop": "blur(12px)",
+     "mask": "none",
+     "rect": [
+      208,
+      -3500,
+      1024,
+      2672
+     ]
+    },
+    "shortCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      336,
+      -3763,
+      768,
+      148
+     ]
+    },
+    "hits": [
+     {
+      "text": "El código, con el detalle que falt",
+      "x": 232,
+      "y": 167,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Qué había en la referencia.",
+      "x": 232,
+      "y": 209,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Los títulos y el texto vuelven a r",
+      "x": 232,
+      "y": 251,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Más cuidado en las piezas pequeñas",
+      "x": 232,
+      "y": 293,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Los componentes muestran lo que ha",
+      "x": 232,
+      "y": 335,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Qué impide decir «igual al 100 %».",
+      "x": 232,
+      "y": 377,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Qué quedó publicado y cómo revisar",
+      "x": 232,
+      "y": 419,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     },
+     {
+      "text": "Final",
+      "x": 232,
+      "y": 461,
+      "tocOnTop": true,
+      "top": "a.",
+      "under": ""
+     }
+    ],
+    "detailsWidth": 1024,
+    "lineNumberSample": {
+     "lines": 0,
+     "h": 2640
+    },
+    "hscroll": false
+   }
+  },
+  "light@390": {
+   "details_open_by_keyboard": true,
+   "details": {
+    "indice": {
+     "pos": "static",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      -835,
+      342,
+      344
+     ]
+    },
+    "gallery": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      4334,
+      342,
+      300
+     ]
+    },
+    "track": {
+     "pos": "static",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "linear-gradient(to right, rgba(0, 0, 0, 0), rgb(0, 0, 0) 0px, rgb(0, 0, 0) calc(100% - 35.76px), rgba(0, 0, 0, 0))",
+     "rect": [
+      46,
+      4356,
+      298,
+      256
+     ]
+    },
+    "details": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      160,
+      342,
+      2828
+     ]
+    },
+    "detailsCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      272,
+      342,
+      2700
+     ]
+    },
+    "detailsPre": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "color(srgb 0.964706 0.941176 0.921569 / 0.25)",
+     "backdrop": "blur(12px)",
+     "mask": "none",
+     "rect": [
+      24,
+      299,
+      342,
+      2672
+     ]
+    },
+    "shortCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      -12,
+      342,
+      148
+     ]
+    },
+    "hits": [],
+    "detailsWidth": 342,
+    "lineNumberSample": {
+     "lines": 0,
+     "h": 2640
+    },
+    "hscroll": false
+   },
+   "details_deep": {
+    "indice": {
+     "pos": "static",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      -1895,
+      342,
+      344
+     ]
+    },
+    "gallery": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      3274,
+      342,
+      300
+     ]
+    },
+    "track": {
+     "pos": "static",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "linear-gradient(to right, rgba(0, 0, 0, 0), rgb(0, 0, 0) 0px, rgb(0, 0, 0) calc(100% - 35.76px), rgba(0, 0, 0, 0))",
+     "rect": [
+      46,
+      3296,
+      298,
+      256
+     ]
+    },
+    "details": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      -900,
+      342,
+      2828
+     ]
+    },
+    "detailsCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      -788,
+      342,
+      2700
+     ]
+    },
+    "detailsPre": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "color(srgb 0.964706 0.941176 0.921569 / 0.25)",
+     "backdrop": "blur(12px)",
+     "mask": "none",
+     "rect": [
+      24,
+      -761,
+      342,
+      2672
+     ]
+    },
+    "shortCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      -1072,
+      342,
+      148
+     ]
+    },
+    "hits": [],
+    "detailsWidth": 342,
+    "lineNumberSample": {
+     "lines": 0,
+     "h": 2640
+    },
+    "hscroll": false
+   },
+   "gallery": {
+    "indice": {
+     "pos": "static",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      -5009,
+      342,
+      344
+     ]
+    },
+    "gallery": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      160,
+      342,
+      300
+     ]
+    },
+    "track": {
+     "pos": "static",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "linear-gradient(to right, rgba(0, 0, 0, 0), rgb(0, 0, 0) 0px, rgb(0, 0, 0) calc(100% - 35.76px), rgba(0, 0, 0, 0))",
+     "rect": [
+      46,
+      182,
+      298,
+      256
+     ]
+    },
+    "details": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      -4014,
+      342,
+      2828
+     ]
+    },
+    "detailsCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      -3902,
+      342,
+      2700
+     ]
+    },
+    "detailsPre": {
+     "pos": "relative",
+     "z": "auto",
+     "isolation": "auto",
+     "bg": "color(srgb 0.964706 0.941176 0.921569 / 0.25)",
+     "backdrop": "blur(12px)",
+     "mask": "none",
+     "rect": [
+      24,
+      -3875,
+      342,
+      2672
+     ]
+    },
+    "shortCode": {
+     "pos": "relative",
+     "z": "3",
+     "isolation": "auto",
+     "bg": "rgba(0, 0, 0, 0)",
+     "backdrop": "none",
+     "mask": "none",
+     "rect": [
+      24,
+      -4186,
+      342,
+      148
+     ]
+    },
+    "hits": [],
+    "detailsWidth": 342,
+    "lineNumberSample": {
+     "lines": 0,
+     "h": 2640
+    },
+    "hscroll": false
+   }
+  }
+ }
+}
