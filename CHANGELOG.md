@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026.10.22-library.2 — Reader actions and file publishing
+
+- Keep footers optional and author-owned; platform credit is opt-in. Presentations preserve their own closing slides.
+- Store likes and saves in the reader account, with a private Guardados list filtered by current permissions. Editorial actions sit below the index heading; raw HTML and decks use the reader bar.
+- Inspect and publish HTML, PDF or single-entry static ZIP uploads with private defaults, revision conflict checks, sandboxed reading and bounded resource expansion.
+- Ship one documented design contract with shared registry, runtime, themes, fonts and validators; preserve plain uploaded HTML.
+
 ## Unreleased — Community creation
 
 - Create themes with light/dark palettes and six font families, including embedded Manrope and Source Serif 4. Save privately, share a link or request catalog inclusion without a PR.

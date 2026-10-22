@@ -1,0 +1,8731 @@
+{
+ "unpublishable_examples": [
+  [
+   "chapters",
+   "{\"detail\":\"Genera el archivo con Margen y un documento-id estable.\"}"
+  ],
+  [
+   "checks",
+   "{\"detail\":\"Genera el archivo con Margen y un documento-id estable.\"}"
+  ],
+  [
+   "editorial-web",
+   "{\"detail\":\"Genera el archivo con Margen y un documento-id estable.\"}"
+  ],
+  [
+   "globe",
+   "{\"detail\":\"Genera el archivo con Margen y un documento-id estable.\"}"
+  ],
+  [
+   "library",
+   "{\"detail\":\"Genera el archivo con Margen y un documento-id estable.\"}"
+  ],
+  [
+   "report",
+   "{\"detail\":\"Genera el archivo con Margen y un documento-id estable.\"}"
+  ],
+  [
+   "template",
+   "{\"detail\":\"Genera el archivo con Margen y un documento-id estable.\"}"
+  ]
+ ],
+ "commit": "ae6275f",
+ "geometry": [
+  {
+   "engine": "chromium",
+   "doc": "doc",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 271.4375,
+     "width": 528,
+     "height": 44,
+     "top": 271.4375,
+     "right": 904,
+     "bottom": 315.4375,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [
+     true
+    ],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 271,
+     "width": 528,
+     "height": 44,
+     "top": 271,
+     "right": 904,
+     "bottom": 315,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 278,
+      "width": 80.703125,
+      "height": 30,
+      "top": 278,
+      "right": 456.703125,
+      "bottom": 308,
+      "left": 376
+     },
+     {
+      "x": 462.703125,
+      "y": 278,
+      "width": 94.21875,
+      "height": 30,
+      "top": 278,
+      "right": 556.921875,
+      "bottom": 308,
+      "left": 462.703125
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    -0.4
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "chapters",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 239.4375,
+     "width": 528,
+     "height": 44,
+     "top": 239.4375,
+     "right": 904,
+     "bottom": 283.4375,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 239,
+     "width": 528,
+     "height": 44,
+     "top": 239,
+     "right": 904,
+     "bottom": 283,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 246,
+      "width": 71.25,
+      "height": 30,
+      "top": 246,
+      "right": 447.25,
+      "bottom": 276,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 246,
+      "width": 78.265625,
+      "height": 30,
+      "top": 246,
+      "right": 531.515625,
+      "bottom": 276,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    -0.4
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "gallery",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 271.4375,
+     "width": 528,
+     "height": 44,
+     "top": 271.4375,
+     "right": 904,
+     "bottom": 315.4375,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 271,
+     "width": 528,
+     "height": 44,
+     "top": 271,
+     "right": 904,
+     "bottom": 315,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 278,
+      "width": 71.25,
+      "height": 30,
+      "top": 278,
+      "right": 447.25,
+      "bottom": 308,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 278,
+      "width": 78.265625,
+      "height": 30,
+      "top": 278,
+      "right": 531.515625,
+      "bottom": 308,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    -0.4
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:blueprint",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 320.875,
+     "width": 528,
+     "height": 44,
+     "top": 320.875,
+     "right": 904,
+     "bottom": 364.875,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 321,
+     "width": 528,
+     "height": 44,
+     "top": 321,
+     "right": 904,
+     "bottom": 365,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 328,
+      "width": 71.25,
+      "height": 30,
+      "top": 328,
+      "right": 447.25,
+      "bottom": 358,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 328,
+      "width": 78.265625,
+      "height": 30,
+      "top": 328,
+      "right": 531.515625,
+      "bottom": 358,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0.1
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:brands",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 302.625,
+     "width": 528,
+     "height": 44,
+     "top": 302.625,
+     "right": 904,
+     "bottom": 346.625,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 303,
+     "width": 528,
+     "height": 44,
+     "top": 303,
+     "right": 904,
+     "bottom": 347,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 310,
+      "width": 71.25,
+      "height": 30,
+      "top": 310,
+      "right": 447.25,
+      "bottom": 340,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 310,
+      "width": 78.265625,
+      "height": 30,
+      "top": 310,
+      "right": 531.515625,
+      "bottom": 340,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0.4
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:catabum",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 271.4375,
+     "width": 528,
+     "height": 44,
+     "top": 271.4375,
+     "right": 904,
+     "bottom": 315.4375,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 271,
+     "width": 528,
+     "height": 44,
+     "top": 271,
+     "right": 904,
+     "bottom": 315,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 278,
+      "width": 71.25,
+      "height": 30,
+      "top": 278,
+      "right": 447.25,
+      "bottom": 308,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 278,
+      "width": 78.265625,
+      "height": 30,
+      "top": 278,
+      "right": 531.515625,
+      "bottom": 308,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    -0.4
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:collaborative",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 271.4375,
+     "width": 528,
+     "height": 44,
+     "top": 271.4375,
+     "right": 904,
+     "bottom": 315.4375,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 271,
+     "width": 528,
+     "height": 44,
+     "top": 271,
+     "right": 904,
+     "bottom": 315,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 278,
+      "width": 71.25,
+      "height": 30,
+      "top": 278,
+      "right": 447.25,
+      "bottom": 308,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 278,
+      "width": 78.265625,
+      "height": 30,
+      "top": 278,
+      "right": 531.515625,
+      "bottom": 308,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    -0.4
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:evidence",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 314.625,
+     "width": 528,
+     "height": 44,
+     "top": 314.625,
+     "right": 904,
+     "bottom": 358.625,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 315,
+     "width": 528,
+     "height": 44,
+     "top": 315,
+     "right": 904,
+     "bottom": 359,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 322,
+      "width": 71.25,
+      "height": 30,
+      "top": 322,
+      "right": 447.25,
+      "bottom": 352,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 322,
+      "width": 78.265625,
+      "height": 30,
+      "top": 322,
+      "right": 531.515625,
+      "bottom": 352,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0.4
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:executive",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 302.625,
+     "width": 528,
+     "height": 44,
+     "top": 302.625,
+     "right": 904,
+     "bottom": 346.625,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 303,
+     "width": 528,
+     "height": 44,
+     "top": 303,
+     "right": 904,
+     "bottom": 347,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 310,
+      "width": 71.25,
+      "height": 30,
+      "top": 310,
+      "right": 447.25,
+      "bottom": 340,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 310,
+      "width": 78.265625,
+      "height": 30,
+      "top": 310,
+      "right": 531.515625,
+      "bottom": 340,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0.4
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:guide",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 302.625,
+     "width": 528,
+     "height": 44,
+     "top": 302.625,
+     "right": 904,
+     "bottom": 346.625,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [
+     true
+    ],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 303,
+     "width": 528,
+     "height": 44,
+     "top": 303,
+     "right": 904,
+     "bottom": 347,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 310,
+      "width": 71.25,
+      "height": 30,
+      "top": 310,
+      "right": 447.25,
+      "bottom": 340,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 310,
+      "width": 78.265625,
+      "height": 30,
+      "top": 310,
+      "right": 531.515625,
+      "bottom": 340,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0.4
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:hacker",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 271.4375,
+     "width": 528,
+     "height": 44,
+     "top": 271.4375,
+     "right": 904,
+     "bottom": 315.4375,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 271,
+     "width": 528,
+     "height": 44,
+     "top": 271,
+     "right": 904,
+     "bottom": 315,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 278,
+      "width": 71.25,
+      "height": 30,
+      "top": 278,
+      "right": 447.25,
+      "bottom": 308,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 278,
+      "width": 78.265625,
+      "height": 30,
+      "top": 278,
+      "right": 531.515625,
+      "bottom": 308,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    -0.4
+   ],
+   "occluded": [
+    {
+     "scrollY": 265,
+     "hits": [
+      "span.procedencia",
+      "span.procedencia"
+     ]
+    }
+   ],
+   "host_overlap": [],
+   "stale": [],
+   "issues": [
+    "overlay painted over document content at 1 scroll positions"
+   ]
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:liftit",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 271.4375,
+     "width": 528,
+     "height": 44,
+     "top": 271.4375,
+     "right": 904,
+     "bottom": 315.4375,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 271,
+     "width": 528,
+     "height": 44,
+     "top": 271,
+     "right": 904,
+     "bottom": 315,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 278,
+      "width": 71.25,
+      "height": 30,
+      "top": 278,
+      "right": 447.25,
+      "bottom": 308,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 278,
+      "width": 78.265625,
+      "height": 30,
+      "top": 278,
+      "right": 531.515625,
+      "bottom": 308,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    -0.4
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:linear-dark",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 271.4375,
+     "width": 528,
+     "height": 44,
+     "top": 271.4375,
+     "right": 904,
+     "bottom": 315.4375,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 271,
+     "width": 528,
+     "height": 44,
+     "top": 271,
+     "right": 904,
+     "bottom": 315,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 278,
+      "width": 71.25,
+      "height": 30,
+      "top": 278,
+      "right": 447.25,
+      "bottom": 308,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 278,
+      "width": 78.265625,
+      "height": 30,
+      "top": 278,
+      "right": 531.515625,
+      "bottom": 308,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    -0.4
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:linear-light",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 271.4375,
+     "width": 528,
+     "height": 44,
+     "top": 271.4375,
+     "right": 904,
+     "bottom": 315.4375,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 271,
+     "width": 528,
+     "height": 44,
+     "top": 271,
+     "right": 904,
+     "bottom": 315,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 278,
+      "width": 71.25,
+      "height": 30,
+      "top": 278,
+      "right": 447.25,
+      "bottom": 308,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 278,
+      "width": 78.265625,
+      "height": 30,
+      "top": 278,
+      "right": 531.515625,
+      "bottom": 308,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    -0.4
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:priorities",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 302.625,
+     "width": 528,
+     "height": 44,
+     "top": 302.625,
+     "right": 904,
+     "bottom": 346.625,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 303,
+     "width": 528,
+     "height": 44,
+     "top": 303,
+     "right": 904,
+     "bottom": 347,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 310,
+      "width": 71.25,
+      "height": 30,
+      "top": 310,
+      "right": 447.25,
+      "bottom": 340,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 310,
+      "width": 78.265625,
+      "height": 30,
+      "top": 310,
+      "right": 531.515625,
+      "bottom": 340,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0.4
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:project-chapters",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 302.625,
+     "width": 528,
+     "height": 44,
+     "top": 302.625,
+     "right": 904,
+     "bottom": 346.625,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 303,
+     "width": 528,
+     "height": 44,
+     "top": 303,
+     "right": 904,
+     "bottom": 347,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 310,
+      "width": 71.25,
+      "height": 30,
+      "top": 310,
+      "right": 447.25,
+      "bottom": 340,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 310,
+      "width": 78.265625,
+      "height": 30,
+      "top": 310,
+      "right": 531.515625,
+      "bottom": 340,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0.4
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:project-presentation",
+   "viewport": 1280,
+   "slot": null,
+   "overlay": {
+    "visible": false,
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": false,
+   "has_index": false,
+   "index_visible": false,
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:standard-chapters",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 329.8125,
+     "width": 528,
+     "height": 44,
+     "top": 329.8125,
+     "right": 904,
+     "bottom": 373.8125,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 330,
+     "width": 528,
+     "height": 44,
+     "top": 330,
+     "right": 904,
+     "bottom": 374,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 337,
+      "width": 71.25,
+      "height": 30,
+      "top": 337,
+      "right": 447.25,
+      "bottom": 367,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 337,
+      "width": 78.265625,
+      "height": 30,
+      "top": 337,
+      "right": 531.515625,
+      "bottom": 367,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0.2
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:standard",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 391.25,
+     "width": 528,
+     "height": 44,
+     "top": 391.25,
+     "right": 904,
+     "bottom": 435.25,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 391,
+     "width": 528,
+     "height": 44,
+     "top": 391,
+     "right": 904,
+     "bottom": 435,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 398,
+      "width": 71.25,
+      "height": 30,
+      "top": 398,
+      "right": 447.25,
+      "bottom": 428,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 398,
+      "width": 78.265625,
+      "height": 30,
+      "top": 398,
+      "right": 531.515625,
+      "bottom": 428,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    -0.2
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:system",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 341.8125,
+     "width": 528,
+     "height": 44,
+     "top": 341.8125,
+     "right": 904,
+     "bottom": 385.8125,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 342,
+     "width": 528,
+     "height": 44,
+     "top": 342,
+     "right": 904,
+     "bottom": 386,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 349,
+      "width": 71.25,
+      "height": 30,
+      "top": 349,
+      "right": 447.25,
+      "bottom": 379,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 349,
+      "width": 78.265625,
+      "height": 30,
+      "top": 349,
+      "right": 531.515625,
+      "bottom": 379,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0.2
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:themes",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 314.625,
+     "width": 528,
+     "height": 44,
+     "top": 314.625,
+     "right": 904,
+     "bottom": 358.625,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 315,
+     "width": 528,
+     "height": 44,
+     "top": 315,
+     "right": 904,
+     "bottom": 359,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 322,
+      "width": 71.25,
+      "height": 30,
+      "top": 322,
+      "right": 447.25,
+      "bottom": 352,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 322,
+      "width": 78.265625,
+      "height": 30,
+      "top": 322,
+      "right": 531.515625,
+      "bottom": 352,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0.4
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:tikin",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 271.4375,
+     "width": 528,
+     "height": 44,
+     "top": 271.4375,
+     "right": 904,
+     "bottom": 315.4375,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 271,
+     "width": 528,
+     "height": 44,
+     "top": 271,
+     "right": 904,
+     "bottom": 315,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 278,
+      "width": 71.25,
+      "height": 30,
+      "top": 278,
+      "right": 447.25,
+      "bottom": 308,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 278,
+      "width": 78.265625,
+      "height": 30,
+      "top": 278,
+      "right": 531.515625,
+      "bottom": 308,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    -0.4
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:workbench",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 314.625,
+     "width": 528,
+     "height": 44,
+     "top": 314.625,
+     "right": 904,
+     "bottom": 358.625,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 315,
+     "width": 528,
+     "height": 44,
+     "top": 315,
+     "right": 904,
+     "bottom": 359,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 322,
+      "width": 71.25,
+      "height": 30,
+      "top": 322,
+      "right": 447.25,
+      "bottom": 352,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 322,
+      "width": 78.265625,
+      "height": 30,
+      "top": 322,
+      "right": 531.515625,
+      "bottom": 352,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0.4
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "doc",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 217.6875,
+     "width": 342,
+     "height": 44,
+     "top": 217.6875,
+     "right": 366,
+     "bottom": 261.6875,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [
+     true
+    ],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 218,
+     "width": 342,
+     "height": 44,
+     "top": 218,
+     "right": 366,
+     "bottom": 262,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 225,
+      "width": 80.703125,
+      "height": 30,
+      "top": 225,
+      "right": 104.703125,
+      "bottom": 255,
+      "left": 24
+     },
+     {
+      "x": 110.703125,
+      "y": 225,
+      "width": 94.21875,
+      "height": 30,
+      "top": 225,
+      "right": 204.921875,
+      "bottom": 255,
+      "left": 110.703125
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 844,
+     "top": 0,
+     "right": 390,
+     "bottom": 844,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0.3
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "chapters",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 278.6875,
+     "width": 342,
+     "height": 44,
+     "top": 278.6875,
+     "right": 366,
+     "bottom": 322.6875,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 279,
+     "width": 342,
+     "height": 44,
+     "top": 279,
+     "right": 366,
+     "bottom": 323,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 286,
+      "width": 71.25,
+      "height": 30,
+      "top": 286,
+      "right": 95.25,
+      "bottom": 316,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 286,
+      "width": 78.265625,
+      "height": 30,
+      "top": 286,
+      "right": 179.515625,
+      "bottom": 316,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 844,
+     "top": 0,
+     "right": 390,
+     "bottom": 844,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0.3
+   ],
+   "occluded": [
+    {
+     "scrollY": 268,
+     "hits": [
+      "a.firma-editorial",
+      "header#nota-inicio.barra.capitulos"
+     ]
+    }
+   ],
+   "host_overlap": [],
+   "stale": [],
+   "issues": [
+    "overlay painted over document content at 1 scroll positions"
+   ]
+  },
+  {
+   "engine": "chromium",
+   "doc": "gallery",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 217.6875,
+     "width": 342,
+     "height": 44,
+     "top": 217.6875,
+     "right": 366,
+     "bottom": 261.6875,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 218,
+     "width": 342,
+     "height": 44,
+     "top": 218,
+     "right": 366,
+     "bottom": 262,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 225,
+      "width": 71.25,
+      "height": 30,
+      "top": 225,
+      "right": 95.25,
+      "bottom": 255,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 225,
+      "width": 78.265625,
+      "height": 30,
+      "top": 225,
+      "right": 179.515625,
+      "bottom": 255,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 844,
+     "top": 0,
+     "right": 390,
+     "bottom": 844,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0.3
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:blueprint",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 261.375,
+     "width": 342,
+     "height": 44,
+     "top": 261.375,
+     "right": 366,
+     "bottom": 305.375,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 261,
+     "width": 342,
+     "height": 44,
+     "top": 261,
+     "right": 366,
+     "bottom": 305,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 268,
+      "width": 71.25,
+      "height": 30,
+      "top": 268,
+      "right": 95.25,
+      "bottom": 298,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 268,
+      "width": 78.265625,
+      "height": 30,
+      "top": 268,
+      "right": 179.515625,
+      "bottom": 298,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 844,
+     "top": 0,
+     "right": 390,
+     "bottom": 844,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    -0.4
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:brands",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 369.0625,
+     "width": 342,
+     "height": 44,
+     "top": 369.0625,
+     "right": 366,
+     "bottom": 413.0625,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 369,
+     "width": 342,
+     "height": 44,
+     "top": 369,
+     "right": 366,
+     "bottom": 413,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 376,
+      "width": 71.25,
+      "height": 30,
+      "top": 376,
+      "right": 95.25,
+      "bottom": 406,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 376,
+      "width": 78.265625,
+      "height": 30,
+      "top": 376,
+      "right": 179.515625,
+      "bottom": 406,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 844,
+     "top": 0,
+     "right": 390,
+     "bottom": 844,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    -0.1
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:catabum",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 261.375,
+     "width": 342,
+     "height": 44,
+     "top": 261.375,
+     "right": 366,
+     "bottom": 305.375,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 261,
+     "width": 342,
+     "height": 44,
+     "top": 261,
+     "right": 366,
+     "bottom": 305,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 268,
+      "width": 71.25,
+      "height": 30,
+      "top": 268,
+      "right": 95.25,
+      "bottom": 298,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 268,
+      "width": 78.265625,
+      "height": 30,
+      "top": 268,
+      "right": 179.515625,
+      "bottom": 298,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 844,
+     "top": 0,
+     "right": 390,
+     "bottom": 844,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    -0.4
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:collaborative",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 217.6875,
+     "width": 342,
+     "height": 44,
+     "top": 217.6875,
+     "right": 366,
+     "bottom": 261.6875,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 218,
+     "width": 342,
+     "height": 44,
+     "top": 218,
+     "right": 366,
+     "bottom": 262,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 225,
+      "width": 71.25,
+      "height": 30,
+      "top": 225,
+      "right": 95.25,
+      "bottom": 255,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 225,
+      "width": 78.265625,
+      "height": 30,
+      "top": 225,
+      "right": 179.515625,
+      "bottom": 255,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 844,
+     "top": 0,
+     "right": 390,
+     "bottom": 844,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0.3
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:evidence",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 331.75,
+     "width": 342,
+     "height": 44,
+     "top": 331.75,
+     "right": 366,
+     "bottom": 375.75,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 332,
+     "width": 342,
+     "height": 44,
+     "top": 332,
+     "right": 366,
+     "bottom": 376,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 339,
+      "width": 71.25,
+      "height": 30,
+      "top": 339,
+      "right": 95.25,
+      "bottom": 369,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 339,
+      "width": 78.265625,
+      "height": 30,
+      "top": 339,
+      "right": 179.515625,
+      "bottom": 369,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 844,
+     "top": 0,
+     "right": 390,
+     "bottom": 844,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0.2
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:executive",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 369.0625,
+     "width": 342,
+     "height": 44,
+     "top": 369.0625,
+     "right": 366,
+     "bottom": 413.0625,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 369,
+     "width": 342,
+     "height": 44,
+     "top": 369,
+     "right": 366,
+     "bottom": 413,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 376,
+      "width": 71.25,
+      "height": 30,
+      "top": 376,
+      "right": 95.25,
+      "bottom": 406,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 376,
+      "width": 78.265625,
+      "height": 30,
+      "top": 376,
+      "right": 179.515625,
+      "bottom": 406,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 844,
+     "top": 0,
+     "right": 390,
+     "bottom": 844,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    -0.1
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:guide",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 369.0625,
+     "width": 342,
+     "height": 44,
+     "top": 369.0625,
+     "right": 366,
+     "bottom": 413.0625,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [
+     true
+    ],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 369,
+     "width": 342,
+     "height": 44,
+     "top": 369,
+     "right": 366,
+     "bottom": 413,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 376,
+      "width": 71.25,
+      "height": 30,
+      "top": 376,
+      "right": 95.25,
+      "bottom": 406,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 376,
+      "width": 78.265625,
+      "height": 30,
+      "top": 376,
+      "right": 179.515625,
+      "bottom": 406,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 844,
+     "top": 0,
+     "right": 390,
+     "bottom": 844,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    -0.1
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:hacker",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 261.375,
+     "width": 342,
+     "height": 44,
+     "top": 261.375,
+     "right": 366,
+     "bottom": 305.375,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 261,
+     "width": 342,
+     "height": 44,
+     "top": 261,
+     "right": 366,
+     "bottom": 305,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 268,
+      "width": 71.25,
+      "height": 30,
+      "top": 268,
+      "right": 95.25,
+      "bottom": 298,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 268,
+      "width": 78.265625,
+      "height": 30,
+      "top": 268,
+      "right": 179.515625,
+      "bottom": 298,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 844,
+     "top": 0,
+     "right": 390,
+     "bottom": 844,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    -0.4
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:liftit",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 217.6875,
+     "width": 342,
+     "height": 44,
+     "top": 217.6875,
+     "right": 366,
+     "bottom": 261.6875,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 218,
+     "width": 342,
+     "height": 44,
+     "top": 218,
+     "right": 366,
+     "bottom": 262,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 225,
+      "width": 71.25,
+      "height": 30,
+      "top": 225,
+      "right": 95.25,
+      "bottom": 255,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 225,
+      "width": 78.265625,
+      "height": 30,
+      "top": 225,
+      "right": 179.515625,
+      "bottom": 255,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 844,
+     "top": 0,
+     "right": 390,
+     "bottom": 844,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0.3
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:linear-dark",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 217.6875,
+     "width": 342,
+     "height": 44,
+     "top": 217.6875,
+     "right": 366,
+     "bottom": 261.6875,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 218,
+     "width": 342,
+     "height": 44,
+     "top": 218,
+     "right": 366,
+     "bottom": 262,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 225,
+      "width": 71.25,
+      "height": 30,
+      "top": 225,
+      "right": 95.25,
+      "bottom": 255,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 225,
+      "width": 78.265625,
+      "height": 30,
+      "top": 225,
+      "right": 179.515625,
+      "bottom": 255,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 844,
+     "top": 0,
+     "right": 390,
+     "bottom": 844,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0.3
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:linear-light",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 217.6875,
+     "width": 342,
+     "height": 44,
+     "top": 217.6875,
+     "right": 366,
+     "bottom": 261.6875,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 218,
+     "width": 342,
+     "height": 44,
+     "top": 218,
+     "right": 366,
+     "bottom": 262,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 225,
+      "width": 71.25,
+      "height": 30,
+      "top": 225,
+      "right": 95.25,
+      "bottom": 255,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 225,
+      "width": 78.265625,
+      "height": 30,
+      "top": 225,
+      "right": 179.515625,
+      "bottom": 255,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 844,
+     "top": 0,
+     "right": 390,
+     "bottom": 844,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0.3
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:priorities",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 369.0625,
+     "width": 342,
+     "height": 44,
+     "top": 369.0625,
+     "right": 366,
+     "bottom": 413.0625,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 369,
+     "width": 342,
+     "height": 44,
+     "top": 369,
+     "right": 366,
+     "bottom": 413,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 376,
+      "width": 71.25,
+      "height": 30,
+      "top": 376,
+      "right": 95.25,
+      "bottom": 406,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 376,
+      "width": 78.265625,
+      "height": 30,
+      "top": 376,
+      "right": 179.515625,
+      "bottom": 406,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 844,
+     "top": 0,
+     "right": 390,
+     "bottom": 844,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    -0.1
+   ],
+   "occluded": [
+    {
+     "scrollY": 349,
+     "hits": [
+      "a.firma-editorial",
+      "header#nota-inicio.barra.capitulos"
+     ]
+    }
+   ],
+   "host_overlap": [],
+   "stale": [],
+   "issues": [
+    "overlay painted over document content at 1 scroll positions"
+   ]
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:project-chapters",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 404.75,
+     "width": 342,
+     "height": 44,
+     "top": 404.75,
+     "right": 366,
+     "bottom": 448.75,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 405,
+     "width": 342,
+     "height": 44,
+     "top": 405,
+     "right": 366,
+     "bottom": 449,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 412,
+      "width": 71.25,
+      "height": 30,
+      "top": 412,
+      "right": 95.25,
+      "bottom": 442,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 412,
+      "width": 78.265625,
+      "height": 30,
+      "top": 412,
+      "right": 179.515625,
+      "bottom": 442,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 844,
+     "top": 0,
+     "right": 390,
+     "bottom": 844,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0.2
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:project-presentation",
+   "viewport": 390,
+   "slot": null,
+   "overlay": {
+    "visible": false,
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 844,
+     "top": 0,
+     "right": 390,
+     "bottom": 844,
+     "left": 0
+    }
+   },
+   "dock_hidden": false,
+   "has_index": false,
+   "index_visible": false,
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:standard-chapters",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 369.0625,
+     "width": 342,
+     "height": 44,
+     "top": 369.0625,
+     "right": 366,
+     "bottom": 413.0625,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 369,
+     "width": 342,
+     "height": 44,
+     "top": 369,
+     "right": 366,
+     "bottom": 413,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 376,
+      "width": 71.25,
+      "height": 30,
+      "top": 376,
+      "right": 95.25,
+      "bottom": 406,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 376,
+      "width": 78.265625,
+      "height": 30,
+      "top": 376,
+      "right": 179.515625,
+      "bottom": 406,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 844,
+     "top": 0,
+     "right": 390,
+     "bottom": 844,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    -0.1
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:standard",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 331.75,
+     "width": 342,
+     "height": 44,
+     "top": 331.75,
+     "right": 366,
+     "bottom": 375.75,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 332,
+     "width": 342,
+     "height": 44,
+     "top": 332,
+     "right": 366,
+     "bottom": 376,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 339,
+      "width": 71.25,
+      "height": 30,
+      "top": 339,
+      "right": 95.25,
+      "bottom": 369,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 339,
+      "width": 78.265625,
+      "height": 30,
+      "top": 339,
+      "right": 179.515625,
+      "bottom": 369,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 844,
+     "top": 0,
+     "right": 390,
+     "bottom": 844,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0.2
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:system",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 358.9375,
+     "width": 342,
+     "height": 44,
+     "top": 358.9375,
+     "right": 366,
+     "bottom": 402.9375,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 359,
+     "width": 342,
+     "height": 44,
+     "top": 359,
+     "right": 366,
+     "bottom": 403,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 366,
+      "width": 71.25,
+      "height": 30,
+      "top": 366,
+      "right": 95.25,
+      "bottom": 396,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 366,
+      "width": 78.265625,
+      "height": 30,
+      "top": 366,
+      "right": 179.515625,
+      "bottom": 396,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 844,
+     "top": 0,
+     "right": 390,
+     "bottom": 844,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0.1
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:themes",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 260.875,
+     "width": 342,
+     "height": 44,
+     "top": 260.875,
+     "right": 366,
+     "bottom": 304.875,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 261,
+     "width": 342,
+     "height": 44,
+     "top": 261,
+     "right": 366,
+     "bottom": 305,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 268,
+      "width": 71.25,
+      "height": 30,
+      "top": 268,
+      "right": 95.25,
+      "bottom": 298,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 268,
+      "width": 78.265625,
+      "height": 30,
+      "top": 268,
+      "right": 179.515625,
+      "bottom": 298,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 844,
+     "top": 0,
+     "right": 390,
+     "bottom": 844,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0.1
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:tikin",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 217.6875,
+     "width": 342,
+     "height": 44,
+     "top": 217.6875,
+     "right": 366,
+     "bottom": 261.6875,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 218,
+     "width": 342,
+     "height": 44,
+     "top": 218,
+     "right": 366,
+     "bottom": 262,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 225,
+      "width": 71.25,
+      "height": 30,
+      "top": 225,
+      "right": 95.25,
+      "bottom": 255,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 225,
+      "width": 78.265625,
+      "height": 30,
+      "top": 225,
+      "right": 179.515625,
+      "bottom": 255,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 844,
+     "top": 0,
+     "right": 390,
+     "bottom": 844,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0.3
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:workbench",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 331.75,
+     "width": 342,
+     "height": 44,
+     "top": 331.75,
+     "right": 366,
+     "bottom": 375.75,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 332,
+     "width": 342,
+     "height": 44,
+     "top": 332,
+     "right": 366,
+     "bottom": 376,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 339,
+      "width": 71.25,
+      "height": 30,
+      "top": 339,
+      "right": 95.25,
+      "bottom": 369,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 339,
+      "width": 78.265625,
+      "height": 30,
+      "top": 339,
+      "right": 179.515625,
+      "bottom": 369,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 844,
+     "top": 0,
+     "right": 390,
+     "bottom": 844,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0.2
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "doc",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 271,
+     "width": 528,
+     "height": 44,
+     "top": 271,
+     "right": 904,
+     "bottom": 315,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [
+     true
+    ],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 271,
+     "width": 528,
+     "height": 44,
+     "top": 271,
+     "right": 904,
+     "bottom": 315,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 278,
+      "width": 80.703125,
+      "height": 30,
+      "top": 278,
+      "right": 456.703125,
+      "bottom": 308,
+      "left": 376
+     },
+     {
+      "x": 462.703125,
+      "y": 278,
+      "width": 94.21875,
+      "height": 30,
+      "top": 278,
+      "right": 556.921875,
+      "bottom": 308,
+      "left": 462.703125
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "chapters",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 239,
+     "width": 528,
+     "height": 44,
+     "top": 239,
+     "right": 904,
+     "bottom": 283,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 239,
+     "width": 528,
+     "height": 44,
+     "top": 239,
+     "right": 904,
+     "bottom": 283,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 246,
+      "width": 71.25,
+      "height": 30,
+      "top": 246,
+      "right": 447.25,
+      "bottom": 276,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 246,
+      "width": 78.265625,
+      "height": 30,
+      "top": 246,
+      "right": 531.515625,
+      "bottom": 276,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "gallery",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 271,
+     "width": 528,
+     "height": 44,
+     "top": 271,
+     "right": 904,
+     "bottom": 315,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 271,
+     "width": 528,
+     "height": 44,
+     "top": 271,
+     "right": 904,
+     "bottom": 315,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 278,
+      "width": 71.25,
+      "height": 30,
+      "top": 278,
+      "right": 447.25,
+      "bottom": 308,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 278,
+      "width": 78.265625,
+      "height": 30,
+      "top": 278,
+      "right": 531.515625,
+      "bottom": 308,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:blueprint",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 320,
+     "width": 528,
+     "height": 44,
+     "top": 320,
+     "right": 904,
+     "bottom": 364,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 320,
+     "width": 528,
+     "height": 44,
+     "top": 320,
+     "right": 904,
+     "bottom": 364,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 327,
+      "width": 71.25,
+      "height": 30,
+      "top": 327,
+      "right": 447.25,
+      "bottom": 357,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 327,
+      "width": 78.265625,
+      "height": 30,
+      "top": 327,
+      "right": 531.515625,
+      "bottom": 357,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:brands",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 302,
+     "width": 528,
+     "height": 44,
+     "top": 302,
+     "right": 904,
+     "bottom": 346,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 302,
+     "width": 528,
+     "height": 44,
+     "top": 302,
+     "right": 904,
+     "bottom": 346,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 309,
+      "width": 71.25,
+      "height": 30,
+      "top": 309,
+      "right": 447.25,
+      "bottom": 339,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 309,
+      "width": 78.265625,
+      "height": 30,
+      "top": 309,
+      "right": 531.515625,
+      "bottom": 339,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:catabum",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 271,
+     "width": 528,
+     "height": 44,
+     "top": 271,
+     "right": 904,
+     "bottom": 315,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 271,
+     "width": 528,
+     "height": 44,
+     "top": 271,
+     "right": 904,
+     "bottom": 315,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 278,
+      "width": 71.25,
+      "height": 30,
+      "top": 278,
+      "right": 447.25,
+      "bottom": 308,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 278,
+      "width": 78.265625,
+      "height": 30,
+      "top": 278,
+      "right": 531.515625,
+      "bottom": 308,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:collaborative",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 271,
+     "width": 528,
+     "height": 44,
+     "top": 271,
+     "right": 904,
+     "bottom": 315,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 271,
+     "width": 528,
+     "height": 44,
+     "top": 271,
+     "right": 904,
+     "bottom": 315,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 278,
+      "width": 71.25,
+      "height": 30,
+      "top": 278,
+      "right": 447.25,
+      "bottom": 308,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 278,
+      "width": 78.265625,
+      "height": 30,
+      "top": 278,
+      "right": 531.515625,
+      "bottom": 308,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:evidence",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 314,
+     "width": 528,
+     "height": 44,
+     "top": 314,
+     "right": 904,
+     "bottom": 358,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 314,
+     "width": 528,
+     "height": 44,
+     "top": 314,
+     "right": 904,
+     "bottom": 358,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 321,
+      "width": 71.25,
+      "height": 30,
+      "top": 321,
+      "right": 447.25,
+      "bottom": 351,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 321,
+      "width": 78.265625,
+      "height": 30,
+      "top": 321,
+      "right": 531.515625,
+      "bottom": 351,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:executive",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 302,
+     "width": 528,
+     "height": 44,
+     "top": 302,
+     "right": 904,
+     "bottom": 346,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 302,
+     "width": 528,
+     "height": 44,
+     "top": 302,
+     "right": 904,
+     "bottom": 346,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 309,
+      "width": 71.25,
+      "height": 30,
+      "top": 309,
+      "right": 447.25,
+      "bottom": 339,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 309,
+      "width": 78.265625,
+      "height": 30,
+      "top": 309,
+      "right": 531.515625,
+      "bottom": 339,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:guide",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 302,
+     "width": 528,
+     "height": 44,
+     "top": 302,
+     "right": 904,
+     "bottom": 346,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [
+     true
+    ],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 302,
+     "width": 528,
+     "height": 44,
+     "top": 302,
+     "right": 904,
+     "bottom": 346,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 309,
+      "width": 71.25,
+      "height": 30,
+      "top": 309,
+      "right": 447.25,
+      "bottom": 339,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 309,
+      "width": 78.265625,
+      "height": 30,
+      "top": 309,
+      "right": 531.515625,
+      "bottom": 339,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:hacker",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 271,
+     "width": 528,
+     "height": 44,
+     "top": 271,
+     "right": 904,
+     "bottom": 315,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 271,
+     "width": 528,
+     "height": 44,
+     "top": 271,
+     "right": 904,
+     "bottom": 315,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 278,
+      "width": 71.25,
+      "height": 30,
+      "top": 278,
+      "right": 447.25,
+      "bottom": 308,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 278,
+      "width": 78.265625,
+      "height": 30,
+      "top": 278,
+      "right": 531.515625,
+      "bottom": 308,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [
+    {
+     "scrollY": 265,
+     "hits": [
+      "span.procedencia",
+      "span.procedencia"
+     ]
+    }
+   ],
+   "host_overlap": [],
+   "stale": [],
+   "issues": [
+    "overlay painted over document content at 1 scroll positions"
+   ]
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:liftit",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 271,
+     "width": 528,
+     "height": 44,
+     "top": 271,
+     "right": 904,
+     "bottom": 315,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 271,
+     "width": 528,
+     "height": 44,
+     "top": 271,
+     "right": 904,
+     "bottom": 315,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 278,
+      "width": 71.25,
+      "height": 30,
+      "top": 278,
+      "right": 447.25,
+      "bottom": 308,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 278,
+      "width": 78.265625,
+      "height": 30,
+      "top": 278,
+      "right": 531.515625,
+      "bottom": 308,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:linear-dark",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 271,
+     "width": 528,
+     "height": 44,
+     "top": 271,
+     "right": 904,
+     "bottom": 315,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 271,
+     "width": 528,
+     "height": 44,
+     "top": 271,
+     "right": 904,
+     "bottom": 315,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 278,
+      "width": 71.25,
+      "height": 30,
+      "top": 278,
+      "right": 447.25,
+      "bottom": 308,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 278,
+      "width": 78.265625,
+      "height": 30,
+      "top": 278,
+      "right": 531.515625,
+      "bottom": 308,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:linear-light",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 271,
+     "width": 528,
+     "height": 44,
+     "top": 271,
+     "right": 904,
+     "bottom": 315,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 271,
+     "width": 528,
+     "height": 44,
+     "top": 271,
+     "right": 904,
+     "bottom": 315,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 278,
+      "width": 71.25,
+      "height": 30,
+      "top": 278,
+      "right": 447.25,
+      "bottom": 308,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 278,
+      "width": 78.265625,
+      "height": 30,
+      "top": 278,
+      "right": 531.515625,
+      "bottom": 308,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:priorities",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 302,
+     "width": 528,
+     "height": 44,
+     "top": 302,
+     "right": 904,
+     "bottom": 346,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 302,
+     "width": 528,
+     "height": 44,
+     "top": 302,
+     "right": 904,
+     "bottom": 346,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 309,
+      "width": 71.25,
+      "height": 30,
+      "top": 309,
+      "right": 447.25,
+      "bottom": 339,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 309,
+      "width": 78.265625,
+      "height": 30,
+      "top": 309,
+      "right": 531.515625,
+      "bottom": 339,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:project-chapters",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 302,
+     "width": 528,
+     "height": 44,
+     "top": 302,
+     "right": 904,
+     "bottom": 346,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 302,
+     "width": 528,
+     "height": 44,
+     "top": 302,
+     "right": 904,
+     "bottom": 346,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 309,
+      "width": 71.25,
+      "height": 30,
+      "top": 309,
+      "right": 447.25,
+      "bottom": 339,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 309,
+      "width": 78.265625,
+      "height": 30,
+      "top": 309,
+      "right": 531.515625,
+      "bottom": 339,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:project-presentation",
+   "viewport": 1280,
+   "slot": null,
+   "overlay": {
+    "visible": false,
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": false,
+   "has_index": false,
+   "index_visible": false,
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:standard-chapters",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 329,
+     "width": 528,
+     "height": 44,
+     "top": 329,
+     "right": 904,
+     "bottom": 373,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 329,
+     "width": 528,
+     "height": 44,
+     "top": 329,
+     "right": 904,
+     "bottom": 373,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 336,
+      "width": 71.25,
+      "height": 30,
+      "top": 336,
+      "right": 447.25,
+      "bottom": 366,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 336,
+      "width": 78.265625,
+      "height": 30,
+      "top": 336,
+      "right": 531.515625,
+      "bottom": 366,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:standard",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 390,
+     "width": 528,
+     "height": 44,
+     "top": 390,
+     "right": 904,
+     "bottom": 434,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 390,
+     "width": 528,
+     "height": 44,
+     "top": 390,
+     "right": 904,
+     "bottom": 434,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 397,
+      "width": 71.25,
+      "height": 30,
+      "top": 397,
+      "right": 447.25,
+      "bottom": 427,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 397,
+      "width": 78.265625,
+      "height": 30,
+      "top": 397,
+      "right": 531.515625,
+      "bottom": 427,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:system",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 341,
+     "width": 528,
+     "height": 44,
+     "top": 341,
+     "right": 904,
+     "bottom": 385,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 341,
+     "width": 528,
+     "height": 44,
+     "top": 341,
+     "right": 904,
+     "bottom": 385,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 348,
+      "width": 71.25,
+      "height": 30,
+      "top": 348,
+      "right": 447.25,
+      "bottom": 378,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 348,
+      "width": 78.265625,
+      "height": 30,
+      "top": 348,
+      "right": 531.515625,
+      "bottom": 378,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:themes",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 314,
+     "width": 528,
+     "height": 44,
+     "top": 314,
+     "right": 904,
+     "bottom": 358,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 314,
+     "width": 528,
+     "height": 44,
+     "top": 314,
+     "right": 904,
+     "bottom": 358,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 321,
+      "width": 71.25,
+      "height": 30,
+      "top": 321,
+      "right": 447.25,
+      "bottom": 351,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 321,
+      "width": 78.265625,
+      "height": 30,
+      "top": 321,
+      "right": 531.515625,
+      "bottom": 351,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:tikin",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 271,
+     "width": 528,
+     "height": 44,
+     "top": 271,
+     "right": 904,
+     "bottom": 315,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 271,
+     "width": 528,
+     "height": 44,
+     "top": 271,
+     "right": 904,
+     "bottom": 315,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 278,
+      "width": 71.25,
+      "height": 30,
+      "top": 278,
+      "right": 447.25,
+      "bottom": 308,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 278,
+      "width": 78.265625,
+      "height": 30,
+      "top": 278,
+      "right": 531.515625,
+      "bottom": 308,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:workbench",
+   "viewport": 1280,
+   "slot": {
+    "rect": {
+     "x": 376,
+     "y": 314,
+     "width": 528,
+     "height": 44,
+     "top": 314,
+     "right": 904,
+     "bottom": 358,
+     "left": 376
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 1280,
+    "innerHeight": 900
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 376,
+     "y": 314,
+     "width": 528,
+     "height": 44,
+     "top": 314,
+     "right": 904,
+     "bottom": 358,
+     "left": 376
+    },
+    "buttons": [
+     {
+      "x": 376,
+      "y": 321,
+      "width": 71.25,
+      "height": 30,
+      "top": 321,
+      "right": 447.25,
+      "bottom": 351,
+      "left": 376
+     },
+     {
+      "x": 453.25,
+      "y": 321,
+      "width": 78.265625,
+      "height": 30,
+      "top": 321,
+      "right": 531.515625,
+      "bottom": 351,
+      "left": 453.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 1280,
+     "height": 900,
+     "top": 0,
+     "right": 1280,
+     "bottom": 900,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "doc",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 217,
+     "width": 342,
+     "height": 44,
+     "top": 217,
+     "right": 366,
+     "bottom": 261,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [
+     true
+    ],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 217,
+     "width": 342,
+     "height": 44,
+     "top": 217,
+     "right": 366,
+     "bottom": 261,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 224,
+      "width": 80.703125,
+      "height": 30,
+      "top": 224,
+      "right": 104.703125,
+      "bottom": 254,
+      "left": 24
+     },
+     {
+      "x": 110.703125,
+      "y": 224,
+      "width": 94.21875,
+      "height": 30,
+      "top": 224,
+      "right": 204.921875,
+      "bottom": 254,
+      "left": 110.703125
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 843.984375,
+     "top": 0,
+     "right": 390,
+     "bottom": 843.984375,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "chapters",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 278,
+     "width": 342,
+     "height": 44,
+     "top": 278,
+     "right": 366,
+     "bottom": 322,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 278,
+     "width": 342,
+     "height": 44,
+     "top": 278,
+     "right": 366,
+     "bottom": 322,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 285,
+      "width": 71.25,
+      "height": 30,
+      "top": 285,
+      "right": 95.25,
+      "bottom": 315,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 285,
+      "width": 78.265625,
+      "height": 30,
+      "top": 285,
+      "right": 179.515625,
+      "bottom": 315,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 843.984375,
+     "top": 0,
+     "right": 390,
+     "bottom": 843.984375,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [
+    {
+     "scrollY": 268,
+     "hits": [
+      "a.firma-editorial",
+      "header#nota-inicio.barra.capitulos"
+     ]
+    }
+   ],
+   "host_overlap": [],
+   "stale": [],
+   "issues": [
+    "overlay painted over document content at 1 scroll positions"
+   ]
+  },
+  {
+   "engine": "webkit",
+   "doc": "gallery",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 217,
+     "width": 342,
+     "height": 44,
+     "top": 217,
+     "right": 366,
+     "bottom": 261,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 217,
+     "width": 342,
+     "height": 44,
+     "top": 217,
+     "right": 366,
+     "bottom": 261,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 224,
+      "width": 71.25,
+      "height": 30,
+      "top": 224,
+      "right": 95.25,
+      "bottom": 254,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 224,
+      "width": 78.265625,
+      "height": 30,
+      "top": 224,
+      "right": 179.515625,
+      "bottom": 254,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 843.984375,
+     "top": 0,
+     "right": 390,
+     "bottom": 843.984375,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:blueprint",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 260,
+     "width": 342,
+     "height": 44,
+     "top": 260,
+     "right": 366,
+     "bottom": 304,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 260,
+     "width": 342,
+     "height": 44,
+     "top": 260,
+     "right": 366,
+     "bottom": 304,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 267,
+      "width": 71.25,
+      "height": 30,
+      "top": 267,
+      "right": 95.25,
+      "bottom": 297,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 267,
+      "width": 78.265625,
+      "height": 30,
+      "top": 267,
+      "right": 179.515625,
+      "bottom": 297,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 843.984375,
+     "top": 0,
+     "right": 390,
+     "bottom": 843.984375,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:brands",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 368,
+     "width": 342,
+     "height": 44,
+     "top": 368,
+     "right": 366,
+     "bottom": 412,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 368,
+     "width": 342,
+     "height": 44,
+     "top": 368,
+     "right": 366,
+     "bottom": 412,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 375,
+      "width": 71.25,
+      "height": 30,
+      "top": 375,
+      "right": 95.25,
+      "bottom": 405,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 375,
+      "width": 78.265625,
+      "height": 30,
+      "top": 375,
+      "right": 179.515625,
+      "bottom": 405,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 843.984375,
+     "top": 0,
+     "right": 390,
+     "bottom": 843.984375,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:catabum",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 260,
+     "width": 342,
+     "height": 44,
+     "top": 260,
+     "right": 366,
+     "bottom": 304,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 260,
+     "width": 342,
+     "height": 44,
+     "top": 260,
+     "right": 366,
+     "bottom": 304,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 267,
+      "width": 71.25,
+      "height": 30,
+      "top": 267,
+      "right": 95.25,
+      "bottom": 297,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 267,
+      "width": 78.265625,
+      "height": 30,
+      "top": 267,
+      "right": 179.515625,
+      "bottom": 297,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 843.984375,
+     "top": 0,
+     "right": 390,
+     "bottom": 843.984375,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:collaborative",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 217,
+     "width": 342,
+     "height": 44,
+     "top": 217,
+     "right": 366,
+     "bottom": 261,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 217,
+     "width": 342,
+     "height": 44,
+     "top": 217,
+     "right": 366,
+     "bottom": 261,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 224,
+      "width": 71.25,
+      "height": 30,
+      "top": 224,
+      "right": 95.25,
+      "bottom": 254,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 224,
+      "width": 78.265625,
+      "height": 30,
+      "top": 224,
+      "right": 179.515625,
+      "bottom": 254,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 843.984375,
+     "top": 0,
+     "right": 390,
+     "bottom": 843.984375,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:evidence",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 330,
+     "width": 342,
+     "height": 44,
+     "top": 330,
+     "right": 366,
+     "bottom": 374,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 330,
+     "width": 342,
+     "height": 44,
+     "top": 330,
+     "right": 366,
+     "bottom": 374,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 337,
+      "width": 71.25,
+      "height": 30,
+      "top": 337,
+      "right": 95.25,
+      "bottom": 367,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 337,
+      "width": 78.265625,
+      "height": 30,
+      "top": 337,
+      "right": 179.515625,
+      "bottom": 367,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 843.984375,
+     "top": 0,
+     "right": 390,
+     "bottom": 843.984375,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:executive",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 368,
+     "width": 342,
+     "height": 44,
+     "top": 368,
+     "right": 366,
+     "bottom": 412,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 368,
+     "width": 342,
+     "height": 44,
+     "top": 368,
+     "right": 366,
+     "bottom": 412,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 375,
+      "width": 71.25,
+      "height": 30,
+      "top": 375,
+      "right": 95.25,
+      "bottom": 405,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 375,
+      "width": 78.265625,
+      "height": 30,
+      "top": 375,
+      "right": 179.515625,
+      "bottom": 405,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 843.984375,
+     "top": 0,
+     "right": 390,
+     "bottom": 843.984375,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:guide",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 368,
+     "width": 342,
+     "height": 44,
+     "top": 368,
+     "right": 366,
+     "bottom": 412,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [
+     true
+    ],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 368,
+     "width": 342,
+     "height": 44,
+     "top": 368,
+     "right": 366,
+     "bottom": 412,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 375,
+      "width": 71.25,
+      "height": 30,
+      "top": 375,
+      "right": 95.25,
+      "bottom": 405,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 375,
+      "width": 78.265625,
+      "height": 30,
+      "top": 375,
+      "right": 179.515625,
+      "bottom": 405,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 843.984375,
+     "top": 0,
+     "right": 390,
+     "bottom": 843.984375,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:hacker",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 260,
+     "width": 342,
+     "height": 44,
+     "top": 260,
+     "right": 366,
+     "bottom": 304,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 260,
+     "width": 342,
+     "height": 44,
+     "top": 260,
+     "right": 366,
+     "bottom": 304,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 267,
+      "width": 71.25,
+      "height": 30,
+      "top": 267,
+      "right": 95.25,
+      "bottom": 297,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 267,
+      "width": 78.265625,
+      "height": 30,
+      "top": 267,
+      "right": 179.515625,
+      "bottom": 297,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 843.984375,
+     "top": 0,
+     "right": 390,
+     "bottom": 843.984375,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:liftit",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 217,
+     "width": 342,
+     "height": 44,
+     "top": 217,
+     "right": 366,
+     "bottom": 261,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 217,
+     "width": 342,
+     "height": 44,
+     "top": 217,
+     "right": 366,
+     "bottom": 261,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 224,
+      "width": 71.25,
+      "height": 30,
+      "top": 224,
+      "right": 95.25,
+      "bottom": 254,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 224,
+      "width": 78.265625,
+      "height": 30,
+      "top": 224,
+      "right": 179.515625,
+      "bottom": 254,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 843.984375,
+     "top": 0,
+     "right": 390,
+     "bottom": 843.984375,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:linear-dark",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 217,
+     "width": 342,
+     "height": 44,
+     "top": 217,
+     "right": 366,
+     "bottom": 261,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 217,
+     "width": 342,
+     "height": 44,
+     "top": 217,
+     "right": 366,
+     "bottom": 261,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 224,
+      "width": 71.25,
+      "height": 30,
+      "top": 224,
+      "right": 95.25,
+      "bottom": 254,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 224,
+      "width": 78.265625,
+      "height": 30,
+      "top": 224,
+      "right": 179.515625,
+      "bottom": 254,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 843.984375,
+     "top": 0,
+     "right": 390,
+     "bottom": 843.984375,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:linear-light",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 217,
+     "width": 342,
+     "height": 44,
+     "top": 217,
+     "right": 366,
+     "bottom": 261,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 217,
+     "width": 342,
+     "height": 44,
+     "top": 217,
+     "right": 366,
+     "bottom": 261,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 224,
+      "width": 71.25,
+      "height": 30,
+      "top": 224,
+      "right": 95.25,
+      "bottom": 254,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 224,
+      "width": 78.265625,
+      "height": 30,
+      "top": 224,
+      "right": 179.515625,
+      "bottom": 254,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 843.984375,
+     "top": 0,
+     "right": 390,
+     "bottom": 843.984375,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:priorities",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 368,
+     "width": 342,
+     "height": 44,
+     "top": 368,
+     "right": 366,
+     "bottom": 412,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 368,
+     "width": 342,
+     "height": 44,
+     "top": 368,
+     "right": 366,
+     "bottom": 412,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 375,
+      "width": 71.25,
+      "height": 30,
+      "top": 375,
+      "right": 95.25,
+      "bottom": 405,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 375,
+      "width": 78.265625,
+      "height": 30,
+      "top": 375,
+      "right": 179.515625,
+      "bottom": 405,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 843.984375,
+     "top": 0,
+     "right": 390,
+     "bottom": 843.984375,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [
+    {
+     "scrollY": 344,
+     "hits": [
+      "a.firma-editorial",
+      "header#nota-inicio.barra.capitulos"
+     ]
+    }
+   ],
+   "host_overlap": [],
+   "stale": [],
+   "issues": [
+    "overlay painted over document content at 1 scroll positions"
+   ]
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:project-chapters",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 403,
+     "width": 342,
+     "height": 44,
+     "top": 403,
+     "right": 366,
+     "bottom": 447,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 403,
+     "width": 342,
+     "height": 44,
+     "top": 403,
+     "right": 366,
+     "bottom": 447,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 410,
+      "width": 71.25,
+      "height": 30,
+      "top": 410,
+      "right": 95.25,
+      "bottom": 440,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 410,
+      "width": 78.265625,
+      "height": 30,
+      "top": 410,
+      "right": 179.515625,
+      "bottom": 440,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 843.984375,
+     "top": 0,
+     "right": 390,
+     "bottom": 843.984375,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:project-presentation",
+   "viewport": 390,
+   "slot": null,
+   "overlay": {
+    "visible": false,
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 843.984375,
+     "top": 0,
+     "right": 390,
+     "bottom": 843.984375,
+     "left": 0
+    }
+   },
+   "dock_hidden": false,
+   "has_index": false,
+   "index_visible": false,
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:standard-chapters",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 368,
+     "width": 342,
+     "height": 44,
+     "top": 368,
+     "right": 366,
+     "bottom": 412,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 368,
+     "width": 342,
+     "height": 44,
+     "top": 368,
+     "right": 366,
+     "bottom": 412,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 375,
+      "width": 71.25,
+      "height": 30,
+      "top": 375,
+      "right": 95.25,
+      "bottom": 405,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 375,
+      "width": 78.265625,
+      "height": 30,
+      "top": 375,
+      "right": 179.515625,
+      "bottom": 405,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 843.984375,
+     "top": 0,
+     "right": 390,
+     "bottom": 843.984375,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:standard",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 330,
+     "width": 342,
+     "height": 44,
+     "top": 330,
+     "right": 366,
+     "bottom": 374,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 330,
+     "width": 342,
+     "height": 44,
+     "top": 330,
+     "right": 366,
+     "bottom": 374,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 337,
+      "width": 71.25,
+      "height": 30,
+      "top": 337,
+      "right": 95.25,
+      "bottom": 367,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 337,
+      "width": 78.265625,
+      "height": 30,
+      "top": 337,
+      "right": 179.515625,
+      "bottom": 367,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 843.984375,
+     "top": 0,
+     "right": 390,
+     "bottom": 843.984375,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:system",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 357,
+     "width": 342,
+     "height": 44,
+     "top": 357,
+     "right": 366,
+     "bottom": 401,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 357,
+     "width": 342,
+     "height": 44,
+     "top": 357,
+     "right": 366,
+     "bottom": 401,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 364,
+      "width": 71.25,
+      "height": 30,
+      "top": 364,
+      "right": 95.25,
+      "bottom": 394,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 364,
+      "width": 78.265625,
+      "height": 30,
+      "top": 364,
+      "right": 179.515625,
+      "bottom": 394,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 843.984375,
+     "top": 0,
+     "right": 390,
+     "bottom": 843.984375,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:themes",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 260,
+     "width": 342,
+     "height": 44,
+     "top": 260,
+     "right": 366,
+     "bottom": 304,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 260,
+     "width": 342,
+     "height": 44,
+     "top": 260,
+     "right": 366,
+     "bottom": 304,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 267,
+      "width": 71.25,
+      "height": 30,
+      "top": 267,
+      "right": 95.25,
+      "bottom": 297,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 267,
+      "width": 78.265625,
+      "height": 30,
+      "top": 267,
+      "right": 179.515625,
+      "bottom": 297,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 843.984375,
+     "top": 0,
+     "right": 390,
+     "bottom": 843.984375,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:tikin",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 217,
+     "width": 342,
+     "height": 44,
+     "top": 217,
+     "right": 366,
+     "bottom": 261,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 217,
+     "width": 342,
+     "height": 44,
+     "top": 217,
+     "right": 366,
+     "bottom": 261,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 224,
+      "width": 71.25,
+      "height": 30,
+      "top": 224,
+      "right": 95.25,
+      "bottom": 254,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 224,
+      "width": 78.265625,
+      "height": 30,
+      "top": 224,
+      "right": 179.515625,
+      "bottom": 254,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 843.984375,
+     "top": 0,
+     "right": 390,
+     "bottom": 843.984375,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:workbench",
+   "viewport": 390,
+   "slot": {
+    "rect": {
+     "x": 24,
+     "y": 330,
+     "width": 342,
+     "height": 44,
+     "top": 330,
+     "right": 366,
+     "bottom": 374,
+     "left": 24
+    },
+    "afterCeja": true,
+    "cejaText": "En esta página",
+    "gap": 0,
+    "inIndex": true,
+    "reacciones": [],
+    "scrollY": 0,
+    "innerWidth": 390,
+    "innerHeight": 844
+   },
+   "overlay": {
+    "visible": true,
+    "rect": {
+     "x": 24,
+     "y": 330,
+     "width": 342,
+     "height": 44,
+     "top": 330,
+     "right": 366,
+     "bottom": 374,
+     "left": 24
+    },
+    "buttons": [
+     {
+      "x": 24,
+      "y": 337,
+      "width": 71.25,
+      "height": 30,
+      "top": 337,
+      "right": 95.25,
+      "bottom": 367,
+      "left": 24
+     },
+     {
+      "x": 101.25,
+      "y": 337,
+      "width": 78.265625,
+      "height": 30,
+      "top": 337,
+      "right": 179.515625,
+      "bottom": 367,
+      "left": 101.25
+     }
+    ],
+    "stacks": [
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ],
+     [
+      ".reader-action",
+      "#artifact-frame",
+      "#reader",
+      "HTML"
+     ]
+    ],
+    "frame": {
+     "x": 0,
+     "y": 0,
+     "width": 390,
+     "height": 843.984375,
+     "top": 0,
+     "right": 390,
+     "bottom": 843.984375,
+     "left": 0
+    }
+   },
+   "dock_hidden": true,
+   "has_index": true,
+   "index_visible": true,
+   "delta": [
+    0,
+    0
+   ],
+   "occluded": [],
+   "host_overlap": [],
+   "stale": [],
+   "issues": []
+  }
+ ],
+ "flows": {
+  "forged_messages_put": 0,
+  "forged_synthetic_click_opens_dialog": false,
+  "document_can_relocate_overlay": true,
+  "early_click_ms": 3,
+  "early_click_put": 0,
+  "dblclick_puts": 1,
+  "saved_after_dblclick": true,
+  "overlay_after_close": true,
+  "focus_after_close": "saved",
+  "held_enter_puts": 0,
+  "held_enter_dialog_open": true,
+  "held_enter_focus": "Cerrar",
+  "held_space_puts": 0,
+  "held_space_dialog_open": true,
+  "overlay_after_resize_while_open": false,
+  "focus_after_resize_close": "artifact-frame",
+  "second_initial": {
+   "saved": false,
+   "liked": false,
+   "likes": 1
+  },
+  "second_anchor_like_text": "Me gusta · 1",
+  "after_both": {
+   "reader": {
+    "saved": true,
+    "liked": true,
+    "likes": 2
+   },
+   "second": {
+    "saved": false,
+    "liked": true,
+    "likes": 2
+   },
+   "author": {
+    "saved": false,
+    "liked": false,
+    "likes": 2
+   }
+  },
+  "reload_anchor": [
+   "Guardado",
+   "Me gusta · 2"
+  ],
+  "saved_list": [
+   [
+    "Informe trimestral",
+    "/a/c1a2212250b94335a141c0cf61d97119"
+   ]
+  ],
+  "saved_tab_active": "false",
+  "saved_tab_visible": true,
+  "saved_tab_url": "/?view=saved",
+  "saved_link_navigates": true,
+  "revoked_state_status": 404,
+  "revoked_put_status": 404,
+  "revoked_saved_list": [],
+  "revoked_likes_seen_by_second": 1,
+  "revoked_overlay": false,
+  "regrant_saved_list": [
+   "c1a2212250b94335a141c0cf61d97119"
+  ],
+  "regrant_likes": 2
+ },
+ "fallback": {
+  "chromium": {
+   "deck": {
+    "dock_visible_after_s": null,
+    "overlay": false,
+    "dock_attr_hidden": false,
+    "host_reader_dock_hidden": true,
+    "dock_box": {
+     "x": 0,
+     "y": 0,
+     "width": 0,
+     "height": 0,
+     "top": 0,
+     "right": 0,
+     "bottom": 0,
+     "left": 0
+    }
+   },
+   "raw": {
+    "dock_visible_after_s": null,
+    "overlay": false,
+    "dock_attr_hidden": false,
+    "host_reader_dock_hidden": true,
+    "dock_box": {
+     "x": 0,
+     "y": 0,
+     "width": 0,
+     "height": 0,
+     "top": 0,
+     "right": 0,
+     "bottom": 0,
+     "left": 0
+    }
+   },
+   "anonymous": {
+    "error": "TimeoutError",
+    "dock_hidden": false
+   }
+  },
+  "webkit": {
+   "deck": {
+    "dock_visible_after_s": null,
+    "overlay": false,
+    "dock_attr_hidden": false,
+    "host_reader_dock_hidden": true,
+    "dock_box": {
+     "x": 0,
+     "y": 0,
+     "width": 0,
+     "height": 0,
+     "top": 0,
+     "right": 0,
+     "bottom": 0,
+     "left": 0
+    }
+   },
+   "raw": {
+    "dock_visible_after_s": null,
+    "overlay": false,
+    "dock_attr_hidden": false,
+    "host_reader_dock_hidden": true,
+    "dock_box": {
+     "x": 0,
+     "y": 0,
+     "width": 0,
+     "height": 0,
+     "top": 0,
+     "right": 0,
+     "bottom": 0,
+     "left": 0
+    }
+   },
+   "anonymous": {
+    "error": "TimeoutError",
+    "dock_hidden": false
+   }
+  }
+ },
+ "version": {
+  "versions": 2,
+  "overlay_hidden_during_switch": false,
+  "overlay_after_switch": true
+ },
+ "alias_merge": {
+  "before": 2,
+  "rows_after": {
+   "reader_saves": 2,
+   "reader_likes": 2
+  },
+  "old_user_left_rows": 1,
+  "after": 2
+ }
+}

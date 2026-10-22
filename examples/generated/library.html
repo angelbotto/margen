@@ -5750,24 +5750,22 @@ main.hoja[data-presentation]{margin-top:22px}
   &lt;/div&gt;
 &lt;/section&gt;</code></pre></div></details><section class="seccion" id="receta-pie-editorial" tabindex="-1"><p class="ceja">Componente / Footer editorial</p><h2>Footer editorial</h2></section><footer class="ancho pie pie-documento" id="pie-editorial-ejemplo">
   <div class="pie-autoria">
-    <p class="pie-autor">Un cuaderno compartido</p>
+    <p class="pie-autor">Tu nombre o el de tu equipo</p>
     <p class="pie-nota">Ejemplo de cierre editorial. El nombre, los enlaces y esta nota pertenecen a quien escribe el documento.</p>
     <nav class="pie-enlaces" aria-label="Enlaces del cuaderno de ejemplo">
-      <span class="pie-enlace"><a href="https://github.com/angelbotto/margen" rel="noopener noreferrer">Código de Margen</a><span class="pie-detalle">Construir y contribuir</span></span>
-      <span class="pie-enlace"><a href="https://artifacts.botto.is" rel="noopener noreferrer">La plataforma</a><span class="pie-detalle">Publicar y conversar</span></span>
+      <span class="pie-enlace"><a href="https://example.com" rel="noopener noreferrer">Tu sitio</a><span class="pie-detalle">Enlace de ejemplo · personalízalo</span></span>
+      <span class="pie-enlace"><a href="mailto:autor@example.com" rel="noopener noreferrer">Contacto</a><span class="pie-detalle">Dirección de ejemplo · personalízala</span></span>
     </nav>
   </div>
-  <p class="pie-plataforma">Hecho con Margen · Ejemplo ilustrativo</p>
-</footer><div class="receta-guia"><p><strong>Uso:</strong> cierra con la identidad y los enlaces de quien escribe. Las dos columnas se apilan en móvil; las descripciones de enlaces se difuminan solo con puntero fino y se revelan también con foco de teclado. La atribución a Margen queda separada.</p><p>El generador ofrece la misma pieza mediante <code>footer: {author, note, links: [{label, href, detail}], platform}</code>. No añadas un segundo pie manual cuando uses esa opción. Se aceptan HTTPS sin credenciales y correo <code>mailto:</code>. No se inventan redes, licencias, estadísticas ni autoría: los enlaces de esta muestra corresponden al proyecto, no a una persona ficticia. El pie sigue al contenido y conserva la identidad del documento.</p></div><details class="receta-copia ancho"><summary>Copiar HTML · Footer editorial</summary><p class="procedencia">Dependencias: packages/core/styles/fonts.css, packages/core/styles/artifact.css, packages/core/components/interface.js, packages/core/components/audio.js, packages/core/components/controls.js, packages/core/components/editorial-pieces.js, packages/core/components/reader.js</p><div class="codigo"><div class="cab"><span>Footer editorial</span><button type="button" data-copiar="biblioteca-codigo-pie-editorial" aria-label="Copiar HTML de Footer editorial">Copiar HTML</button><span role="status" class="copia-estado"></span></div><pre tabindex="0" aria-label="HTML de Footer editorial, desplazable"><code id="biblioteca-codigo-pie-editorial">&lt;footer class=&quot;ancho pie pie-documento&quot; id=&quot;pie-editorial-ejemplo&quot;&gt;
+</footer><div class="receta-guia"><p><strong>Uso:</strong> cierra con la identidad y los enlaces de quien escribe. Las dos columnas se apilan en móvil; las descripciones de enlaces se difuminan solo con puntero fino y se revelan también con foco de teclado. La atribución a Margen queda separada.</p><p>El generador ofrece la misma pieza mediante <code>footer: {author, note, links: [{label, href, detail}], platform}</code>. No añadas un segundo pie manual cuando uses esa opción. Se aceptan HTTPS sin credenciales y correo <code>mailto:</code>. No se inventan redes, licencias, estadísticas ni autoría: los enlaces de esta muestra usan example.com como marcadores para sustituir. El pie sigue al contenido y conserva la identidad del documento.</p><p>Es opcional: omite <code>footer</code> para no añadir ningún pie. <code>platform</code> vale <code>false</code> por defecto. En una presentación, compón una diapositiva de cierre si la necesitas; el generador no inserta un pie de artículo.</p></div><details class="receta-copia ancho"><summary>Copiar HTML · Footer editorial</summary><p class="procedencia">Dependencias: packages/core/styles/fonts.css, packages/core/styles/artifact.css, packages/core/components/interface.js, packages/core/components/audio.js, packages/core/components/controls.js, packages/core/components/editorial-pieces.js, packages/core/components/reader.js</p><div class="codigo"><div class="cab"><span>Footer editorial</span><button type="button" data-copiar="biblioteca-codigo-pie-editorial" aria-label="Copiar HTML de Footer editorial">Copiar HTML</button><span role="status" class="copia-estado"></span></div><pre tabindex="0" aria-label="HTML de Footer editorial, desplazable"><code id="biblioteca-codigo-pie-editorial">&lt;footer class=&quot;ancho pie pie-documento&quot; id=&quot;pie-editorial-ejemplo&quot;&gt;
   &lt;div class=&quot;pie-autoria&quot;&gt;
-    &lt;p class=&quot;pie-autor&quot;&gt;Un cuaderno compartido&lt;/p&gt;
+    &lt;p class=&quot;pie-autor&quot;&gt;Tu nombre o el de tu equipo&lt;/p&gt;
     &lt;p class=&quot;pie-nota&quot;&gt;Ejemplo de cierre editorial. El nombre, los enlaces y esta nota pertenecen a quien escribe el documento.&lt;/p&gt;
     &lt;nav class=&quot;pie-enlaces&quot; aria-label=&quot;Enlaces del cuaderno de ejemplo&quot;&gt;
-      &lt;span class=&quot;pie-enlace&quot;&gt;&lt;a href=&quot;https://github.com/angelbotto/margen&quot; rel=&quot;noopener noreferrer&quot;&gt;Código de Margen&lt;/a&gt;&lt;span class=&quot;pie-detalle&quot;&gt;Construir y contribuir&lt;/span&gt;&lt;/span&gt;
-      &lt;span class=&quot;pie-enlace&quot;&gt;&lt;a href=&quot;https://artifacts.botto.is&quot; rel=&quot;noopener noreferrer&quot;&gt;La plataforma&lt;/a&gt;&lt;span class=&quot;pie-detalle&quot;&gt;Publicar y conversar&lt;/span&gt;&lt;/span&gt;
+      &lt;span class=&quot;pie-enlace&quot;&gt;&lt;a href=&quot;https://example.com&quot; rel=&quot;noopener noreferrer&quot;&gt;Tu sitio&lt;/a&gt;&lt;span class=&quot;pie-detalle&quot;&gt;Enlace de ejemplo · personalízalo&lt;/span&gt;&lt;/span&gt;
+      &lt;span class=&quot;pie-enlace&quot;&gt;&lt;a href=&quot;mailto:autor@example.com&quot; rel=&quot;noopener noreferrer&quot;&gt;Contacto&lt;/a&gt;&lt;span class=&quot;pie-detalle&quot;&gt;Dirección de ejemplo · personalízala&lt;/span&gt;&lt;/span&gt;
     &lt;/nav&gt;
   &lt;/div&gt;
-  &lt;p class=&quot;pie-plataforma&quot;&gt;Hecho con Margen · Ejemplo ilustrativo&lt;/p&gt;
 &lt;/footer&gt;</code></pre></div></details><section class="seccion" id="receta-actividad-editorial" tabindex="-1"><p class="ceja">Componente / Actividad con contexto editorial</p><h2>Actividad con contexto editorial</h2></section><section class="pieza amplio actividad-editorial" id="actividad-editorial-ejemplo" data-actividad data-actividad-tabla="actividad-editorial-datos">
   <div><p class="ceja">Actividad de ejemplo / ocho semanas</p><h3>Pequeños avances,<br>una historia visible.</h3><p>Cada cuadrado representa una semana. La intensidad indica cuántas acciones se registraron; no mide calidad ni productividad.</p><a class="enlace-icono" href="https://www.cmrg.me/now">Ver la referencia editorial ↗</a></div>
   <div><div class="actividad-mosaico" data-actividad-mapa role="group" aria-label="Acciones por semana"></div><div class="actividad-escala" data-actividad-escala aria-label="Escala de acciones"></div><p data-actividad-estado role="status">Los conteos completos están en la tabla.</p></div>
@@ -9901,6 +9899,32 @@ window.NotaGeografia=Object.freeze({
   });
   [...(root.matches?.(selector)?[root]:[]),...root.querySelectorAll(selector)].forEach(mount);}
  window.NotaPiezasEditoriales={init,get:el=>instances.get(el)};init();
+ // Acciones del lector: sólo dentro del portal, que dibuja sus propios botones encima de este hueco.
+ // El documento no guarda ni marca nada; sin portal no aparece hueco ni promesa de sincronía.
+ if(window.parent!==window){
+  let slot=null,last='',frame=0;
+  const index=()=>[...document.querySelectorAll('.lectura-guiada:not([data-presentation]) .indice')].find(n=>n.getClientRects().length&&n.querySelector(':scope > .ceja'));
+  const post=data=>parent.postMessage({bottifact:1,id:'acciones-'+Math.random().toString(36).slice(2),op:'reader-actions-anchor',data},'*');
+  const report=()=>{frame=0;const target=index();if(target&&slot.parentElement!==target)target.querySelector(':scope > .ceja').after(slot);
+   const r=slot.getBoundingClientRect();
+   // A host overlay cannot inherit the iframe stacking context. Report a slot only
+   // when its entire button area is uncovered by wide figures or the sticky header.
+   const visible=!!target&&r.width>=40&&r.top>=0&&r.bottom<=innerHeight&&
+    [4,Math.min(r.width-4,100),Math.min(r.width-4,210)].every(x=>[8,r.height/2,r.height-8].every(y=>slot.contains(document.elementFromPoint(r.left+x,r.top+y))));
+   const data=visible?{visible:true,x:Math.max(0,Math.round(r.left)),y:Math.round(r.top),width:Math.min(Math.round(r.width),640,innerWidth-Math.max(0,Math.round(r.left))),height:Math.round(r.height),vw:innerWidth,vh:innerHeight}:{visible:false};
+   const key=JSON.stringify(data);if(key!==last){last=key;post(data);}};
+  const schedule=()=>{if(slot&&!frame)frame=requestAnimationFrame(report);};
+  addEventListener('message',e=>{const d=e.data;if(e.source!==parent||d?.bottifact!==1||d.op!=='reader-actions-slot'||slot)return;
+   const h=Number(d.height),target=index();if(!(h>=24&&h<=96)||!target)return;
+   slot=document.createElement('div');slot.className='acciones-lector';slot.setAttribute('data-acciones-lector','');slot.setAttribute('aria-hidden','true');slot.style.blockSize=h+'px';
+   target.querySelector(':scope > .ceja').after(slot);
+   // Las reacciones locales del pie no se duplican con el «Me gusta» de la cuenta.
+   document.querySelectorAll('[data-reacciones]').forEach(n=>{n.hidden=true;});
+   addEventListener('scroll',schedule,{passive:true,capture:true});addEventListener('resize',schedule,{passive:true});
+   document.addEventListener('nota:pagina',schedule);new ResizeObserver(schedule).observe(document.documentElement);schedule();
+  });
+  if(index())post({visible:false,slot:true});
+ }
  // Bordes de lectura: capas decorativas fuera del flujo, una sola vez por documento.
  if(document.querySelector('.hoja.lectura-guiada:not([data-presentation])')&&!document.querySelector('.lectura-bordes')){const edges=document.createElement('div');edges.className='lectura-bordes';edges.setAttribute('aria-hidden','true');edges.innerHTML='<span></span>'.repeat(8);document.body.append(edges);}
 })();
@@ -14576,6 +14600,32 @@ globalThis.BottifactTableModel=TableModel;
   });
   [...(root.matches?.(selector)?[root]:[]),...root.querySelectorAll(selector)].forEach(mount);}
  window.NotaPiezasEditoriales={init,get:el=>instances.get(el)};init();
+ // Acciones del lector: sólo dentro del portal, que dibuja sus propios botones encima de este hueco.
+ // El documento no guarda ni marca nada; sin portal no aparece hueco ni promesa de sincronía.
+ if(window.parent!==window){
+  let slot=null,last='',frame=0;
+  const index=()=>[...document.querySelectorAll('.lectura-guiada:not([data-presentation]) .indice')].find(n=>n.getClientRects().length&&n.querySelector(':scope > .ceja'));
+  const post=data=>parent.postMessage({bottifact:1,id:'acciones-'+Math.random().toString(36).slice(2),op:'reader-actions-anchor',data},'*');
+  const report=()=>{frame=0;const target=index();if(target&&slot.parentElement!==target)target.querySelector(':scope > .ceja').after(slot);
+   const r=slot.getBoundingClientRect();
+   // A host overlay cannot inherit the iframe stacking context. Report a slot only
+   // when its entire button area is uncovered by wide figures or the sticky header.
+   const visible=!!target&&r.width>=40&&r.top>=0&&r.bottom<=innerHeight&&
+    [4,Math.min(r.width-4,100),Math.min(r.width-4,210)].every(x=>[8,r.height/2,r.height-8].every(y=>slot.contains(document.elementFromPoint(r.left+x,r.top+y))));
+   const data=visible?{visible:true,x:Math.max(0,Math.round(r.left)),y:Math.round(r.top),width:Math.min(Math.round(r.width),640,innerWidth-Math.max(0,Math.round(r.left))),height:Math.round(r.height),vw:innerWidth,vh:innerHeight}:{visible:false};
+   const key=JSON.stringify(data);if(key!==last){last=key;post(data);}};
+  const schedule=()=>{if(slot&&!frame)frame=requestAnimationFrame(report);};
+  addEventListener('message',e=>{const d=e.data;if(e.source!==parent||d?.bottifact!==1||d.op!=='reader-actions-slot'||slot)return;
+   const h=Number(d.height),target=index();if(!(h>=24&&h<=96)||!target)return;
+   slot=document.createElement('div');slot.className='acciones-lector';slot.setAttribute('data-acciones-lector','');slot.setAttribute('aria-hidden','true');slot.style.blockSize=h+'px';
+   target.querySelector(':scope > .ceja').after(slot);
+   // Las reacciones locales del pie no se duplican con el «Me gusta» de la cuenta.
+   document.querySelectorAll('[data-reacciones]').forEach(n=>{n.hidden=true;});
+   addEventListener('scroll',schedule,{passive:true,capture:true});addEventListener('resize',schedule,{passive:true});
+   document.addEventListener('nota:pagina',schedule);new ResizeObserver(schedule).observe(document.documentElement);schedule();
+  });
+  if(index())post({visible:false,slot:true});
+ }
  // Bordes de lectura: capas decorativas fuera del flujo, una sola vez por documento.
  if(document.querySelector('.hoja.lectura-guiada:not([data-presentation])')&&!document.querySelector('.lectura-bordes')){const edges=document.createElement('div');edges.className='lectura-bordes';edges.setAttribute('aria-hidden','true');edges.innerHTML='<span></span>'.repeat(8);document.body.append(edges);}
 })();

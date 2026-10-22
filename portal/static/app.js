@@ -14,8 +14,6 @@
     items = [],
     current = null,
     grants = [],
-    uploadVersion = false,
-    uploadBase = null,
     poll = null,
     noticePoll = null,
     toastTimer = null,
@@ -80,8 +78,13 @@
     public: "Público",
     external: "Sitio anterior",
   };
-  function toast(text) {
+  function toast(text, action) {
     $("#toast").textContent = text;
+    if (action?.href === '/?view=saved') {
+      const link = document.createElement('a');
+      link.href = action.href; link.textContent = 'Ver guardados';
+      $("#toast").append(document.createTextNode(' '), link);
+    }
     $("#toast").hidden = false;
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => ($("#toast").hidden = true), 6000);
@@ -859,6 +862,19 @@
   }
   async function load(append = false) {
     window.MargenDevelopers.destroy();
+    if (view === "saved") {
+      listController?.abort(); graphController?.abort(); graphInstance?.destroy();
+      requestNumber++; nextCursor = null;
+      previews.disconnect(); covers.disconnect(); workspace.destroy();
+      for (const id of ["feed-end", "table-preferences", "context-tools", "browse-bar", "library-filters", "overview"])
+        $("#" + id).hidden = true;
+      $(".tools").hidden = true;
+      const panel = make("div", undefined, "reader-saved-panel");
+      $("#results").className = "workspace-view";
+      $("#results").replaceChildren(panel);
+      $("#results").removeAttribute("aria-busy");
+      return window.MargenReaderActions.renderSaved(panel);
+    }
     if (["themes", "components", "developers"].includes(view)) {
       listController?.abort(); graphController?.abort(); graphInstance?.destroy();
       previews.disconnect(); covers.disconnect(); workspace.destroy();
@@ -1037,6 +1053,7 @@
           insights: "Visitas",
           work: "Mi trabajo",
           mine: "Mis artefactos",
+          saved: "Guardados",
           all: "Todos los artefactos",
           shared: "Compartidos conmigo",
           inbox: "Conversaciones en contexto.",
@@ -1048,6 +1065,7 @@
         }[view];
         $("#library-description").textContent =
           {
+            saved: "Tu lista privada para volver a leer. Cada documento conserva sus permisos.",
             mine: "Solo documentos de tu cuenta. Los de otras personas están en Compartidos conmigo.",
             all: "Vista de administración. Cada documento conserva su propietario y sus permisos.",
             shared: "Documentos que otras personas comparten contigo o con los dominios de tu cuenta.",
@@ -1177,6 +1195,7 @@
     insights: "chart",
     work: "note",
     mine: "folder",
+    saved: "bookmark",
     shared: "share",
     inbox: "comment",
     public: "globe",
@@ -1364,19 +1383,9 @@
           matchMedia("(prefers-color-scheme:dark)").matches),
     );
   } catch {}
-  function upload(revision = false) {
-    uploadVersion = revision;
-    uploadBase = revision ? current.current_version : null;
-    $("#upload-heading").textContent = revision
-      ? "Subir una revisión"
-      : "Publicar artefacto";
-    const form = $("#upload-form");
-    form.reset();
-    form.elements.title.value = revision ? current.title : "";
-    form.elements.space.value = revision ? current.space : "Personal";
-    form.querySelector(".form-error").textContent = "";
-    $("#upload-dialog").showModal();
-  }
+  const uploader = window.MargenUpload.create({api});
+  function upload(revision = false) { uploader.open(revision ? current : null); }
+
   function rename(a) {
     editing = a;
     const form = $("#rename-form");
@@ -1419,64 +1428,6 @@
   });
   $("#publish").addEventListener("click", () => upload());
   $("#new-version").addEventListener("click", () => upload(true));
-  $("#upload-form").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const form = e.currentTarget,
-      button = form.querySelector("[type=submit]");
-    button.disabled = true;
-    form.querySelector(".form-error").textContent = "";
-    try {
-      const file = form.elements.file.files[0];
-      if (!file || file.size > 20 * 1024 * 1024)
-        throw Error("Selecciona un HTML de hasta 20 MB.");
-      const original = form.elements.original?.files[0];
-      let attachments = [];
-      if (original) {
-        if (original.size > 12 * 1024 * 1024)
-          throw Error("El original debe ocupar menos de 12 MB.");
-        const data = await new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(String(reader.result).split(",")[1]);
-          reader.onerror = reject;
-          reader.readAsDataURL(original);
-        });
-        attachments = [
-          {
-            name: "original." + original.name.split(".").pop().toLowerCase(),
-            data,
-          },
-        ];
-      }
-      const payload = {
-          attachments,
-          title: form.elements.title.value,
-          space: form.elements.space.value,
-          html: await file.text(),
-          mode: uploadVersion ? "draft" : "published",
-          ...(uploadVersion ? {expected_current: uploadBase} : {}),
-          source: {
-            agent: form.elements.agent.value,
-            session: form.elements.session.value,
-            device: form.elements.device.value,
-          },
-        },
-        result = await api(
-          uploadVersion
-            ? "/api/artifacts/" + current.id + "/versions"
-            : "/api/artifacts",
-          { method: "POST", body: JSON.stringify(payload) },
-        );
-      location.assign(
-        "/a/" +
-          result.id +
-          (result.state === "draft" ? "?version=" + result.version : ""),
-      );
-    } catch (error) {
-      form.querySelector(".form-error").textContent = error.message;
-    } finally {
-      button.disabled = false;
-    }
-  });
   function shareSummary() {
     const form = $("#share-form"),
       mode = form.elements.visibility.value;
@@ -1784,6 +1735,10 @@
     mounted: () => (current && mounted?.artifact === current.id ? mounted : null),
     origin: location.origin,
   });
+  const readerActions = window.MargenReaderActions.create({
+    frame: () => $("#artifact-frame"), dock: () => $("#reader-personal-actions"), toast,
+  });
+  addEventListener("pagehide", () => readerActions.reset());
   addEventListener("message", async (event) => {
     if (
       !current ||
@@ -1806,6 +1761,7 @@
         "action",
         "preferences",
         "controls-ready",
+        "reader-actions-anchor",
         "surface",
         "embed",
         "open-source",
@@ -1816,7 +1772,9 @@
     const source = event.source;
     try {
       let result;
-      if (["action", "preferences", "controls-ready"].includes(op)) {
+      if (op === "reader-actions-anchor") {
+        result = readerActions.anchor(data);
+      } else if (["action", "preferences", "controls-ready"].includes(op)) {
         result = await readerWorkspace.handle(op, data);
       } else if (op === "embed" || op === "open-source" || op === "external") {
         result = media.handle(op, data);
@@ -1973,6 +1931,7 @@
   function readerSurface(color) {
     const frame = $("#artifact-frame");
     const valid = validSurface(color);
+    readerActions.surface(valid ? color : null);
     if (valid)
       frame.style.setProperty("--reader-surface", "rgb(" + color.join(",") + ")");
     else frame.style.removeProperty("--reader-surface");
@@ -2058,6 +2017,8 @@
       contextRequested = false;
       const version = current.versions.find((v) => v.id === select.value);
       backVersion(current.id, select.value, version?.appearance ?? null);
+      readerActions.reset();
+      readerActions.load(current);
       media.reset();
       mounted = { artifact: current.id, version: select.value, first: true };
       $("#artifact-frame").src =

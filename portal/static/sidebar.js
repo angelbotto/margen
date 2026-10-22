@@ -11,7 +11,7 @@ window.MargenSidebar = (() => {
     if (nav.dataset.organized) return;
     nav.dataset.organized = 'true';
     for (const [id, label, views] of [
-      ['library', 'Biblioteca', ['mine', 'shared', 'inbox']],
+      ['library', 'Biblioteca', ['mine', 'saved', 'shared', 'inbox']],
       ['knowledge', 'Conocimiento', ['brain', 'work', 'insights']],
       ['resources', 'Crear con Margen', ['themes', 'components', 'developers', 'connections']],
       ['account', 'Gestionar', ['notifications', 'public', 'archived', 'all', 'admin']],

@@ -49,7 +49,7 @@ Write from the user to their team or themselves, ready to share. Lead with the c
 
 - Reuse the base's **Comments → Share → Preferences** dock, themes, sound and review. Never reconstruct them. Notes remain private unless explicitly selected for an AI context bundle. Keep anchoring available on text, cells, charts and images.
 - Reading rhythm comes from the base, independently of theme. Use `.prosa` for custom or nested text wrappers; reserve `data-ritmo="propio"` for intentional custom layouts. Resolve composition warnings and check heading gaps on mobile.
-- Text width is 35rem; wide figures 62/76rem and fluid. Wide figures are siblings of prose blocks. Use one outer frame, no nested dotted frames, negative margins or document-wide overflow hiding.
+- Editorial prose defaults to 33rem (528px), code to 48rem (768px), and wide figures to 64rem (1024px), all fluid with 24px mobile gutters. Wide figures are siblings of prose blocks. Use one outer frame, no nested dotted frames, negative margins or document-wide overflow hiding.
 - Tables and code use named local scrollers. Preserve whole words in short columns; give descriptions deliberate widths and vertical room. Use existing search/filter/column/view controls rather than rebuilding them. Missing data is not zero.
 - Marginal notes use `apuntes`; preserve Reenie Beanie and the approved sound. Handwriting and strike-through reveal on entering the viewport; replay is a small hover/focus control, also usable on touch. Essential conditions stay in the prose.
 - Charts disclose source, units and denominator; provide accessible text/table alternatives. Illustrative routes, animations and data must be labeled. Unique visitors are estimates, not identified people.
@@ -70,3 +70,5 @@ Write from the user to their team or themselves, ready to share. Lead with the c
 | Change library runtime, recipes or release | [Extended maintenance guidance](docs/skill-reference.md), [contributing](docs/contributing-components.md), [release security](docs/release-security.md) |
 
 Updating the skill does not rewrite old artifacts or reload active conversations. An opted-in updater checks every six hours; `scripts/update.py --if-changed` updates the managed installation, not a Git checkout. Use a new session or reread changed instructions. Never package credentials, private transcripts or production screenshots. Assignments produce drafts; copying feedback does not deliver to or resume an agent. Do not resolve comments without checking the change.
+
+Document identity and imported HTML: follow [the design contract](docs/design-contract.md). Footers are optional author content; platform credit is opt-in. Preserve raw uploaded HTML and presentation navigation.

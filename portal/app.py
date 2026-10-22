@@ -107,6 +107,8 @@ class Store:
             migrate_editor(db)
             from portal.library_query import migrate as migrate_library
             migrate_library(db)
+            from portal.reader_actions import migrate as migrate_reader_actions
+            migrate_reader_actions(db)
 
     def refresh_search(self):
         with self.db() as db:
@@ -135,9 +137,13 @@ class Store:
                 changed_before = db.total_changes
                 for table, column in [('sessions','user_id'), ('tokens','user_id'), ('logins','user_id'), ('artifacts','owner'), ('events','actor'), ('audit','actor'), ('creator_jobs','owner'), ('creator_decisions','owner'), ('creator_rules','owner'), ('creator_connectors','owner'), ('creator_decision_history','actor'), ('review_threads','actor'), ('editor_drafts','owner'), ('editor_sources','actor')]:
                     db.execute(f'UPDATE {table} SET {column}=? WHERE {column}=?', (uid, old['id']))
-                for table in ['review_reads','thread_reads','notifications','notification_settings']:
+                for table in ['review_reads','thread_reads','notifications','notification_settings','reader_saves','reader_likes']:
                     # Las claves únicas del usuario canónico prevalecen; el historial original queda auditable.
                     db.execute(f'UPDATE OR IGNORE {table} SET user=? WHERE user=?',(uid,old['id']))
+                # Account actions represent one person, not historical alias activity.
+                # Only duplicate rows remain after UPDATE OR IGNORE above.
+                for table in ['reader_saves', 'reader_likes']:
+                    db.execute(f'DELETE FROM {table} WHERE user=?', (old['id'],))
                 db.execute('UPDATE delivery_batches SET user=? WHERE user=?',(uid,old['id']))
                 # Los duplicados se conservan con su dueño histórico; la administración los ve.
                 db.execute('UPDATE bookmarks SET owner=? WHERE owner=? AND url NOT IN (SELECT url FROM bookmarks WHERE owner=?)', (uid,old['id'],uid))
@@ -709,6 +715,8 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
         return review(aid,request)
 
     mount_workspace(app,store,origin,who,account,payload,clean,artifact_for,permissions,threads,snapshot,is_admin)
+    from portal.reader_actions import mount as mount_reader_actions
+    mount_reader_actions(app,store,who,account,payload,artifact_for,permissions)
     from portal.developers import mount as mount_developers
     mount_developers(app,store,who,account,payload,clean,is_admin,artifact_for,publish)
     mount_context(app,store,origin,account,payload,clean,artifact_for,permissions)
@@ -716,6 +724,8 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
     mount_creator(app,store,origin,account,payload,clean,artifact_for,permissions,threads,snapshot)
     from portal.editor import mount as mount_editor
     mount_editor(app,store,origin,account,payload,artifact_for,permissions)
+    from portal.uploads import mount as mount_uploads
+    mount_uploads(app,store,account,payload,clean,artifact_for,publish)
 
     @lru_cache(maxsize=32)
     def static_preview(sha,title):

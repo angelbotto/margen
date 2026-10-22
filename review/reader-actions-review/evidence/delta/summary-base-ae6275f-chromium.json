@@ -1,0 +1,556 @@
+{
+ "root": "/Users/angelbotto/orca/workspaces/margen/margen-reader-review",
+ "portal_module": "/Users/angelbotto/orca/workspaces/margen/margen-reader-review/portal/__init__.py",
+ "commit": "3944592",
+ "probes": {
+  "occ": [
+   {
+    "engine": "chromium",
+    "doc": "table",
+    "width": 1280,
+    "visible_positions": 1,
+    "occluded_positions": 0,
+    "examples": [],
+    "issues": []
+   },
+   {
+    "engine": "chromium",
+    "doc": "table",
+    "width": 1440,
+    "visible_positions": 21,
+    "occluded_positions": 11,
+    "examples": [
+     {
+      "scrollY": 2653,
+      "hits": [
+       "slot",
+       "td"
+      ]
+     },
+     {
+      "scrollY": 2919,
+      "hits": [
+       "slot",
+       "td"
+      ]
+     },
+     {
+      "scrollY": 3184,
+      "hits": [
+       "slot",
+       "td"
+      ]
+     }
+    ],
+    "issues": [
+     "anchor over content at 11 positions"
+    ]
+   },
+   {
+    "engine": "chromium",
+    "doc": "table",
+    "width": 1920,
+    "visible_positions": 21,
+    "occluded_positions": 11,
+    "examples": [
+     {
+      "scrollY": 2650,
+      "hits": [
+       "slot",
+       "td"
+      ]
+     },
+     {
+      "scrollY": 2913,
+      "hits": [
+       "slot",
+       "td"
+      ]
+     },
+     {
+      "scrollY": 3178,
+      "hits": [
+       "slot",
+       "td"
+      ]
+     }
+    ],
+    "issues": [
+     "anchor over content at 11 positions"
+    ]
+   },
+   {
+    "engine": "chromium",
+    "doc": "table",
+    "width": 390,
+    "visible_positions": 1,
+    "occluded_positions": 0,
+    "examples": [],
+    "issues": []
+   },
+   {
+    "engine": "chromium",
+    "doc": "gallery",
+    "width": 1280,
+    "visible_positions": 2,
+    "occluded_positions": 0,
+    "examples": [],
+    "issues": []
+   },
+   {
+    "engine": "chromium",
+    "doc": "gallery",
+    "width": 1440,
+    "visible_positions": 21,
+    "occluded_positions": 0,
+    "examples": [],
+    "issues": []
+   },
+   {
+    "engine": "chromium",
+    "doc": "gallery",
+    "width": 1920,
+    "visible_positions": 21,
+    "occluded_positions": 0,
+    "examples": [],
+    "issues": []
+   },
+   {
+    "engine": "chromium",
+    "doc": "gallery",
+    "width": 390,
+    "visible_positions": 2,
+    "occluded_positions": 1,
+    "examples": [
+     {
+      "scrollY": 169,
+      "hits": [
+       "header.barra",
+       "slot"
+      ]
+     }
+    ],
+    "issues": [
+     "anchor over content at 1 positions"
+    ]
+   },
+   {
+    "engine": "chromium",
+    "doc": "priorities",
+    "width": 1280,
+    "visible_positions": 3,
+    "occluded_positions": 1,
+    "examples": [
+     {
+      "scrollY": 249,
+      "hits": [
+       "header.barra",
+       "slot"
+      ]
+     }
+    ],
+    "issues": [
+     "anchor over content at 1 positions"
+    ]
+   },
+   {
+    "engine": "chromium",
+    "doc": "priorities",
+    "width": 1440,
+    "visible_positions": 21,
+    "occluded_positions": 13,
+    "examples": [
+     {
+      "scrollY": 781,
+      "hits": [
+       "section.apunte",
+       "slot"
+      ]
+     },
+     {
+      "scrollY": 893,
+      "hits": [
+       "aside.apunte-nota",
+       "section.apunte",
+       "slot"
+      ]
+     },
+     {
+      "scrollY": 1116,
+      "hits": [
+       "caption",
+       "figure.amplio",
+       "slot"
+      ]
+     }
+    ],
+    "issues": [
+     "anchor over content at 13 positions"
+    ]
+   },
+   {
+    "engine": "chromium",
+    "doc": "priorities",
+    "width": 1920,
+    "visible_positions": 21,
+    "occluded_positions": 13,
+    "examples": [
+     {
+      "scrollY": 781,
+      "hits": [
+       "section.apunte",
+       "slot"
+      ]
+     },
+     {
+      "scrollY": 893,
+      "hits": [
+       "aside.apunte-nota",
+       "section.apunte",
+       "slot"
+      ]
+     },
+     {
+      "scrollY": 1116,
+      "hits": [
+       "caption",
+       "figure.amplio",
+       "slot"
+      ]
+     }
+    ],
+    "issues": [
+     "anchor over content at 13 positions"
+    ]
+   },
+   {
+    "engine": "chromium",
+    "doc": "priorities",
+    "width": 390,
+    "visible_positions": 3,
+    "occluded_positions": 1,
+    "examples": [
+     {
+      "scrollY": 352,
+      "hits": [
+       "a.firma-editorial",
+       "header.barra",
+       "path",
+       "svg"
+      ]
+     }
+    ],
+    "issues": [
+     "anchor over content at 1 positions"
+    ]
+   }
+  ],
+  "dock": [
+   {
+    "engine": "chromium",
+    "doc": "deck",
+    "vp": "desktop",
+    "info": {
+     "hidden": false,
+     "parent": "reader-dock",
+     "display": "flex",
+     "btns": [
+      {
+       "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+       },
+       "top_is_self": false,
+       "top": "artifact-frame"
+      },
+      {
+       "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+       },
+       "top_is_self": false,
+       "top": "artifact-frame"
+      }
+     ],
+     "host": [
+      {
+       "x": 0,
+       "y": 0,
+       "width": 0,
+       "height": 0,
+       "top": 0,
+       "right": 0,
+       "bottom": 0,
+       "left": 0
+      },
+      {
+       "x": 0,
+       "y": 0,
+       "width": 0,
+       "height": 0,
+       "top": 0,
+       "right": 0,
+       "bottom": 0,
+       "left": 0
+      }
+     ],
+     "overlay_visible": false
+    },
+    "issues": [
+     "dock not visible"
+    ]
+   },
+   {
+    "engine": "chromium",
+    "doc": "deck",
+    "vp": "mobile",
+    "info": {
+     "hidden": false,
+     "parent": "reader-dock",
+     "display": "flex",
+     "btns": [
+      {
+       "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+       },
+       "top_is_self": false,
+       "top": "artifact-frame"
+      },
+      {
+       "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+       },
+       "top_is_self": false,
+       "top": "artifact-frame"
+      }
+     ],
+     "host": [
+      {
+       "x": 0,
+       "y": 0,
+       "width": 0,
+       "height": 0,
+       "top": 0,
+       "right": 0,
+       "bottom": 0,
+       "left": 0
+      },
+      {
+       "x": 0,
+       "y": 0,
+       "width": 0,
+       "height": 0,
+       "top": 0,
+       "right": 0,
+       "bottom": 0,
+       "left": 0
+      }
+     ],
+     "overlay_visible": false
+    },
+    "issues": [
+     "dock not visible"
+    ]
+   },
+   {
+    "engine": "chromium",
+    "doc": "raw",
+    "vp": "desktop",
+    "info": {
+     "hidden": false,
+     "parent": "reader-dock",
+     "display": "flex",
+     "btns": [
+      {
+       "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+       },
+       "top_is_self": false,
+       "top": "artifact-frame"
+      },
+      {
+       "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+       },
+       "top_is_self": false,
+       "top": "artifact-frame"
+      }
+     ],
+     "host": [
+      {
+       "x": 0,
+       "y": 0,
+       "width": 0,
+       "height": 0,
+       "top": 0,
+       "right": 0,
+       "bottom": 0,
+       "left": 0
+      },
+      {
+       "x": 0,
+       "y": 0,
+       "width": 0,
+       "height": 0,
+       "top": 0,
+       "right": 0,
+       "bottom": 0,
+       "left": 0
+      },
+      {
+       "x": 0,
+       "y": 0,
+       "width": 0,
+       "height": 0,
+       "top": 0,
+       "right": 0,
+       "bottom": 0,
+       "left": 0
+      }
+     ],
+     "overlay_visible": false
+    },
+    "issues": [
+     "dock not visible"
+    ]
+   },
+   {
+    "engine": "chromium",
+    "doc": "raw",
+    "vp": "mobile",
+    "info": {
+     "hidden": false,
+     "parent": "reader-dock",
+     "display": "flex",
+     "btns": [
+      {
+       "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+       },
+       "top_is_self": false,
+       "top": "artifact-frame"
+      },
+      {
+       "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+       },
+       "top_is_self": false,
+       "top": "artifact-frame"
+      }
+     ],
+     "host": [
+      {
+       "x": 0,
+       "y": 0,
+       "width": 0,
+       "height": 0,
+       "top": 0,
+       "right": 0,
+       "bottom": 0,
+       "left": 0
+      },
+      {
+       "x": 0,
+       "y": 0,
+       "width": 0,
+       "height": 0,
+       "top": 0,
+       "right": 0,
+       "bottom": 0,
+       "left": 0
+      },
+      {
+       "x": 0,
+       "y": 0,
+       "width": 0,
+       "height": 0,
+       "top": 0,
+       "right": 0,
+       "bottom": 0,
+       "left": 0
+      }
+     ],
+     "overlay_visible": false
+    },
+    "issues": [
+     "dock not visible"
+    ]
+   }
+  ],
+  "saved": [
+   {
+    "engine": "chromium",
+    "tabs": [
+     "saved"
+    ],
+    "saved_current": "page",
+    "saved_hidden": false,
+    "items": [
+     "/a/e83206b4820e466c8422b583129c7aee"
+    ],
+    "url": "/?view=saved",
+    "issues": []
+   }
+  ]
+ },
+ "seconds": 128,
+ "failed": {
+  "occ": 7,
+  "dock": 4,
+  "saved": 0
+ }
+}
