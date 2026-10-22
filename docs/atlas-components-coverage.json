@@ -1,0 +1,3383 @@
+{
+ "version": 1,
+ "generado": "2026-10-22",
+ "base": "d61743a (registry 90 IDs); atlas root 4394481",
+ "fuente_medicion": "~/.local/share/margen-review/atlas-datos-20261022/recipe-audit.json (examples/generated/library.html, Chromium headless 1280 y 390 px)",
+ "conteos": {
+  "registro": 90,
+  "manifests": 92,
+  "layouts_excluidos": [
+   "report-layout (informe)",
+   "chapter-layout (multipagina)"
+  ],
+  "por_familia": {
+   "publicaciones": 10,
+   "lectura": 13,
+   "reportes": 15,
+   "graficas": 22,
+   "tablas": 7,
+   "prototipos": 5,
+   "expresion": 8,
+   "configuracion": 10
+  },
+  "por_pagina_propuesta": {
+   "publicar": 10,
+   "leer": 13,
+   "decidir": 15,
+   "datos-magnitud": 7,
+   "datos-tiempo": 6,
+   "datos-distribucion-relacion": 7,
+   "lugares-y-espacio": 9,
+   "tablas": 7,
+   "prototipos": 6,
+   "codigo-y-edicion": 10
+  }
+ },
+ "paginas_propuestas": [
+  {
+   "id": "publicar",
+   "ids": [
+    "archivo",
+    "autor",
+    "relacionados",
+    "cards",
+    "cards-trazadas",
+    "estanteria",
+    "invitacion",
+    "pie-editorial",
+    "actividad-editorial",
+    "galeria"
+   ]
+  },
+  {
+   "id": "leer",
+   "ids": [
+    "manuscrita",
+    "articulo",
+    "referencias",
+    "glosario",
+    "metodologia",
+    "revisiones",
+    "apuntes",
+    "lista-estados",
+    "lista-proyectos",
+    "conversacion",
+    "enlaces-icono",
+    "avisos-animados",
+    "relato-visual"
+   ]
+  },
+  {
+   "id": "decidir",
+   "ids": [
+    "decision",
+    "cronologia",
+    "conciliacion",
+    "escenario",
+    "hallazgo",
+    "criterios",
+    "riesgos",
+    "trayectoria",
+    "ficha-entrega",
+    "sensibilidad",
+    "gantt",
+    "session-brief",
+    "context-bundle",
+    "evidence-ledger",
+    "version-comparison"
+   ]
+  },
+  {
+   "id": "datos-magnitud",
+   "ids": [
+    "barras",
+    "cascada",
+    "multiples",
+    "torta",
+    "atencion",
+    "sankey",
+    "embudo"
+   ]
+  },
+  {
+   "id": "datos-tiempo",
+   "ids": [
+    "lineas",
+    "temporal",
+    "calendario",
+    "areas",
+    "velas",
+    "cohortes"
+   ]
+  },
+  {
+   "id": "datos-distribucion-relacion",
+   "ids": [
+    "dispersion",
+    "distribucion",
+    "calor",
+    "caja",
+    "incertidumbre",
+    "relationship-map",
+    "sketch-diagram"
+   ]
+  },
+  {
+   "id": "lugares-y-espacio",
+   "ids": [
+    "mapa-rutas",
+    "mapa-burbujas",
+    "xyz",
+    "etapas",
+    "recorrido",
+    "columnas-mapa",
+    "arcos-mapa",
+    "almacen",
+    "globo-flota"
+   ]
+  },
+  {
+   "id": "tablas",
+   "ids": [
+    "tabla-densa",
+    "comparacion",
+    "totales",
+    "sparkline",
+    "explorador",
+    "cola-novedades",
+    "review-queue"
+   ]
+  },
+  {
+   "id": "prototipos",
+   "ids": [
+    "antes-despues",
+    "visor",
+    "pestanas",
+    "anotaciones",
+    "evidencia-ampliable",
+    "sonido"
+   ]
+  },
+  {
+   "id": "codigo-y-edicion",
+   "ids": [
+    "terminal",
+    "escritura",
+    "apariencia",
+    "configuracion",
+    "revision",
+    "codigo-poliglota",
+    "marco",
+    "navegacion",
+    "codigo-lineas",
+    "sitio-editorial"
+   ]
+  }
+ ],
+ "leyenda_hallazgos": {
+  "B1": "rótulos X/Y literales",
+  "B2": "paleta de 4 tonos con ciclo i%4",
+  "B3": "locale es-CO fijo, sin data-formato",
+  "B4": "ticks no redondeados",
+  "B5": "ancho fijo de viewBox",
+  "B6": "tooltip solo <title>",
+  "B8": "three.js síncrono de CDN",
+  "B10": "partición binaria vs mosaico squarified",
+  "B12": "leyenda no interactiva"
+ },
+ "componentes": [
+  {
+   "id": "archivo",
+   "alias": "archive",
+   "nombre": "Archivo de publicaciones",
+   "familia_registro": "publicaciones",
+   "pagina_atlas_propuesta": "publicar",
+   "tipo": "editorial",
+   "runtime_extra": [
+    "editorial.js"
+   ],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 6,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-archivo existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "autor",
+   "alias": "author",
+   "nombre": "Ficha de autor",
+   "familia_registro": "publicaciones",
+   "pagina_atlas_propuesta": "publicar",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 1,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-autor existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "relacionados",
+   "alias": "related-reading",
+   "nombre": "Lecturas relacionadas",
+   "familia_registro": "publicaciones",
+   "pagina_atlas_propuesta": "publicar",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 2,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-relacionados existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "cards",
+   "alias": "cards",
+   "nombre": "Familia de cards",
+   "familia_registro": "publicaciones",
+   "pagina_atlas_propuesta": "publicar",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 2,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-cards existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "cards-trazadas",
+   "alias": "outlined-cards",
+   "nombre": "Cards delineadas",
+   "familia_registro": "publicaciones",
+   "pagina_atlas_propuesta": "publicar",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 6,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-cards-trazadas existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "estanteria",
+   "alias": "bookshelf",
+   "nombre": "Estantería editorial",
+   "familia_registro": "publicaciones",
+   "pagina_atlas_propuesta": "publicar",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 3,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-estanteria existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "invitacion",
+   "alias": "invitation",
+   "nombre": "Invitación editorial",
+   "familia_registro": "publicaciones",
+   "pagina_atlas_propuesta": "publicar",
+   "tipo": "editorial",
+   "runtime_extra": [
+    "invitation.js"
+   ],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 1,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-invitacion existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "pie-editorial",
+   "alias": "editorial-footer",
+   "nombre": "Footer editorial",
+   "familia_registro": "publicaciones",
+   "pagina_atlas_propuesta": "publicar",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 3,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-pie-editorial existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "actividad-editorial",
+   "alias": "activity",
+   "nombre": "Actividad con contexto editorial",
+   "familia_registro": "publicaciones",
+   "pagina_atlas_propuesta": "publicar",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 1,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 11,
+    "regiones_scroll_390": 1,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-actividad-editorial existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "galeria",
+   "alias": "gallery",
+   "nombre": "Galería deslizable",
+   "familia_registro": "publicaciones",
+   "pagina_atlas_propuesta": "publicar",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 1,
+    "regiones_scroll_390": 1,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-galeria existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "manuscrita",
+   "alias": "handwritten-note",
+   "nombre": "Nota manuscrita",
+   "familia_registro": "lectura",
+   "pagina_atlas_propuesta": "leer",
+   "tipo": "editorial",
+   "runtime_extra": [
+    "handwriting.js"
+   ],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 1,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-manuscrita existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "articulo",
+   "alias": "article",
+   "nombre": "Ficha de artículo",
+   "familia_registro": "lectura",
+   "pagina_atlas_propuesta": "leer",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "sin controles",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 0,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-articulo existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "referencias",
+   "alias": "references",
+   "nombre": "Referencias con regreso",
+   "familia_registro": "lectura",
+   "pagina_atlas_propuesta": "leer",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 4,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-referencias existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "glosario",
+   "alias": "glossary",
+   "nombre": "Glosario editorial",
+   "familia_registro": "lectura",
+   "pagina_atlas_propuesta": "leer",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "sin controles",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 0,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-glosario existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "metodologia",
+   "alias": "methodology",
+   "nombre": "Metodología desplegable",
+   "familia_registro": "lectura",
+   "pagina_atlas_propuesta": "leer",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 1,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-metodologia existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "revisiones",
+   "alias": "revision-history",
+   "nombre": "Historial de revisiones",
+   "familia_registro": "lectura",
+   "pagina_atlas_propuesta": "leer",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "sin controles",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 0,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-revisiones existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "apuntes",
+   "alias": "margin-notes",
+   "nombre": "Apuntes manuscritos al margen",
+   "familia_registro": "lectura",
+   "pagina_atlas_propuesta": "leer",
+   "tipo": "editorial",
+   "runtime_extra": [
+    "handwriting.js"
+   ],
+   "render": "svg",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 1,
+    "canvas": 0,
+    "enfocables": 2,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-apuntes existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "lista-estados",
+   "alias": "status-list",
+   "nombre": "Listas de estado",
+   "familia_registro": "lectura",
+   "pagina_atlas_propuesta": "leer",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "sin controles",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 0,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-lista-estados existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "lista-proyectos",
+   "alias": "project-list",
+   "nombre": "Lista de proyectos",
+   "familia_registro": "lectura",
+   "pagina_atlas_propuesta": "leer",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "sin controles",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 0,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-lista-proyectos existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "conversacion",
+   "alias": "conversation",
+   "nombre": "Conversación en el artículo",
+   "familia_registro": "lectura",
+   "pagina_atlas_propuesta": "leer",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "sin controles",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 0,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-conversacion existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "enlaces-icono",
+   "alias": "icon-links",
+   "nombre": "Enlaces con icono",
+   "familia_registro": "lectura",
+   "pagina_atlas_propuesta": "leer",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 1,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-enlaces-icono existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "avisos-animados",
+   "alias": "animated-callouts",
+   "nombre": "Avisos con icono animado",
+   "familia_registro": "lectura",
+   "pagina_atlas_propuesta": "leer",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "sin controles",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 0,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-avisos-animados existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "relato-visual",
+   "alias": "visual-story",
+   "nombre": "Relato visual por pasos",
+   "familia_registro": "lectura",
+   "pagina_atlas_propuesta": "leer",
+   "tipo": "editorial",
+   "runtime_extra": [
+    "evidence.js"
+   ],
+   "render": "svg",
+   "interacciones": [
+    "<select> de dato",
+    "clic en marca",
+    "status"
+   ],
+   "teclado": "vía <select>",
+   "redimension": "ancho fijo por contenido",
+   "medido": {
+    "tablas": 1,
+    "svg": 1,
+    "canvas": 0,
+    "enfocables": 7,
+    "regiones_scroll_390": 2,
+    "fuente_svg_px_1280": 15.4,
+    "fuente_svg_px_390": 12,
+    "errores": []
+   },
+   "hallazgos": [
+    "B2 paleta ev-color-0..3 (4 tonos)",
+    "B5 ancho fijo por contenido",
+    "B3 locale es-CO fijo"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-relato-visual existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "390px: el SVG cabe sin scroll horizontal (o declara scroll intencional con región etiquetada)",
+    "texto SVG renderizado entre 11 y 14px a 390 y 1440px",
+    "cada marca alcanzable por teclado o por control equivalente; Enter fija, Escape cierra",
+    "tabla fuente disponible sin JS y descargable como CSV",
+    "claro y oscuro: contraste de marcas ≥3:1 contra --papel"
+   ]
+  },
+  {
+   "id": "decision",
+   "alias": "decision",
+   "nombre": "Ficha de decisión",
+   "familia_registro": "reportes",
+   "pagina_atlas_propuesta": "decidir",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "sin controles",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 0,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-decision existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "cronologia",
+   "alias": "chronology",
+   "nombre": "Cronología anotada",
+   "familia_registro": "reportes",
+   "pagina_atlas_propuesta": "decidir",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "sin controles",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 0,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-cronologia existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "conciliacion",
+   "alias": "reconciliation",
+   "nombre": "Conciliación de registros",
+   "familia_registro": "reportes",
+   "pagina_atlas_propuesta": "decidir",
+   "tipo": "editorial",
+   "runtime_extra": [
+    "reports.js"
+   ],
+   "render": "svg/html",
+   "interacciones": [
+    "tooltip nativo <title>",
+    "cálculo de escenario"
+   ],
+   "teclado": "controles nativos; marcas no enfocables",
+   "redimension": "viewBox fijo",
+   "medido": {
+    "tablas": 1,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 1,
+    "regiones_scroll_390": 1,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [
+    "B5 viewBox fijo",
+    "B6 tooltip solo <title>",
+    "B3 locale es-CO fijo"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-conciliacion existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "390px: el SVG cabe sin scroll horizontal (o declara scroll intencional con región etiquetada)",
+    "texto SVG renderizado entre 11 y 14px a 390 y 1440px",
+    "cada marca alcanzable por teclado o por control equivalente; Enter fija, Escape cierra",
+    "tabla fuente disponible sin JS y descargable como CSV",
+    "claro y oscuro: contraste de marcas ≥3:1 contra --papel"
+   ]
+  },
+  {
+   "id": "escenario",
+   "alias": "scenario",
+   "nombre": "Calculadora de escenarios",
+   "familia_registro": "reportes",
+   "pagina_atlas_propuesta": "decidir",
+   "tipo": "editorial",
+   "runtime_extra": [
+    "reports.js"
+   ],
+   "render": "svg/html",
+   "interacciones": [
+    "tooltip nativo <title>",
+    "cálculo de escenario"
+   ],
+   "teclado": "controles nativos; marcas no enfocables",
+   "redimension": "viewBox fijo",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 4,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [
+    "B5 viewBox fijo",
+    "B6 tooltip solo <title>",
+    "B3 locale es-CO fijo"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-escenario existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "390px: el SVG cabe sin scroll horizontal (o declara scroll intencional con región etiquetada)",
+    "texto SVG renderizado entre 11 y 14px a 390 y 1440px",
+    "cada marca alcanzable por teclado o por control equivalente; Enter fija, Escape cierra",
+    "tabla fuente disponible sin JS y descargable como CSV",
+    "claro y oscuro: contraste de marcas ≥3:1 contra --papel"
+   ]
+  },
+  {
+   "id": "hallazgo",
+   "alias": "finding",
+   "nombre": "Ficha de hallazgo",
+   "familia_registro": "reportes",
+   "pagina_atlas_propuesta": "decidir",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "sin controles",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 0,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-hallazgo existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "criterios",
+   "alias": "criteria",
+   "nombre": "Matriz de criterios",
+   "familia_registro": "reportes",
+   "pagina_atlas_propuesta": "decidir",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 1,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 1,
+    "regiones_scroll_390": 1,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-criterios existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "riesgos",
+   "alias": "risks",
+   "nombre": "Registro de riesgos",
+   "familia_registro": "reportes",
+   "pagina_atlas_propuesta": "decidir",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 1,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 1,
+    "regiones_scroll_390": 1,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-riesgos existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "trayectoria",
+   "alias": "timeline",
+   "nombre": "Cronología vertical",
+   "familia_registro": "reportes",
+   "pagina_atlas_propuesta": "decidir",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "sin controles",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 0,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-trayectoria existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "ficha-entrega",
+   "alias": "delivery-summary",
+   "nombre": "Ficha de entrega e hitos",
+   "familia_registro": "reportes",
+   "pagina_atlas_propuesta": "decidir",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "sin controles",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 0,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-ficha-entrega existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "sensibilidad",
+   "alias": "sensitivity",
+   "nombre": "Sensibilidad de escenarios",
+   "familia_registro": "reportes",
+   "pagina_atlas_propuesta": "decidir",
+   "tipo": "editorial",
+   "runtime_extra": [
+    "evidence.js"
+   ],
+   "render": "svg",
+   "interacciones": [
+    "<select> de dato",
+    "clic en marca",
+    "status"
+   ],
+   "teclado": "vía <select>",
+   "redimension": "ancho fijo por contenido",
+   "medido": {
+    "tablas": 1,
+    "svg": 1,
+    "canvas": 0,
+    "enfocables": 4,
+    "regiones_scroll_390": 2,
+    "fuente_svg_px_1280": 17,
+    "fuente_svg_px_390": 12,
+    "errores": []
+   },
+   "hallazgos": [
+    "B2 paleta ev-color-0..3 (4 tonos)",
+    "B5 ancho fijo por contenido",
+    "B3 locale es-CO fijo"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-sensibilidad existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "390px: el SVG cabe sin scroll horizontal (o declara scroll intencional con región etiquetada)",
+    "texto SVG renderizado entre 11 y 14px a 390 y 1440px",
+    "cada marca alcanzable por teclado o por control equivalente; Enter fija, Escape cierra",
+    "tabla fuente disponible sin JS y descargable como CSV",
+    "claro y oscuro: contraste de marcas ≥3:1 contra --papel"
+   ]
+  },
+  {
+   "id": "gantt",
+   "alias": "gantt",
+   "nombre": "Gantt editorial",
+   "familia_registro": "reportes",
+   "pagina_atlas_propuesta": "decidir",
+   "tipo": "editorial",
+   "runtime_extra": [
+    "evidence.js"
+   ],
+   "render": "svg",
+   "interacciones": [
+    "<select> de dato",
+    "clic en marca",
+    "status"
+   ],
+   "teclado": "vía <select>",
+   "redimension": "ancho fijo por contenido",
+   "medido": {
+    "tablas": 1,
+    "svg": 1,
+    "canvas": 0,
+    "enfocables": 3,
+    "regiones_scroll_390": 2,
+    "fuente_svg_px_1280": 15.5,
+    "fuente_svg_px_390": 12,
+    "errores": []
+   },
+   "hallazgos": [
+    "B2 paleta ev-color-0..3 (4 tonos)",
+    "B5 ancho fijo por contenido",
+    "B3 locale es-CO fijo"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-gantt existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "390px: el SVG cabe sin scroll horizontal (o declara scroll intencional con región etiquetada)",
+    "texto SVG renderizado entre 11 y 14px a 390 y 1440px",
+    "cada marca alcanzable por teclado o por control equivalente; Enter fija, Escape cierra",
+    "tabla fuente disponible sin JS y descargable como CSV",
+    "claro y oscuro: contraste de marcas ≥3:1 contra --papel"
+   ]
+  },
+  {
+   "id": "session-brief",
+   "alias": "session-brief",
+   "nombre": "Ficha de sesión y continuación",
+   "familia_registro": "reportes",
+   "pagina_atlas_propuesta": "decidir",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 1,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-session-brief existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "context-bundle",
+   "alias": "context-bundle",
+   "nombre": "Paquete de contexto para agentes",
+   "familia_registro": "reportes",
+   "pagina_atlas_propuesta": "decidir",
+   "tipo": "editorial",
+   "runtime_extra": [
+    "code.js"
+   ],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 2,
+    "regiones_scroll_390": 1,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-context-bundle existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "evidence-ledger",
+   "alias": "evidence-ledger",
+   "nombre": "Registro de afirmaciones y evidencia",
+   "familia_registro": "reportes",
+   "pagina_atlas_propuesta": "decidir",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 1,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 1,
+    "regiones_scroll_390": 1,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-evidence-ledger existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "version-comparison",
+   "alias": "version-comparison",
+   "nombre": "Comparación editorial entre versiones",
+   "familia_registro": "reportes",
+   "pagina_atlas_propuesta": "decidir",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 1,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-version-comparison existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "barras",
+   "alias": "bar-chart",
+   "nombre": "Barras",
+   "familia_registro": "graficas",
+   "pagina_atlas_propuesta": "datos-magnitud",
+   "tipo": "datos",
+   "runtime_extra": [
+    "charts.js"
+   ],
+   "render": "svg",
+   "interacciones": [
+    "tooltip nativo <title>",
+    "leyenda estática",
+    "tabla en <details>"
+   ],
+   "teclado": "solo región desplazable enfocable; marcas no enfocables",
+   "redimension": "barras re-renderiza con ResizeObserver; resto viewBox fijo 800",
+   "medido": {
+    "tablas": 1,
+    "svg": 1,
+    "canvas": 0,
+    "enfocables": 3,
+    "regiones_scroll_390": 1,
+    "fuente_svg_px_1280": 12,
+    "fuente_svg_px_390": 12,
+    "errores": []
+   },
+   "hallazgos": [
+    "B1 rótulos literales X/Y en el SVG",
+    "B4 ticks sin redondeo (dominio/4)",
+    "B5 viewBox fijo: escala tipográfica variable y scroll horizontal en móvil",
+    "B6 tooltip solo <title> (sin táctil/teclado)",
+    "B12 leyenda no interactiva",
+    "B3 locale es-CO fijo"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-barras existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "390px: el SVG cabe sin scroll horizontal (o declara scroll intencional con región etiquetada)",
+    "texto SVG renderizado entre 11 y 14px a 390 y 1440px",
+    "cada marca alcanzable por teclado o por control equivalente; Enter fija, Escape cierra",
+    "tabla fuente disponible sin JS y descargable como CSV",
+    "claro y oscuro: contraste de marcas ≥3:1 contra --papel"
+   ]
+  },
+  {
+   "id": "lineas",
+   "alias": "line-chart",
+   "nombre": "Líneas",
+   "familia_registro": "graficas",
+   "pagina_atlas_propuesta": "datos-tiempo",
+   "tipo": "datos",
+   "runtime_extra": [
+    "charts.js"
+   ],
+   "render": "svg",
+   "interacciones": [
+    "tooltip nativo <title>",
+    "leyenda estática",
+    "tabla en <details>"
+   ],
+   "teclado": "solo región desplazable enfocable; marcas no enfocables",
+   "redimension": "barras re-renderiza con ResizeObserver; resto viewBox fijo 800",
+   "medido": {
+    "tablas": 1,
+    "svg": 1,
+    "canvas": 0,
+    "enfocables": 3,
+    "regiones_scroll_390": 2,
+    "fuente_svg_px_1280": 15.4,
+    "fuente_svg_px_390": 12,
+    "errores": []
+   },
+   "hallazgos": [
+    "B1 rótulos literales X/Y en el SVG",
+    "B4 ticks sin redondeo (dominio/4)",
+    "B5 viewBox fijo: escala tipográfica variable y scroll horizontal en móvil",
+    "B6 tooltip solo <title> (sin táctil/teclado)",
+    "B12 leyenda no interactiva",
+    "B3 locale es-CO fijo"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-lineas existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "390px: el SVG cabe sin scroll horizontal (o declara scroll intencional con región etiquetada)",
+    "texto SVG renderizado entre 11 y 14px a 390 y 1440px",
+    "cada marca alcanzable por teclado o por control equivalente; Enter fija, Escape cierra",
+    "tabla fuente disponible sin JS y descargable como CSV",
+    "claro y oscuro: contraste de marcas ≥3:1 contra --papel"
+   ]
+  },
+  {
+   "id": "temporal",
+   "alias": "time-series",
+   "nombre": "Serie temporal",
+   "familia_registro": "graficas",
+   "pagina_atlas_propuesta": "datos-tiempo",
+   "tipo": "datos",
+   "runtime_extra": [
+    "charts.js"
+   ],
+   "render": "svg",
+   "interacciones": [
+    "tooltip nativo <title>",
+    "leyenda estática",
+    "tabla en <details>"
+   ],
+   "teclado": "solo región desplazable enfocable; marcas no enfocables",
+   "redimension": "barras re-renderiza con ResizeObserver; resto viewBox fijo 800",
+   "medido": {
+    "tablas": 1,
+    "svg": 1,
+    "canvas": 0,
+    "enfocables": 3,
+    "regiones_scroll_390": 2,
+    "fuente_svg_px_1280": 15.4,
+    "fuente_svg_px_390": 12,
+    "errores": []
+   },
+   "hallazgos": [
+    "B1 rótulos literales X/Y en el SVG",
+    "B4 ticks sin redondeo (dominio/4)",
+    "B5 viewBox fijo: escala tipográfica variable y scroll horizontal en móvil",
+    "B6 tooltip solo <title> (sin táctil/teclado)",
+    "B12 leyenda no interactiva",
+    "B3 locale es-CO fijo"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-temporal existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "390px: el SVG cabe sin scroll horizontal (o declara scroll intencional con región etiquetada)",
+    "texto SVG renderizado entre 11 y 14px a 390 y 1440px",
+    "cada marca alcanzable por teclado o por control equivalente; Enter fija, Escape cierra",
+    "tabla fuente disponible sin JS y descargable como CSV",
+    "claro y oscuro: contraste de marcas ≥3:1 contra --papel"
+   ]
+  },
+  {
+   "id": "dispersion",
+   "alias": "scatter-plot",
+   "nombre": "Dispersión",
+   "familia_registro": "graficas",
+   "pagina_atlas_propuesta": "datos-distribucion-relacion",
+   "tipo": "datos",
+   "runtime_extra": [
+    "charts.js"
+   ],
+   "render": "svg",
+   "interacciones": [
+    "tooltip nativo <title>",
+    "leyenda estática",
+    "tabla en <details>"
+   ],
+   "teclado": "solo región desplazable enfocable; marcas no enfocables",
+   "redimension": "barras re-renderiza con ResizeObserver; resto viewBox fijo 800",
+   "medido": {
+    "tablas": 1,
+    "svg": 1,
+    "canvas": 0,
+    "enfocables": 3,
+    "regiones_scroll_390": 2,
+    "fuente_svg_px_1280": 15.4,
+    "fuente_svg_px_390": 12,
+    "errores": []
+   },
+   "hallazgos": [
+    "B1 rótulos literales X/Y en el SVG",
+    "B4 ticks sin redondeo (dominio/4)",
+    "B5 viewBox fijo: escala tipográfica variable y scroll horizontal en móvil",
+    "B6 tooltip solo <title> (sin táctil/teclado)",
+    "B12 leyenda no interactiva",
+    "B3 locale es-CO fijo"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-dispersion existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "390px: el SVG cabe sin scroll horizontal (o declara scroll intencional con región etiquetada)",
+    "texto SVG renderizado entre 11 y 14px a 390 y 1440px",
+    "cada marca alcanzable por teclado o por control equivalente; Enter fija, Escape cierra",
+    "tabla fuente disponible sin JS y descargable como CSV",
+    "claro y oscuro: contraste de marcas ≥3:1 contra --papel"
+   ]
+  },
+  {
+   "id": "distribucion",
+   "alias": "distribution",
+   "nombre": "Distribución",
+   "familia_registro": "graficas",
+   "pagina_atlas_propuesta": "datos-distribucion-relacion",
+   "tipo": "datos",
+   "runtime_extra": [
+    "charts.js"
+   ],
+   "render": "svg",
+   "interacciones": [
+    "tooltip nativo <title>",
+    "leyenda estática",
+    "tabla en <details>"
+   ],
+   "teclado": "solo región desplazable enfocable; marcas no enfocables",
+   "redimension": "barras re-renderiza con ResizeObserver; resto viewBox fijo 800",
+   "medido": {
+    "tablas": 1,
+    "svg": 1,
+    "canvas": 0,
+    "enfocables": 3,
+    "regiones_scroll_390": 2,
+    "fuente_svg_px_1280": 15.4,
+    "fuente_svg_px_390": 12,
+    "errores": []
+   },
+   "hallazgos": [
+    "B1 rótulos literales X/Y en el SVG",
+    "B4 ticks sin redondeo (dominio/4)",
+    "B5 viewBox fijo: escala tipográfica variable y scroll horizontal en móvil",
+    "B6 tooltip solo <title> (sin táctil/teclado)",
+    "B12 leyenda no interactiva",
+    "B3 locale es-CO fijo"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-distribucion existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "390px: el SVG cabe sin scroll horizontal (o declara scroll intencional con región etiquetada)",
+    "texto SVG renderizado entre 11 y 14px a 390 y 1440px",
+    "cada marca alcanzable por teclado o por control equivalente; Enter fija, Escape cierra",
+    "tabla fuente disponible sin JS y descargable como CSV",
+    "claro y oscuro: contraste de marcas ≥3:1 contra --papel"
+   ]
+  },
+  {
+   "id": "calor",
+   "alias": "heatmap",
+   "nombre": "Mapa de calor",
+   "familia_registro": "graficas",
+   "pagina_atlas_propuesta": "datos-distribucion-relacion",
+   "tipo": "datos",
+   "runtime_extra": [
+    "charts.js"
+   ],
+   "render": "svg",
+   "interacciones": [
+    "tooltip nativo <title>",
+    "leyenda estática",
+    "tabla en <details>"
+   ],
+   "teclado": "solo región desplazable enfocable; marcas no enfocables",
+   "redimension": "barras re-renderiza con ResizeObserver; resto viewBox fijo 800",
+   "medido": {
+    "tablas": 1,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 2,
+    "regiones_scroll_390": 1,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [
+    "B1 rótulos literales X/Y en el SVG",
+    "B4 ticks sin redondeo (dominio/4)",
+    "B5 viewBox fijo: escala tipográfica variable y scroll horizontal en móvil",
+    "B6 tooltip solo <title> (sin táctil/teclado)",
+    "B12 leyenda no interactiva",
+    "B3 locale es-CO fijo"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-calor existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "390px: el SVG cabe sin scroll horizontal (o declara scroll intencional con región etiquetada)",
+    "texto SVG renderizado entre 11 y 14px a 390 y 1440px",
+    "cada marca alcanzable por teclado o por control equivalente; Enter fija, Escape cierra",
+    "tabla fuente disponible sin JS y descargable como CSV",
+    "claro y oscuro: contraste de marcas ≥3:1 contra --papel"
+   ]
+  },
+  {
+   "id": "cascada",
+   "alias": "waterfall",
+   "nombre": "Cascada de cantidades",
+   "familia_registro": "graficas",
+   "pagina_atlas_propuesta": "datos-magnitud",
+   "tipo": "datos",
+   "runtime_extra": [
+    "reports.js"
+   ],
+   "render": "svg/html",
+   "interacciones": [
+    "tooltip nativo <title>",
+    "cálculo de escenario"
+   ],
+   "teclado": "controles nativos; marcas no enfocables",
+   "redimension": "viewBox fijo",
+   "medido": {
+    "tablas": 1,
+    "svg": 1,
+    "canvas": 0,
+    "enfocables": 2,
+    "regiones_scroll_390": 2,
+    "fuente_svg_px_1280": 15.6,
+    "fuente_svg_px_390": 14,
+    "errores": []
+   },
+   "hallazgos": [
+    "B5 viewBox fijo",
+    "B6 tooltip solo <title>",
+    "B3 locale es-CO fijo"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-cascada existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "390px: el SVG cabe sin scroll horizontal (o declara scroll intencional con región etiquetada)",
+    "texto SVG renderizado entre 11 y 14px a 390 y 1440px",
+    "cada marca alcanzable por teclado o por control equivalente; Enter fija, Escape cierra",
+    "tabla fuente disponible sin JS y descargable como CSV",
+    "claro y oscuro: contraste de marcas ≥3:1 contra --papel"
+   ]
+  },
+  {
+   "id": "multiples",
+   "alias": "small-multiples",
+   "nombre": "Pequeños múltiples",
+   "familia_registro": "graficas",
+   "pagina_atlas_propuesta": "datos-magnitud",
+   "tipo": "datos",
+   "runtime_extra": [
+    "reports.js"
+   ],
+   "render": "svg/html",
+   "interacciones": [
+    "tooltip nativo <title>",
+    "cálculo de escenario"
+   ],
+   "teclado": "controles nativos; marcas no enfocables",
+   "redimension": "viewBox fijo",
+   "medido": {
+    "tablas": 1,
+    "svg": 3,
+    "canvas": 0,
+    "enfocables": 4,
+    "regiones_scroll_390": 4,
+    "fuente_svg_px_1280": 14.3,
+    "fuente_svg_px_390": 14,
+    "errores": []
+   },
+   "hallazgos": [
+    "B5 viewBox fijo",
+    "B6 tooltip solo <title>",
+    "B3 locale es-CO fijo"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-multiples existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "390px: el SVG cabe sin scroll horizontal (o declara scroll intencional con región etiquetada)",
+    "texto SVG renderizado entre 11 y 14px a 390 y 1440px",
+    "cada marca alcanzable por teclado o por control equivalente; Enter fija, Escape cierra",
+    "tabla fuente disponible sin JS y descargable como CSV",
+    "claro y oscuro: contraste de marcas ≥3:1 contra --papel"
+   ]
+  },
+  {
+   "id": "calendario",
+   "alias": "contribution-calendar",
+   "nombre": "Calendario de actividad",
+   "familia_registro": "graficas",
+   "pagina_atlas_propuesta": "datos-tiempo",
+   "tipo": "datos",
+   "runtime_extra": [
+    "analytics.js"
+   ],
+   "render": "svg",
+   "interacciones": [
+    "<select> de registro",
+    "status aria-live",
+    "clic en marca",
+    "tooltip nativo <title>"
+   ],
+   "teclado": "vía <select>; marcas no enfocables",
+   "redimension": "viewBox fijo 720",
+   "medido": {
+    "tablas": 1,
+    "svg": 1,
+    "canvas": 0,
+    "enfocables": 4,
+    "regiones_scroll_390": 2,
+    "fuente_svg_px_1280": 17.1,
+    "fuente_svg_px_390": 12,
+    "errores": []
+   },
+   "hallazgos": [
+    "B2 color(i)=i%4: torta admite 6 categorías y repite colores 1–2",
+    "B5 viewBox fijo 720",
+    "B6 tooltip solo <title>",
+    "B3 locale es-CO fijo"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-calendario existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "390px: el SVG cabe sin scroll horizontal (o declara scroll intencional con región etiquetada)",
+    "texto SVG renderizado entre 11 y 14px a 390 y 1440px",
+    "cada marca alcanzable por teclado o por control equivalente; Enter fija, Escape cierra",
+    "tabla fuente disponible sin JS y descargable como CSV",
+    "claro y oscuro: contraste de marcas ≥3:1 contra --papel"
+   ]
+  },
+  {
+   "id": "torta",
+   "alias": "pie-chart",
+   "nombre": "Torta y donut",
+   "familia_registro": "graficas",
+   "pagina_atlas_propuesta": "datos-magnitud",
+   "tipo": "datos",
+   "runtime_extra": [
+    "analytics.js"
+   ],
+   "render": "svg",
+   "interacciones": [
+    "<select> de registro",
+    "status aria-live",
+    "clic en marca",
+    "tooltip nativo <title>"
+   ],
+   "teclado": "vía <select>; marcas no enfocables",
+   "redimension": "viewBox fijo 720",
+   "medido": {
+    "tablas": 1,
+    "svg": 1,
+    "canvas": 0,
+    "enfocables": 4,
+    "regiones_scroll_390": 2,
+    "fuente_svg_px_1280": 17.1,
+    "fuente_svg_px_390": 12,
+    "errores": []
+   },
+   "hallazgos": [
+    "B2 color(i)=i%4: torta admite 6 categorías y repite colores 1–2",
+    "B5 viewBox fijo 720",
+    "B6 tooltip solo <title>",
+    "B3 locale es-CO fijo"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-torta existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "390px: el SVG cabe sin scroll horizontal (o declara scroll intencional con región etiquetada)",
+    "texto SVG renderizado entre 11 y 14px a 390 y 1440px",
+    "cada marca alcanzable por teclado o por control equivalente; Enter fija, Escape cierra",
+    "tabla fuente disponible sin JS y descargable como CSV",
+    "claro y oscuro: contraste de marcas ≥3:1 contra --papel",
+    "más de 4 series/categorías: colores distintos o patrón (sin repetir por i%4)"
+   ]
+  },
+  {
+   "id": "areas",
+   "alias": "area-chart",
+   "nombre": "Áreas apiladas",
+   "familia_registro": "graficas",
+   "pagina_atlas_propuesta": "datos-tiempo",
+   "tipo": "datos",
+   "runtime_extra": [
+    "analytics.js"
+   ],
+   "render": "svg",
+   "interacciones": [
+    "<select> de registro",
+    "status aria-live",
+    "clic en marca",
+    "tooltip nativo <title>"
+   ],
+   "teclado": "vía <select>; marcas no enfocables",
+   "redimension": "viewBox fijo 720",
+   "medido": {
+    "tablas": 1,
+    "svg": 1,
+    "canvas": 0,
+    "enfocables": 3,
+    "regiones_scroll_390": 2,
+    "fuente_svg_px_1280": 17.1,
+    "fuente_svg_px_390": 12,
+    "errores": []
+   },
+   "hallazgos": [
+    "B2 color(i)=i%4: torta admite 6 categorías y repite colores 1–2",
+    "B5 viewBox fijo 720",
+    "B6 tooltip solo <title>",
+    "B3 locale es-CO fijo"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-areas existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "390px: el SVG cabe sin scroll horizontal (o declara scroll intencional con región etiquetada)",
+    "texto SVG renderizado entre 11 y 14px a 390 y 1440px",
+    "cada marca alcanzable por teclado o por control equivalente; Enter fija, Escape cierra",
+    "tabla fuente disponible sin JS y descargable como CSV",
+    "claro y oscuro: contraste de marcas ≥3:1 contra --papel",
+    "más de 4 series/categorías: colores distintos o patrón (sin repetir por i%4)"
+   ]
+  },
+  {
+   "id": "caja",
+   "alias": "box-plot",
+   "nombre": "Caja y bigotes",
+   "familia_registro": "graficas",
+   "pagina_atlas_propuesta": "datos-distribucion-relacion",
+   "tipo": "datos",
+   "runtime_extra": [
+    "analytics.js"
+   ],
+   "render": "svg",
+   "interacciones": [
+    "<select> de registro",
+    "status aria-live",
+    "clic en marca",
+    "tooltip nativo <title>"
+   ],
+   "teclado": "vía <select>; marcas no enfocables",
+   "redimension": "viewBox fijo 720",
+   "medido": {
+    "tablas": 1,
+    "svg": 1,
+    "canvas": 0,
+    "enfocables": 3,
+    "regiones_scroll_390": 2,
+    "fuente_svg_px_1280": 17.1,
+    "fuente_svg_px_390": 12,
+    "errores": []
+   },
+   "hallazgos": [
+    "B2 color(i)=i%4: torta admite 6 categorías y repite colores 1–2",
+    "B5 viewBox fijo 720",
+    "B6 tooltip solo <title>",
+    "B3 locale es-CO fijo"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-caja existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "390px: el SVG cabe sin scroll horizontal (o declara scroll intencional con región etiquetada)",
+    "texto SVG renderizado entre 11 y 14px a 390 y 1440px",
+    "cada marca alcanzable por teclado o por control equivalente; Enter fija, Escape cierra",
+    "tabla fuente disponible sin JS y descargable como CSV",
+    "claro y oscuro: contraste de marcas ≥3:1 contra --papel"
+   ]
+  },
+  {
+   "id": "velas",
+   "alias": "candlestick",
+   "nombre": "Velas OHLC",
+   "familia_registro": "graficas",
+   "pagina_atlas_propuesta": "datos-tiempo",
+   "tipo": "datos",
+   "runtime_extra": [
+    "analytics.js"
+   ],
+   "render": "svg",
+   "interacciones": [
+    "<select> de registro",
+    "status aria-live",
+    "clic en marca",
+    "tooltip nativo <title>"
+   ],
+   "teclado": "vía <select>; marcas no enfocables",
+   "redimension": "viewBox fijo 720",
+   "medido": {
+    "tablas": 1,
+    "svg": 1,
+    "canvas": 0,
+    "enfocables": 3,
+    "regiones_scroll_390": 2,
+    "fuente_svg_px_1280": 17.1,
+    "fuente_svg_px_390": 12,
+    "errores": []
+   },
+   "hallazgos": [
+    "B2 color(i)=i%4: torta admite 6 categorías y repite colores 1–2",
+    "B5 viewBox fijo 720",
+    "B6 tooltip solo <title>",
+    "B3 locale es-CO fijo"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-velas existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "390px: el SVG cabe sin scroll horizontal (o declara scroll intencional con región etiquetada)",
+    "texto SVG renderizado entre 11 y 14px a 390 y 1440px",
+    "cada marca alcanzable por teclado o por control equivalente; Enter fija, Escape cierra",
+    "tabla fuente disponible sin JS y descargable como CSV",
+    "claro y oscuro: contraste de marcas ≥3:1 contra --papel"
+   ]
+  },
+  {
+   "id": "mapa-rutas",
+   "alias": "route-map",
+   "nombre": "Mapa de rutas",
+   "familia_registro": "graficas",
+   "pagina_atlas_propuesta": "lugares-y-espacio",
+   "tipo": "datos",
+   "runtime_extra": [
+    "geography.js",
+    "analytics.js"
+   ],
+   "render": "svg",
+   "interacciones": [
+    "<select> de registro",
+    "status aria-live",
+    "clic en marca",
+    "tooltip nativo <title>"
+   ],
+   "teclado": "vía <select>; marcas no enfocables",
+   "redimension": "viewBox fijo 720",
+   "medido": {
+    "tablas": 1,
+    "svg": 1,
+    "canvas": 0,
+    "enfocables": 4,
+    "regiones_scroll_390": 2,
+    "fuente_svg_px_1280": 17.1,
+    "fuente_svg_px_390": 12,
+    "errores": []
+   },
+   "hallazgos": [
+    "B2 color(i)=i%4: torta admite 6 categorías y repite colores 1–2",
+    "B5 viewBox fijo 720",
+    "B6 tooltip solo <title>",
+    "B3 locale es-CO fijo"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-mapa-rutas existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "390px: el SVG cabe sin scroll horizontal (o declara scroll intencional con región etiquetada)",
+    "texto SVG renderizado entre 11 y 14px a 390 y 1440px",
+    "cada marca alcanzable por teclado o por control equivalente; Enter fija, Escape cierra",
+    "tabla fuente disponible sin JS y descargable como CSV",
+    "claro y oscuro: contraste de marcas ≥3:1 contra --papel"
+   ]
+  },
+  {
+   "id": "mapa-burbujas",
+   "alias": "bubble-map",
+   "nombre": "Mapa de volumen",
+   "familia_registro": "graficas",
+   "pagina_atlas_propuesta": "lugares-y-espacio",
+   "tipo": "datos",
+   "runtime_extra": [
+    "geography.js",
+    "analytics.js"
+   ],
+   "render": "svg",
+   "interacciones": [
+    "<select> de registro",
+    "status aria-live",
+    "clic en marca",
+    "tooltip nativo <title>"
+   ],
+   "teclado": "vía <select>; marcas no enfocables",
+   "redimension": "viewBox fijo 720",
+   "medido": {
+    "tablas": 1,
+    "svg": 1,
+    "canvas": 0,
+    "enfocables": 4,
+    "regiones_scroll_390": 2,
+    "fuente_svg_px_1280": 17.1,
+    "fuente_svg_px_390": 12,
+    "errores": []
+   },
+   "hallazgos": [
+    "B2 color(i)=i%4: torta admite 6 categorías y repite colores 1–2",
+    "B5 viewBox fijo 720",
+    "B6 tooltip solo <title>",
+    "B3 locale es-CO fijo"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-mapa-burbujas existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "390px: el SVG cabe sin scroll horizontal (o declara scroll intencional con región etiquetada)",
+    "texto SVG renderizado entre 11 y 14px a 390 y 1440px",
+    "cada marca alcanzable por teclado o por control equivalente; Enter fija, Escape cierra",
+    "tabla fuente disponible sin JS y descargable como CSV",
+    "claro y oscuro: contraste de marcas ≥3:1 contra --papel"
+   ]
+  },
+  {
+   "id": "atencion",
+   "alias": "attention-map",
+   "nombre": "Attention map de áreas",
+   "familia_registro": "graficas",
+   "pagina_atlas_propuesta": "datos-magnitud",
+   "tipo": "datos",
+   "runtime_extra": [
+    "attention-map.js"
+   ],
+   "render": "svg+foreignObject",
+   "interacciones": [
+    "tooltip propio hover/focus/touch",
+    "botones aria-pressed",
+    "Escape cierra",
+    "status"
+   ],
+   "teclado": "botones de categoría; celdas sin tabindex propio",
+   "redimension": "ResizeObserver solo para ajustar etiquetas; viewBox 1000×380, mínimo 900px",
+   "medido": {
+    "tablas": 1,
+    "svg": 1,
+    "canvas": 0,
+    "enfocables": 10,
+    "regiones_scroll_390": 2,
+    "fuente_svg_px_1280": 12.3,
+    "fuente_svg_px_390": 10.8,
+    "errores": []
+   },
+   "hallazgos": [
+    "B10 partición binaria: tiras delgadas y aspecto alto en la cola; difiere del mosaico tonal de referencia",
+    "B5 mínimo 900px → scroll en móvil",
+    "B3 locale es-CO fijo"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-atencion existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "390px: el SVG cabe sin scroll horizontal (o declara scroll intencional con región etiquetada)",
+    "texto SVG renderizado entre 11 y 14px a 390 y 1440px",
+    "cada marca alcanzable por teclado o por control equivalente; Enter fija, Escape cierra",
+    "tabla fuente disponible sin JS y descargable como CSV",
+    "claro y oscuro: contraste de marcas ≥3:1 contra --papel",
+    "variante mosaico: ninguna celda con lado <24px muestra texto; relación de aspecto media ≤3 (squarified)",
+    "reduced-motion: sin reveal escalonado"
+   ]
+  },
+  {
+   "id": "sankey",
+   "alias": "sankey",
+   "nombre": "Flujos Sankey",
+   "familia_registro": "graficas",
+   "pagina_atlas_propuesta": "datos-magnitud",
+   "tipo": "datos",
+   "runtime_extra": [
+    "evidence.js"
+   ],
+   "render": "svg",
+   "interacciones": [
+    "<select> de dato",
+    "clic en marca",
+    "status"
+   ],
+   "teclado": "vía <select>",
+   "redimension": "ancho fijo por contenido",
+   "medido": {
+    "tablas": 1,
+    "svg": 1,
+    "canvas": 0,
+    "enfocables": 3,
+    "regiones_scroll_390": 2,
+    "fuente_svg_px_1280": 17.4,
+    "fuente_svg_px_390": 12,
+    "errores": []
+   },
+   "hallazgos": [
+    "B2 paleta ev-color-0..3 (4 tonos)",
+    "B5 ancho fijo por contenido",
+    "B3 locale es-CO fijo"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-sankey existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "390px: el SVG cabe sin scroll horizontal (o declara scroll intencional con región etiquetada)",
+    "texto SVG renderizado entre 11 y 14px a 390 y 1440px",
+    "cada marca alcanzable por teclado o por control equivalente; Enter fija, Escape cierra",
+    "tabla fuente disponible sin JS y descargable como CSV",
+    "claro y oscuro: contraste de marcas ≥3:1 contra --papel",
+    "más de 4 series/categorías: colores distintos o patrón (sin repetir por i%4)"
+   ]
+  },
+  {
+   "id": "cohortes",
+   "alias": "cohorts",
+   "nombre": "Cohortes de recurrencia",
+   "familia_registro": "graficas",
+   "pagina_atlas_propuesta": "datos-tiempo",
+   "tipo": "datos",
+   "runtime_extra": [
+    "evidence.js"
+   ],
+   "render": "svg",
+   "interacciones": [
+    "<select> de dato",
+    "clic en marca",
+    "status"
+   ],
+   "teclado": "vía <select>",
+   "redimension": "ancho fijo por contenido",
+   "medido": {
+    "tablas": 1,
+    "svg": 1,
+    "canvas": 0,
+    "enfocables": 3,
+    "regiones_scroll_390": 2,
+    "fuente_svg_px_1280": 21.1,
+    "fuente_svg_px_390": 12,
+    "errores": []
+   },
+   "hallazgos": [
+    "B2 paleta ev-color-0..3 (4 tonos)",
+    "B5 ancho fijo por contenido",
+    "B3 locale es-CO fijo"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-cohortes existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "390px: el SVG cabe sin scroll horizontal (o declara scroll intencional con región etiquetada)",
+    "texto SVG renderizado entre 11 y 14px a 390 y 1440px",
+    "cada marca alcanzable por teclado o por control equivalente; Enter fija, Escape cierra",
+    "tabla fuente disponible sin JS y descargable como CSV",
+    "claro y oscuro: contraste de marcas ≥3:1 contra --papel"
+   ]
+  },
+  {
+   "id": "embudo",
+   "alias": "funnel",
+   "nombre": "Embudo explicado",
+   "familia_registro": "graficas",
+   "pagina_atlas_propuesta": "datos-magnitud",
+   "tipo": "datos",
+   "runtime_extra": [
+    "evidence.js"
+   ],
+   "render": "svg",
+   "interacciones": [
+    "<select> de dato",
+    "clic en marca",
+    "status"
+   ],
+   "teclado": "vía <select>",
+   "redimension": "ancho fijo por contenido",
+   "medido": {
+    "tablas": 1,
+    "svg": 1,
+    "canvas": 0,
+    "enfocables": 3,
+    "regiones_scroll_390": 2,
+    "fuente_svg_px_1280": 16.6,
+    "fuente_svg_px_390": 12,
+    "errores": []
+   },
+   "hallazgos": [
+    "B2 paleta ev-color-0..3 (4 tonos)",
+    "B5 ancho fijo por contenido",
+    "B3 locale es-CO fijo"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-embudo existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "390px: el SVG cabe sin scroll horizontal (o declara scroll intencional con región etiquetada)",
+    "texto SVG renderizado entre 11 y 14px a 390 y 1440px",
+    "cada marca alcanzable por teclado o por control equivalente; Enter fija, Escape cierra",
+    "tabla fuente disponible sin JS y descargable como CSV",
+    "claro y oscuro: contraste de marcas ≥3:1 contra --papel",
+    "más de 4 series/categorías: colores distintos o patrón (sin repetir por i%4)"
+   ]
+  },
+  {
+   "id": "incertidumbre",
+   "alias": "uncertainty",
+   "nombre": "Rangos de incertidumbre",
+   "familia_registro": "graficas",
+   "pagina_atlas_propuesta": "datos-distribucion-relacion",
+   "tipo": "datos",
+   "runtime_extra": [
+    "evidence.js"
+   ],
+   "render": "svg",
+   "interacciones": [
+    "<select> de dato",
+    "clic en marca",
+    "status"
+   ],
+   "teclado": "vía <select>",
+   "redimension": "ancho fijo por contenido",
+   "medido": {
+    "tablas": 1,
+    "svg": 1,
+    "canvas": 0,
+    "enfocables": 3,
+    "regiones_scroll_390": 2,
+    "fuente_svg_px_1280": 15.2,
+    "fuente_svg_px_390": 12,
+    "errores": []
+   },
+   "hallazgos": [
+    "B2 paleta ev-color-0..3 (4 tonos)",
+    "B5 ancho fijo por contenido",
+    "B3 locale es-CO fijo"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-incertidumbre existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "390px: el SVG cabe sin scroll horizontal (o declara scroll intencional con región etiquetada)",
+    "texto SVG renderizado entre 11 y 14px a 390 y 1440px",
+    "cada marca alcanzable por teclado o por control equivalente; Enter fija, Escape cierra",
+    "tabla fuente disponible sin JS y descargable como CSV",
+    "claro y oscuro: contraste de marcas ≥3:1 contra --papel"
+   ]
+  },
+  {
+   "id": "relationship-map",
+   "alias": "relationship-map",
+   "nombre": "Mapa de relaciones explorable",
+   "familia_registro": "graficas",
+   "pagina_atlas_propuesta": "datos-distribucion-relacion",
+   "tipo": "datos",
+   "runtime_extra": [
+    "relationship-map.js"
+   ],
+   "render": "svg+html",
+   "interacciones": [
+    "búsqueda",
+    "filtros",
+    "1–2 saltos",
+    "historial",
+    "zoom",
+    "tablas fuente"
+   ],
+   "teclado": "controles y nodos",
+   "redimension": "propio",
+   "medido": {
+    "tablas": 2,
+    "svg": 1,
+    "canvas": 0,
+    "enfocables": 20,
+    "regiones_scroll_390": 3,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-relationship-map existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "sketch-diagram",
+   "alias": "sketch-diagram",
+   "nombre": "Diagrama a mano · flujos legibles",
+   "familia_registro": "graficas",
+   "pagina_atlas_propuesta": "datos-distribucion-relacion",
+   "tipo": "datos",
+   "runtime_extra": [],
+   "render": "svg",
+   "interacciones": [],
+   "teclado": "sin controles",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 3,
+    "canvas": 0,
+    "enfocables": 0,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": false,
+   "aceptacion": [
+    "#receta-sketch-diagram existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "tabla-densa",
+   "alias": "dense-table",
+   "nombre": "Tabla densa",
+   "familia_registro": "tablas",
+   "pagina_atlas_propuesta": "tablas",
+   "tipo": "tabla",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 1,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 1,
+    "regiones_scroll_390": 1,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-tabla-densa existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "comparacion",
+   "alias": "comparison",
+   "nombre": "Comparación",
+   "familia_registro": "tablas",
+   "pagina_atlas_propuesta": "tablas",
+   "tipo": "tabla",
+   "runtime_extra": [
+    "tables.js"
+   ],
+   "render": "html table",
+   "interacciones": [
+    "orden",
+    "totales",
+    "sparkline SVG"
+   ],
+   "teclado": "botones de orden",
+   "redimension": "scroll de tabla",
+   "medido": {
+    "tablas": 1,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 1,
+    "regiones_scroll_390": 1,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-comparacion existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "totales",
+   "alias": "totals",
+   "nombre": "Totales y ordenación",
+   "familia_registro": "tablas",
+   "pagina_atlas_propuesta": "tablas",
+   "tipo": "tabla",
+   "runtime_extra": [
+    "tables.js"
+   ],
+   "render": "html table",
+   "interacciones": [
+    "orden",
+    "totales",
+    "sparkline SVG"
+   ],
+   "teclado": "botones de orden",
+   "redimension": "scroll de tabla",
+   "medido": {
+    "tablas": 1,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 3,
+    "regiones_scroll_390": 1,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-totales existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "sparkline",
+   "alias": "sparkline",
+   "nombre": "Tabla con serie",
+   "familia_registro": "tablas",
+   "pagina_atlas_propuesta": "tablas",
+   "tipo": "tabla",
+   "runtime_extra": [
+    "tables.js"
+   ],
+   "render": "html table",
+   "interacciones": [
+    "orden",
+    "totales",
+    "sparkline SVG"
+   ],
+   "teclado": "botones de orden",
+   "redimension": "scroll de tabla",
+   "medido": {
+    "tablas": 1,
+    "svg": 2,
+    "canvas": 0,
+    "enfocables": 1,
+    "regiones_scroll_390": 1,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-sparkline existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "explorador",
+   "alias": "data-explorer",
+   "nombre": "Tabla interactiva",
+   "familia_registro": "tablas",
+   "pagina_atlas_propuesta": "tablas",
+   "tipo": "tabla",
+   "runtime_extra": [
+    "table-model.js",
+    "data-explorer.js"
+   ],
+   "render": "html table",
+   "interacciones": [
+    "filtros",
+    "orden",
+    "vistas",
+    "menús",
+    "detalle"
+   ],
+   "teclado": "completo (menús)",
+   "redimension": "responsive propio",
+   "medido": {
+    "tablas": 1,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 95,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-explorador existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "cola-novedades",
+   "alias": "incident-queue",
+   "nombre": "Cola de despacho y novedades",
+   "familia_registro": "tablas",
+   "pagina_atlas_propuesta": "tablas",
+   "tipo": "tabla",
+   "runtime_extra": [
+    "data-explorer.js"
+   ],
+   "render": "html table",
+   "interacciones": [
+    "filtros",
+    "orden",
+    "vistas",
+    "menús",
+    "detalle"
+   ],
+   "teclado": "completo (menús)",
+   "redimension": "responsive propio",
+   "medido": {
+    "tablas": 1,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 89,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-cola-novedades existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "review-queue",
+   "alias": "review-queue",
+   "nombre": "Bandeja de revisión contextual",
+   "familia_registro": "tablas",
+   "pagina_atlas_propuesta": "tablas",
+   "tipo": "tabla",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 2,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-review-queue existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "antes-despues",
+   "alias": "before-after",
+   "nombre": "Antes y después",
+   "familia_registro": "prototipos",
+   "pagina_atlas_propuesta": "prototipos",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "sin controles",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 0,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-antes-despues existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "visor",
+   "alias": "prototype",
+   "nombre": "Visor de prototipos",
+   "familia_registro": "prototipos",
+   "pagina_atlas_propuesta": "prototipos",
+   "tipo": "editorial",
+   "runtime_extra": [
+    "prototype.js"
+   ],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 15,
+    "regiones_scroll_390": 1,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-visor existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "pestanas",
+   "alias": "tabs",
+   "nombre": "Pestañas de una pieza",
+   "familia_registro": "prototipos",
+   "pagina_atlas_propuesta": "prototipos",
+   "tipo": "editorial",
+   "runtime_extra": [
+    "tabs.js"
+   ],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 7,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-pestanas existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "anotaciones",
+   "alias": "annotations",
+   "nombre": "Diagrama anotado",
+   "familia_registro": "prototipos",
+   "pagina_atlas_propuesta": "prototipos",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "svg",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 1,
+    "canvas": 0,
+    "enfocables": 1,
+    "regiones_scroll_390": 1,
+    "fuente_svg_px_1280": 21.3,
+    "fuente_svg_px_390": 14.2,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-anotaciones existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "evidencia-ampliable",
+   "alias": "zoomable-evidence",
+   "nombre": "Evidencia ampliable",
+   "familia_registro": "prototipos",
+   "pagina_atlas_propuesta": "prototipos",
+   "tipo": "editorial",
+   "runtime_extra": [
+    "evidence.js"
+   ],
+   "render": "svg",
+   "interacciones": [
+    "<select> de dato",
+    "clic en marca",
+    "status"
+   ],
+   "teclado": "vía <select>",
+   "redimension": "ancho fijo por contenido",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 8,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [
+    "B2 paleta ev-color-0..3 (4 tonos)",
+    "B5 ancho fijo por contenido",
+    "B3 locale es-CO fijo"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-evidencia-ampliable existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "390px: el SVG cabe sin scroll horizontal (o declara scroll intencional con región etiquetada)",
+    "texto SVG renderizado entre 11 y 14px a 390 y 1440px",
+    "cada marca alcanzable por teclado o por control equivalente; Enter fija, Escape cierra",
+    "tabla fuente disponible sin JS y descargable como CSV",
+    "claro y oscuro: contraste de marcas ≥3:1 contra --papel"
+   ]
+  },
+  {
+   "id": "sonido",
+   "alias": "sound",
+   "nombre": "Sonido optativo",
+   "familia_registro": "expresion",
+   "pagina_atlas_propuesta": "prototipos",
+   "tipo": "editorial",
+   "runtime_extra": [
+    "sound.js"
+   ],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 4,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-sonido existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "xyz",
+   "alias": "coordinates",
+   "nombre": "Three.js · XYZ",
+   "familia_registro": "expresion",
+   "pagina_atlas_propuesta": "lugares-y-espacio",
+   "tipo": "3d",
+   "runtime_extra": [
+    "three.min.js",
+    "scene.js"
+   ],
+   "render": "webgl(three)",
+   "interacciones": [
+    "rotación",
+    "selección",
+    "pausa"
+   ],
+   "teclado": "controles",
+   "redimension": "ResizeObserver; IntersectionObserver pausa",
+   "medido": {
+    "tablas": 1,
+    "svg": 0,
+    "canvas": 1,
+    "enfocables": 11,
+    "regiones_scroll_390": 2,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [
+    "B8 three.js por <script> síncrono desde CDN: bloquea el parseo y no funciona offline (fallback de tabla sí funciona)"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-xyz existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "sin red: fallback visible y tabla completa; ningún <script src> síncrono antes del contenido"
+   ]
+  },
+  {
+   "id": "etapas",
+   "alias": "stages",
+   "nombre": "Three.js · etapas",
+   "familia_registro": "expresion",
+   "pagina_atlas_propuesta": "lugares-y-espacio",
+   "tipo": "3d",
+   "runtime_extra": [
+    "three.min.js",
+    "scene.js"
+   ],
+   "render": "webgl(three)",
+   "interacciones": [
+    "rotación",
+    "selección",
+    "pausa"
+   ],
+   "teclado": "controles",
+   "redimension": "ResizeObserver; IntersectionObserver pausa",
+   "medido": {
+    "tablas": 1,
+    "svg": 0,
+    "canvas": 1,
+    "enfocables": 11,
+    "regiones_scroll_390": 2,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [
+    "B8 three.js por <script> síncrono desde CDN: bloquea el parseo y no funciona offline (fallback de tabla sí funciona)"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-etapas existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "sin red: fallback visible y tabla completa; ningún <script src> síncrono antes del contenido"
+   ]
+  },
+  {
+   "id": "recorrido",
+   "alias": "journey",
+   "nombre": "Globo narrado",
+   "familia_registro": "expresion",
+   "pagina_atlas_propuesta": "lugares-y-espacio",
+   "tipo": "3d",
+   "runtime_extra": [
+    "three.min.js",
+    "globe.js",
+    "reports.js"
+   ],
+   "render": "webgl(three)",
+   "interacciones": [
+    "arrastre",
+    "teclado",
+    "lista de rutas"
+   ],
+   "teclado": "flechas",
+   "redimension": "ResizeObserver",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 1,
+    "enfocables": 10,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [
+    "B8 three.js síncrono desde CDN",
+    "B5 viewBox fijo",
+    "B6 tooltip solo <title>",
+    "B3 locale es-CO fijo"
+   ],
+   "tabla_alternativa": false,
+   "aceptacion": [
+    "#receta-recorrido existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "390px: el SVG cabe sin scroll horizontal (o declara scroll intencional con región etiquetada)",
+    "texto SVG renderizado entre 11 y 14px a 390 y 1440px",
+    "cada marca alcanzable por teclado o por control equivalente; Enter fija, Escape cierra",
+    "tabla fuente disponible sin JS y descargable como CSV",
+    "claro y oscuro: contraste de marcas ≥3:1 contra --papel",
+    "sin red: fallback visible y tabla completa; ningún <script src> síncrono antes del contenido"
+   ]
+  },
+  {
+   "id": "columnas-mapa",
+   "alias": "map-columns",
+   "nombre": "Columnas geográficas 3D",
+   "familia_registro": "expresion",
+   "pagina_atlas_propuesta": "lugares-y-espacio",
+   "tipo": "3d",
+   "runtime_extra": [
+    "three.min.js",
+    "geography.js",
+    "scene.js"
+   ],
+   "render": "webgl(three)",
+   "interacciones": [
+    "rotación",
+    "selección",
+    "pausa"
+   ],
+   "teclado": "controles",
+   "redimension": "ResizeObserver; IntersectionObserver pausa",
+   "medido": {
+    "tablas": 1,
+    "svg": 0,
+    "canvas": 1,
+    "enfocables": 12,
+    "regiones_scroll_390": 2,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [
+    "B8 three.js por <script> síncrono desde CDN: bloquea el parseo y no funciona offline (fallback de tabla sí funciona)"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-columnas-mapa existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "sin red: fallback visible y tabla completa; ningún <script src> síncrono antes del contenido"
+   ]
+  },
+  {
+   "id": "arcos-mapa",
+   "alias": "map-arcs",
+   "nombre": "Arcos logísticos 3D",
+   "familia_registro": "expresion",
+   "pagina_atlas_propuesta": "lugares-y-espacio",
+   "tipo": "3d",
+   "runtime_extra": [
+    "three.min.js",
+    "geography.js",
+    "scene.js"
+   ],
+   "render": "webgl(three)",
+   "interacciones": [
+    "rotación",
+    "selección",
+    "pausa"
+   ],
+   "teclado": "controles",
+   "redimension": "ResizeObserver; IntersectionObserver pausa",
+   "medido": {
+    "tablas": 1,
+    "svg": 0,
+    "canvas": 1,
+    "enfocables": 11,
+    "regiones_scroll_390": 2,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [
+    "B8 three.js por <script> síncrono desde CDN: bloquea el parseo y no funciona offline (fallback de tabla sí funciona)"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-arcos-mapa existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "sin red: fallback visible y tabla completa; ningún <script src> síncrono antes del contenido"
+   ]
+  },
+  {
+   "id": "almacen",
+   "alias": "warehouse",
+   "nombre": "Capacidad de almacén 3D",
+   "familia_registro": "expresion",
+   "pagina_atlas_propuesta": "lugares-y-espacio",
+   "tipo": "3d",
+   "runtime_extra": [
+    "three.min.js",
+    "scene.js"
+   ],
+   "render": "webgl(three)",
+   "interacciones": [
+    "rotación",
+    "selección",
+    "pausa"
+   ],
+   "teclado": "controles",
+   "redimension": "ResizeObserver; IntersectionObserver pausa",
+   "medido": {
+    "tablas": 1,
+    "svg": 0,
+    "canvas": 1,
+    "enfocables": 13,
+    "regiones_scroll_390": 2,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [
+    "B8 three.js por <script> síncrono desde CDN: bloquea el parseo y no funciona offline (fallback de tabla sí funciona)"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-almacen existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "sin red: fallback visible y tabla completa; ningún <script src> síncrono antes del contenido"
+   ]
+  },
+  {
+   "id": "globo-flota",
+   "alias": "fleet-globe",
+   "nombre": "Globo operativo de Colombia",
+   "familia_registro": "expresion",
+   "pagina_atlas_propuesta": "lugares-y-espacio",
+   "tipo": "3d",
+   "runtime_extra": [
+    "three.min.js",
+    "geography.js",
+    "globe.js",
+    "fleet.js"
+   ],
+   "render": "webgl(three)",
+   "interacciones": [
+    "arrastre",
+    "teclado",
+    "lista de rutas"
+   ],
+   "teclado": "flechas",
+   "redimension": "ResizeObserver",
+   "medido": {
+    "tablas": 1,
+    "svg": 0,
+    "canvas": 1,
+    "enfocables": 16,
+    "regiones_scroll_390": 1,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [
+    "B8 three.js síncrono desde CDN"
+   ],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-globo-flota existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar",
+    "sin red: fallback visible y tabla completa; ningún <script src> síncrono antes del contenido"
+   ]
+  },
+  {
+   "id": "terminal",
+   "alias": "terminal",
+   "nombre": "Terminal",
+   "familia_registro": "configuracion",
+   "pagina_atlas_propuesta": "codigo-y-edicion",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 2,
+    "regiones_scroll_390": 1,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-terminal existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "escritura",
+   "alias": "writing",
+   "nombre": "Escritura por trazos",
+   "familia_registro": "configuracion",
+   "pagina_atlas_propuesta": "codigo-y-edicion",
+   "tipo": "editorial",
+   "runtime_extra": [
+    "sound.js",
+    "writing.js"
+   ],
+   "render": "svg",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 1,
+    "canvas": 0,
+    "enfocables": 4,
+    "regiones_scroll_390": 1,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-escritura existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "apariencia",
+   "alias": "appearance",
+   "nombre": "Apariencia y lectura cómoda",
+   "familia_registro": "configuracion",
+   "pagina_atlas_propuesta": "codigo-y-edicion",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 132,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-apariencia existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "configuracion",
+   "alias": "configuration",
+   "nombre": "Configuración editorial",
+   "familia_registro": "configuracion",
+   "pagina_atlas_propuesta": "codigo-y-edicion",
+   "tipo": "editorial",
+   "runtime_extra": [
+    "editorial.js"
+   ],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 7,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-configuracion existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "revision",
+   "alias": "review",
+   "nombre": "Comentarios sobre el documento",
+   "familia_registro": "configuracion",
+   "pagina_atlas_propuesta": "codigo-y-edicion",
+   "tipo": "editorial",
+   "runtime_extra": [
+    "review.js"
+   ],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 2,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-revision existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "codigo-poliglota",
+   "alias": "polyglot-code",
+   "nombre": "Código en varios lenguajes",
+   "familia_registro": "configuracion",
+   "pagina_atlas_propuesta": "codigo-y-edicion",
+   "tipo": "editorial",
+   "runtime_extra": [
+    "code.js",
+    "tabs.js"
+   ],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 37,
+    "regiones_scroll_390": 2,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-codigo-poliglota existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "marco",
+   "alias": "frame",
+   "nombre": "Marco de líneas desvanecidas",
+   "familia_registro": "configuracion",
+   "pagina_atlas_propuesta": "codigo-y-edicion",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "sin controles",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 0,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-marco existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "navegacion",
+   "alias": "navigation",
+   "nombre": "Navegación editorial",
+   "familia_registro": "configuracion",
+   "pagina_atlas_propuesta": "codigo-y-edicion",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 5,
+    "regiones_scroll_390": 0,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-navegacion existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "codigo-lineas",
+   "alias": "code-lines",
+   "nombre": "Código numerado y destacado",
+   "familia_registro": "configuracion",
+   "pagina_atlas_propuesta": "codigo-y-edicion",
+   "tipo": "editorial",
+   "runtime_extra": [
+    "code.js"
+   ],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 2,
+    "regiones_scroll_390": 1,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-codigo-lineas existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  },
+  {
+   "id": "sitio-editorial",
+   "alias": "web-shell",
+   "nombre": "Sitio editorial: navegación y cierre",
+   "familia_registro": "configuracion",
+   "pagina_atlas_propuesta": "codigo-y-edicion",
+   "tipo": "editorial",
+   "runtime_extra": [],
+   "render": "html",
+   "interacciones": [],
+   "teclado": "controles nativos HTML",
+   "redimension": "flujo HTML",
+   "medido": {
+    "tablas": 0,
+    "svg": 0,
+    "canvas": 0,
+    "enfocables": 9,
+    "regiones_scroll_390": 1,
+    "fuente_svg_px_1280": null,
+    "fuente_svg_px_390": null,
+    "errores": []
+   },
+   "hallazgos": [],
+   "tabla_alternativa": true,
+   "aceptacion": [
+    "#receta-sitio-editorial existe en la página del atlas y el deep link abre esa página",
+    "0 errores de consola al montar, destruir y volver a montar"
+   ]
+  }
+ ]
+}

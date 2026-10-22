@@ -1,0 +1,20 @@
+/Users/angelbotto/orca/workspaces/margen/margen-lector-voz/.venv/lib/python3.14/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+PASS Alice composer shows Alice 
+PASS twin composer shows her own name 
+PASS twin cannot edit Alice comment (no Editar) 
+PASS twin can edit her own 
+FAIL two accounts with the same name are distinguishable in the reader ["Alice Ruiz · correo verificado · 22/10/2026 · Abierto", "Alice Ruiz · correo verificado · 22/10/2026 · Abierto"]
+PASS guest composer shows chosen name 
+PASS agent token comment accepted 
+PASS guest badge says invitado 
+FAIL guest chosen name cannot contain the verified badge wording {"meta": "Alice Ruiz · correo verificado · invitado · 22/10/2026 · Abierto", "badge": "invitado", "person": "Alice Ruiz · correo verificado", "text": "Comentario de la invitada.", "replies": [], "actions": ["Resolver", "Archivar"]}
+PASS agent badge says conexión de agente and byline names the account 
+FAIL agent label cannot be another person name {"meta": "Alice Ruiz (agente de Propietaria) · conexión de agente · 22/10/2026 · Abierto", "badge": "conexión de agente", "person": "Alice Ruiz (agente de Propietaria)", "text": "Comentario del agente.", "replies": [], "actions": ["Editar", "Resolver", "Archivar"]}
+PASS owner has no Editar on Alice comment (owner edits only own) 
+PASS after reload Alice never sees owner words under her own byline 
+PASS reply after reload attributed to its writer with badge 
+PASS token label creation strips bidi/newline (stored label) 
+PASS export never contains participant emails 
+PASS no page errors 
+14 / 17

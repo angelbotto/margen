@@ -90,5 +90,13 @@
   "review-queue": "review-queue",
   "version-comparison": "version-comparison",
   "sketch-diagram": "sketch-diagram",
-  "sitio-editorial": "web-shell"
+  "sitio-editorial": "web-shell",
+  "x-post": "x-post",
+  "youtube": "youtube",
+  "instagram": "instagram",
+  "columnas": "column-chart",
+  "cambio": "dumbbell-chart",
+  "meta": "bullet-chart",
+  "encabezado-fecha": "dated-header",
+  "reacciones": "reading-reactions"
 }

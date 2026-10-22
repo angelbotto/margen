@@ -1,0 +1,926 @@
+{
+ "origin": "https://localhost:<puerto>",
+ "artifact_visibility": "unlisted",
+ "portal": [
+  {
+   "browser": "chromium",
+   "user": "owner",
+   "offline": false,
+   "artifact_sandbox": "allow-scripts allow-downloads",
+   "artifact_origin": "null",
+   "no_provider_before_click": true,
+   "links": [
+    "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "https://www.instagram.com/p/fA9uwTtkSN/",
+    "https://x.com/XDevelopers"
+   ],
+   "synthetic_without_link": true,
+   "unactivated_messages_sent": true,
+   "unactivated_messages_ignored": true,
+   "youtube_dialog": {
+    "src": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Flocalhost%3A58921",
+    "sandbox": "allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation",
+    "referrerpolicy": "strict-origin",
+    "allow": "autoplay; encrypted-media; picture-in-picture; fullscreen"
+   },
+   "youtube_notice": "Al cargarlo, tu navegador se conecta con YouTube.",
+   "youtube_source_link": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+   "youtube_playback": {
+    "video": true,
+    "advanced": true,
+    "currentTime": 3.6,
+    "muted": true,
+    "paused": false,
+    "error153": false
+   },
+   "youtube_status": "Reproduciendo sin sonido. Actívalo en el propio reproductor.",
+   "escape_closes": true,
+   "focus_returns": true,
+   "reopen_and_close_button": true,
+   "instagram_dialog": {
+    "src": "https://www.instagram.com/p/fA9uwTtkSN/embed/",
+    "sandbox": "allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation",
+    "referrerpolicy": "no-referrer"
+   },
+   "instagram_view": {
+    "media": true,
+    "login": false,
+    "chars": 194
+   },
+   "instagram_height": "744px",
+   "instagram_status": "",
+   "hash_navigation_closes": true,
+   "frame_requests": [
+    {
+     "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE",
+     "referer": "https://localhost:<puerto>/"
+    },
+    {
+     "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE",
+     "referer": "https://localhost:<puerto>/"
+    },
+    {
+     "url": "https://www.instagram.com/p/fA9uwTtkSN/embed/",
+     "referer": null
+    }
+   ],
+   "x_source": {
+    "popups": 1,
+    "url": "https://x.com/XDevelopers",
+    "opener_null": true,
+    "fallback": null
+   },
+   "youtube_source": {
+    "popups": 1,
+    "url": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "opener_null": true,
+    "fallback": null
+   },
+   "footer_link": {
+    "popups": 1,
+    "url": "https://example.org/perfil",
+    "opener_null": true,
+    "fallback": null
+   },
+   "provider_requests": 90,
+   "stub_referers": [
+    "None"
+   ]
+  },
+  {
+   "browser": "chromium",
+   "user": "reader",
+   "offline": false,
+   "artifact_sandbox": "allow-scripts allow-downloads",
+   "artifact_origin": "null",
+   "no_provider_before_click": true,
+   "links": [
+    "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "https://www.instagram.com/p/fA9uwTtkSN/",
+    "https://x.com/XDevelopers"
+   ],
+   "synthetic_without_link": true,
+   "unactivated_messages_sent": true,
+   "unactivated_messages_ignored": true,
+   "youtube_dialog": {
+    "src": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Flocalhost%3A58921",
+    "sandbox": "allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation",
+    "referrerpolicy": "strict-origin",
+    "allow": "autoplay; encrypted-media; picture-in-picture; fullscreen"
+   },
+   "youtube_notice": "Al cargarlo, tu navegador se conecta con YouTube.",
+   "youtube_source_link": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+   "youtube_playback": {
+    "video": true,
+    "advanced": true,
+    "currentTime": 3.6,
+    "muted": true,
+    "paused": false,
+    "error153": false
+   },
+   "youtube_status": "Reproduciendo sin sonido. Actívalo en el propio reproductor.",
+   "escape_closes": true,
+   "focus_returns": true,
+   "reopen_and_close_button": true,
+   "instagram_dialog": {
+    "src": "https://www.instagram.com/p/fA9uwTtkSN/embed/",
+    "sandbox": "allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation",
+    "referrerpolicy": "no-referrer"
+   },
+   "instagram_view": {
+    "media": true,
+    "login": false,
+    "chars": 194
+   },
+   "instagram_height": "744px",
+   "instagram_status": "",
+   "hash_navigation_closes": true,
+   "frame_requests": [
+    {
+     "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE",
+     "referer": "https://localhost:<puerto>/"
+    },
+    {
+     "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE",
+     "referer": "https://localhost:<puerto>/"
+    },
+    {
+     "url": "https://www.instagram.com/p/fA9uwTtkSN/embed/",
+     "referer": null
+    }
+   ],
+   "x_source": {
+    "popups": 1,
+    "url": "https://x.com/XDevelopers",
+    "opener_null": true,
+    "fallback": null
+   },
+   "youtube_source": {
+    "popups": 1,
+    "url": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "opener_null": true,
+    "fallback": null
+   },
+   "footer_link": {
+    "popups": 1,
+    "url": "https://example.org/perfil",
+    "opener_null": true,
+    "fallback": null
+   },
+   "provider_requests": 90,
+   "stub_referers": [
+    "None"
+   ]
+  },
+  {
+   "browser": "chromium",
+   "user": "reader",
+   "offline": true,
+   "artifact_sandbox": "allow-scripts allow-downloads",
+   "artifact_origin": "null",
+   "no_provider_before_click": true,
+   "links": [
+    "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "https://www.instagram.com/p/fA9uwTtkSN/",
+    "https://x.com/XDevelopers"
+   ],
+   "synthetic_without_link": true,
+   "unactivated_messages_sent": true,
+   "unactivated_messages_ignored": true,
+   "youtube_dialog": {
+    "src": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Flocalhost%3A58921",
+    "sandbox": "allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation",
+    "referrerpolicy": "strict-origin",
+    "allow": "autoplay; encrypted-media; picture-in-picture; fullscreen"
+   },
+   "youtube_notice": "Al cargarlo, tu navegador se conecta con YouTube.",
+   "youtube_source_link": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+   "youtube_status": "YouTube no respondió. El enlace abre la fuente original.",
+   "escape_closes": true,
+   "focus_returns": true,
+   "reopen_and_close_button": true,
+   "instagram_dialog": {
+    "src": "https://www.instagram.com/p/fA9uwTtkSN/embed/",
+    "sandbox": "allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation",
+    "referrerpolicy": "no-referrer"
+   },
+   "instagram_status": "Instagram no respondió. El enlace abre la fuente original.",
+   "hash_navigation_closes": true,
+   "frame_requests": [
+    {
+     "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE",
+     "referer": "https://localhost:<puerto>/"
+    },
+    {
+     "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE",
+     "referer": "https://localhost:<puerto>/"
+    },
+    {
+     "url": "https://www.instagram.com/p/fA9uwTtkSN/embed/",
+     "referer": null
+    }
+   ],
+   "x_source": {
+    "popups": 1,
+    "url": "chrome-error://chromewebdata/",
+    "opener_null": true,
+    "fallback": null
+   },
+   "youtube_source": {
+    "popups": 1,
+    "url": "chrome-error://chromewebdata/",
+    "opener_null": true,
+    "fallback": null
+   },
+   "footer_link": {
+    "popups": 1,
+    "url": "https://example.org/perfil",
+    "opener_null": true,
+    "fallback": null
+   },
+   "provider_requests": 3,
+   "stub_referers": [
+    "None"
+   ]
+  },
+  {
+   "browser": "webkit",
+   "user": "owner",
+   "offline": false,
+   "artifact_sandbox": "allow-scripts allow-downloads",
+   "artifact_origin": "null",
+   "no_provider_before_click": true,
+   "links": [
+    "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "https://www.instagram.com/p/fA9uwTtkSN/",
+    "https://x.com/XDevelopers"
+   ],
+   "synthetic_without_link": true,
+   "unactivated_messages_sent": true,
+   "unactivated_messages_ignored": true,
+   "youtube_dialog": {
+    "src": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Flocalhost%3A58921",
+    "sandbox": "allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation",
+    "referrerpolicy": "strict-origin",
+    "allow": "autoplay; encrypted-media; picture-in-picture; fullscreen"
+   },
+   "youtube_notice": "Al cargarlo, tu navegador se conecta con YouTube.",
+   "youtube_source_link": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+   "youtube_playback": {
+    "video": true,
+    "advanced": true,
+    "currentTime": 3.7,
+    "muted": true,
+    "paused": false,
+    "error153": false
+   },
+   "youtube_status": "Reproduciendo sin sonido. Actívalo en el propio reproductor.",
+   "escape_closes": true,
+   "focus_returns": true,
+   "reopen_and_close_button": true,
+   "instagram_dialog": {
+    "src": "https://www.instagram.com/p/fA9uwTtkSN/embed/",
+    "sandbox": "allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation",
+    "referrerpolicy": "no-referrer"
+   },
+   "instagram_view": {
+    "media": true,
+    "login": false,
+    "chars": 139
+   },
+   "instagram_height": "744px",
+   "instagram_status": "",
+   "hash_navigation_closes": true,
+   "frame_requests": [
+    {
+     "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE",
+     "referer": "https://localhost:<puerto>/"
+    },
+    {
+     "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE",
+     "referer": "https://localhost:<puerto>/"
+    },
+    {
+     "url": "https://www.instagram.com/p/fA9uwTtkSN/embed/",
+     "referer": null
+    }
+   ],
+   "x_source": {
+    "popups": 1,
+    "url": "https://x.com/XDevelopers",
+    "opener_null": true,
+    "fallback": null
+   },
+   "youtube_source": {
+    "popups": 1,
+    "url": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "opener_null": true,
+    "fallback": null
+   },
+   "footer_link": {
+    "popups": 1,
+    "url": "https://example.org/perfil",
+    "opener_null": true,
+    "fallback": null
+   },
+   "provider_requests": 91,
+   "stub_referers": [
+    "None"
+   ]
+  },
+  {
+   "browser": "webkit",
+   "user": "reader",
+   "offline": false,
+   "artifact_sandbox": "allow-scripts allow-downloads",
+   "artifact_origin": "null",
+   "no_provider_before_click": true,
+   "links": [
+    "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "https://www.instagram.com/p/fA9uwTtkSN/",
+    "https://x.com/XDevelopers"
+   ],
+   "synthetic_without_link": true,
+   "unactivated_messages_sent": true,
+   "unactivated_messages_ignored": true,
+   "youtube_dialog": {
+    "src": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Flocalhost%3A58921",
+    "sandbox": "allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation",
+    "referrerpolicy": "strict-origin",
+    "allow": "autoplay; encrypted-media; picture-in-picture; fullscreen"
+   },
+   "youtube_notice": "Al cargarlo, tu navegador se conecta con YouTube.",
+   "youtube_source_link": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+   "youtube_playback": {
+    "video": true,
+    "advanced": true,
+    "currentTime": 3.7,
+    "muted": true,
+    "paused": false,
+    "error153": false
+   },
+   "youtube_status": "Reproduciendo sin sonido. Actívalo en el propio reproductor.",
+   "escape_closes": true,
+   "focus_returns": true,
+   "reopen_and_close_button": true,
+   "instagram_dialog": {
+    "src": "https://www.instagram.com/p/fA9uwTtkSN/embed/",
+    "sandbox": "allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation",
+    "referrerpolicy": "no-referrer"
+   },
+   "instagram_view": {
+    "media": true,
+    "login": false,
+    "chars": 139
+   },
+   "instagram_height": "744px",
+   "instagram_status": "",
+   "hash_navigation_closes": true,
+   "frame_requests": [
+    {
+     "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE",
+     "referer": "https://localhost:<puerto>/"
+    },
+    {
+     "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE",
+     "referer": "https://localhost:<puerto>/"
+    },
+    {
+     "url": "https://www.instagram.com/p/fA9uwTtkSN/embed/",
+     "referer": null
+    }
+   ],
+   "x_source": {
+    "popups": 1,
+    "url": "https://x.com/XDevelopers",
+    "opener_null": true,
+    "fallback": null
+   },
+   "youtube_source": {
+    "popups": 1,
+    "url": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "opener_null": true,
+    "fallback": null
+   },
+   "footer_link": {
+    "popups": 1,
+    "url": "https://example.org/perfil",
+    "opener_null": true,
+    "fallback": null
+   },
+   "provider_requests": 91,
+   "stub_referers": [
+    "None"
+   ]
+  },
+  {
+   "browser": "webkit",
+   "user": "reader",
+   "offline": true,
+   "artifact_sandbox": "allow-scripts allow-downloads",
+   "artifact_origin": "null",
+   "no_provider_before_click": true,
+   "links": [
+    "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "https://www.instagram.com/p/fA9uwTtkSN/",
+    "https://x.com/XDevelopers"
+   ],
+   "synthetic_without_link": true,
+   "unactivated_messages_sent": true,
+   "unactivated_messages_ignored": true,
+   "youtube_dialog": {
+    "src": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Flocalhost%3A58921",
+    "sandbox": "allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation",
+    "referrerpolicy": "strict-origin",
+    "allow": "autoplay; encrypted-media; picture-in-picture; fullscreen"
+   },
+   "youtube_notice": "Al cargarlo, tu navegador se conecta con YouTube.",
+   "youtube_source_link": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+   "youtube_status": "YouTube no respondió. El enlace abre la fuente original.",
+   "escape_closes": true,
+   "focus_returns": true,
+   "reopen_and_close_button": true,
+   "instagram_dialog": {
+    "src": "https://www.instagram.com/p/fA9uwTtkSN/embed/",
+    "sandbox": "allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation",
+    "referrerpolicy": "no-referrer"
+   },
+   "instagram_status": "Instagram no respondió. El enlace abre la fuente original.",
+   "hash_navigation_closes": true,
+   "frame_requests": [
+    {
+     "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE",
+     "referer": "https://localhost:<puerto>/"
+    },
+    {
+     "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE",
+     "referer": "https://localhost:<puerto>/"
+    },
+    {
+     "url": "https://www.instagram.com/p/fA9uwTtkSN/embed/",
+     "referer": null
+    }
+   ],
+   "x_source": {
+    "popups": 1,
+    "url": "about:blank",
+    "opener_null": true,
+    "fallback": null
+   },
+   "youtube_source": {
+    "popups": 1,
+    "url": "about:blank",
+    "opener_null": true,
+    "fallback": null
+   },
+   "footer_link": {
+    "popups": 1,
+    "url": "https://example.org/perfil",
+    "opener_null": true,
+    "fallback": null
+   },
+   "provider_requests": 3,
+   "stub_referers": [
+    "None"
+   ]
+  }
+ ],
+ "standalone": [
+  {
+   "browser": "chromium",
+   "mode": "https",
+   "no_provider_before_click": true,
+   "cards": 4,
+   "links": [
+    "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "https://www.instagram.com/p/fA9uwTtkSN/",
+    "https://x.com/XDevelopers"
+   ],
+   "youtube_button_visible": true,
+   "youtube_status": "Reproduciendo sin sonido. El sonido se activa en el propio reproductor.",
+   "youtube_iframe": {
+    "sandbox": "allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation",
+    "referrerpolicy": "strict-origin",
+    "src": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE"
+   },
+   "youtube_playback": {
+    "video": true,
+    "advanced": true,
+    "currentTime": 3.9,
+    "muted": true,
+    "paused": false,
+    "error153": false
+   },
+   "youtube_removed": true,
+   "instagram_view": {
+    "media": true,
+    "login": false,
+    "chars": 194
+   },
+   "instagram_height": "518px",
+   "frame_requests": [
+    {
+     "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE",
+     "referer": "https://localhost:<puerto-estatico>/"
+    },
+    {
+     "url": "https://www.instagram.com/p/fA9uwTtkSN/embed/",
+     "referer": null
+    }
+   ]
+  },
+  {
+   "browser": "chromium",
+   "mode": "file",
+   "no_provider_before_click": true,
+   "cards": 4,
+   "links": [
+    "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "https://www.instagram.com/p/fA9uwTtkSN/",
+    "https://x.com/XDevelopers"
+   ],
+   "youtube_button_visible": false,
+   "youtube_status": "Abierto como archivo local, YouTube no permite reproducirlo aquí. El enlace abre el video.",
+   "instagram_view": {
+    "media": true,
+    "login": false,
+    "chars": 194
+   },
+   "instagram_height": "518px",
+   "frame_requests": [
+    {
+     "url": "https://www.instagram.com/p/fA9uwTtkSN/embed/",
+     "referer": null
+    }
+   ]
+  },
+  {
+   "browser": "chromium",
+   "mode": "no-js",
+   "no_provider_before_click": true,
+   "cards": 4,
+   "links": [
+    "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "https://www.instagram.com/p/fA9uwTtkSN/",
+    "https://evil.example/"
+   ],
+   "youtube_button_visible": false,
+   "youtube_status": "",
+   "frame_requests": []
+  },
+  {
+   "browser": "chromium",
+   "mode": "layout",
+   "320-light": {
+    "overflow": false,
+    "cards": [
+     {
+      "w": 272,
+      "fits": true
+     },
+     {
+      "w": 272,
+      "fits": true
+     },
+     {
+      "w": 272,
+      "fits": true
+     },
+     {
+      "w": 272,
+      "fits": true
+     }
+    ]
+   },
+   "320-dark": {
+    "overflow": false,
+    "cards": [
+     {
+      "w": 272,
+      "fits": true
+     },
+     {
+      "w": 272,
+      "fits": true
+     },
+     {
+      "w": 272,
+      "fits": true
+     },
+     {
+      "w": 272,
+      "fits": true
+     }
+    ]
+   },
+   "390-light": {
+    "overflow": false,
+    "cards": [
+     {
+      "w": 342,
+      "fits": true
+     },
+     {
+      "w": 342,
+      "fits": true
+     },
+     {
+      "w": 342,
+      "fits": true
+     },
+     {
+      "w": 342,
+      "fits": true
+     }
+    ]
+   },
+   "390-dark": {
+    "overflow": false,
+    "cards": [
+     {
+      "w": 342,
+      "fits": true
+     },
+     {
+      "w": 342,
+      "fits": true
+     },
+     {
+      "w": 342,
+      "fits": true
+     },
+     {
+      "w": 342,
+      "fits": true
+     }
+    ]
+   },
+   "1440-light": {
+    "overflow": false,
+    "cards": [
+     {
+      "w": 528,
+      "fits": true
+     },
+     {
+      "w": 528,
+      "fits": true
+     },
+     {
+      "w": 528,
+      "fits": true
+     },
+     {
+      "w": 528,
+      "fits": true
+     }
+    ]
+   },
+   "1440-dark": {
+    "overflow": false,
+    "cards": [
+     {
+      "w": 528,
+      "fits": true
+     },
+     {
+      "w": 528,
+      "fits": true
+     },
+     {
+      "w": 528,
+      "fits": true
+     },
+     {
+      "w": 528,
+      "fits": true
+     }
+    ]
+   },
+   "print": {
+    "buttons_hidden": true,
+    "link_url_printed": true
+   }
+  },
+  {
+   "browser": "webkit",
+   "mode": "https",
+   "no_provider_before_click": true,
+   "cards": 4,
+   "links": [
+    "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "https://www.instagram.com/p/fA9uwTtkSN/",
+    "https://x.com/XDevelopers"
+   ],
+   "youtube_button_visible": true,
+   "youtube_status": "Reproduciendo sin sonido. El sonido se activa en el propio reproductor.",
+   "youtube_iframe": {
+    "sandbox": "allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation",
+    "referrerpolicy": "strict-origin",
+    "src": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE"
+   },
+   "youtube_playback": {
+    "video": true,
+    "advanced": true,
+    "currentTime": 3.8,
+    "muted": true,
+    "paused": false,
+    "error153": false
+   },
+   "youtube_removed": true,
+   "instagram_view": {
+    "media": true,
+    "login": false,
+    "chars": 139
+   },
+   "instagram_height": "518px",
+   "frame_requests": [
+    {
+     "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE",
+     "referer": "https://localhost:<puerto-estatico>/"
+    },
+    {
+     "url": "https://www.instagram.com/p/fA9uwTtkSN/embed/",
+     "referer": null
+    }
+   ]
+  },
+  {
+   "browser": "webkit",
+   "mode": "file",
+   "no_provider_before_click": true,
+   "cards": 4,
+   "links": [
+    "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "https://www.instagram.com/p/fA9uwTtkSN/",
+    "https://x.com/XDevelopers"
+   ],
+   "youtube_button_visible": false,
+   "youtube_status": "Abierto como archivo local, YouTube no permite reproducirlo aquí. El enlace abre el video.",
+   "instagram_view": {
+    "media": true,
+    "login": false,
+    "chars": 139
+   },
+   "instagram_height": "518px",
+   "frame_requests": [
+    {
+     "url": "https://www.instagram.com/p/fA9uwTtkSN/embed/",
+     "referer": null
+    }
+   ]
+  },
+  {
+   "browser": "webkit",
+   "mode": "no-js",
+   "no_provider_before_click": true,
+   "cards": 4,
+   "links": [
+    "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "https://www.instagram.com/p/fA9uwTtkSN/",
+    "https://evil.example/"
+   ],
+   "youtube_button_visible": false,
+   "youtube_status": "",
+   "frame_requests": []
+  },
+  {
+   "browser": "webkit",
+   "mode": "layout",
+   "320-light": {
+    "overflow": false,
+    "cards": [
+     {
+      "w": 272,
+      "fits": true
+     },
+     {
+      "w": 272,
+      "fits": true
+     },
+     {
+      "w": 272,
+      "fits": true
+     },
+     {
+      "w": 272,
+      "fits": true
+     }
+    ]
+   },
+   "320-dark": {
+    "overflow": false,
+    "cards": [
+     {
+      "w": 272,
+      "fits": true
+     },
+     {
+      "w": 272,
+      "fits": true
+     },
+     {
+      "w": 272,
+      "fits": true
+     },
+     {
+      "w": 272,
+      "fits": true
+     }
+    ]
+   },
+   "390-light": {
+    "overflow": false,
+    "cards": [
+     {
+      "w": 342,
+      "fits": true
+     },
+     {
+      "w": 342,
+      "fits": true
+     },
+     {
+      "w": 342,
+      "fits": true
+     },
+     {
+      "w": 342,
+      "fits": true
+     }
+    ]
+   },
+   "390-dark": {
+    "overflow": false,
+    "cards": [
+     {
+      "w": 342,
+      "fits": true
+     },
+     {
+      "w": 342,
+      "fits": true
+     },
+     {
+      "w": 342,
+      "fits": true
+     },
+     {
+      "w": 342,
+      "fits": true
+     }
+    ]
+   },
+   "1440-light": {
+    "overflow": false,
+    "cards": [
+     {
+      "w": 528,
+      "fits": true
+     },
+     {
+      "w": 528,
+      "fits": true
+     },
+     {
+      "w": 528,
+      "fits": true
+     },
+     {
+      "w": 528,
+      "fits": true
+     }
+    ]
+   },
+   "1440-dark": {
+    "overflow": false,
+    "cards": [
+     {
+      "w": 528,
+      "fits": true
+     },
+     {
+      "w": 528,
+      "fits": true
+     },
+     {
+      "w": 528,
+      "fits": true
+     },
+     {
+      "w": 528,
+      "fits": true
+     }
+    ]
+   },
+   "print": {
+    "buttons_hidden": true,
+    "link_url_printed": true
+   }
+  }
+ ],
+ "versions": {
+  "chromium": "145.0.7632.6",
+  "webkit": "26.0"
+ }
+}

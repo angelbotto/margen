@@ -32,6 +32,27 @@ python3 scripts/create_artifact.py --config /project/slides.json --output /proje
 
 English configuration keys are canonical for new work; existing Spanish aliases continue to work. A separately published briefing gets a distinct document ID. A new revision of the same briefing keeps its existing ID and stable page/section IDs. A slide deck needs its own slide content and configuration. Do not reuse article prose and relabel it as a presentation.
 
+## Dates, author footer and reactions
+
+These options are explicit. The generator never infers a date from the build time or from file metadata, and it never adds an author's networks to other documents.
+
+```json
+{
+  "date": {"published": "2026-10-01", "updated": "2026-10-22"},
+  "footer": {
+    "author": "Ana Autora",
+    "note": "Writes about reading and data.",
+    "links": [{"label": "Site", "href": "https://ana.example/", "detail": "projects and notes"}],
+    "platform": true
+  },
+  "reactions": false
+}
+```
+
+- `date`: `YYYY-MM-DD` or `{"published", "updated"}`. Invalid calendar dates, other formats and an update earlier than publication are rejected. The header shows `<time datetime>` under the title, in the measured mono 13.7 px style. A page may carry its own `date`; otherwise the document date appears on the first page only. `--date` sets it from the CLI. Historical documents keep no date unless one is supplied from a real record.
+- `footer`: `author` (≤120 characters), `note` (≤280), up to eight `links` with `label` (≤60), `href` and an optional `detail` (≤80). Links accept only `https://` without credentials or `mailto:` with an address. Text is escaped and links carry `rel="noopener noreferrer"`. `platform` (default `true`) adds a separate “Hecho con Margen” line; authorship and platform never share a sentence. Without `footer`, the previous “brand · title” line is unchanged. On a fine pointer at ≥1280 px, link details start blurred and clear on hover or focus.
+- `reactions`: `true` adds three icon buttons (useful, return later, made me think). Choices are stored only in that browser under the document ID. No counts are displayed or shared, and the group says so. Print omits it.
+
 ## Presentation controls
 
 - Previous/next buttons, a slide counter and an overview of titles and summaries.

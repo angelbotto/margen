@@ -14,3 +14,15 @@ const noSpace=memory();noSpace.setItem=()=>{throw Error('quota')};const volatile
 const quota=memory(),quotaStore=Store.create('doc',quota);let writes=0;const set=quota.setItem;quota.setItem=(k,v)=>{if(++writes>2)throw Error('quota');set(k,v)};assert.throws(()=>quotaStore.importData(portable));assert.equal(quota.length,0);assert.equal(quotaStore.state().length,0);
 a.append('delete',c.thread,'Ana');assert.equal(a.state().length,0);assert.equal(a.exportData().events.length,6);
 console.log('Revisión: convergencia entre instancias, importación idempotente, errores atómicos, resolución e historial correctos.');
+
+// Server-origin snapshots can contain edits allowed by an older API. Preserve
+// that history without projecting another actor's words over the author's text.
+const shared=Store.create('shared'),original=shared.append('create',null,'Ana',{actor:'a',text:'Original de Ana',anchor});
+shared.append('edit',original.thread,'Luis',{actor:'b',text:'Palabras ajenas'});
+assert.equal(shared.state()[0].text,'Original de Ana');
+shared.append('edit',original.thread,'Ana',{actor:'a',text:'Corrección de Ana'});
+assert.equal(shared.state()[0].text,'Corrección de Ana');
+assert.equal(shared.state()[0].history.length,3);
+assert.equal(shared.exportData().events[1].text,'Palabras ajenas');
+const imported=Store.create('shared');imported.importData(shared.exportData());
+assert.equal(imported.state()[0].text,'Corrección de Ana');

@@ -1,7 +1,7 @@
 import {beforeEach,afterEach,it,expect,vi} from 'vitest';
 import {readFileSync} from 'node:fs';
 const source=readFileSync('portal/static/reader-workspace.js','utf8');
-beforeEach(()=>{HTMLDialogElement.prototype.showModal=function(){this.open=true;};window.eval(source);});
+beforeEach(()=>{window.eval(readFileSync('portal/static/review-identity.js','utf8'));HTMLDialogElement.prototype.showModal=function(){this.open=true;};window.eval(source);});
 afterEach(()=>{document.body.replaceChildren();delete (HTMLDialogElement.prototype as any).showModal;vi.restoreAllMocks();});
 it('never copies an in-flight prompt after feedback selection changes',async()=>{
  let resolve:any;

@@ -17,7 +17,7 @@ from portal.developers import bundled
 WIDTHS = (300, 375, 768, 1024, 1440)
 # Global each reviewed module publishes once it has executed inside the preview.
 GLOBALS = {
-    'analytics.js': 'NotaAnalitica', 'attention-map.js': 'NotaAtencion', 'audio.js': 'NotaAudio', 'charts.js': 'NotaGraficas',
+    'analytics.js': 'NotaAnalitica', 'chart-core.js': 'MargenGraficas', 'embeds.js': 'MargenEmbeds', 'attention-map.js': 'NotaAtencion', 'audio.js': 'NotaAudio', 'charts.js': 'NotaGraficas',
     'code.js': 'NotaCodigo', 'controls.js': 'NotaControles', 'data-explorer.js': 'NotaExplorador',
     'editorial-pieces.js': 'NotaPiezasEditoriales', 'editorial.js': 'NotaEditorial', 'evidence.js': 'NotaEvidencia',
     'fleet.js': 'NotaFlota', 'geography.js': 'NotaGeografia', 'globe.js': 'NotaGlobo', 'handwriting.js': 'NotaMano',

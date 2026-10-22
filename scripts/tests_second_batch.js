@@ -30,8 +30,10 @@
   });
   await test('Cascada: suma, dominio y longitudes desde la misma escala',()=>{
     const f=document.querySelector('[data-reporte="cascada"]'),s=f.querySelector('svg'),bars=[...s.querySelectorAll('[data-from]')];
-    close(+s.dataset.xMin,0);close(+s.dataset.xMax,120);close(+s.querySelector('[data-total]').dataset.total,95);
-    bars.forEach(b=>close(+b.getAttribute('width'),Math.abs(+b.dataset.to- +b.dataset.from)/120*380));
+    // Dominio redondeado 1-2-5 que contiene 0 y 120; ancho medido: la escala sale de dos ticks del propio eje.
+    close(+s.dataset.xMin,0);assert(+s.dataset.xMax>=120,'Dominio corto');close(+s.querySelector('[data-total]').dataset.total,95);
+    const t=[...s.querySelectorAll('[data-tick-x]')].map(l=>[+l.dataset.tickX,+l.getAttribute('x1')]),unit=(t[1][1]-t[0][1])/(t[1][0]-t[0][0]);
+    bars.forEach(b=>close(+b.getAttribute('width'),Math.abs(+b.dataset.to- +b.dataset.from)*unit));
     assert(f.querySelector('tfoot').textContent.includes('95'),'Total incorrecto');
   });
   await test('Cascada negativa y cero: ningún valor fuera del dominio ni coordenadas NaN',()=>fixture('cascada',f=>{
@@ -47,7 +49,8 @@
     [...f.querySelectorAll('tbody th')].forEach(c=>c.textContent='Revisión de las solicitudes pendientes y confirmadas en cada área de la organización '.repeat(3));
     NotaReportes.init(f);const s=f.querySelector('svg'),labels=[...s.querySelectorAll('text')].filter(t=>t.querySelector('tspan'));
     const bars=[...s.querySelectorAll('[data-from]')];assert(labels.length===4,'Rótulos ausentes');
-    labels.forEach((t,i)=>{const b=t.getBBox();assert(b.x+b.width<300,'Rótulo invade el eje');assert(b.y+b.height<(i+1<bars.length?+bars[i+1].getAttribute('y'):+s.querySelector('[data-total]').getAttribute('y')),'Rótulo invade la siguiente fila');});
+    const hit=(a,b)=>Math.min(a.x+a.width,b.x+b.width)-Math.max(a.x,b.x)>1&&Math.min(a.y+a.height,b.y+b.height)-Math.max(a.y,b.y)>1;
+    labels.forEach((t,i)=>{const b=t.getBBox();assert(![...s.querySelectorAll('[data-from],[data-total]')].some(r=>hit(b,r.getBBox())),'Rótulo invade el eje');assert(b.y+b.height<(i+1<bars.length?+bars[i+1].getAttribute('y'):+s.querySelector('[data-total]').getAttribute('y')),'Rótulo invade la siguiente fila');});
   }));
   await test('Reporte inválido conserva tabla; reintento limpia error; destroy restaura DOM',()=>fixture('cascada',f=>{
     const cell=f.querySelector('[data-valor]');cell.dataset.valor='invalid';const original=f.querySelector('table').outerHTML;

@@ -166,14 +166,7 @@ window.BottifactReaderWorkspace = {
           };
           text.append(
             el("strong", item.title),
-            el(
-              "small",
-              (item.thread.entry_type === "note"
-                ? "Nota personal"
-                : "Comentario") +
-                " · " +
-                item.thread.author,
-            ),
+            window.MargenReviewIdentity.element("small", item.thread, (item.thread.entry_type === "note" ? "Nota personal" : "Comentario") + " · "),
             el("p", item.thread.text),
             el("blockquote", item.thread.anchor.quote),
           );
@@ -312,7 +305,7 @@ window.BottifactReaderWorkspace = {
           threads.set(e.thread, { ...e, replies: [] });
         const t = threads.get(e.thread);
         if (!t) continue;
-        if (e.kind === "edit") t.text = e.text;
+        if (e.kind === "edit" && (!e.actor || !t.actor || e.actor === t.actor)) { t.text = e.text; t.last_edit = e; }
         if (e.kind === "reply") t.replies.push(e);
         if (e.kind === "resolve") t.resolved = e.resolved;
         if (e.kind === "delete") t.deleted = true;
@@ -321,17 +314,13 @@ window.BottifactReaderWorkspace = {
         if (t.deleted) continue;
         const row = el("article");
         row.append(
-          el(
-            "small",
-            (t.entry_type === "note" ? "Nota personal" : "Comentario") +
-              " · " +
-              t.author,
-          ),
+          window.MargenReviewIdentity.element("small", t, (t.entry_type === "note" ? "Nota personal" : "Comentario") + " · "),
           el("p", t.text),
           el("blockquote", t.anchor.quote),
         );
+        if (t.last_edit) row.append(window.MargenReviewIdentity.element("small", t.last_edit, "Última edición: "));
         for (const r of t.replies)
-          row.append(el("p", r.author + ": " + r.text));
+          row.append(window.MargenReviewIdentity.element("p", r, "", ": " + r.text));
         body.append(row);
       }
       if (!body.children.length)

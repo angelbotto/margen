@@ -22,6 +22,7 @@ jobs:
           python scripts/test_project_profile.py
           node scripts/test_review_store.cjs
           node scripts/test_themes.cjs
+          node --test scripts/test_chart_core.mjs
           python scripts/validate_skill.py
           python scripts/test_feedback.py
           python scripts/test_domain_share.py
@@ -81,7 +82,7 @@ jobs:
       - name: Install browser test dependencies
         run: |
           pip install playwright==1.58.0
-          python -m playwright install --with-deps chromium
+          python -m playwright install --with-deps chromium webkit
       - name: Install portal test dependencies
         run: |
           pip install --require-hashes -r portal/requirements.lock
@@ -95,3 +96,37 @@ jobs:
         run: |
           python scripts/test_editorial_reference.py
           python scripts/test_editorial_web.py
+
+      - name: Check atlas layers, syntax and hidden prototype sizing
+        run: |
+          python scripts/test_editorial_atlas.py
+          python scripts/test_code_syntax.py
+          MARGEN_BROWSER=webkit python scripts/test_code_syntax.py
+          python scripts/test_prototype_resize.py
+          python scripts/test_deferred_runtime.py
+          MARGEN_BROWSER=webkit python scripts/test_deferred_runtime.py
+      - name: Check independently reported reader and chart regressions
+        run: |
+          python scripts/test_chart_edges.py
+          python review/atlas-ui-runtime/test_defects.py
+          MARGEN_BROWSER=webkit python review/atlas-ui-runtime/test_defects.py
+      - name: Check portal-owned media intent with real browser clicks
+        run: |
+          python tests/evidence/atlas-media-intent-2026-10-22/media_intent_browser.py . /tmp/media-intent-ci /tmp/media-intent-shots chromium
+          python tests/evidence/atlas-media-intent-2026-10-22/media_intent_browser.py . /tmp/media-intent-ci /tmp/media-intent-shots webkit
+          python tests/evidence/atlas-final-delta-20261022/media_doubleclick_browser.py . /tmp/media-repeat-ci chromium
+          python tests/evidence/atlas-final-delta-20261022/media_doubleclick_browser.py . /tmp/media-repeat-ci webkit
+      - name: Check complete atlas offline in Chromium and WebKit
+        run: |
+          python scripts/build_atlas.py --output-dir /tmp/margen-atlas-ci --render
+          python scripts/check_component_atlas.py --html /tmp/margen-atlas-ci/atlas.html --coverage /tmp/margen-atlas-ci/coverage.json --output /tmp/margen-atlas-ci/chromium --browser chromium
+          python scripts/check_component_atlas.py --html /tmp/margen-atlas-ci/atlas.html --coverage /tmp/margen-atlas-ci/coverage.json --output /tmp/margen-atlas-ci/webkit --browser webkit
+          python scripts/check_charts_atlas.py /tmp/margen-atlas-ci/atlas.html /tmp/margen-atlas-ci/charts.json
+      - name: Preserve visual failure evidence
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: editorial-layer-failure
+          path: /tmp/margen-atlas-layer-proof
+          if-no-files-found: ignore
+          retention-days: 7

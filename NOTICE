@@ -38,3 +38,7 @@ React table primitives use Radix UI (MIT, WorkOS and contributors) and TanStack 
 (MIT, Tanner Linsley and contributors). Versions are pinned in package-lock.json.
 Composition references shadcn/ui (MIT); original token-based wrappers live under
 packages/react/src/components/ui. Dependency packages retain their upstream license notices. Demo avatar/package SVGs are original synthetic illustrations.
+
+Code highlighting embeds Prism 1.30.0 (MIT, Copyright (c) 2012 Lea Verou), unmodified minified
+core and grammars from the official npm tarball. Integrity, per-file hashes and provenance are in
+packages/core/syntax/vendor/prismjs-1.30.0/; the license text is licenses/prismjs-MIT.txt.

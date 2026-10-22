@@ -1,0 +1,7 @@
+{
+  "id": "dated-header",
+  "legacyId": "encabezado-fecha",
+  "category": "publicaciones",
+  "title": "Encabezado con fecha",
+  "dependencies": ["packages/core/styles/fonts.css", "packages/core/styles/artifact.css", "packages/core/components/reader.js", "packages/core/components/editorial-pieces.js"]
+}

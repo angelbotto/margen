@@ -1,6 +1,6 @@
 import {beforeEach,expect,it,vi} from 'vitest';
 import {readFileSync} from 'node:fs';
-beforeEach(()=>{document.body.innerHTML='<div id="reader-dock"></div>';localStorage.clear();window.eval(readFileSync(process.cwd()+'/portal/static/reader-workspace.js','utf8'));Object.assign(HTMLDialogElement.prototype,{showModal(){this.open=true;},close(){this.open=false;this.dispatchEvent(new Event('close'));}});});
+beforeEach(()=>{window.eval(readFileSync('portal/static/review-identity.js','utf8'));document.body.innerHTML='<div id="reader-dock"></div>';localStorage.clear();window.eval(readFileSync(process.cwd()+'/portal/static/reader-workspace.js','utf8'));Object.assign(HTMLDialogElement.prototype,{showModal(){this.open=true;},close(){this.open=false;this.dispatchEvent(new Event('close'));}});});
 function setup(owner=false){const share=vi.fn(),copy=vi.fn().mockResolvedValue(true),manage=vi.fn(),current={id:'a',owner:'owner',permissions:{manage:owner}};const api=vi.fn().mockResolvedValue({items:[]});const instance=(window as any).BottifactReaderWorkspace.create({api,current:()=>current,user:()=>({id:owner?'owner':'reader',verified:true}),share,copy,manage,comment:vi.fn(),refresh:vi.fn()});return {instance,share,copy,manage,api};}
 it('gives readers copy-link sharing without permission management',async()=>{const {instance,share,copy}=setup();await instance.handle('action',{name:'share'});expect(share).not.toHaveBeenCalled();const b=[...document.querySelectorAll('button')].find(b=>b.textContent==='Copiar enlace')!;b.click();await Promise.resolve();expect(copy).toHaveBeenCalled();await expect(instance.handle('action',{name:'manage'})).rejects.toThrow();});
 it('uses owner sharing and stores validated preferences in the account/document scope',async()=>{const {instance,share}=setup(true);await instance.handle('action',{name:'share'});expect(share).toHaveBeenCalledWith('a');await instance.handle('preferences',{theme:'linear',mode:'dark',sound:true,volume:.4,token:'not-a-preference'});expect(JSON.parse(localStorage.getItem('bottifact-reader:owner:a')!)).toEqual({theme:'linear',mode:'dark',sound:true,volume:.4});});
@@ -23,4 +23,13 @@ it('does not show owner controls or hidden activity to readers',async()=>{
 it('only the owner can invoke editor or history through the artifact bridge',async()=>{
  const reader=setup();await expect(reader.instance.handle('action',{name:'edit'})).rejects.toThrow('Sólo el creador');await expect(reader.instance.handle('action',{name:'history'})).rejects.toThrow('Sólo el creador');
  const edit=vi.fn(),history=vi.fn();const instance=(window as any).BottifactReaderWorkspace.create({api:vi.fn(),current:()=>({id:'a',owner:'owner'}),user:()=>({id:'owner'}),edit,history});await instance.handle('action',{name:'edit'});await instance.handle('action',{name:'history'});expect(edit).toHaveBeenCalledOnce();expect(history).toHaveBeenCalledOnce();
+});
+
+it('does not project a legacy foreign edit as the original author in fallback review',async()=>{
+ const events=[{id:'c',thread:'c',kind:'create',actor:'a',author:'Ana',verified:true,text:'Original de Ana',anchor:{quote:'Cita'}},
+  {id:'e',thread:'c',kind:'edit',actor:'b',author:'Luis',verified:true,text:'Palabras ajenas'}];
+ const instance=(window as any).BottifactReaderWorkspace.create({api:vi.fn(),current:()=>({id:'a',owner:'owner'}),user:()=>({id:'owner'}),refresh:async()=>({snapshot:{events},permissions:{comment:false},verified:true})});
+ await instance.handle('action',{name:'review'});
+ expect(document.querySelector('.workbench-body')!.textContent).toContain('Original de Ana');
+ expect(document.querySelector('.workbench-body')!.textContent).not.toContain('Palabras ajenas');
 });

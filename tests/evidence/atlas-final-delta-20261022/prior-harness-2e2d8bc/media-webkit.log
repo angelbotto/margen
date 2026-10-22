@@ -1,0 +1,34 @@
+/Users/angelbotto/orca/workspaces/margen/margen-lector-voz/.venv/lib/python3.14/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+PASS portal reader CSP frame-src exact provider prefixes only 
+PASS artifact iframe sandbox unchanged (allow-scripts allow-downloads) 
+PASS artifact stays opaque and cannot read the portal 
+PASS no provider/external request before any click 
+PASS YouTube and Instagram cards expose a load button, X does not 
+PASS scripted embed without user activation is refused and opens nothing 
+FAIL YouTube click opens the portal dialog with exact player URL {"open": true, "provider": "youtube", "title": "Video de YouTube", "status": "", "link": "https://www.youtube.com/watch?v=M7lc1UVf-VE", "linkText": "Abrir en YouTube", "linkTarget": "_blank", "linkRel": "noopener noreferrer", "players": 0, "src": null, "sandbox": null, "allow": null, "referrerpolicy": null, "height": null, "active": "primary media-play|Reproducir aquí", "ua": {"a": true}}
+FAIL player sandbox/allow/referrer exact {"open": true, "provider": "youtube", "title": "Video de YouTube", "status": "", "link": "https://www.youtube.com/watch?v=M7lc1UVf-VE", "linkText": "Abrir en YouTube", "linkTarget": "_blank", "linkRel": "noopener noreferrer", "players": 0, "src": null, "sandbox": null, "allow": null, "referrerpolicy": null, "height": null, "active": "primary media-play|Reproducir aquí", "ua": {"a": true}}
+FAIL player liveness comes from provider postMessage (stub says playing) {"open": true, "provider": "youtube", "title": "Video de YouTube", "status": "", "link": "https://www.youtube.com/watch?v=M7lc1UVf-VE", "linkText": "Abrir en YouTube", "linkTarget": "_blank", "linkRel": "noopener noreferrer", "players": 0, "src": null, "sandbox": null, "allow": null, "referrerpolicy": null, "height": null, "active": "primary media-play|Reproducir aquí", "ua": {"a": true}}
+FAIL only the exact player URL is requested after the click []
+PASS forged provider error from the artifact is ignored 
+PASS Escape closes and removes the player 
+PASS focus returns to the card button inside the artifact 
+PASS repeated opening keeps at most one player and the dialog usable 
+PASS after repeated cycles closing leaves zero players 
+FAIL Instagram click mounts exact /embed/ URL with no-referrer {"d": {"open": true, "provider": "instagram", "title": "Publicación de Instagram", "status": "", "link": "https://www.instagram.com/p/fA9uwTtkSN/", "linkText": "Abrir en Instagram", "linkTarget": "_blank", "linkRel": "noopener noreferrer", "players": 0, "src": null, "sandbox": null, "allow": null, "referrerpolicy": null, "height": null, "active": "primary media-play|Cargar aquí", "ua": {"a": true}}, "reqs": []}
+FAIL Instagram MEASURE height bounded (5000 ignored, 900 applied) {"open": true, "provider": "instagram", "title": "Publicación de Instagram", "status": "", "link": "https://www.instagram.com/p/fA9uwTtkSN/", "linkText": "Abrir en Instagram", "linkTarget": "_blank", "linkRel": "noopener noreferrer", "players": 0, "src": null, "sandbox": null, "allow": null, "referrerpolicy": null, "height": null, "active": "primary media-play|Cargar aquí", "ua": {"a": true}}
+PASS history navigation (popstate) closes dialog and removes player 
+PASS switching version closes dialog and removes player 
+PASS embed request carrying another version is refused 
+FAIL click on plain text cannot be reused by artifact script to open an arbitrary external URL {"popups": [], "dialog": {"open": true, "provider": "link", "title": "Abrir enlace", "status": "", "link": "https://attacker.example/phish", "linkText": "Abrir en pestaña nueva", "linkTarget": "_blank", "linkRel": "noopener noreferrer", "players": 0, "src": null, "sandbox": null, "allow": null, "referrerpolicy": null, "height": null, "active": "media-source button primary|Abrir en pestaña nueva", "ua": {"a": true}}}
+PASS click on plain text cannot be reused to load a different provider player 
+PASS footer https link opens exactly one tab or a usable fallback 
+PASS blocked popup shows dialog with the exact link, new tab target and focus on it 
+PASS fallback link opens the tab on click 
+PASS X source href regenerated from ID (authored href ignored) 
+PASS X source link opens x.com status URL (tab or fallback) 
+FAIL credentialed https link is not opened {"popups": [], "dialog": {"open": true, "link": "", "title": "Este enlace no se abre aquí"}, "frames": ["https://portal.test/a/1c5303652dd14632a462c75db1ff927e", "https://portal.test/api/artifacts/1c5303652dd14632a462c75db1ff927e/render?version=5b907b81040d4db28fbb99b70c0df275"], "reqs": []}
+PASS credentialed https link gives the reader visible feedback 
+PASS http:// footer link is usable (tab or fallback) or explained 
+PASS mailto opens nothing in a new browsing context and stays in the reader 
+23 / 31

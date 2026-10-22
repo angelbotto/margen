@@ -21,6 +21,7 @@ import jwt
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse, Response, FileResponse
 from portal.workflows import migrate, metadata, version_state, visible_events, provenance, enqueue
+from portal.review_identity import identity_text
 from portal.workspace import mount_workspace
 from portal.knowledge import enrich, connections, knowledge_network
 from portal.context_graph import network as context_network, mount as mount_context, cited_version_readable
@@ -35,6 +36,9 @@ COOKIE = '__Host-bottifact'
 MAX_BODY = 22 * 1024 * 1024
 EMAIL = re.compile(r'^[^\s@]{1,64}@[^\s@.]+(?:\.[^\s@.]+)+$')
 ID = re.compile(r'^[a-zA-Z0-9_-]{1,120}$')
+PORTAL_CSP = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'"
+# Prefijos exactos de los reproductores que el lector puede montar; ver docs/atlas-embed-compatibility.md.
+MEDIA_FRAMES = ('https://www.youtube-nocookie.com/embed/', 'https://www.instagram.com/p/', 'https://www.instagram.com/reel/')
 
 
 def admin_emails():
@@ -228,13 +232,16 @@ def threads(events):
     result = {}
     for e in events:
         if e['kind'] == 'create':
-            result[e['thread']] = {**e, 'replies': [], 'resolved': False, 'deleted': False, 'assignee': ''}
+            result[e['thread']] = {**e, 'author': identity_text(e.get('author')), 'replies': [], 'resolved': False, 'deleted': False, 'assignee': ''}
         t = result.get(e['thread'])
         if not t:
             continue
         t['updated']=e['time']
         if e['kind'] == 'reply': t['replies'].append(e)
-        if e['kind'] == 'edit': t['text'] = e['text']
+        # Una edición de otro actor nunca se muestra con el nombre del autor original.
+        if e['kind'] == 'edit' and (not e.get('actor') or not t.get('actor') or e['actor'] == t['actor']):
+            t['text'] = e['text']
+            t['last_edit'] = {**e, 'author': identity_text(e.get('author'))}
         if e['kind'] == 'resolve': t['resolved'] = e['resolved']
         if e['kind'] == 'assign': t['assignee'] = e['assignee']
         if e['kind'] == 'delete': t['deleted'] = True
@@ -264,7 +271,7 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
         auth = request.headers.get('authorization', '')
         with store.db() as db:
             if auth.startswith('Bearer '):
-                row = db.execute('SELECT u.* FROM tokens t JOIN users u ON u.id=t.user_id WHERE t.hash=?', (digest(auth[7:]),)).fetchone()
+                row = db.execute('SELECT u.*,t.label AS agent_label FROM tokens t JOIN users u ON u.id=t.user_id WHERE t.hash=?', (digest(auth[7:]),)).fetchone()
                 if not row: raise HTTPException(401, 'Conexión del agente inválida o revocada.')
                 return {**dict(row), 'agent': True}
             session = request.cookies.get(COOKIE, '')
@@ -323,7 +330,7 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
         response.headers['Referrer-Policy'] = 'no-referrer'
         response.headers['X-Robots-Tag'] = 'noindex, nofollow'
         if 'Content-Security-Policy' not in response.headers:
-            response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'"
+            response.headers['Content-Security-Policy'] = PORTAL_CSP
         analytics = analytics_configuration()
         if analytics and "sandbox" not in response.headers.get('Content-Security-Policy',''):
             policy = response.headers.get('Content-Security-Policy','')
@@ -358,7 +365,7 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
             a = artifact_for(db, aid, None)
             if not a['guests'] or a['comments'] != 'readers': raise HTTPException(403, 'El autor requiere iniciar sesión para comentar.')
             uid = uuid.uuid4().hex
-            db.execute('INSERT INTO users VALUES(?,NULL,?,0)', (uid, clean(body.get('name'), 80)))
+            db.execute('INSERT INTO users VALUES(?,NULL,?,0)', (uid, identity_text(clean(body.get('name'), 80))))
         return set_session(JSONResponse({'ok':True}), uid)
 
     @app.post('/api/logout')
@@ -396,7 +403,7 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
     @app.post('/api/tokens')
     async def new_token(request: Request):
         u = account(request, True);body = await payload(request)
-        return {'token':store.token(u['id'], clean(body.get('label','Agente'),80))}
+        return {'token':store.token(u['id'], identity_text(clean(body.get('label','Agente'),80), 'Agente'))}
 
     @app.get('/api/tokens')
     def tokens(request: Request):
@@ -674,9 +681,11 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
                 original = db.execute('SELECT actor,event FROM events WHERE artifact=? AND id=?',(aid,thread)).fetchone()
                 if not original or json.loads(original['event'])['kind']!='create': raise HTTPException(404,'Hilo no disponible.')
                 if kind in ['resolve','assign','delete'] and not (p['edit'] or personal): raise HTTPException(403,'Sólo el autor del documento y sus editores pueden gestionar hilos.')
-                if kind=='edit' and not (p['edit'] or original['actor']==u['id']): raise HTTPException(403,'Sólo puedes editar tus comentarios.')
+                # Editar reescribe la voz del autor: ni el dueño ni sus editores pueden hacerlo por otra persona.
+                if kind=='edit' and original['actor']!=u['id']: raise HTTPException(403,'Sólo puedes editar tus comentarios.')
             e = {'id':event_id,'thread':thread,'kind':kind,'author':u['name'],'time':max(int(time.time()*1000),max([x['time'] for x in entries],default=0)+1),
                  'version':version,'actor':u['id'],'verified':bool(u['verified'])}
+            if u.get('agent'): e['agent']=identity_text(clean(u.get('agent_label') or 'Agente',80), 'Agente')
             if kind in ['create','reply','edit']: e['text'] = clean(body.get('text'),4000)
             if kind=='resolve':
                 if not isinstance(body.get('resolved'),bool): raise HTTPException(422,'Estado inválido.')
@@ -746,7 +755,8 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
         content=refresh_editorial_reference(content,
             (ROOT/'static/editorial-reference.css').read_text(),
             (ROOT/'static/editorial-code.js').read_text(),
-            (ROOT/'static/editorial-pieces.js').read_text())
+            (ROOT/'static/editorial-pieces.js').read_text(),
+            json.loads((ROOT/'static/runtime-refresh.json').read_text()))
         content=re.sub(r'href="([^"]+)" data-margen-original="([^"]+)"',lambda m:'data-bottifact-link href="/api/artifacts/'+aid+'/attachments/'+vid+'/'+quote(m[2],safe='')+'"',content)
         # El iframe y la cabecera CSP fuerzan origen opaco, incluso al abrir esta URL fuera del portal.
         bridge=(ROOT/'static/bridge.js').read_text()
@@ -793,8 +803,11 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
     def page(request: Request, aid: str=''):
         if not aid and request.query_params.get('view') not in {'themes', 'components', 'developers'} and not (who(request) or {}).get('verified'): return RedirectResponse('/login', status_code=303)
         content=(ROOT/'static/index.html').read_text()
-        if aid:content=content.replace('<body class="portal-app">','<body class="portal-app reading">').replace('<section id="library">','<section id="library" hidden>')
-        return HTMLResponse(content)
+        if not aid:return HTMLResponse(content)
+        content=content.replace('<body class="portal-app">','<body class="portal-app reading">').replace('<section id="library">','<section id="library" hidden>')
+        # Sólo el lector monta reproductores (portal/static/media-embeds.js), y sólo en estas rutas exactas.
+        # El render del artefacto conserva su propia CSP y su sandbox opaco.
+        return HTMLResponse(content,headers={'Content-Security-Policy':PORTAL_CSP.replace("frame-src 'self';","frame-src 'self' "+' '.join(MEDIA_FRAMES)+';')})
 
     app.mount('/static',StaticFiles(directory=ROOT/'static'),name='static')
     return app

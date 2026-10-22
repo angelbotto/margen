@@ -48,7 +48,8 @@ class ContractTests(unittest.TestCase):
    html=item['html']+(recipe('archivo') if item['id']=='configuracion' else '')
    with self.subTest(recipe=item['id']):
     result=build(item['nombre'],[{**self.pages[0],'html':html}]);self.assertEqual(validate(result),[])
-    if THREE in item['dependencias']:self.assertEqual(result.count('<script src="'+THREE+'">'),1)
+    # Three is requested by the 3D module when shown, never as a render-blocking tag.
+    if THREE in item['dependencias']:self.assertEqual(result.count('<script src="'+THREE+'">'),0);self.assertIn("src='"+THREE+"'",result)
  def test_custom_prose_guidance_and_wide_article(self):
   source='<section class="business-summary" id="summary"><h2>Summary</h2><p>Evidence.</p></section>'
   render=lambda content:build('Report',[{'id':'start','titulo':'Start','html':content}])

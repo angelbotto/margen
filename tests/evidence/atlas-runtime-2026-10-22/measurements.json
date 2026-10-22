@@ -1,0 +1,5157 @@
+{
+ "note": "Lab automation on one machine; medians of cold loads. Not field data and not FPS.",
+ "files": {
+  "base": {
+   "bytes": 2322301,
+   "gzip": 968485
+  },
+  "candidate": {
+   "bytes": 2393107,
+   "gzip": 993251
+  }
+ },
+ "results": [
+  {
+   "engine": "chromium",
+   "width": 1440,
+   "cpuThrottle": 1,
+   "build": "base",
+   "summary": {
+    "loadMs": 164,
+    "dclMs": 160,
+    "settleMs": 30,
+    "nodesInitial": 35699,
+    "codeLinesInitial": 1063,
+    "longTasks": 0,
+    "longTaskMs": 0,
+    "maxTaskMs": 0,
+    "listenersInitial": 1041,
+    "heapKbInitial": 9766,
+    "cdpScriptMs": 0.1,
+    "cdpTaskMs": 0.2,
+    "openDetailsMs": 20,
+    "nodesFinal": 37698
+   },
+   "runs": [
+    {
+     "initial": {
+      "nodes": 35699,
+      "codeSpans": 1063,
+      "dcl": 160,
+      "load": 164,
+      "listeners": 1041,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": null,
+      "waiting": null,
+      "heap": 9766
+     },
+     "settleAfterLoad": 17,
+     "cdp": {
+      "Nodes": 91444,
+      "JSEventListeners": 1041,
+      "JSHeapUsedSize": 4538632,
+      "ScriptDuration": 0.1,
+      "LayoutDuration": 0.0,
+      "RecalcStyleDuration": 0.0,
+      "TaskDuration": 0.2
+     },
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 70,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 62,
+       "idleMs": 27
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 64,
+       "idleMs": 24
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 70,
+       "idleMs": 23
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 63,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 67,
+       "idleMs": 34
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 62,
+       "idleMs": 30
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 67,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 64,
+       "idleMs": 29
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 66,
+       "idleMs": 31
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 96,
+      "idleMs": 20,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 37698,
+      "codeSpans": 1063,
+      "dcl": 160,
+      "load": 164,
+      "listeners": 1362,
+      "longTasks": 1,
+      "longTaskMs": 61,
+      "maxTask": 61,
+      "pending": null,
+      "waiting": null,
+      "heap": 9766
+     },
+     "cdpFinal": {
+      "Nodes": 94731,
+      "JSEventListeners": 1358,
+      "JSHeapUsedSize": 4188616
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 35699,
+      "codeSpans": 1063,
+      "dcl": 156,
+      "load": 160,
+      "listeners": 1041,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": null,
+      "waiting": null,
+      "heap": 9766
+     },
+     "settleAfterLoad": 30,
+     "cdp": {
+      "Nodes": 91444,
+      "JSEventListeners": 1041,
+      "JSHeapUsedSize": 4615044,
+      "ScriptDuration": 0.1,
+      "LayoutDuration": 0.0,
+      "RecalcStyleDuration": 0.0,
+      "TaskDuration": 0.2
+     },
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 56,
+       "idleMs": 38
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 59,
+       "idleMs": 25
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 67,
+       "idleMs": 25
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 85,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 67,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 66,
+       "idleMs": 35
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 63,
+       "idleMs": 35
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 65,
+       "idleMs": 30
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 69,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 64,
+       "idleMs": 38
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 96,
+      "idleMs": 22,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 37698,
+      "codeSpans": 1063,
+      "dcl": 156,
+      "load": 160,
+      "listeners": 1362,
+      "longTasks": 1,
+      "longTaskMs": 63,
+      "maxTask": 63,
+      "pending": null,
+      "waiting": null,
+      "heap": 9766
+     },
+     "cdpFinal": {
+      "Nodes": 94732,
+      "JSEventListeners": 1358,
+      "JSHeapUsedSize": 4235212
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 35699,
+      "codeSpans": 1063,
+      "dcl": 160,
+      "load": 164,
+      "listeners": 1041,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": null,
+      "waiting": null,
+      "heap": 9766
+     },
+     "settleAfterLoad": 31,
+     "cdp": {
+      "Nodes": 91444,
+      "JSEventListeners": 1041,
+      "JSHeapUsedSize": 4620596,
+      "ScriptDuration": 0.1,
+      "LayoutDuration": 0.0,
+      "RecalcStyleDuration": 0.0,
+      "TaskDuration": 0.2
+     },
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 47,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 68,
+       "idleMs": 36
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 63,
+       "idleMs": 25
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 84,
+       "idleMs": 27
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 67,
+       "idleMs": 28
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 66,
+       "idleMs": 30
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 62,
+       "idleMs": 30
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 68,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 64,
+       "idleMs": 27
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 66,
+       "idleMs": 33
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 92,
+      "idleMs": 19,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 37698,
+      "codeSpans": 1063,
+      "dcl": 160,
+      "load": 164,
+      "listeners": 1362,
+      "longTasks": 1,
+      "longTaskMs": 60,
+      "maxTask": 60,
+      "pending": null,
+      "waiting": null,
+      "heap": 9766
+     },
+     "cdpFinal": {
+      "Nodes": 94731,
+      "JSEventListeners": 1358,
+      "JSHeapUsedSize": 4309092
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    }
+   ]
+  },
+  {
+   "engine": "chromium",
+   "width": 1440,
+   "cpuThrottle": 1,
+   "build": "candidate",
+   "summary": {
+    "loadMs": 131,
+    "dclMs": 126,
+    "settleMs": 28,
+    "nodesInitial": 7364,
+    "codeLinesInitial": 0,
+    "longTasks": 0,
+    "longTaskMs": 0,
+    "maxTaskMs": 0,
+    "listenersInitial": 1045,
+    "heapKbInitial": 9766,
+    "cdpScriptMs": 0.0,
+    "cdpTaskMs": 0.1,
+    "openDetailsMs": 21,
+    "nodesFinal": 21368
+   },
+   "runs": [
+    {
+     "initial": {
+      "nodes": 7364,
+      "codeSpans": 0,
+      "dcl": 126,
+      "load": 131,
+      "listeners": 1045,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": 0,
+      "waiting": 113,
+      "heap": 9766
+     },
+     "settleAfterLoad": 16,
+     "cdp": {
+      "Nodes": 16540,
+      "JSEventListeners": 1045,
+      "JSHeapUsedSize": 3415276,
+      "ScriptDuration": 0.0,
+      "LayoutDuration": 0.0,
+      "RecalcStyleDuration": 0.0,
+      "TaskDuration": 0.1
+     },
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 55,
+       "idleMs": 25
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 69,
+       "idleMs": 28
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 64,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 68,
+       "idleMs": 25
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 68,
+       "idleMs": 37
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 59,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 70,
+       "idleMs": 35
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 67,
+       "idleMs": 37
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 66,
+       "idleMs": 40
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 64,
+       "idleMs": 35
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 116,
+      "idleMs": 23,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 21368,
+      "codeSpans": 1000,
+      "dcl": 126,
+      "load": 131,
+      "listeners": 1367,
+      "longTasks": 1,
+      "longTaskMs": 60,
+      "maxTask": 60,
+      "pending": 0,
+      "waiting": 107,
+      "heap": 9766
+     },
+     "cdpFinal": {
+      "Nodes": 50126,
+      "JSEventListeners": 1363,
+      "JSHeapUsedSize": 4287520
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 7364,
+      "codeSpans": 0,
+      "dcl": 126,
+      "load": 129,
+      "listeners": 1045,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": 0,
+      "waiting": 113,
+      "heap": 9766
+     },
+     "settleAfterLoad": 33,
+     "cdp": {
+      "Nodes": 16540,
+      "JSEventListeners": 1045,
+      "JSHeapUsedSize": 3422688,
+      "ScriptDuration": 0.0,
+      "LayoutDuration": 0.0,
+      "RecalcStyleDuration": 0.0,
+      "TaskDuration": 0.1
+     },
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 52,
+       "idleMs": 22
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 65,
+       "idleMs": 22
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 68,
+       "idleMs": 27
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 65,
+       "idleMs": 25
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 64,
+       "idleMs": 27
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 67,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 65,
+       "idleMs": 26
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 65,
+       "idleMs": 26
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 69,
+       "idleMs": 35
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 66,
+       "idleMs": 35
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 118,
+      "idleMs": 21,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 21368,
+      "codeSpans": 1000,
+      "dcl": 126,
+      "load": 129,
+      "listeners": 1367,
+      "longTasks": 1,
+      "longTaskMs": 62,
+      "maxTask": 62,
+      "pending": 0,
+      "waiting": 107,
+      "heap": 9766
+     },
+     "cdpFinal": {
+      "Nodes": 50125,
+      "JSEventListeners": 1363,
+      "JSHeapUsedSize": 4248464
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 7364,
+      "codeSpans": 0,
+      "dcl": 131,
+      "load": 134,
+      "listeners": 1045,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": 0,
+      "waiting": 113,
+      "heap": 9766
+     },
+     "settleAfterLoad": 28,
+     "cdp": {
+      "Nodes": 16542,
+      "JSEventListeners": 1045,
+      "JSHeapUsedSize": 3454644,
+      "ScriptDuration": 0.0,
+      "LayoutDuration": 0.0,
+      "RecalcStyleDuration": 0.0,
+      "TaskDuration": 0.1
+     },
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 59,
+       "idleMs": 30
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 62,
+       "idleMs": 23
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 68,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 63,
+       "idleMs": 25
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 68,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 65,
+       "idleMs": 28
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 67,
+       "idleMs": 36
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 61,
+       "idleMs": 28
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 66,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 70,
+       "idleMs": 37
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 115,
+      "idleMs": 15,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 21368,
+      "codeSpans": 1000,
+      "dcl": 131,
+      "load": 134,
+      "listeners": 1367,
+      "longTasks": 1,
+      "longTaskMs": 61,
+      "maxTask": 61,
+      "pending": 0,
+      "waiting": 107,
+      "heap": 9766
+     },
+     "cdpFinal": {
+      "Nodes": 50125,
+      "JSEventListeners": 1363,
+      "JSHeapUsedSize": 4248968
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    }
+   ]
+  },
+  {
+   "engine": "chromium",
+   "width": 390,
+   "cpuThrottle": 1,
+   "build": "base",
+   "summary": {
+    "loadMs": 154,
+    "dclMs": 150,
+    "settleMs": 22,
+    "nodesInitial": 35696,
+    "codeLinesInitial": 1063,
+    "longTasks": 0,
+    "longTaskMs": 0,
+    "maxTaskMs": 0,
+    "listenersInitial": 1041,
+    "heapKbInitial": 9766,
+    "cdpScriptMs": 0.1,
+    "cdpTaskMs": 0.2,
+    "openDetailsMs": 20,
+    "nodesFinal": 37371
+   },
+   "runs": [
+    {
+     "initial": {
+      "nodes": 35696,
+      "codeSpans": 1063,
+      "dcl": 150,
+      "load": 154,
+      "listeners": 1041,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": null,
+      "waiting": null,
+      "heap": 9766
+     },
+     "settleAfterLoad": 22,
+     "cdp": {
+      "Nodes": 91390,
+      "JSEventListeners": 1041,
+      "JSHeapUsedSize": 4555192,
+      "ScriptDuration": 0.1,
+      "LayoutDuration": 0.0,
+      "RecalcStyleDuration": 0.0,
+      "TaskDuration": 0.2
+     },
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 51,
+       "idleMs": 34
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 66,
+       "idleMs": 34
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 67,
+       "idleMs": 34
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 64,
+       "idleMs": 21
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 68,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 68,
+       "idleMs": 38
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 61,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 68,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 67,
+       "idleMs": 37
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 62,
+       "idleMs": 32
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 102,
+      "idleMs": 25,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 37371,
+      "codeSpans": 1063,
+      "dcl": 150,
+      "load": 154,
+      "listeners": 1362,
+      "longTasks": 1,
+      "longTaskMs": 65,
+      "maxTask": 65,
+      "pending": null,
+      "waiting": null,
+      "heap": 9766
+     },
+     "cdpFinal": {
+      "Nodes": 93914,
+      "JSEventListeners": 1358,
+      "JSHeapUsedSize": 4994180
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 35696,
+      "codeSpans": 1063,
+      "dcl": 149,
+      "load": 153,
+      "listeners": 1041,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": null,
+      "waiting": null,
+      "heap": 9766
+     },
+     "settleAfterLoad": 22,
+     "cdp": {
+      "Nodes": 91390,
+      "JSEventListeners": 1041,
+      "JSHeapUsedSize": 4525116,
+      "ScriptDuration": 0.1,
+      "LayoutDuration": 0.0,
+      "RecalcStyleDuration": 0.0,
+      "TaskDuration": 0.2
+     },
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 53,
+       "idleMs": 35
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 64,
+       "idleMs": 34
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 65,
+       "idleMs": 34
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 71,
+       "idleMs": 25
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 64,
+       "idleMs": 34
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 64,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 68,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 61,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 67,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 67,
+       "idleMs": 34
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 99,
+      "idleMs": 20,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 37371,
+      "codeSpans": 1063,
+      "dcl": 149,
+      "load": 153,
+      "listeners": 1362,
+      "longTasks": 1,
+      "longTaskMs": 64,
+      "maxTask": 64,
+      "pending": null,
+      "waiting": null,
+      "heap": 9766
+     },
+     "cdpFinal": {
+      "Nodes": 93917,
+      "JSEventListeners": 1358,
+      "JSHeapUsedSize": 5151220
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 35696,
+      "codeSpans": 1063,
+      "dcl": 151,
+      "load": 154,
+      "listeners": 1041,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": null,
+      "waiting": null,
+      "heap": 9766
+     },
+     "settleAfterLoad": 31,
+     "cdp": {
+      "Nodes": 91390,
+      "JSEventListeners": 1041,
+      "JSHeapUsedSize": 4532104,
+      "ScriptDuration": 0.1,
+      "LayoutDuration": 0.0,
+      "RecalcStyleDuration": 0.0,
+      "TaskDuration": 0.2
+     },
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 62,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 70,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 62,
+       "idleMs": 34
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 69,
+       "idleMs": 19
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 63,
+       "idleMs": 34
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 68,
+       "idleMs": 35
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 62,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 68,
+       "idleMs": 34
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 64,
+       "idleMs": 35
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 66,
+       "idleMs": 32
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 95,
+      "idleMs": 16,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 37371,
+      "codeSpans": 1063,
+      "dcl": 151,
+      "load": 154,
+      "listeners": 1362,
+      "longTasks": 1,
+      "longTaskMs": 68,
+      "maxTask": 68,
+      "pending": null,
+      "waiting": null,
+      "heap": 9766
+     },
+     "cdpFinal": {
+      "Nodes": 93918,
+      "JSEventListeners": 1358,
+      "JSHeapUsedSize": 5155368
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    }
+   ]
+  },
+  {
+   "engine": "chromium",
+   "width": 390,
+   "cpuThrottle": 1,
+   "build": "candidate",
+   "summary": {
+    "loadMs": 124,
+    "dclMs": 120,
+    "settleMs": 24,
+    "nodesInitial": 7361,
+    "codeLinesInitial": 0,
+    "longTasks": 0,
+    "longTaskMs": 0,
+    "maxTaskMs": 0,
+    "listenersInitial": 1045,
+    "heapKbInitial": 9766,
+    "cdpScriptMs": 0.0,
+    "cdpTaskMs": 0.1,
+    "openDetailsMs": 144,
+    "nodesFinal": 21041
+   },
+   "runs": [
+    {
+     "initial": {
+      "nodes": 7361,
+      "codeSpans": 0,
+      "dcl": 120,
+      "load": 124,
+      "listeners": 1045,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": 0,
+      "waiting": 113,
+      "heap": 9766
+     },
+     "settleAfterLoad": 24,
+     "cdp": {
+      "Nodes": 16487,
+      "JSEventListeners": 1045,
+      "JSHeapUsedSize": 3422372,
+      "ScriptDuration": 0.0,
+      "LayoutDuration": 0.0,
+      "RecalcStyleDuration": 0.0,
+      "TaskDuration": 0.1
+     },
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 56,
+       "idleMs": 29
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 65,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 63,
+       "idleMs": 26
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 66,
+       "idleMs": 25
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 68,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 64,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 66,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 67,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 67,
+       "idleMs": 35
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 66,
+       "idleMs": 36
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 178,
+      "idleMs": 144,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 21041,
+      "codeSpans": 1000,
+      "dcl": 120,
+      "load": 124,
+      "listeners": 1367,
+      "longTasks": 2,
+      "longTaskMs": 128,
+      "maxTask": 65,
+      "pending": 0,
+      "waiting": 107,
+      "heap": 9766
+     },
+     "cdpFinal": {
+      "Nodes": 49688,
+      "JSEventListeners": 1363,
+      "JSHeapUsedSize": 4223160
+     },
+     "blocked": [],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 7361,
+      "codeSpans": 0,
+      "dcl": 120,
+      "load": 124,
+      "listeners": 1045,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": 0,
+      "waiting": 113,
+      "heap": 9766
+     },
+     "settleAfterLoad": 18,
+     "cdp": {
+      "Nodes": 16487,
+      "JSEventListeners": 1045,
+      "JSHeapUsedSize": 3401672,
+      "ScriptDuration": 0.0,
+      "LayoutDuration": 0.0,
+      "RecalcStyleDuration": 0.0,
+      "TaskDuration": 0.1
+     },
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 60,
+       "idleMs": 38
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 61,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 66,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 72,
+       "idleMs": 24
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 59,
+       "idleMs": 30
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 66,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 67,
+       "idleMs": 35
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 64,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 68,
+       "idleMs": 29
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 66,
+       "idleMs": 35
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 187,
+      "idleMs": 139,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 21041,
+      "codeSpans": 1000,
+      "dcl": 120,
+      "load": 124,
+      "listeners": 1367,
+      "longTasks": 2,
+      "longTaskMs": 132,
+      "maxTask": 67,
+      "pending": 0,
+      "waiting": 107,
+      "heap": 9766
+     },
+     "cdpFinal": {
+      "Nodes": 49688,
+      "JSEventListeners": 1363,
+      "JSHeapUsedSize": 4223760
+     },
+     "blocked": [],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 7361,
+      "codeSpans": 0,
+      "dcl": 123,
+      "load": 127,
+      "listeners": 1045,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": 0,
+      "waiting": 113,
+      "heap": 9766
+     },
+     "settleAfterLoad": 27,
+     "cdp": {
+      "Nodes": 16487,
+      "JSEventListeners": 1045,
+      "JSHeapUsedSize": 3420780,
+      "ScriptDuration": 0.0,
+      "LayoutDuration": 0.0,
+      "RecalcStyleDuration": 0.0,
+      "TaskDuration": 0.1
+     },
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 56,
+       "idleMs": 28
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 70,
+       "idleMs": 34
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 65,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 61,
+       "idleMs": 19
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 66,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 69,
+       "idleMs": 36
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 65,
+       "idleMs": 38
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 64,
+       "idleMs": 30
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 66,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 64,
+       "idleMs": 31
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 184,
+      "idleMs": 148,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 21041,
+      "codeSpans": 1000,
+      "dcl": 123,
+      "load": 127,
+      "listeners": 1367,
+      "longTasks": 2,
+      "longTaskMs": 130,
+      "maxTask": 66,
+      "pending": 0,
+      "waiting": 107,
+      "heap": 9766
+     },
+     "cdpFinal": {
+      "Nodes": 49688,
+      "JSEventListeners": 1363,
+      "JSHeapUsedSize": 4223000
+     },
+     "blocked": [],
+     "errors": []
+    }
+   ]
+  },
+  {
+   "engine": "chromium",
+   "width": 320,
+   "cpuThrottle": 1,
+   "build": "base",
+   "summary": {
+    "loadMs": 155,
+    "dclMs": 152,
+    "settleMs": 28,
+    "nodesInitial": 35696,
+    "codeLinesInitial": 1063,
+    "longTasks": 0,
+    "longTaskMs": 0,
+    "maxTaskMs": 0,
+    "listenersInitial": 1041,
+    "heapKbInitial": 9766,
+    "cdpScriptMs": 0.1,
+    "cdpTaskMs": 0.2,
+    "openDetailsMs": 23,
+    "nodesFinal": 37355
+   },
+   "runs": [
+    {
+     "initial": {
+      "nodes": 35696,
+      "codeSpans": 1063,
+      "dcl": 152,
+      "load": 155,
+      "listeners": 1041,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": null,
+      "waiting": null,
+      "heap": 9766
+     },
+     "settleAfterLoad": 28,
+     "cdp": {
+      "Nodes": 91390,
+      "JSEventListeners": 1041,
+      "JSHeapUsedSize": 4537848,
+      "ScriptDuration": 0.1,
+      "LayoutDuration": 0.0,
+      "RecalcStyleDuration": 0.0,
+      "TaskDuration": 0.2
+     },
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 55,
+       "idleMs": 38
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 61,
+       "idleMs": 30
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 67,
+       "idleMs": 30
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 63,
+       "idleMs": 19
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 69,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 62,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 72,
+       "idleMs": 39
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 67,
+       "idleMs": 35
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 63,
+       "idleMs": 36
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 64,
+       "idleMs": 38
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 117,
+      "idleMs": 23,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 37355,
+      "codeSpans": 1063,
+      "dcl": 152,
+      "load": 155,
+      "listeners": 1362,
+      "longTasks": 1,
+      "longTaskMs": 73,
+      "maxTask": 73,
+      "pending": null,
+      "waiting": null,
+      "heap": 9766
+     },
+     "cdpFinal": {
+      "Nodes": 93894,
+      "JSEventListeners": 1358,
+      "JSHeapUsedSize": 5315208
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 35696,
+      "codeSpans": 1063,
+      "dcl": 150,
+      "load": 153,
+      "listeners": 1041,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": null,
+      "waiting": null,
+      "heap": 9766
+     },
+     "settleAfterLoad": 28,
+     "cdp": {
+      "Nodes": 91390,
+      "JSEventListeners": 1041,
+      "JSHeapUsedSize": 4537280,
+      "ScriptDuration": 0.1,
+      "LayoutDuration": 0.0,
+      "RecalcStyleDuration": 0.0,
+      "TaskDuration": 0.2
+     },
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 57,
+       "idleMs": 35
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 64,
+       "idleMs": 37
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 62,
+       "idleMs": 30
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 73,
+       "idleMs": 25
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 62,
+       "idleMs": 37
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 62,
+       "idleMs": 30
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 68,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 65,
+       "idleMs": 35
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 64,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 65,
+       "idleMs": 33
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 119,
+      "idleMs": 30,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 37355,
+      "codeSpans": 1063,
+      "dcl": 150,
+      "load": 153,
+      "listeners": 1362,
+      "longTasks": 1,
+      "longTaskMs": 71,
+      "maxTask": 71,
+      "pending": null,
+      "waiting": null,
+      "heap": 9766
+     },
+     "cdpFinal": {
+      "Nodes": 93888,
+      "JSEventListeners": 1358,
+      "JSHeapUsedSize": 4987836
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 35696,
+      "codeSpans": 1063,
+      "dcl": 154,
+      "load": 158,
+      "listeners": 1041,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": null,
+      "waiting": null,
+      "heap": 9766
+     },
+     "settleAfterLoad": 23,
+     "cdp": {
+      "Nodes": 91390,
+      "JSEventListeners": 1041,
+      "JSHeapUsedSize": 4563304,
+      "ScriptDuration": 0.1,
+      "LayoutDuration": 0.0,
+      "RecalcStyleDuration": 0.0,
+      "TaskDuration": 0.2
+     },
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 51,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 68,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 63,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 84,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 67,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 65,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 67,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 63,
+       "idleMs": 27
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 64,
+       "idleMs": 29
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 71,
+       "idleMs": 39
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 115,
+      "idleMs": 22,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 37355,
+      "codeSpans": 1063,
+      "dcl": 154,
+      "load": 158,
+      "listeners": 1362,
+      "longTasks": 1,
+      "longTaskMs": 74,
+      "maxTask": 74,
+      "pending": null,
+      "waiting": null,
+      "heap": 9766
+     },
+     "cdpFinal": {
+      "Nodes": 93894,
+      "JSEventListeners": 1358,
+      "JSHeapUsedSize": 5324300
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    }
+   ]
+  },
+  {
+   "engine": "chromium",
+   "width": 320,
+   "cpuThrottle": 1,
+   "build": "candidate",
+   "summary": {
+    "loadMs": 125,
+    "dclMs": 121,
+    "settleMs": 27,
+    "nodesInitial": 7361,
+    "codeLinesInitial": 0,
+    "longTasks": 0,
+    "longTaskMs": 0,
+    "maxTaskMs": 0,
+    "listenersInitial": 1045,
+    "heapKbInitial": 9766,
+    "cdpScriptMs": 0.0,
+    "cdpTaskMs": 0.1,
+    "openDetailsMs": 131,
+    "nodesFinal": 21025
+   },
+   "runs": [
+    {
+     "initial": {
+      "nodes": 7361,
+      "codeSpans": 0,
+      "dcl": 122,
+      "load": 125,
+      "listeners": 1045,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": 0,
+      "waiting": 113,
+      "heap": 9766
+     },
+     "settleAfterLoad": 21,
+     "cdp": {
+      "Nodes": 16487,
+      "JSEventListeners": 1045,
+      "JSHeapUsedSize": 3419840,
+      "ScriptDuration": 0.0,
+      "LayoutDuration": 0.0,
+      "RecalcStyleDuration": 0.0,
+      "TaskDuration": 0.1
+     },
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 59,
+       "idleMs": 35
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 62,
+       "idleMs": 34
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 66,
+       "idleMs": 30
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 68,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 60,
+       "idleMs": 34
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 67,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 71,
+       "idleMs": 40
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 58,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 69,
+       "idleMs": 37
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 64,
+       "idleMs": 35
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 182,
+      "idleMs": 82,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 21025,
+      "codeSpans": 1000,
+      "dcl": 122,
+      "load": 125,
+      "listeners": 1367,
+      "longTasks": 2,
+      "longTaskMs": 132,
+      "maxTask": 69,
+      "pending": 0,
+      "waiting": 107,
+      "heap": 9766
+     },
+     "cdpFinal": {
+      "Nodes": 49663,
+      "JSEventListeners": 1363,
+      "JSHeapUsedSize": 4229284
+     },
+     "blocked": [],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 7361,
+      "codeSpans": 0,
+      "dcl": 120,
+      "load": 124,
+      "listeners": 1045,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": 0,
+      "waiting": 113,
+      "heap": 9766
+     },
+     "settleAfterLoad": 32,
+     "cdp": {
+      "Nodes": 16487,
+      "JSEventListeners": 1045,
+      "JSHeapUsedSize": 3413084,
+      "ScriptDuration": 0.0,
+      "LayoutDuration": 0.0,
+      "RecalcStyleDuration": 0.0,
+      "TaskDuration": 0.1
+     },
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 60,
+       "idleMs": 36
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 62,
+       "idleMs": 34
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 68,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 61,
+       "idleMs": 22
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 67,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 69,
+       "idleMs": 36
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 63,
+       "idleMs": 34
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 68,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 62,
+       "idleMs": 29
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 67,
+       "idleMs": 33
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 186,
+      "idleMs": 150,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 21025,
+      "codeSpans": 1000,
+      "dcl": 120,
+      "load": 124,
+      "listeners": 1367,
+      "longTasks": 2,
+      "longTaskMs": 131,
+      "maxTask": 68,
+      "pending": 0,
+      "waiting": 107,
+      "heap": 9766
+     },
+     "cdpFinal": {
+      "Nodes": 49663,
+      "JSEventListeners": 1363,
+      "JSHeapUsedSize": 4230012
+     },
+     "blocked": [],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 7361,
+      "codeSpans": 0,
+      "dcl": 121,
+      "load": 125,
+      "listeners": 1045,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": 0,
+      "waiting": 113,
+      "heap": 9766
+     },
+     "settleAfterLoad": 27,
+     "cdp": {
+      "Nodes": 16488,
+      "JSEventListeners": 1045,
+      "JSHeapUsedSize": 3422580,
+      "ScriptDuration": 0.0,
+      "LayoutDuration": 0.0,
+      "RecalcStyleDuration": 0.0,
+      "TaskDuration": 0.1
+     },
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 56,
+       "idleMs": 38
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 65,
+       "idleMs": 37
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 60,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 65,
+       "idleMs": 21
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 70,
+       "idleMs": 37
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 61,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 66,
+       "idleMs": 27
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 70,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 65,
+       "idleMs": 37
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 62,
+       "idleMs": 32
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 168,
+      "idleMs": 131,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 21025,
+      "codeSpans": 1000,
+      "dcl": 121,
+      "load": 125,
+      "listeners": 1367,
+      "longTasks": 2,
+      "longTaskMs": 123,
+      "maxTask": 65,
+      "pending": 0,
+      "waiting": 107,
+      "heap": 9766
+     },
+     "cdpFinal": {
+      "Nodes": 49664,
+      "JSEventListeners": 1363,
+      "JSHeapUsedSize": 5003584
+     },
+     "blocked": [],
+     "errors": []
+    }
+   ]
+  },
+  {
+   "engine": "chromium",
+   "width": 1440,
+   "cpuThrottle": 4,
+   "build": "base",
+   "summary": {
+    "loadMs": 690,
+    "dclMs": 675,
+    "settleMs": 25,
+    "nodesInitial": 35699,
+    "codeLinesInitial": 1063,
+    "longTasks": 3,
+    "longTaskMs": 262,
+    "maxTaskMs": 117,
+    "listenersInitial": 1041,
+    "heapKbInitial": 9766,
+    "cdpScriptMs": 0.3,
+    "cdpTaskMs": 0.7,
+    "openDetailsMs": 26,
+    "nodesFinal": 37698
+   },
+   "runs": [
+    {
+     "initial": {
+      "nodes": 35699,
+      "codeSpans": 1063,
+      "dcl": 685,
+      "load": 701,
+      "listeners": 1041,
+      "longTasks": 3,
+      "longTaskMs": 277,
+      "maxTask": 117,
+      "pending": null,
+      "waiting": null,
+      "heap": 9766
+     },
+     "settleAfterLoad": 31,
+     "cdp": {
+      "Nodes": 91453,
+      "JSEventListeners": 1041,
+      "JSHeapUsedSize": 4709792,
+      "ScriptDuration": 0.3,
+      "LayoutDuration": 0.1,
+      "RecalcStyleDuration": 0.1,
+      "TaskDuration": 0.7
+     },
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 105,
+       "idleMs": 43
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 99,
+       "idleMs": 36
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 112,
+       "idleMs": 38
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 228,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 84,
+       "idleMs": 24
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 70,
+       "idleMs": 30
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 77,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 80,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 67,
+       "idleMs": 24
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 66,
+       "idleMs": 37
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 294,
+      "idleMs": 16,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 37698,
+      "codeSpans": 1063,
+      "dcl": 685,
+      "load": 701,
+      "listeners": 1362,
+      "longTasks": 6,
+      "longTaskMs": 738,
+      "maxTask": 267,
+      "pending": null,
+      "waiting": null,
+      "heap": 9766
+     },
+     "cdpFinal": {
+      "Nodes": 94731,
+      "JSEventListeners": 1358,
+      "JSHeapUsedSize": 4329832
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 35699,
+      "codeSpans": 1063,
+      "dcl": 655,
+      "load": 671,
+      "listeners": 1041,
+      "longTasks": 2,
+      "longTaskMs": 217,
+      "maxTask": 126,
+      "pending": null,
+      "waiting": null,
+      "heap": 9766
+     },
+     "settleAfterLoad": 25,
+     "cdp": {
+      "Nodes": 90476,
+      "JSEventListeners": 1041,
+      "JSHeapUsedSize": 3882484,
+      "ScriptDuration": 0.3,
+      "LayoutDuration": 0.1,
+      "RecalcStyleDuration": 0.1,
+      "TaskDuration": 0.7
+     },
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 87,
+       "idleMs": 27
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 103,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 112,
+       "idleMs": 34
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 199,
+       "idleMs": 25
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 98,
+       "idleMs": 36
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 68,
+       "idleMs": 30
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 86,
+       "idleMs": 40
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 78,
+       "idleMs": 34
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 68,
+       "idleMs": 28
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 65,
+       "idleMs": 33
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 296,
+      "idleMs": 27,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 37698,
+      "codeSpans": 1063,
+      "dcl": 655,
+      "load": 671,
+      "listeners": 1362,
+      "longTasks": 6,
+      "longTaskMs": 698,
+      "maxTask": 256,
+      "pending": null,
+      "waiting": null,
+      "heap": 9766
+     },
+     "cdpFinal": {
+      "Nodes": 94198,
+      "JSEventListeners": 1358,
+      "JSHeapUsedSize": 3847824
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 35699,
+      "codeSpans": 1063,
+      "dcl": 675,
+      "load": 690,
+      "listeners": 1041,
+      "longTasks": 3,
+      "longTaskMs": 262,
+      "maxTask": 116,
+      "pending": null,
+      "waiting": null,
+      "heap": 9766
+     },
+     "settleAfterLoad": 18,
+     "cdp": {
+      "Nodes": 91453,
+      "JSEventListeners": 1041,
+      "JSHeapUsedSize": 4698972,
+      "ScriptDuration": 0.3,
+      "LayoutDuration": 0.1,
+      "RecalcStyleDuration": 0.1,
+      "TaskDuration": 0.7
+     },
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 87,
+       "idleMs": 28
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 115,
+       "idleMs": 35
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 99,
+       "idleMs": 22
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 219,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 98,
+       "idleMs": 39
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 71,
+       "idleMs": 30
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 74,
+       "idleMs": 29
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 64,
+       "idleMs": 23
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 69,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 63,
+       "idleMs": 34
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 287,
+      "idleMs": 26,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 37698,
+      "codeSpans": 1063,
+      "dcl": 675,
+      "load": 690,
+      "listeners": 1362,
+      "longTasks": 6,
+      "longTaskMs": 703,
+      "maxTask": 256,
+      "pending": null,
+      "waiting": null,
+      "heap": 9766
+     },
+     "cdpFinal": {
+      "Nodes": 94737,
+      "JSEventListeners": 1358,
+      "JSHeapUsedSize": 4485872
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    }
+   ]
+  },
+  {
+   "engine": "chromium",
+   "width": 1440,
+   "cpuThrottle": 4,
+   "build": "candidate",
+   "summary": {
+    "loadMs": 553,
+    "dclMs": 535,
+    "settleMs": 15,
+    "nodesInitial": 7364,
+    "codeLinesInitial": 0,
+    "longTasks": 2,
+    "longTaskMs": 133,
+    "maxTaskMs": 77,
+    "listenersInitial": 1045,
+    "heapKbInitial": 9766,
+    "cdpScriptMs": 0.2,
+    "cdpTaskMs": 0.6,
+    "openDetailsMs": 369,
+    "nodesFinal": 21368
+   },
+   "runs": [
+    {
+     "initial": {
+      "nodes": 7364,
+      "codeSpans": 0,
+      "dcl": 521,
+      "load": 538,
+      "listeners": 1045,
+      "longTasks": 2,
+      "longTaskMs": 131,
+      "maxTask": 76,
+      "pending": 0,
+      "waiting": 113,
+      "heap": 9766
+     },
+     "settleAfterLoad": 15,
+     "cdp": {
+      "Nodes": 16542,
+      "JSEventListeners": 1045,
+      "JSHeapUsedSize": 3432416,
+      "ScriptDuration": 0.2,
+      "LayoutDuration": 0.1,
+      "RecalcStyleDuration": 0.1,
+      "TaskDuration": 0.5
+     },
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 86,
+       "idleMs": 35
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 99,
+       "idleMs": 30
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 99,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 199,
+       "idleMs": 36
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 81,
+       "idleMs": 28
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 68,
+       "idleMs": 36
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 63,
+       "idleMs": 23
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 65,
+       "idleMs": 25
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 68,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 67,
+       "idleMs": 38
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 448,
+      "idleMs": 369,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 21368,
+      "codeSpans": 1000,
+      "dcl": 521,
+      "load": 538,
+      "listeners": 1367,
+      "longTasks": 5,
+      "longTaskMs": 581,
+      "maxTask": 288,
+      "pending": 0,
+      "waiting": 107,
+      "heap": 9766
+     },
+     "cdpFinal": {
+      "Nodes": 50130,
+      "JSEventListeners": 1363,
+      "JSHeapUsedSize": 5224020
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 7364,
+      "codeSpans": 0,
+      "dcl": 559,
+      "load": 577,
+      "listeners": 1045,
+      "longTasks": 2,
+      "longTaskMs": 138,
+      "maxTask": 78,
+      "pending": 0,
+      "waiting": 113,
+      "heap": 9766
+     },
+     "settleAfterLoad": 14,
+     "cdp": {
+      "Nodes": 16551,
+      "JSEventListeners": 1045,
+      "JSHeapUsedSize": 3434248,
+      "ScriptDuration": 0.2,
+      "LayoutDuration": 0.1,
+      "RecalcStyleDuration": 0.1,
+      "TaskDuration": 0.6
+     },
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 87,
+       "idleMs": 38
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 97,
+       "idleMs": 25
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 104,
+       "idleMs": 35
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 197,
+       "idleMs": 25
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 79,
+       "idleMs": 24
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 66,
+       "idleMs": 34
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 79,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 67,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 64,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 64,
+       "idleMs": 25
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 457,
+      "idleMs": 432,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 21368,
+      "codeSpans": 1000,
+      "dcl": 559,
+      "load": 577,
+      "listeners": 1367,
+      "longTasks": 5,
+      "longTaskMs": 620,
+      "maxTask": 312,
+      "pending": 0,
+      "waiting": 107,
+      "heap": 9766
+     },
+     "cdpFinal": {
+      "Nodes": 50135,
+      "JSEventListeners": 1363,
+      "JSHeapUsedSize": 5227312
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 7364,
+      "codeSpans": 0,
+      "dcl": 535,
+      "load": 553,
+      "listeners": 1045,
+      "longTasks": 2,
+      "longTaskMs": 133,
+      "maxTask": 77,
+      "pending": 0,
+      "waiting": 113,
+      "heap": 9766
+     },
+     "settleAfterLoad": 23,
+     "cdp": {
+      "Nodes": 16551,
+      "JSEventListeners": 1045,
+      "JSHeapUsedSize": 3463300,
+      "ScriptDuration": 0.2,
+      "LayoutDuration": 0.1,
+      "RecalcStyleDuration": 0.1,
+      "TaskDuration": 0.6
+     },
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 89,
+       "idleMs": 40
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 77,
+       "idleMs": 19
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 100,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 199,
+       "idleMs": 37
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 79,
+       "idleMs": 23
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 71,
+       "idleMs": 39
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 77,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 66,
+       "idleMs": 23
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 65,
+       "idleMs": 28
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 71,
+       "idleMs": 31
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 82,
+      "idleMs": 57,
+      "lines": 0
+     },
+     "final": {
+      "nodes": 9368,
+      "codeSpans": 0,
+      "dcl": 535,
+      "load": 553,
+      "listeners": 1367,
+      "longTasks": 4,
+      "longTaskMs": 294,
+      "maxTask": 110,
+      "pending": 1,
+      "waiting": 107,
+      "heap": 9766
+     },
+     "cdpFinal": {
+      "Nodes": 46144,
+      "JSEventListeners": 1369,
+      "JSHeapUsedSize": 8112588
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    }
+   ]
+  },
+  {
+   "engine": "chromium",
+   "width": 390,
+   "cpuThrottle": 4,
+   "build": "base",
+   "summary": {
+    "loadMs": 654,
+    "dclMs": 639,
+    "settleMs": 23,
+    "nodesInitial": 35696,
+    "codeLinesInitial": 1063,
+    "longTasks": 3,
+    "longTaskMs": 256,
+    "maxTaskMs": 116,
+    "listenersInitial": 1041,
+    "heapKbInitial": 9766,
+    "cdpScriptMs": 0.3,
+    "cdpTaskMs": 0.7,
+    "openDetailsMs": 25,
+    "nodesFinal": 37371
+   },
+   "runs": [
+    {
+     "initial": {
+      "nodes": 35696,
+      "codeSpans": 1063,
+      "dcl": 639,
+      "load": 654,
+      "listeners": 1041,
+      "longTasks": 3,
+      "longTaskMs": 260,
+      "maxTask": 113,
+      "pending": null,
+      "waiting": null,
+      "heap": 9766
+     },
+     "settleAfterLoad": 26,
+     "cdp": {
+      "Nodes": 91390,
+      "JSEventListeners": 1041,
+      "JSHeapUsedSize": 4694864,
+      "ScriptDuration": 0.3,
+      "LayoutDuration": 0.1,
+      "RecalcStyleDuration": 0.1,
+      "TaskDuration": 0.7
+     },
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 83,
+       "idleMs": 29
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 84,
+       "idleMs": 23
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 101,
+       "idleMs": 29
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 214,
+       "idleMs": 38
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 83,
+       "idleMs": 25
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 64,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 64,
+       "idleMs": 26
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 68,
+       "idleMs": 27
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 60,
+       "idleMs": 30
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 70,
+       "idleMs": 36
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 314,
+      "idleMs": 34,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 37371,
+      "codeSpans": 1063,
+      "dcl": 639,
+      "load": 654,
+      "listeners": 1362,
+      "longTasks": 7,
+      "longTaskMs": 751,
+      "maxTask": 266,
+      "pending": null,
+      "waiting": null,
+      "heap": 9766
+     },
+     "cdpFinal": {
+      "Nodes": 93914,
+      "JSEventListeners": 1358,
+      "JSHeapUsedSize": 5009004
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 35696,
+      "codeSpans": 1063,
+      "dcl": 632,
+      "load": 646,
+      "listeners": 1041,
+      "longTasks": 3,
+      "longTaskMs": 256,
+      "maxTask": 116,
+      "pending": null,
+      "waiting": null,
+      "heap": 9766
+     },
+     "settleAfterLoad": 23,
+     "cdp": {
+      "Nodes": 91390,
+      "JSEventListeners": 1041,
+      "JSHeapUsedSize": 4681000,
+      "ScriptDuration": 0.3,
+      "LayoutDuration": 0.1,
+      "RecalcStyleDuration": 0.1,
+      "TaskDuration": 0.7
+     },
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 81,
+       "idleMs": 27
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 104,
+       "idleMs": 37
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 95,
+       "idleMs": 26
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 201,
+       "idleMs": 29
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 93,
+       "idleMs": 29
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 69,
+       "idleMs": 37
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 62,
+       "idleMs": 21
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 66,
+       "idleMs": 28
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 67,
+       "idleMs": 35
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 63,
+       "idleMs": 32
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 320,
+      "idleMs": 20,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 37371,
+      "codeSpans": 1063,
+      "dcl": 632,
+      "load": 646,
+      "listeners": 1362,
+      "longTasks": 7,
+      "longTaskMs": 764,
+      "maxTask": 284,
+      "pending": null,
+      "waiting": null,
+      "heap": 9766
+     },
+     "cdpFinal": {
+      "Nodes": 93920,
+      "JSEventListeners": 1358,
+      "JSHeapUsedSize": 5399128
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 35696,
+      "codeSpans": 1063,
+      "dcl": 695,
+      "load": 711,
+      "listeners": 1041,
+      "longTasks": 2,
+      "longTaskMs": 245,
+      "maxTask": 144,
+      "pending": null,
+      "waiting": null,
+      "heap": 9766
+     },
+     "settleAfterLoad": 20,
+     "cdp": {
+      "Nodes": 90467,
+      "JSEventListeners": 1041,
+      "JSHeapUsedSize": 4137996,
+      "ScriptDuration": 0.3,
+      "LayoutDuration": 0.1,
+      "RecalcStyleDuration": 0.1,
+      "TaskDuration": 0.7
+     },
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 87,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 97,
+       "idleMs": 25
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 100,
+       "idleMs": 29
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 183,
+       "idleMs": 21
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 84,
+       "idleMs": 21
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 62,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 69,
+       "idleMs": 25
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 65,
+       "idleMs": 27
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 64,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 63,
+       "idleMs": 33
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 297,
+      "idleMs": 25,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 37371,
+      "codeSpans": 1063,
+      "dcl": 695,
+      "load": 711,
+      "listeners": 1362,
+      "longTasks": 7,
+      "longTaskMs": 769,
+      "maxTask": 259,
+      "pending": null,
+      "waiting": null,
+      "heap": 9766
+     },
+     "cdpFinal": {
+      "Nodes": 93548,
+      "JSEventListeners": 1358,
+      "JSHeapUsedSize": 3728840
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    }
+   ]
+  },
+  {
+   "engine": "chromium",
+   "width": 390,
+   "cpuThrottle": 4,
+   "build": "candidate",
+   "summary": {
+    "loadMs": 539,
+    "dclMs": 523,
+    "settleMs": 24,
+    "nodesInitial": 7361,
+    "codeLinesInitial": 0,
+    "longTasks": 2,
+    "longTaskMs": 130,
+    "maxTaskMs": 76,
+    "listenersInitial": 1045,
+    "heapKbInitial": 9766,
+    "cdpScriptMs": 0.2,
+    "cdpTaskMs": 0.5,
+    "openDetailsMs": 59,
+    "nodesFinal": 21041
+   },
+   "runs": [
+    {
+     "initial": {
+      "nodes": 7361,
+      "codeSpans": 0,
+      "dcl": 523,
+      "load": 539,
+      "listeners": 1045,
+      "longTasks": 2,
+      "longTaskMs": 135,
+      "maxTask": 78,
+      "pending": 0,
+      "waiting": 113,
+      "heap": 9766
+     },
+     "settleAfterLoad": 20,
+     "cdp": {
+      "Nodes": 16488,
+      "JSEventListeners": 1045,
+      "JSHeapUsedSize": 3420696,
+      "ScriptDuration": 0.2,
+      "LayoutDuration": 0.1,
+      "RecalcStyleDuration": 0.1,
+      "TaskDuration": 0.5
+     },
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 70,
+       "idleMs": 26
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 77,
+       "idleMs": 30
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 82,
+       "idleMs": 22
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 166,
+       "idleMs": 23
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 83,
+       "idleMs": 29
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 65,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 64,
+       "idleMs": 29
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 71,
+       "idleMs": 37
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 63,
+       "idleMs": 36
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 63,
+       "idleMs": 27
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 93,
+      "idleMs": 59,
+      "lines": 0
+     },
+     "final": {
+      "nodes": 9041,
+      "codeSpans": 0,
+      "dcl": 523,
+      "load": 539,
+      "listeners": 1367,
+      "longTasks": 3,
+      "longTaskMs": 230,
+      "maxTask": 95,
+      "pending": 1,
+      "waiting": 107,
+      "heap": 9766
+     },
+     "cdpFinal": {
+      "Nodes": 44306,
+      "JSEventListeners": 1367,
+      "JSHeapUsedSize": 7819332
+     },
+     "blocked": [],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 7361,
+      "codeSpans": 0,
+      "dcl": 525,
+      "load": 541,
+      "listeners": 1045,
+      "longTasks": 2,
+      "longTaskMs": 130,
+      "maxTask": 76,
+      "pending": 0,
+      "waiting": 113,
+      "heap": 9766
+     },
+     "settleAfterLoad": 24,
+     "cdp": {
+      "Nodes": 16488,
+      "JSEventListeners": 1045,
+      "JSHeapUsedSize": 3415456,
+      "ScriptDuration": 0.2,
+      "LayoutDuration": 0.1,
+      "RecalcStyleDuration": 0.1,
+      "TaskDuration": 0.5
+     },
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 70,
+       "idleMs": 27
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 86,
+       "idleMs": 20
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 79,
+       "idleMs": 20
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 186,
+       "idleMs": 28
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 83,
+       "idleMs": 30
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 63,
+       "idleMs": 36
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 64,
+       "idleMs": 27
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 67,
+       "idleMs": 34
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 64,
+       "idleMs": 35
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 64,
+       "idleMs": 35
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 664,
+      "idleMs": 582,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 21041,
+      "codeSpans": 1000,
+      "dcl": 525,
+      "load": 541,
+      "listeners": 1367,
+      "longTasks": 6,
+      "longTaskMs": 825,
+      "maxTask": 295,
+      "pending": 0,
+      "waiting": 107,
+      "heap": 9766
+     },
+     "cdpFinal": {
+      "Nodes": 49694,
+      "JSEventListeners": 1363,
+      "JSHeapUsedSize": 5201816
+     },
+     "blocked": [],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 7361,
+      "codeSpans": 0,
+      "dcl": 510,
+      "load": 526,
+      "listeners": 1045,
+      "longTasks": 1,
+      "longTaskMs": 75,
+      "maxTask": 75,
+      "pending": 0,
+      "waiting": 113,
+      "heap": 9766
+     },
+     "settleAfterLoad": 31,
+     "cdp": {
+      "Nodes": 16488,
+      "JSEventListeners": 1045,
+      "JSHeapUsedSize": 3406784,
+      "ScriptDuration": 0.2,
+      "LayoutDuration": 0.1,
+      "RecalcStyleDuration": 0.1,
+      "TaskDuration": 0.5
+     },
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 70,
+       "idleMs": 24
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 82,
+       "idleMs": 26
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 84,
+       "idleMs": 24
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 180,
+       "idleMs": 35
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 81,
+       "idleMs": 27
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 66,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 65,
+       "idleMs": 30
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 66,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 66,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 65,
+       "idleMs": 32
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 94,
+      "idleMs": 59,
+      "lines": 0
+     },
+     "final": {
+      "nodes": 21041,
+      "codeSpans": 1000,
+      "dcl": 510,
+      "load": 526,
+      "listeners": 1367,
+      "longTasks": 2,
+      "longTaskMs": 171,
+      "maxTask": 96,
+      "pending": 0,
+      "waiting": 107,
+      "heap": 9766
+     },
+     "cdpFinal": {
+      "Nodes": 49689,
+      "JSEventListeners": 1363,
+      "JSHeapUsedSize": 4986996
+     },
+     "blocked": [],
+     "errors": []
+    }
+   ]
+  },
+  {
+   "engine": "webkit",
+   "width": 1440,
+   "cpuThrottle": 1,
+   "build": "base",
+   "summary": {
+    "loadMs": 234,
+    "dclMs": 203,
+    "settleMs": 23,
+    "nodesInitial": 35699,
+    "codeLinesInitial": 1063,
+    "longTasks": 0,
+    "longTaskMs": 0,
+    "maxTaskMs": 0,
+    "listenersInitial": 1041,
+    "heapKbInitial": null,
+    "cdpScriptMs": null,
+    "cdpTaskMs": null,
+    "openDetailsMs": 30,
+    "nodesFinal": 37698
+   },
+   "runs": [
+    {
+     "initial": {
+      "nodes": 35699,
+      "codeSpans": 1063,
+      "dcl": 339,
+      "load": 367,
+      "listeners": 1041,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": null,
+      "waiting": null,
+      "heap": null
+     },
+     "settleAfterLoad": 21,
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 97,
+       "idleMs": 20
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 112,
+       "idleMs": 24
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 98,
+       "idleMs": 30
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 231,
+       "idleMs": 40
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 132,
+       "idleMs": 18
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 83,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 86,
+       "idleMs": 35
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 111,
+       "idleMs": 30
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 148,
+       "idleMs": 26
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 114,
+       "idleMs": 21
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 182,
+      "idleMs": 34,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 37698,
+      "codeSpans": 1063,
+      "dcl": 339,
+      "load": 367,
+      "listeners": 1362,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": null,
+      "waiting": null,
+      "heap": null
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 35699,
+      "codeSpans": 1063,
+      "dcl": 203,
+      "load": 234,
+      "listeners": 1041,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": null,
+      "waiting": null,
+      "heap": null
+     },
+     "settleAfterLoad": 23,
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 93,
+       "idleMs": 18
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 113,
+       "idleMs": 27
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 97,
+       "idleMs": 29
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 216,
+       "idleMs": 34
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 132,
+       "idleMs": 22
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 84,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 80,
+       "idleMs": 23
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 107,
+       "idleMs": 22
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 142,
+       "idleMs": 17
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 114,
+       "idleMs": 18
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 179,
+      "idleMs": 30,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 37698,
+      "codeSpans": 1063,
+      "dcl": 203,
+      "load": 234,
+      "listeners": 1362,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": null,
+      "waiting": null,
+      "heap": null
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 35699,
+      "codeSpans": 1063,
+      "dcl": 199,
+      "load": 229,
+      "listeners": 1041,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": null,
+      "waiting": null,
+      "heap": null
+     },
+     "settleAfterLoad": 25,
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 96,
+       "idleMs": 19
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 97,
+       "idleMs": 13
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 97,
+       "idleMs": 29
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 214,
+       "idleMs": 37
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 131,
+       "idleMs": 23
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 83,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 83,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 104,
+       "idleMs": 22
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 144,
+       "idleMs": 22
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 115,
+       "idleMs": 23
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 164,
+      "idleMs": 18,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 37698,
+      "codeSpans": 1063,
+      "dcl": 199,
+      "load": 229,
+      "listeners": 1362,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": null,
+      "waiting": null,
+      "heap": null
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    }
+   ]
+  },
+  {
+   "engine": "webkit",
+   "width": 1440,
+   "cpuThrottle": 1,
+   "build": "candidate",
+   "summary": {
+    "loadMs": 204,
+    "dclMs": 180,
+    "settleMs": 17,
+    "nodesInitial": 7364,
+    "codeLinesInitial": 0,
+    "longTasks": 0,
+    "longTaskMs": 0,
+    "maxTaskMs": 0,
+    "listenersInitial": 1045,
+    "heapKbInitial": null,
+    "cdpScriptMs": null,
+    "cdpTaskMs": null,
+    "openDetailsMs": 143,
+    "nodesFinal": 21368
+   },
+   "runs": [
+    {
+     "initial": {
+      "nodes": 7364,
+      "codeSpans": 0,
+      "dcl": 161,
+      "load": 211,
+      "listeners": 1045,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": 0,
+      "waiting": 113,
+      "heap": null
+     },
+     "settleAfterLoad": 16,
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 82,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 98,
+       "idleMs": 30
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 66,
+       "idleMs": 19
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 165,
+       "idleMs": 24
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 99,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 65,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 64,
+       "idleMs": 27
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 65,
+       "idleMs": 19
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 66,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 65,
+       "idleMs": 34
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 215,
+      "idleMs": 26,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 21368,
+      "codeSpans": 1000,
+      "dcl": 161,
+      "load": 211,
+      "listeners": 1367,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": 0,
+      "waiting": 107,
+      "heap": null
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 7364,
+      "codeSpans": 0,
+      "dcl": 186,
+      "load": 204,
+      "listeners": 1045,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": 0,
+      "waiting": 113,
+      "heap": null
+     },
+     "settleAfterLoad": 22,
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 69,
+       "idleMs": 29
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 99,
+       "idleMs": 27
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 82,
+       "idleMs": 34
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 166,
+       "idleMs": 23
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 98,
+       "idleMs": 29
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 65,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 65,
+       "idleMs": 29
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 66,
+       "idleMs": 20
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 66,
+       "idleMs": 34
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 63,
+       "idleMs": 32
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 207,
+      "idleMs": 143,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 21368,
+      "codeSpans": 1000,
+      "dcl": 186,
+      "load": 204,
+      "listeners": 1367,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": 0,
+      "waiting": 107,
+      "heap": null
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 7364,
+      "codeSpans": 0,
+      "dcl": 180,
+      "load": 198,
+      "listeners": 1045,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": 0,
+      "waiting": 113,
+      "heap": null
+     },
+     "settleAfterLoad": 17,
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 69,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 98,
+       "idleMs": 27
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 67,
+       "idleMs": 20
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 165,
+       "idleMs": 28
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 82,
+       "idleMs": 19
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 64,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 67,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 66,
+       "idleMs": 21
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 65,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 65,
+       "idleMs": 33
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 205,
+      "idleMs": 143,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 21368,
+      "codeSpans": 1000,
+      "dcl": 180,
+      "load": 198,
+      "listeners": 1367,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": 0,
+      "waiting": 107,
+      "heap": null
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    }
+   ]
+  },
+  {
+   "engine": "webkit",
+   "width": 390,
+   "cpuThrottle": 1,
+   "build": "base",
+   "summary": {
+    "loadMs": 224,
+    "dclMs": 212,
+    "settleMs": 13,
+    "nodesInitial": 35696,
+    "codeLinesInitial": 1063,
+    "longTasks": 0,
+    "longTaskMs": 0,
+    "maxTaskMs": 0,
+    "listenersInitial": 1041,
+    "heapKbInitial": null,
+    "cdpScriptMs": null,
+    "cdpTaskMs": null,
+    "openDetailsMs": 30,
+    "nodesFinal": 37371
+   },
+   "runs": [
+    {
+     "initial": {
+      "nodes": 35696,
+      "codeSpans": 1063,
+      "dcl": 212,
+      "load": 222,
+      "listeners": 1041,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": null,
+      "waiting": null,
+      "heap": null
+     },
+     "settleAfterLoad": 13,
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 78,
+       "idleMs": 18
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 99,
+       "idleMs": 28
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 81,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 163,
+       "idleMs": 20
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 115,
+       "idleMs": 26
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 65,
+       "idleMs": 30
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 66,
+       "idleMs": 28
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 82,
+       "idleMs": 23
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 131,
+       "idleMs": 25
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 116,
+       "idleMs": 32
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 181,
+      "idleMs": 28,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 37371,
+      "codeSpans": 1063,
+      "dcl": 212,
+      "load": 222,
+      "listeners": 1362,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": null,
+      "waiting": null,
+      "heap": null
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 35696,
+      "codeSpans": 1063,
+      "dcl": 200,
+      "load": 225,
+      "listeners": 1041,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": null,
+      "waiting": null,
+      "heap": null
+     },
+     "settleAfterLoad": 11,
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 79,
+       "idleMs": 20
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 81,
+       "idleMs": 14
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 81,
+       "idleMs": 30
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 162,
+       "idleMs": 15
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 117,
+       "idleMs": 30
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 66,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 64,
+       "idleMs": 28
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 83,
+       "idleMs": 28
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 130,
+       "idleMs": 28
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 101,
+       "idleMs": 18
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 183,
+      "idleMs": 33,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 37371,
+      "codeSpans": 1063,
+      "dcl": 200,
+      "load": 225,
+      "listeners": 1362,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": null,
+      "waiting": null,
+      "heap": null
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 35696,
+      "codeSpans": 1063,
+      "dcl": 215,
+      "load": 224,
+      "listeners": 1041,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": null,
+      "waiting": null,
+      "heap": null
+     },
+     "settleAfterLoad": 22,
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 75,
+       "idleMs": 15
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 98,
+       "idleMs": 27
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 81,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 164,
+       "idleMs": 23
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 115,
+       "idleMs": 26
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 66,
+       "idleMs": 30
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 66,
+       "idleMs": 29
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 81,
+       "idleMs": 25
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 131,
+       "idleMs": 16
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 98,
+       "idleMs": 20
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 180,
+      "idleMs": 30,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 37371,
+      "codeSpans": 1063,
+      "dcl": 215,
+      "load": 224,
+      "listeners": 1362,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": null,
+      "waiting": null,
+      "heap": null
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    }
+   ]
+  },
+  {
+   "engine": "webkit",
+   "width": 390,
+   "cpuThrottle": 1,
+   "build": "candidate",
+   "summary": {
+    "loadMs": 205,
+    "dclMs": 180,
+    "settleMs": 16,
+    "nodesInitial": 7361,
+    "codeLinesInitial": 0,
+    "longTasks": 0,
+    "longTaskMs": 0,
+    "maxTaskMs": 0,
+    "listenersInitial": 1045,
+    "heapKbInitial": null,
+    "cdpScriptMs": null,
+    "cdpTaskMs": null,
+    "openDetailsMs": 194,
+    "nodesFinal": 21041
+   },
+   "runs": [
+    {
+     "initial": {
+      "nodes": 7361,
+      "codeSpans": 0,
+      "dcl": 180,
+      "load": 197,
+      "listeners": 1045,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": 0,
+      "waiting": 113,
+      "heap": null
+     },
+     "settleAfterLoad": 19,
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 52,
+       "idleMs": 25
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 82,
+       "idleMs": 27
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 65,
+       "idleMs": 26
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 132,
+       "idleMs": 19
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 81,
+       "idleMs": 27
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 65,
+       "idleMs": 34
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 66,
+       "idleMs": 34
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 65,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 66,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 64,
+       "idleMs": 32
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 266,
+      "idleMs": 12,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 21041,
+      "codeSpans": 1000,
+      "dcl": 180,
+      "load": 197,
+      "listeners": 1367,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": 0,
+      "waiting": 107,
+      "heap": null
+     },
+     "blocked": [],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 7361,
+      "codeSpans": 0,
+      "dcl": 157,
+      "load": 206,
+      "listeners": 1045,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": 0,
+      "waiting": 113,
+      "heap": null
+     },
+     "settleAfterLoad": 16,
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 54,
+       "idleMs": 26
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 82,
+       "idleMs": 28
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 66,
+       "idleMs": 29
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 131,
+       "idleMs": 19
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 81,
+       "idleMs": 26
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 66,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 63,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 67,
+       "idleMs": 34
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 64,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 67,
+       "idleMs": 33
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 259,
+      "idleMs": 194,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 21041,
+      "codeSpans": 1000,
+      "dcl": 157,
+      "load": 206,
+      "listeners": 1367,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": 0,
+      "waiting": 107,
+      "heap": null
+     },
+     "blocked": [],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 7361,
+      "codeSpans": 0,
+      "dcl": 187,
+      "load": 205,
+      "listeners": 1045,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": 0,
+      "waiting": 113,
+      "heap": null
+     },
+     "settleAfterLoad": 13,
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 52,
+       "idleMs": 23
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 82,
+       "idleMs": 24
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 65,
+       "idleMs": 24
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 131,
+       "idleMs": 15
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 83,
+       "idleMs": 29
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 64,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 66,
+       "idleMs": 35
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 66,
+       "idleMs": 35
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 65,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 65,
+       "idleMs": 33
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 271,
+      "idleMs": 207,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 21041,
+      "codeSpans": 1000,
+      "dcl": 187,
+      "load": 205,
+      "listeners": 1367,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": 0,
+      "waiting": 107,
+      "heap": null
+     },
+     "blocked": [],
+     "errors": []
+    }
+   ]
+  },
+  {
+   "engine": "webkit",
+   "width": 320,
+   "cpuThrottle": 1,
+   "build": "base",
+   "summary": {
+    "loadMs": 231,
+    "dclMs": 219,
+    "settleMs": 15,
+    "nodesInitial": 35696,
+    "codeLinesInitial": 1063,
+    "longTasks": 0,
+    "longTaskMs": 0,
+    "maxTaskMs": 0,
+    "listenersInitial": 1041,
+    "heapKbInitial": null,
+    "cdpScriptMs": null,
+    "cdpTaskMs": null,
+    "openDetailsMs": 25,
+    "nodesFinal": 37355
+   },
+   "runs": [
+    {
+     "initial": {
+      "nodes": 35696,
+      "codeSpans": 1063,
+      "dcl": 221,
+      "load": 231,
+      "listeners": 1041,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": null,
+      "waiting": null,
+      "heap": null
+     },
+     "settleAfterLoad": 15,
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 81,
+       "idleMs": 21
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 98,
+       "idleMs": 27
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 81,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 164,
+       "idleMs": 24
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 115,
+       "idleMs": 30
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 66,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 66,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 81,
+       "idleMs": 25
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 131,
+       "idleMs": 25
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 115,
+       "idleMs": 27
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 180,
+      "idleMs": 25,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 37355,
+      "codeSpans": 1063,
+      "dcl": 221,
+      "load": 231,
+      "listeners": 1362,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": null,
+      "waiting": null,
+      "heap": null
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 35696,
+      "codeSpans": 1063,
+      "dcl": 219,
+      "load": 245,
+      "listeners": 1041,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": null,
+      "waiting": null,
+      "heap": null
+     },
+     "settleAfterLoad": 11,
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 73,
+       "idleMs": 10
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 100,
+       "idleMs": 29
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 81,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 163,
+       "idleMs": 22
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 115,
+       "idleMs": 25
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 66,
+       "idleMs": 29
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 64,
+       "idleMs": 28
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 84,
+       "idleMs": 28
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 132,
+       "idleMs": 28
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 99,
+       "idleMs": 18
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 180,
+      "idleMs": 24,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 37355,
+      "codeSpans": 1063,
+      "dcl": 219,
+      "load": 245,
+      "listeners": 1362,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": null,
+      "waiting": null,
+      "heap": null
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 35696,
+      "codeSpans": 1063,
+      "dcl": 201,
+      "load": 225,
+      "listeners": 1041,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": null,
+      "waiting": null,
+      "heap": null
+     },
+     "settleAfterLoad": 20,
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 77,
+       "idleMs": 18
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 98,
+       "idleMs": 29
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 81,
+       "idleMs": 32
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 163,
+       "idleMs": 22
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 117,
+       "idleMs": 29
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 64,
+       "idleMs": 28
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 66,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 83,
+       "idleMs": 28
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 132,
+       "idleMs": 21
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 98,
+       "idleMs": 23
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 181,
+      "idleMs": 34,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 37355,
+      "codeSpans": 1063,
+      "dcl": 201,
+      "load": 225,
+      "listeners": 1362,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": null,
+      "waiting": null,
+      "heap": null
+     },
+     "blocked": [
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"
+     ],
+     "errors": []
+    }
+   ]
+  },
+  {
+   "engine": "webkit",
+   "width": 320,
+   "cpuThrottle": 1,
+   "build": "candidate",
+   "summary": {
+    "loadMs": 204,
+    "dclMs": 187,
+    "settleMs": 9,
+    "nodesInitial": 7361,
+    "codeLinesInitial": 0,
+    "longTasks": 0,
+    "longTaskMs": 0,
+    "maxTaskMs": 0,
+    "listenersInitial": 1045,
+    "heapKbInitial": null,
+    "cdpScriptMs": null,
+    "cdpTaskMs": null,
+    "openDetailsMs": 199,
+    "nodesFinal": 21025
+   },
+   "runs": [
+    {
+     "initial": {
+      "nodes": 7361,
+      "codeSpans": 0,
+      "dcl": 187,
+      "load": 204,
+      "listeners": 1045,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": 0,
+      "waiting": 113,
+      "heap": null
+     },
+     "settleAfterLoad": 13,
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 52,
+       "idleMs": 24
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 82,
+       "idleMs": 27
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 65,
+       "idleMs": 28
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 149,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 81,
+       "idleMs": 28
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 65,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 65,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 65,
+       "idleMs": 34
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 64,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 67,
+       "idleMs": 34
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 282,
+      "idleMs": 25,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 21025,
+      "codeSpans": 1000,
+      "dcl": 187,
+      "load": 204,
+      "listeners": 1367,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": 0,
+      "waiting": 107,
+      "heap": null
+     },
+     "blocked": [],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 7361,
+      "codeSpans": 0,
+      "dcl": 200,
+      "load": 230,
+      "listeners": 1045,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": 0,
+      "waiting": 113,
+      "heap": null
+     },
+     "settleAfterLoad": 9,
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 68,
+       "idleMs": 20
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 80,
+       "idleMs": 23
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 67,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 132,
+       "idleMs": 16
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 82,
+       "idleMs": 30
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 65,
+       "idleMs": 34
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 65,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 64,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 66,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 64,
+       "idleMs": 32
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 268,
+      "idleMs": 200,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 21025,
+      "codeSpans": 1000,
+      "dcl": 200,
+      "load": 230,
+      "listeners": 1367,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": 0,
+      "waiting": 107,
+      "heap": null
+     },
+     "blocked": [],
+     "errors": []
+    },
+    {
+     "initial": {
+      "nodes": 7361,
+      "codeSpans": 0,
+      "dcl": 179,
+      "load": 196,
+      "listeners": 1045,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": 0,
+      "waiting": 113,
+      "heap": null
+     },
+     "settleAfterLoad": 8,
+     "navigation": [
+      {
+       "page": "atlas-publicaciones",
+       "ms": 51,
+       "idleMs": 24
+      },
+      {
+       "page": "atlas-lectura",
+       "ms": 83,
+       "idleMs": 29
+      },
+      {
+       "page": "atlas-reportes",
+       "ms": 64,
+       "idleMs": 27
+      },
+      {
+       "page": "atlas-graficas",
+       "ms": 134,
+       "idleMs": 21
+      },
+      {
+       "page": "atlas-tablas",
+       "ms": 82,
+       "idleMs": 31
+      },
+      {
+       "page": "atlas-prototipos",
+       "ms": 66,
+       "idleMs": 34
+      },
+      {
+       "page": "atlas-expresion",
+       "ms": 63,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-configuracion",
+       "ms": 67,
+       "idleMs": 33
+      },
+      {
+       "page": "atlas-pruebas",
+       "ms": 66,
+       "idleMs": 34
+      },
+      {
+       "page": "atlas-inicio",
+       "ms": 64,
+       "idleMs": 32
+      }
+     ],
+     "openDetails": {
+      "count": 1,
+      "ms": 265,
+      "idleMs": 199,
+      "lines": 1000
+     },
+     "final": {
+      "nodes": 21025,
+      "codeSpans": 1000,
+      "dcl": 179,
+      "load": 196,
+      "listeners": 1367,
+      "longTasks": 0,
+      "longTaskMs": 0,
+      "maxTask": 0,
+      "pending": 0,
+      "waiting": 107,
+      "heap": null
+     },
+     "blocked": [],
+     "errors": []
+    }
+   ]
+  }
+ ]
+}

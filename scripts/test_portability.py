@@ -27,7 +27,8 @@ class PortableTests(unittest.TestCase):
    self.assertEqual(dest.name,'bottifact')
    from new_component import scaffold
    scaffold(dest, 'test-release-brief', 'Release brief', 'reports')
-   subprocess.run([sys.executable,'-X','utf8',str(dest/'scripts/build.py')],cwd=root,check=True,capture_output=True)
+   generated=subprocess.run([sys.executable,'-X','utf8',str(dest/'scripts/build.py')],cwd=root,capture_output=True,text=True,encoding='utf-8')
+   self.assertEqual(generated.returncode,0,generated.stdout+'\n'+generated.stderr)
    registry=json.loads((dest/'packages/core/registry/registry.json').read_text())['componentes']
    added=next(item for item in registry if item['id']=='test-release-brief')
    self.assertEqual(added['nombre'],'Release brief')

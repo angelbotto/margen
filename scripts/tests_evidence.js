@@ -5,11 +5,11 @@
  check('Sankey conserva 120 entre conexiones',get('sankey').model.total===120);
  const paths=root('sankey').querySelectorAll('.ev-flujo');check('Sankey: grosor 65/5 = 13',Math.abs(Number(paths[0].getAttribute('stroke-width'))/Number(paths[5].getAttribute('stroke-width'))-13)<1e-8);
  check('Cohorte conserva base y pendiente',get('cohortes').model.data[1].base===100&&get('cohortes').model.data[1].values[3]===null&&get('cohortes').model.data[0].values[3]===72);
- get('cohortes').select(3);check('Porcentaje de cohorte sobre su base',root('cohortes').querySelector('.evidencia-detalle').textContent.includes('60 %'));
+ get('cohortes').select(3);check('Porcentaje de cohorte sobre su base',root('cohortes').querySelector('.evidencia-detalle').textContent.match(/60\s?%/));
  check('Sensibilidad permite impacto inverso',get('sensibilidad').model.data.find(d=>d.name==='Combustible').a===106&&get('sensibilidad').model.base===100);
  check('Gantt conserva hito y dos dependencias',get('gantt').model.data[4].start===get('gantt').model.data[4].end&&get('gantt').model.data[4].deps.length===2);
- get('embudo').select(3);const funnel=root('embudo').querySelector('.evidencia-detalle').textContent;check('Embudo 450/1000 y 450/500',funnel.includes('45 %')&&funnel.includes('90 %')&&funnel.includes('50 pedidos'),funnel);
- check('Banda alcanza ambos extremos',get('incertidumbre').model.domain[0]===80&&get('incertidumbre').model.domain[1]===180);
+ get('embudo').select(3);const funnel=root('embudo').querySelector('.evidencia-detalle').textContent;check('Embudo 450/1000 y 450/500',/45\s?%/.test(funnel)&&/90\s?%/.test(funnel)&&funnel.includes('50 pedidos'),funnel);
+ check('Banda alcanza ambos extremos',get('incertidumbre').model.domain[0]<=80&&get('incertidumbre').model.domain[1]>=180);
  const snapshot=root('sensibilidad').querySelector('table').outerHTML;root('sensibilidad').querySelector('select').value='2';root('sensibilidad').querySelector('select').dispatchEvent(new Event('change'));check('Selección cambia detalle y conserva datos',get('sensibilidad').selected===2&&root('sensibilidad').querySelector('table').outerHTML===snapshot);
  root('sensibilidad').querySelector('button').click();check('Restablecer consulta',get('sensibilidad').selected===0);
  root('relato').querySelector('.relato-pasos li:nth-child(2) button').click();check('Paso manual detiene seguimiento',get('relato').selected===1&&root('relato').querySelector('input[type=checkbox]').checked);

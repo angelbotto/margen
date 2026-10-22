@@ -10,6 +10,7 @@
     "packages/core/components/controls.js",
     "packages/core/components/editorial-pieces.js",
     "packages/core/components/reader.js",
+    "packages/core/components/chart-core.js",
     "packages/core/components/attention-map.js"
   ]
 }

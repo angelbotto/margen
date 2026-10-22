@@ -1,0 +1,16 @@
+{
+  "id": "bullet-chart",
+  "legacyId": "meta",
+  "category": "graficas",
+  "title": "Avance frente a meta",
+  "dependencies": [
+    "packages/core/styles/fonts.css",
+    "packages/core/styles/artifact.css",
+    "packages/core/components/audio.js",
+    "packages/core/components/controls.js",
+    "packages/core/components/editorial-pieces.js",
+    "packages/core/components/reader.js",
+    "packages/core/components/chart-core.js",
+    "packages/core/components/charts.js"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "id": "instagram",
+  "legacyId": "instagram",
+  "category": "publicaciones",
+  "title": "Publicaci\u00f3n de Instagram",
+  "dependencies": [
+    "packages/core/styles/fonts.css",
+    "packages/core/styles/artifact.css",
+    "packages/core/components/embeds.js"
+  ]
+}

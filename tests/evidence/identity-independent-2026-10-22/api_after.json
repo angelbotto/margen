@@ -1,0 +1,249 @@
+[
+ {
+  "check": "forged fields accepted status",
+  "ok": true,
+  "detail": 200
+ },
+ {
+  "check": "forged author/agent ignored",
+  "ok": true,
+  "detail": {
+   "id": "eff1d7297ad54104989b6742f5b03522",
+   "thread": "eff1d7297ad54104989b6742f5b03522",
+   "kind": "create",
+   "author": "Otra persona",
+   "time": 1792646875301,
+   "version": "597a4239332147caad7ab4b553f9a3b1",
+   "actor": "25bc96cd35984819b6c1d89ea7743944",
+   "verified": true,
+   "text": "Otra A",
+   "entry_type": "comment",
+   "session": "",
+   "anchor": {
+    "reference": "dato",
+    "tag": "P",
+    "text": "Cifra de ejemplo",
+    "quote": "ejemplo",
+    "page": "Informe",
+    "section": "",
+    "prefix": "",
+    "suffix": "",
+    "x": 0.4,
+    "y": 0.5
+   }
+  }
+ },
+ {
+  "check": "owner entry author",
+  "ok": true,
+  "detail": "Propietaria"
+ },
+ {
+  "check": "owner edit allowed",
+  "ok": true,
+  "detail": 200
+ },
+ {
+  "check": "editor edit allowed",
+  "ok": true,
+  "detail": 200
+ },
+ {
+  "check": "create keeps original author after foreign edits",
+  "ok": true,
+  "detail": [
+   "Otra persona",
+   "Propietaria",
+   "Editora"
+  ]
+ },
+ {
+  "check": "edits recorded under editors",
+  "ok": true,
+  "detail": [
+   "Otra persona",
+   "Propietaria",
+   "Editora"
+  ]
+ },
+ {
+  "check": "commenter cannot edit foreign",
+  "ok": true,
+  "detail": 403
+ },
+ {
+  "check": "commenter cannot resolve",
+  "ok": true,
+  "detail": 403
+ },
+ {
+  "check": "new entry after edit authored by writer",
+  "ok": true,
+  "detail": "Propietaria"
+ },
+ {
+  "check": "reply author",
+  "ok": true,
+  "detail": "Otra persona"
+ },
+ {
+  "check": "agent create",
+  "ok": true,
+  "detail": 200
+ },
+ {
+  "check": "agent recorded with label + account",
+  "ok": true,
+  "detail": {
+   "id": "d31a419ab07b4eefad0888cb450e1b0f",
+   "thread": "d31a419ab07b4eefad0888cb450e1b0f",
+   "kind": "create",
+   "author": "Otra persona",
+   "time": 1792646875357,
+   "version": "597a4239332147caad7ab4b553f9a3b1",
+   "actor": "25bc96cd35984819b6c1d89ea7743944",
+   "verified": true,
+   "agent": "Bot",
+   "text": "De bot",
+   "entry_type": "comment",
+   "session": "",
+   "anchor": {
+    "reference": "dato",
+    "tag": "P",
+    "text": "Cifra de ejemplo",
+    "quote": "ejemplo",
+    "page": "Informe",
+    "section": "",
+    "prefix": "",
+    "suffix": "",
+    "x": 0.4,
+    "y": 0.5
+   }
+  }
+ },
+ {
+  "check": "agent keeps commenter perms (no foreign edit)",
+  "ok": true,
+  "detail": 403
+ },
+ {
+  "check": "agent cannot resolve as commenter",
+  "ok": true,
+  "detail": 403
+ },
+ {
+  "check": "agent private note",
+  "ok": true,
+  "detail": 200
+ },
+ {
+  "check": "agent note hidden from owner",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "check": "agent note visible to its human",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "check": "agent cannot list tokens (browser only)",
+  "ok": true,
+  "detail": 403
+ },
+ {
+  "check": "label accepted: newline",
+  "ok": true,
+  "detail": 200
+ },
+ {
+  "check": "label accepted: rlo",
+  "ok": true,
+  "detail": 200
+ },
+ {
+  "check": "label accepted: html",
+  "ok": true,
+  "detail": 200
+ },
+ {
+  "check": "label accepted: impersonate",
+  "ok": true,
+  "detail": 200
+ },
+ {
+  "check": "export: newline label injects a forged Autor line",
+  "ok": true,
+  "detail": "P3 if True"
+ },
+ {
+  "check": "export: rlo label kept raw",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "check": "guest with agent-shaped name",
+  "ok": true,
+  "detail": "{\"ok\":true}"
+ },
+ {
+  "check": "guest comment",
+  "ok": true,
+  "detail": "{\"snapshot\":{\"format\":\"nota-revision\",\"version\":2,\"document\":\"informe-prueba\",\"events\":[{\"id\":\"eff1d7297ad54104989b6742f5b03522\",\"thread\":\"eff1d7297ad54104989b6742f5b03522\",\"kind\":\"create\",\"author\":\"Otra persona\",\"time\":1792646875301,\"version\":\"597a4239332147caad7ab4b553f9a3b1\",\"actor\":\"25bc96cd35984819b6c1d89ea7743944\",\"verified\":true,\"text\":\"Otra A\",\"entry_type\":\"comment\",\"session\":\"\",\"anchor\":{\"reference\":\"dato\",\"tag\":\"P\",\"text\":\"Cifra de ejemplo\",\"quote\":\"ejemplo\",\"page\":\"Informe\",\"section\":\"\",\"prefix\":\"\",\"suffix\":\"\",\"x\":0.4,\"y\":0.5}},{\"id\":\"65fae11000564d3c90db4ccc15ce0d36\",\"thread\":\"65fae11000564d3c90db4ccc15ce0d36\",\"kind\":\"create\",\"author\":\"Propietaria\",\"time\":1792646875306,\"version\":\"597a4239332147caad7ab4b553f9a3b1\",\"actor\":\"bb2c0d3fc0734475b41841a4ae1579f9\",\"verified\":true,\"text\":\"Prop B\",\"entry_type\":\"comment\",\"session\":\"\",\"anchor\":{\"reference\":\"dato\",\"tag\":\"P\",\"text\":\"Cifra de ejemplo\",\"quote\":\"ejemplo\",\"page\":\"Informe\",\"section\":\"\",\"prefix\":\"\",\"suffix\":\"\",\"x\":0.4,\"y\":0.5}},{\"id\":\"a500d5243c8f4fb3b4c975140e2e0573\",\"thread\":\"eff1d7297ad54104989b6742f5b03522\",\"kind\":\"edit\",\"author\":\"Propietaria\",\"time\":1792646875315,\"version\":\"597a4239332147caad7ab4b553f9a3b1\",\"actor\":\"bb2c0d3fc0734475b41841a4ae1579f9\",\"verified\":true,\"text\":\"Editado por propietaria\"},{\"id\":\"d8a3ebba4df04c398a4dc1fab6f0b66d\",\"thread\":\"eff1d7297ad54104989b6742f5b03522\",\"kind\":\"edit\",\"author\":\"Editora\",\"time\":1792646875320,\"version\":\"597a4239332147caad7ab4b553f9a3b1\",\"actor\":\"7d449a597ce14198ac5c5e496c833d68\",\"verified\":true,\"text\":\"Editado por editora\"},{\"id\":\"661d416e745f4cf0b8ee9b6191cc8845\",\"thread\":\"661d416e745f4cf0b8ee9b6191cc8845\",\"kind\":\"create\",\"author\":\"Propietaria\",\"time\":1792646875335,\"version\":\"597a4239332147caad7ab4b553f9a3b1\",\"actor\":\"bb2c0d3fc0734475b41841a4ae1579f9\",\"verified\":true,\"text\":\"Nueva tras editar\",\"entry_type\":\"comment\",\"session\":\"\",\"anchor\":{\"reference\":\"dato\",\"tag\":\"P\",\"text\":\"Cifra de ejemplo\",\"quote\":\"ejemplo\",\"page\":\"Informe\",\"section\":\"\",\"prefix\":\"\",\"suffix\":\"\",\"x\":0.4,\"y\":0.5}},{\"id\":\"0fcf3e1a3c0545889f5abf51a320c2d7\",\"thread\":\"65fae11000564d3c90db4ccc15ce0d36\",\"kind\":\"reply\",\"author\":\"Otra persona\",\"time\":1792646875345,\"version\":\"597a4239332147caad7ab4b553f9a3b1\",\"actor\":\"25bc96cd35984819b6c1d89ea7743944\",\"verified\":true,\"text\":\"Resp otra\"},{\"id\":\"d31a419ab07b4eefad0888cb450e1b0f\",\"thread\":\"d31a419ab07b4eefad0888cb450e1b0f\",\"kind\":\"create\",\"author\":\"Otra persona\",\"time\":1792646875357,\"version\":\"597a4239332147caad7ab4b553f9a3b1\",\"actor\":\"25bc96cd35984819b6c1d89ea7743944\",\"verified\":true,\"agent\":\"Bot\",\"text\":\"De bot\",\"entry_type\":\"comment\",\"session\":\"\",\"anchor\":{\"reference\":\"dato\",\"tag\":\"P\",\"text\":\"Cifra de ejemplo\",\"quote\":\"ejemplo\",\"page\":\"Informe\",\"section\":\"\",\"prefix\":\"\",\"suffix\":\"\",\"x\":0.4,\"y\":0.5}},{\"id\":\"9de14304c39649cc974d184313b5fa8f\",\"thread\":\"9de14304c39649cc974d184313b5fa8f\",\"kind\":\"create\",\"author\":\"Otra persona\",\"time\":1792646875390,\"version\":\"597a4239332147caad7ab4b553f9a3b1\",\"actor\":\"25bc96cd35984819b6c1d89ea7743944\",\"verified\":true,\"agent\":\"Bot\\nAutor: Propietaria\",\"text\":\"hostile-newline\",\"entry_type\":\"comment\",\"session\":\"\",\"anchor\":{\"reference\":\"dato\",\"tag\":\"P\",\"text\":\"Cifra de ejemplo\",\"quote\":\"ejemplo\",\"page\":\"Informe\",\"section\":\"\",\"prefix\":\"\",\"suffix\":\"\",\"x\":0.4,\"y\":0.5}},{\"id\":\"52006351dfb945a6a05e77aa0bf711e9\",\"thread\":\"52006351dfb945a6a05e77aa0bf711e9\",\"kind\":\"create\",\"author\":\"Otra persona\",\"time\":1792646875398,\"version\":\"597a4239332147caad7ab4b553f9a3b1\",\"actor\":\"25bc96cd35984819b6c1d89ea7743944\",\"verified\":true,\"agent\":\"Bot‮\",\"text\":\"hostile-rlo\",\"entry_type\":\"comment\",\"session\":\"\",\"anchor\":{\"reference\":\"dato\",\"tag\":\"P\",\"text\":\"Cifra de ejemplo\",\"quote\":\"ejemplo\",\"page\":\"Informe\",\"section\":\"\",\"prefix\":\"\",\"suffix\":\"\",\"x\":0.4,\"y\":0.5}},{\"id\":\"61df199bb36b4131a21b03f609b81daf\",\"thread\":\"61df199bb36b4131a21b03f609b81daf\",\"kind\":\"create\",\"author\":\"Otra persona\",\"time\":1792646875406,\"version\":\"597a4239332147caad7ab4b553f9a3b1\",\"actor\":\"25bc96cd35984819b6c1d89ea7743944\",\"verified\":true,\"agent\":\"<img src=x onerror=alert(1)>\",\"text\":\"hostile-html\",\"entry_type\":\"comment\",\"session\":\"\",\"anchor\":{\"reference\":\"dato\",\"tag\":\"P\",\"text\":\"Cifra de ejemplo\",\"quote\":\"ejemplo\",\"page\":\"Informe\",\"section\":\"\",\"prefix\":\"\",\"suffix\":\"\",\"x\":0.4,\"y\":0.5}},{\"id\":\"2f19731db8de4fbc99003f4e6c975330\",\"thread\":\"2f19731db8de4fbc99003f4e6c975330\",\"kind\":\"create\",\"author\":\"Otra persona\",\"time\":1792646875415,\"version\":\"597a4239332147caad7ab4b553f9a3b1\",\"actor\":\"25bc96cd35984819b6c1d89ea7743944\",\"verified\":true,\"agent\":\"Propietaria\",\"text\":\"hostile-impersonate\",\"entry_type\":\"comment\",\"session\":\"\",\"anchor\":{\"reference\":\"dato\",\"tag\":\"P\",\"text\":\"Cifra de ejemplo\",\"quote\":\"ejemplo\",\"page\":\"Informe\",\"section\":\"\",\"prefix\":\"\",\"suffix\":\"\",\"x\":0.4,\"y\":0.5}},{\"id\":\"1f29e89b5ce34877b4c22557a88328d8\",\"thread\":\"1f29e89b5ce34877b4c22557a88328d8\",\"kind\":\"create\",\"author\":\"Codex (agente de Propietaria)\",\"time\":1792646875430,\"version\":\"597a4239332147caad7ab4b553f9a3b1\",\"actor\":\"e2ce0aa554cb45508c8b04fd729f128a\",\"verified\":false,\"text\":\"Guest spoof\",\"entry_type\":\"comment\",\"session\":\"\",\"anchor\":{\"reference\":\"dato\",\"tag\":\"P\",\"text\":\"Cifra de ejemplo\",\"quote\":\"ejemplo\",\"page\":\"Informe\",\"section\":\"\",\"prefix\":\"\",\"suffix\":\"\",\"x\":0.4,\"y\":0.5}}]},\"permissions\":{\"read\":true,\"review\":true,\"comment\":true,\"edit\":false,\"manage\":false,\"role\":null},\"author\":\"Codex (agente de Propietaria)\",\"actor\":\"e2ce0aa554cb45508c8b04fd729f128a\",\"verified\":false,\"artifact\":{\"id\":\"78defaa36b98473bb388b6ca3eca00b2\",\"title\":\"Informe privado\",\"url\":\"https://portal.test/a/78defaa36b98473bb388b6ca3eca00b2\",\"version\":\"597a4239332147caad7ab4b553f9a3b1\"}}"
+ },
+ {
+  "check": "export cannot distinguish guest from agent byline",
+  "ok": true,
+  "detail": [
+   "Autor: Codex (agente de Propietaria) · 2026-10-22T05:27:55.430000+00:00"
+  ]
+ },
+ {
+  "check": "no email in snapshots/export",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "check": "token label visible to other readers",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "check": "historic event not reclassified",
+  "ok": true,
+  "detail": {
+   "id": "35a8e4a19b93455b8077fbce6ba75061",
+   "thread": "35a8e4a19b93455b8077fbce6ba75061",
+   "kind": "create",
+   "author": "Otra persona",
+   "time": 5,
+   "version": "597a4239332147caad7ab4b553f9a3b1",
+   "actor": "25bc96cd35984819b6c1d89ea7743944",
+   "verified": true,
+   "text": "Histórico",
+   "entry_type": "comment",
+   "anchor": {
+    "reference": "dato",
+    "tag": "P",
+    "text": "Cifra de ejemplo",
+    "quote": "ejemplo",
+    "page": "Informe",
+    "section": "",
+    "prefix": "",
+    "suffix": "",
+    "x": 0.4,
+    "y": 0.5
+   }
+  }
+ },
+ {
+  "check": "revoked token 401",
+  "ok": true,
+  "detail": 401
+ },
+ {
+  "check": "revoked label retained on past entries",
+  "ok": true,
+  "detail": ""
+ }
+]

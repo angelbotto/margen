@@ -79,6 +79,11 @@
     if(destino && destino!==pags[i])revelar(destino,conFoco);
   }
 
+  // Para módulos que difieren trabajo hasta que su página se muestra; avisa con nota:pagina.
+  window.NotaPaginas = {
+    actual: function () { return pags[actual].id; },
+    visible: function (el) { return !pags.some(function (p) { return p.hidden && p.contains(el); }); }
+  };
   botones.forEach(function (b, k) { b.addEventListener("click", function () { ir(k, true); }); });
   if (prev) prev.addEventListener("click", function () { ir(actual - 1, true); });
   if (next) next.addEventListener("click", function () { ir(actual + 1, true); });
@@ -105,9 +110,10 @@
     });
     var links = Array.prototype.slice.call(pg.querySelectorAll('.indice a[href^="#"]'));
     var act = -1;
+    var padding = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
     links.forEach(function (a, i) {
       var s = document.getElementById(a.hash.slice(1));
-      if (s && s.getBoundingClientRect().top <= 120) act = i;
+      if (s && s.getBoundingClientRect().top <= padding + (parseFloat(getComputedStyle(s).scrollMarginTop) || 0) + 2) act = i;
     });
     if(hoja.hasAttribute('data-progreso-pagina')&&pg.getBoundingClientRect().bottom<=innerHeight)act=links.length-1;
     links.forEach(function (a, i) {

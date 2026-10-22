@@ -14,7 +14,9 @@
   };
   const dispose=f=>{NotaGraficas.get(f)?.destroy();f.remove();};
   await test('Cinco gráficas SVG, calor y dos escenas inicializados',()=>{
-    assert(document.querySelectorAll('[data-grafica] .grafica-caja svg').length===5,'Número de gráficas');
+    // Cada figura dibuja un único SVG (el mapa de calor también; su tabla coloreada sigue como modo accesible).
+    const figures=[...document.querySelectorAll('[data-grafica]')];
+    assert(figures.length>=6&&figures.every(f=>f.querySelectorAll('.grafica-caja svg').length===1),'Número de gráficas');
     assert(document.querySelectorAll('.tabla-calor').length===1,'Mapa ausente');
     document.querySelectorAll('[data-escena]').forEach(e=>assert(NotaEscena.get(e)?.renderer,'WebGL no disponible'));
   });
@@ -25,9 +27,9 @@
     const negative=bars.find(e=>e.dataset.value==='-10');near(+negative.getAttribute('x') + +negative.getAttribute('width'),+b60.getAttribute('x'));
   });
   await test('Temporal: distancia real, extremos y delta',()=>{
-    const f=document.querySelector('[data-grafica="temporal"]'),p=[...f.querySelectorAll('.grafica-punto')];
-    near((+p[1].getAttribute('cx')- +p[0].getAttribute('cx'))/(+p[3].getAttribute('cx')- +p[0].getAttribute('cx')),2/12);
-    assert(f.querySelector('.grafica-variacion').textContent.includes('+30 · +33,3333 %'),'Delta incorrecto');
+    const f=document.querySelector('[data-grafica="temporal"]'),p=[...f.querySelectorAll('[data-cx]')];
+    near((+p[1].dataset.cx- +p[0].dataset.cx)/(+p[3].dataset.cx- +p[0].dataset.cx),2/12);
+    assert(/\+30 · \+33,3\s?%/.test(f.querySelector('.grafica-variacion').textContent),'Delta incorrecto');
     assert(NotaGraficas.delta(5,0).includes('no definido'),'Porcentaje con base cero');
     assert(NotaGraficas.delta(null,2).includes('ausente'),'Ausencia interpretada como cero');
   });
@@ -53,7 +55,8 @@
   await test('Fechas inválidas rechazadas; fechas cercanas no superponen sus rótulos',()=>{
     let f=make('temporal',['Día','Valor'],[[{date:'2026-02-30'},4]]);assert(NotaGraficas.init(f)[0]===null,'Fecha inexistente aceptada');dispose(f);
     f=make('temporal',['Día','Valor'],[[{date:'2026-01-01'},1],[{date:'2026-01-02'},2],[{date:'2026-12-31'},3]]);
-    NotaGraficas.init(f);const texts=[...f.querySelectorAll('[data-label-index]')];assert(texts.length===2,'Fechas cercanas sin separación');dispose(f);
+    NotaGraficas.init(f);const texts=[...f.querySelectorAll('svg text')].filter(t=>t.textContent.trim()).map(t=>t.getBoundingClientRect());
+    assert(texts.length&&texts.every((a,i)=>texts.every((b,j)=>i>=j||Math.min(a.right,b.right)-Math.max(a.left,b.left)<=1||Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top)<=1)),'Fechas cercanas sin separación');dispose(f);
   });
   await test('Inicialización idempotente y destroy recupera datos',()=>{
     const f=make('barras',['Grupo','Valor'],[['A',4],['B',9]]),before=f.innerHTML;

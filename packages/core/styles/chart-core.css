@@ -1,0 +1,124 @@
+/* Margen · núcleo de gráficas (chart-core.js). Se compone en artifact.css como bloque CHART CORE.
+   Ancho real: el SVG mide lo que su caja, así que el texto conserva 12–14 px en cualquier pantalla. */
+
+/* Paleta de 8. Los slots 1–4 vienen de cada tema; 5–8 se derivan de ellos en OKLCH (rotación de tono,
+   ajuste de luminosidad y croma mínimo), con una receta para modo claro y otra para oscuro según el
+   color-scheme del tema. Las rotaciones se eligieron midiendo los 32 temas: cada slot nuevo queda a ΔE OK
+   ≥ 0,11 (claro) y ≥ 0,08 (oscuro) de los demás y con contraste ≥ 3:1 sobre --grafica-papel. */
+:root {
+  --grafica-5: var(--grafica-tinta); --grafica-6: var(--grafica-1);
+  --grafica-7: var(--grafica-2); --grafica-8: var(--grafica-3);
+  --mg-tip-sombra: 0 8px 24px rgb(0 0 0 / .14);
+}
+@supports (color: light-dark(oklch(from red l c h), red)) {
+  :root, :root[data-theme] {
+    --grafica-5: light-dark(oklch(from var(--grafica-3) calc(l + .12) max(c, .1) calc(h + 330)), oklch(from var(--grafica-2) calc(l - .12) max(c, .1) calc(h + 330)));
+    --grafica-6: light-dark(oklch(from var(--grafica-2) calc(l - .12) max(c, .06) calc(h + 330)), oklch(from var(--grafica-3) calc(l - .12) max(c, .1) calc(h + 210)));
+    --grafica-7: light-dark(oklch(from var(--grafica-2) calc(l - .12) max(c, .1) calc(h + 180)), oklch(from var(--grafica-4) calc(l + .12) max(c, .1) calc(h + 150)));
+    --grafica-8: light-dark(oklch(from var(--grafica-2) calc(l + .12) max(c, .1) calc(h + 30)), oklch(from var(--grafica-2) calc(l - .12) max(c, .1) calc(h + 270)));
+  }
+}
+.serie-4 { --serie: var(--grafica-5); stroke-dasharray: 12 4; }
+.serie-5 { --serie: var(--grafica-6); stroke-dasharray: 4 2 1 2; }
+.serie-6 { --serie: var(--grafica-7); stroke-dasharray: 1 3; }
+.serie-7 { --serie: var(--grafica-8); stroke-dasharray: 8 2 2 2 2 2; }
+.mg-textura { stroke-width: 1.1; stroke-opacity: .55; }
+
+/* SVG a ancho real. Doble clase para ganar a los min-width heredados de cada runtime. */
+:is(.grafica-caja,.evidencia-visor,.analitica-caja,.atencion-caja) > svg.mg-svg.mg-svg { min-width: 0; width: 100%; max-width: 100%; height: auto; overflow: visible; }
+:is(.grafica-caja,.evidencia-visor) > svg.mg-svg.mg-desplazable { width: auto; max-width: none; }
+:is(.grafica-caja,.evidencia-visor,.analitica-caja,.atencion-caja):has(> svg.mg-svg:not(.mg-desplazable)) { overflow: visible; }
+.mg-svg text { font-size: 12px; }
+.mg-svg .mg-texto-fuerte { fill: var(--tinta); }
+.mg-svg .mg-texto-suave { fill: var(--tinta-3); }
+.mg-svg .mg-halo { paint-order: stroke; stroke: var(--grafica-papel); stroke-width: 4px; stroke-linejoin: round; }
+.mg-svg .grafica-trazo { stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.mg-svg .mg-forma { fill: var(--grafica-papel); stroke: var(--serie); stroke-width: 2; stroke-dasharray: none; }
+.mg-svg .grafica-barra, .mg-svg .grafica-serie { stroke-dasharray: none; }
+
+/* Marcas enfocables */
+.mg-marca { cursor: pointer; outline: none; }
+.mg-marca:focus-visible { outline: none; }
+.mg-marca:is(:focus-visible,.mg-elegida) :is(rect,path,circle):not(.mg-sin-foco),
+.mg-marca:is(rect,path,circle):is(:focus-visible,.mg-elegida) { stroke: var(--foco); stroke-width: 2.5; stroke-dasharray: none; }
+.mg-marca:focus-visible { filter: drop-shadow(0 0 1.5px var(--foco)); }
+.mg-atenuada { opacity: .18; transition: opacity var(--rapido, 150ms) ease; }
+@media (prefers-reduced-motion: reduce) { .mg-atenuada { transition: none; } }
+
+/* Tip: una sola capa por documento, fija y recortada al viewport. */
+.mg-tip { position: fixed; z-index: 95; width: max-content; max-width: min(320px, calc(100vw - 16px)); max-height: calc(100dvh - 16px); overflow: auto;
+  padding: 10px 14px; border: 1px solid var(--linea-fuerte); border-radius: 6px; background: var(--panel); color: var(--tinta-2);
+  box-shadow: var(--mg-tip-sombra); font: 12px/1.55 var(--mono); pointer-events: auto; }
+.mg-tip strong { display: block; margin-bottom: 4px; color: var(--tinta); font: 400 18px/1.25 var(--serif); }
+.mg-tip span { display: block; overflow-wrap: anywhere; }
+.mg-tip[hidden] { display: none; }
+@media (prefers-reduced-motion: no-preference) { .mg-tip:not([hidden]) { animation: mg-tip 150ms cubic-bezier(.175,.885,.32,1.1); } }
+@keyframes mg-tip { from { opacity: 0; filter: blur(4px); } }
+
+/* Leyenda interactiva */
+.mg-leyenda-caja { margin-block: 8px 4px; }
+.mg-leyenda { display: flex; flex-wrap: wrap; gap: 6px 8px; margin: 0; padding: 0; list-style: none; }
+.mg-leyenda li { margin: 0; min-width: 0; }
+.mg-leyenda button { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; max-width: 100%; padding: 6px 10px; border: 1px solid transparent; border-radius: 5px;
+  background: transparent; color: var(--tinta-2); font: 12px/1.4 var(--mono); text-align: left; cursor: pointer; overflow-wrap: anywhere; }
+.mg-leyenda button:hover { border-color: var(--linea); }
+.mg-leyenda button[aria-pressed=true] { border-color: var(--linea-fuerte); color: var(--tinta); background: var(--panel); }
+.mg-leyenda button:focus-visible, .mg-exportar button:focus-visible { outline: 2px solid var(--foco); outline-offset: 2px; }
+.mg-muestra-forma { flex: none; overflow: visible; }
+.mg-muestra-forma .mg-forma { fill: var(--grafica-papel); stroke: var(--serie); stroke-width: 2; }
+.mg-leyenda-ayuda { margin: 4px 0 0; font: 11.5px/1.5 var(--mono); color: var(--tinta-3); }
+.mg-muestra { flex: none; width: 22px; height: 0; border-top: 3px solid var(--serie); }
+.mg-muestra.serie-1 { border-top-style: dashed; } .mg-muestra.serie-2 { border-top-style: dotted; }
+.mg-muestra.serie-3 { border-top-style: double; border-top-width: 4px; }
+.mg-oculto { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@media (pointer: coarse) { .mg-leyenda button, .mg-exportar button { min-height: 44px; } }
+
+/* Exportación */
+.mg-exportar { display: flex; flex-wrap: wrap; gap: 8px; margin-block: 8px 0; }
+.mg-exportar button { min-height: 32px; padding: 4px 10px; border: 1px solid var(--linea); border-radius: 5px; background: transparent; color: var(--tinta-3); font: 12px/1.4 var(--mono); cursor: pointer; }
+.mg-exportar button:hover { color: var(--tinta); border-color: var(--linea-fuerte); }
+
+/* Ayuda de desplazamiento para las tres figuras que lo conservan (calendario, cohortes, gantt). */
+.mg-desplazar-nota { margin: 6px 0 0; font: 12px/1.5 var(--mono); color: var(--tinta-3); }
+
+/* Heatmap con ejes */
+.mg-calor-celda { stroke: var(--grafica-papel); stroke-width: 1; }
+.mg-escala { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; margin-block: 8px; font: 12px/1.5 var(--mono); color: var(--tinta-2); }
+.mg-escala-rampa { display: inline-flex; height: 12px; border: 1px solid var(--linea); }
+.mg-escala-rampa span { width: 28px; }
+
+/* Attention map v2 (treemap) · lenguaje de cmrg.me: celdas en panel-2, trazo 1 px, serif 18 y mono 11,5. */
+.nota-atencion .atencion-marco { position: relative; max-width: 64rem; padding: 8px; }
+.nota-atencion .atencion-marco::before { content: ''; position: absolute; inset: 0; border: 1px dashed var(--linea); pointer-events: none;
+  -webkit-mask: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+.atencion-caja.atencion-v2 { border: 0; overflow: visible; }
+.atencion-v2 > svg.mg-svg { display: block; }
+.atencion-v2 .atencion-area { fill: var(--panel-2); stroke: var(--grafica-linea); stroke-width: 1; }
+.atencion-v2 g:nth-child(even) .atencion-area { fill: var(--panel-2); }
+.atencion-v2 .atencion-otros .atencion-area { fill: var(--panel); }
+.atencion-v2 g:is(:hover,.atencion-elegida,:focus-visible) .atencion-area { fill: var(--tabla-elegida, var(--panel)); stroke: var(--marcador); }
+.atencion-v2 g.mg-marca:is(:focus-visible,.mg-elegida) .atencion-area { stroke: var(--foco); stroke-width: 2; }
+.atencion-v2 .atencion-nombre { fill: var(--tinta); font: 400 18px var(--serif); }
+.atencion-v2 .atencion-valor { fill: var(--tinta-3); font: 11.5px var(--mono); }
+:root[data-theme$='-dark'] .atencion-v2 .atencion-nombre, :root[data-theme='dark'] .atencion-v2 .atencion-nombre { fill: var(--tinta-2); }
+
+/* Recetas nuevas */
+.mg-sin-dato { fill: none; stroke: var(--grafica-tinta); stroke-width: 1; stroke-dasharray: 3 2; }
+.mg-conector { stroke: var(--grafica-linea); stroke-width: 3; stroke-linecap: round; }
+.mg-conector.mg-sube { stroke: var(--grafica-tinta); }
+.mg-bullet-banda { fill: var(--panel-2); }
+.mg-bullet-banda.mg-b1 { fill: var(--panel); }
+.mg-bullet-banda.mg-b2 { fill: color-mix(in srgb, var(--panel-2) 60%, var(--linea)); }
+.mg-bullet-meta { stroke: var(--tinta); stroke-width: 3; }
+
+@media (forced-colors: active) {
+  .mg-tip { border-color: CanvasText; }
+  .mg-marca:is(:focus-visible,.mg-elegida) :is(rect,path,circle) { stroke: Highlight; }
+}
+@media print { .mg-exportar, .mg-tip, .mg-leyenda-caja .mg-oculto { display: none !important; } .mg-atenuada { opacity: 1; } }
+
+/* Estado de la marca fijada y escala del heatmap */
+.grafica-estado { min-height: 1.6em; margin: 4px 0 0; font: 12px/1.6 var(--mono); color: var(--tinta-2); overflow-wrap: anywhere; }
+.grafica-estado:empty { min-height: 0; margin: 0; }
+.mg-calor-muestra { display: inline-block; flex: none; width: 14px; height: 14px; border: 1px solid var(--linea); }
+.mg-calor-ausente-muestra { background: repeating-linear-gradient(135deg, var(--calor-ausente) 0 3px, var(--grafica-tinta) 3px 4px); }

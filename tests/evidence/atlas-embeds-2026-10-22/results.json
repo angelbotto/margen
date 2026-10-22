@@ -1,0 +1,716 @@
+{
+ "portal_csp": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'",
+ "render_csp": "sandbox allow-scripts allow-downloads; default-src 'none'; script-src 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'unsafe-inline'; img-src data: blob:; font-src data:; media-src data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'self'",
+ "chromium": null,
+ "results": [
+  {
+   "id": "file",
+   "entorno": "archivo local",
+   "modo": "nested",
+   "artefacto": {
+    "origin": "null",
+    "cookie": "ok",
+    "storage": "ok",
+    "fetch": "ok"
+   },
+   "x_card": true,
+   "x_link_popup": true,
+   "echo": {
+    "frame": true,
+    "frame_view": {
+     "origin": "https://echo.margen.test:61997",
+     "referrer": "",
+     "cookie": "ok",
+     "storage": "ok",
+     "popup": "opened"
+    },
+    "server_saw": {
+     "k": "nested-medir",
+     "host": "echo.margen.test:61997",
+     "referer": null,
+     "origin": null,
+     "sec-fetch-dest": "iframe",
+     "sec-fetch-site": "cross-site"
+    },
+    "frame_url_error": false,
+    "source_link_visible": true
+   },
+   "youtube": {
+    "frame": true,
+    "video": true,
+    "currentTime": 0,
+    "muted": true,
+    "paused": true,
+    "error": true,
+    "error153": true,
+    "bot": false,
+    "frame_url_error": false,
+    "source_link_visible": true
+   },
+   "instagram": {
+    "frame": true,
+    "images": 5,
+    "media": true,
+    "login": false,
+    "unavailable": false,
+    "chars": 194,
+    "frame_url_error": false,
+    "source_link_visible": true
+   },
+   "provider_requests": 69,
+   "provider_documents": [
+    {
+     "url": "https://echo.margen.test:61997/echo",
+     "type": "document",
+     "referer": null,
+     "origin": null,
+     "status": 200,
+     "failure": null
+    },
+    {
+     "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE",
+     "type": "document",
+     "referer": null,
+     "origin": null,
+     "status": 200,
+     "failure": null
+    },
+    {
+     "url": "https://www.instagram.com/p/fA9uwTtkSN/embed/",
+     "type": "document",
+     "referer": null,
+     "origin": null,
+     "status": 200,
+     "failure": null
+    }
+   ],
+   "csp_violations": []
+  },
+  {
+   "id": "http-top-exact",
+   "entorno": "http local · headers exactos",
+   "modo": "nested",
+   "artefacto": {
+    "origin": "null",
+    "cookie": "SecurityError",
+    "storage": "SecurityError",
+    "fetch": "blocked"
+   },
+   "x_card": true,
+   "x_link_popup": false,
+   "echo": {
+    "frame": false,
+    "source_link_visible": true
+   },
+   "youtube": {
+    "frame": false,
+    "source_link_visible": true
+   },
+   "instagram": {
+    "frame": false,
+    "source_link_visible": true
+   },
+   "provider_requests": 0,
+   "provider_documents": [],
+   "csp_violations": [
+    "error: Connecting to 'https://echo.margen.test:61997/echo?k=connect' violates the following Content Security Policy directive: \"connect-src 'none'\". The action has been blocked.",
+    "error: Fetch API cannot load https://echo.margen.test:61997/echo?k=connect. Refused to connect because it violates the document's Content Security Policy.",
+    "error: Framing 'https://echo.margen.test:61997/' violates the following Content Security Policy directive: \"default-src 'none'\". The request has been blocked. Note that 'frame-src' was not explicitly set, so 'default-src' is used as a fallback.\n",
+    "error: Framing 'https://www.youtube-nocookie.com/' violates the following Content Security Policy directive: \"default-src 'none'\". The request has been blocked. Note that 'frame-src' was not explicitly set, so 'default-src' is used as a fallback.\n",
+    "error: Framing 'https://www.instagram.com/' violates the following Content Security Policy directive: \"default-src 'none'\". The request has been blocked. Note that 'frame-src' was not explicitly set, so 'default-src' is used as a fallback.\n"
+   ]
+  },
+  {
+   "id": "http-top-frames",
+   "entorno": "http local · headers exactos + frame-src",
+   "modo": "nested",
+   "artefacto": {
+    "origin": "null",
+    "cookie": "SecurityError",
+    "storage": "SecurityError",
+    "fetch": "blocked"
+   },
+   "x_card": true,
+   "x_link_popup": false,
+   "echo": {
+    "frame": true,
+    "frame_view": {
+     "origin": "null",
+     "referrer": "",
+     "cookie": "SecurityError",
+     "storage": "SecurityError",
+     "popup": "null"
+    },
+    "server_saw": {
+     "k": "nested-medir",
+     "host": "echo.margen.test:61997",
+     "referer": null,
+     "origin": null,
+     "sec-fetch-dest": "iframe",
+     "sec-fetch-site": "cross-site"
+    },
+    "frame_url_error": false,
+    "source_link_visible": true
+   },
+   "youtube": {
+    "frame": true,
+    "video": false,
+    "currentTime": null,
+    "muted": null,
+    "paused": null,
+    "error": false,
+    "error153": false,
+    "bot": false,
+    "frame_url_error": false,
+    "source_link_visible": true
+   },
+   "instagram": {
+    "frame": true,
+    "images": 5,
+    "media": true,
+    "login": false,
+    "unavailable": false,
+    "chars": 194,
+    "frame_url_error": false,
+    "source_link_visible": true
+   },
+   "provider_requests": 63,
+   "provider_documents": [
+    {
+     "url": "https://echo.margen.test:61997/echo",
+     "type": "document",
+     "referer": null,
+     "origin": null,
+     "status": 200,
+     "failure": null
+    },
+    {
+     "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE",
+     "type": "document",
+     "referer": null,
+     "origin": null,
+     "status": 200,
+     "failure": null
+    },
+    {
+     "url": "https://www.instagram.com/p/fA9uwTtkSN/embed/",
+     "type": "document",
+     "referer": null,
+     "origin": null,
+     "status": 200,
+     "failure": null
+    }
+   ],
+   "csp_violations": [
+    "error: Connecting to 'https://echo.margen.test:61997/echo?k=connect' violates the following Content Security Policy directive: \"connect-src 'none'\". The action has been blocked.",
+    "error: Fetch API cannot load https://echo.margen.test:61997/echo?k=connect. Refused to connect because it violates the document's Content Security Policy."
+   ]
+  },
+  {
+   "id": "portal-nested-exact",
+   "entorno": "host https · portal → artefacto (CSP actual)",
+   "modo": "nested",
+   "artefacto": {
+    "origin": "null",
+    "cookie": "SecurityError",
+    "storage": "SecurityError",
+    "fetch": "blocked"
+   },
+   "x_card": true,
+   "x_link_popup": false,
+   "echo": {
+    "frame": false,
+    "source_link_visible": true
+   },
+   "youtube": {
+    "frame": false,
+    "source_link_visible": true
+   },
+   "instagram": {
+    "frame": false,
+    "source_link_visible": true
+   },
+   "provider_requests": 0,
+   "provider_documents": [],
+   "csp_violations": [
+    "error: Connecting to 'https://echo.margen.test:61997/echo?k=connect' violates the following Content Security Policy directive: \"connect-src 'none'\". The action has been blocked.",
+    "error: Fetch API cannot load https://echo.margen.test:61997/echo?k=connect. Refused to connect because it violates the document's Content Security Policy.",
+    "error: Framing 'https://echo.margen.test:61997/' violates the following Content Security Policy directive: \"default-src 'none'\". The request has been blocked. Note that 'frame-src' was not explicitly set, so 'default-src' is used as a fallback.\n",
+    "error: Framing 'https://www.youtube-nocookie.com/' violates the following Content Security Policy directive: \"default-src 'none'\". The request has been blocked. Note that 'frame-src' was not explicitly set, so 'default-src' is used as a fallback.\n",
+    "error: Framing 'https://www.instagram.com/' violates the following Content Security Policy directive: \"default-src 'none'\". The request has been blocked. Note that 'frame-src' was not explicitly set, so 'default-src' is used as a fallback.\n"
+   ]
+  },
+  {
+   "id": "portal-nested-frames",
+   "entorno": "host https · portal → artefacto + frame-src",
+   "modo": "nested",
+   "artefacto": {
+    "origin": "null",
+    "cookie": "SecurityError",
+    "storage": "SecurityError",
+    "fetch": "blocked"
+   },
+   "x_card": true,
+   "x_link_popup": false,
+   "echo": {
+    "frame": true,
+    "frame_view": {
+     "origin": "null",
+     "referrer": "",
+     "cookie": "SecurityError",
+     "storage": "SecurityError",
+     "popup": "null"
+    },
+    "server_saw": {
+     "k": "nested-medir",
+     "host": "echo.margen.test:61997",
+     "referer": null,
+     "origin": null,
+     "sec-fetch-dest": "iframe",
+     "sec-fetch-site": "cross-site"
+    },
+    "frame_url_error": false,
+    "source_link_visible": true
+   },
+   "youtube": {
+    "frame": true,
+    "video": false,
+    "currentTime": null,
+    "muted": null,
+    "paused": null,
+    "error": false,
+    "error153": false,
+    "bot": false,
+    "frame_url_error": false,
+    "source_link_visible": true
+   },
+   "instagram": {
+    "frame": true,
+    "images": 5,
+    "media": true,
+    "login": false,
+    "unavailable": false,
+    "chars": 194,
+    "frame_url_error": false,
+    "source_link_visible": true
+   },
+   "provider_requests": 63,
+   "provider_documents": [
+    {
+     "url": "https://echo.margen.test:61997/echo",
+     "type": "document",
+     "referer": null,
+     "origin": null,
+     "status": 200,
+     "failure": null
+    },
+    {
+     "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE",
+     "type": "document",
+     "referer": null,
+     "origin": null,
+     "status": 200,
+     "failure": null
+    },
+    {
+     "url": "https://www.instagram.com/p/fA9uwTtkSN/embed/",
+     "type": "document",
+     "referer": null,
+     "origin": null,
+     "status": 200,
+     "failure": null
+    }
+   ],
+   "csp_violations": [
+    "error: Connecting to 'https://echo.margen.test:61997/echo?k=connect' violates the following Content Security Policy directive: \"connect-src 'none'\". The action has been blocked.",
+    "error: Fetch API cannot load https://echo.margen.test:61997/echo?k=connect. Refused to connect because it violates the document's Content Security Policy."
+   ]
+  },
+  {
+   "id": "portal-host",
+   "entorno": "host https · portal monta el iframe",
+   "modo": "host",
+   "artefacto": {
+    "origin": "null",
+    "cookie": "SecurityError",
+    "storage": "SecurityError",
+    "fetch": "blocked"
+   },
+   "x_card": true,
+   "x_link_popup": true,
+   "echo": {
+    "frame": true,
+    "frame_view": {
+     "origin": "https://echo.margen.test:61997",
+     "referrer": "https://artifacts.margen.test:61997/",
+     "cookie": "ok",
+     "storage": "ok",
+     "popup": "opened"
+    },
+    "server_saw": {
+     "k": "host-medir",
+     "host": "echo.margen.test:61997",
+     "referer": "https://artifacts.margen.test:61997/",
+     "origin": null,
+     "sec-fetch-dest": "iframe",
+     "sec-fetch-site": "same-site"
+    },
+    "frame_url_error": false,
+    "host_status": "Cargando…",
+    "host_messages": 0,
+    "source_link_visible": true
+   },
+   "youtube": {
+    "frame": true,
+    "video": true,
+    "currentTime": 6.9,
+    "muted": true,
+    "paused": false,
+    "error": false,
+    "error153": false,
+    "bot": false,
+    "frame_url_error": false,
+    "host_status": "",
+    "host_messages": 31,
+    "source_link_visible": true
+   },
+   "instagram": {
+    "frame": true,
+    "images": 5,
+    "media": true,
+    "login": false,
+    "unavailable": false,
+    "chars": 194,
+    "frame_url_error": false,
+    "host_status": "",
+    "host_messages": 37,
+    "source_link_visible": true
+   },
+   "provider_requests": 90,
+   "provider_documents": [
+    {
+     "url": "https://echo.margen.test:61997/echo",
+     "type": "document",
+     "referer": "https://artifacts.margen.test:61997/",
+     "origin": null,
+     "status": 200,
+     "failure": null
+    },
+    {
+     "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE",
+     "type": "document",
+     "referer": "https://artifacts.margen.test:61997/",
+     "origin": null,
+     "status": 200,
+     "failure": null
+    },
+    {
+     "url": "https://www.instagram.com/p/fA9uwTtkSN/embed/",
+     "type": "document",
+     "referer": "https://artifacts.margen.test:61997/",
+     "origin": null,
+     "status": 200,
+     "failure": null
+    }
+   ],
+   "csp_violations": [
+    "error: Connecting to 'https://echo.margen.test:61997/echo?k=connect' violates the following Content Security Policy directive: \"connect-src 'none'\". The action has been blocked.",
+    "error: Fetch API cannot load https://echo.margen.test:61997/echo?k=connect. Refused to connect because it violates the document's Content Security Policy."
+   ]
+  },
+  {
+   "id": "portal-host-noref",
+   "entorno": "host https · portal monta, no-referrer",
+   "modo": "host",
+   "artefacto": {
+    "origin": "null",
+    "cookie": "SecurityError",
+    "storage": "SecurityError",
+    "fetch": "blocked"
+   },
+   "x_card": true,
+   "x_link_popup": true,
+   "echo": {
+    "frame": true,
+    "frame_view": {
+     "origin": "https://echo.margen.test:61997",
+     "referrer": "",
+     "cookie": "ok",
+     "storage": "ok",
+     "popup": "opened"
+    },
+    "server_saw": {
+     "k": "host-medir",
+     "host": "echo.margen.test:61997",
+     "referer": null,
+     "origin": null,
+     "sec-fetch-dest": "iframe",
+     "sec-fetch-site": "same-site"
+    },
+    "frame_url_error": false,
+    "host_status": "Cargando…",
+    "host_messages": 0,
+    "source_link_visible": true
+   },
+   "youtube": {
+    "frame": true,
+    "video": true,
+    "currentTime": 0,
+    "muted": true,
+    "paused": true,
+    "error": true,
+    "error153": true,
+    "bot": false,
+    "frame_url_error": false,
+    "host_status": "",
+    "host_messages": 3,
+    "source_link_visible": true
+   },
+   "instagram": {
+    "frame": true,
+    "images": 5,
+    "media": true,
+    "login": false,
+    "unavailable": false,
+    "chars": 194,
+    "frame_url_error": false,
+    "host_status": "",
+    "host_messages": 8,
+    "source_link_visible": true
+   },
+   "provider_requests": 69,
+   "provider_documents": [
+    {
+     "url": "https://echo.margen.test:61997/echo",
+     "type": "document",
+     "referer": null,
+     "origin": null,
+     "status": 200,
+     "failure": null
+    },
+    {
+     "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE",
+     "type": "document",
+     "referer": null,
+     "origin": null,
+     "status": 200,
+     "failure": null
+    },
+    {
+     "url": "https://www.instagram.com/p/fA9uwTtkSN/embed/",
+     "type": "document",
+     "referer": null,
+     "origin": null,
+     "status": 200,
+     "failure": null
+    }
+   ],
+   "csp_violations": [
+    "error: Connecting to 'https://echo.margen.test:61997/echo?k=connect' violates the following Content Security Policy directive: \"connect-src 'none'\". The action has been blocked.",
+    "error: Fetch API cannot load https://echo.margen.test:61997/echo?k=connect. Refused to connect because it violates the document's Content Security Policy."
+   ]
+  },
+  {
+   "id": "portal-host-csp-exact",
+   "entorno": "host https · portal monta sin ampliar frame-src",
+   "modo": "host",
+   "artefacto": {
+    "origin": "null",
+    "cookie": "SecurityError",
+    "storage": "SecurityError",
+    "fetch": "blocked"
+   },
+   "x_card": true,
+   "x_link_popup": true,
+   "echo": {
+    "frame": false,
+    "host_status": "Eco no respondió. El enlace de arriba abre la fuente original.",
+    "host_messages": 0,
+    "source_link_visible": true
+   },
+   "youtube": {
+    "frame": false,
+    "host_status": "YouTube no respondió. El enlace de arriba abre la fuente original.",
+    "host_messages": 0,
+    "source_link_visible": true
+   },
+   "instagram": {
+    "frame": false,
+    "host_status": "Instagram no respondió. El enlace de arriba abre la fuente original.",
+    "host_messages": 0,
+    "source_link_visible": true
+   },
+   "provider_requests": 0,
+   "provider_documents": [],
+   "csp_violations": [
+    "error: Connecting to 'https://echo.margen.test:61997/echo?k=connect' violates the following Content Security Policy directive: \"connect-src 'none'\". The action has been blocked.",
+    "error: Fetch API cannot load https://echo.margen.test:61997/echo?k=connect. Refused to connect because it violates the document's Content Security Policy.",
+    "error: Framing 'https://echo.margen.test:61997/' violates the following Content Security Policy directive: \"frame-src 'self'\". The request has been blocked.\n",
+    "error: Framing 'https://www.youtube-nocookie.com/' violates the following Content Security Policy directive: \"frame-src 'self'\". The request has been blocked.\n",
+    "error: Framing 'https://www.instagram.com/' violates the following Content Security Policy directive: \"frame-src 'self'\". The request has been blocked.\n"
+   ]
+  },
+  {
+   "id": "portal-host-offline",
+   "entorno": "host https · portal monta, red de proveedores bloqueada",
+   "modo": "host",
+   "artefacto": {
+    "origin": "null",
+    "cookie": "SecurityError",
+    "storage": "SecurityError",
+    "fetch": "blocked"
+   },
+   "x_card": true,
+   "x_link_popup": true,
+   "echo": {
+    "frame": true,
+    "frame_view": {
+     "origin": "https://echo.margen.test:61997",
+     "referrer": "https://artifacts.margen.test:61997/",
+     "cookie": "ok",
+     "storage": "ok",
+     "popup": "opened"
+    },
+    "server_saw": {
+     "k": "host-medir",
+     "host": "echo.margen.test:61997",
+     "referer": "https://artifacts.margen.test:61997/",
+     "origin": null,
+     "sec-fetch-dest": "iframe",
+     "sec-fetch-site": "same-site"
+    },
+    "frame_url_error": false,
+    "host_status": "Cargando…",
+    "host_messages": 0,
+    "source_link_visible": true
+   },
+   "youtube": {
+    "frame": false,
+    "host_status": "YouTube no respondió. El enlace de arriba abre la fuente original.",
+    "host_messages": 0,
+    "source_link_visible": true
+   },
+   "instagram": {
+    "frame": false,
+    "host_status": "Instagram no respondió. El enlace de arriba abre la fuente original.",
+    "host_messages": 0,
+    "source_link_visible": true
+   },
+   "provider_requests": 3,
+   "provider_documents": [
+    {
+     "url": "https://echo.margen.test:61997/echo",
+     "type": "document",
+     "referer": "https://artifacts.margen.test:61997/",
+     "origin": null,
+     "status": 200,
+     "failure": null
+    },
+    {
+     "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE",
+     "type": "document",
+     "referer": "https://artifacts.margen.test:61997/",
+     "origin": null,
+     "status": null,
+     "failure": "net::ERR_FAILED"
+    },
+    {
+     "url": "https://www.instagram.com/p/fA9uwTtkSN/embed/",
+     "type": "document",
+     "referer": "https://artifacts.margen.test:61997/",
+     "origin": null,
+     "status": null,
+     "failure": "net::ERR_FAILED"
+    }
+   ],
+   "csp_violations": [
+    "error: Connecting to 'https://echo.margen.test:61997/echo?k=connect' violates the following Content Security Policy directive: \"connect-src 'none'\". The action has been blocked.",
+    "error: Fetch API cannot load https://echo.margen.test:61997/echo?k=connect. Refused to connect because it violates the document's Content Security Policy."
+   ]
+  },
+  {
+   "id": "static-host",
+   "entorno": "host https sin cabeceras (HTML portátil)",
+   "modo": "nested",
+   "artefacto": {
+    "origin": "https://artifacts.margen.test:61997",
+    "cookie": "ok",
+    "storage": "ok",
+    "fetch": "ok"
+   },
+   "x_card": true,
+   "x_link_popup": true,
+   "echo": {
+    "frame": true,
+    "frame_view": {
+     "origin": "https://echo.margen.test:61997",
+     "referrer": "https://artifacts.margen.test:61997/",
+     "cookie": "ok",
+     "storage": "ok",
+     "popup": "opened"
+    },
+    "server_saw": {
+     "k": "nested-medir",
+     "host": "echo.margen.test:61997",
+     "referer": "https://artifacts.margen.test:61997/",
+     "origin": null,
+     "sec-fetch-dest": "iframe",
+     "sec-fetch-site": "same-site"
+    },
+    "frame_url_error": false,
+    "source_link_visible": true
+   },
+   "youtube": {
+    "frame": true,
+    "video": true,
+    "currentTime": 7.3,
+    "muted": true,
+    "paused": false,
+    "error": false,
+    "error153": false,
+    "bot": false,
+    "frame_url_error": false,
+    "source_link_visible": true
+   },
+   "instagram": {
+    "frame": true,
+    "images": 5,
+    "media": true,
+    "login": false,
+    "unavailable": false,
+    "chars": 194,
+    "frame_url_error": false,
+    "source_link_visible": true
+   },
+   "provider_requests": 94,
+   "provider_documents": [
+    {
+     "url": "https://echo.margen.test:61997/echo",
+     "type": "document",
+     "referer": "https://artifacts.margen.test:61997/",
+     "origin": null,
+     "status": 200,
+     "failure": null
+    },
+    {
+     "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE",
+     "type": "document",
+     "referer": "https://artifacts.margen.test:61997/",
+     "origin": null,
+     "status": 200,
+     "failure": null
+    },
+    {
+     "url": "https://www.instagram.com/p/fA9uwTtkSN/embed/",
+     "type": "document",
+     "referer": "https://artifacts.margen.test:61997/",
+     "origin": null,
+     "status": 200,
+     "failure": null
+    }
+   ],
+   "csp_violations": []
+  }
+ ],
+ "ran_at": "2026-10-22T00:57:23-0500"
+}

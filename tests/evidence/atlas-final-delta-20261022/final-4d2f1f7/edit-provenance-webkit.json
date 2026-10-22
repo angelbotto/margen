@@ -1,0 +1,145 @@
+{
+ "engine": "webkit",
+ "checks": [
+  {
+   "name": "alice creates",
+   "ok": true,
+   "detail": 200
+  },
+  {
+   "name": "owner agent cannot edit Alice (other actor)",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "owner human cannot edit Alice",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "forged agent/author in body ignored",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "owner: reader shows original author Alice",
+   "ok": true,
+   "detail": [
+    {
+     "meta": "Alice Ruiz · correo verificado · 22/10/2026 · Abierto\nÚltima edición: Codex (agente de Alice Ruiz) · conexión de agente",
+     "text": "Reescrito por Codex",
+     "actions": [
+      "Resolver",
+      "Archivar"
+     ]
+    }
+   ]
+  },
+  {
+   "name": "owner: reader shows last edit by Codex (agente de Alice Ruiz)",
+   "ok": true,
+   "detail": "Alice Ruiz · correo verificado · 22/10/2026 · Abierto\nÚltima edición: Codex (agente de Alice Ruiz) · conexión de agente"
+  },
+  {
+   "name": "owner: forged author/agent not shown",
+   "ok": true,
+   "detail": "Alice Ruiz · correo verificado · 22/10/2026 · Abierto\nÚltima edición: Codex (agente de Alice Ruiz) · conexión de agente"
+  },
+  {
+   "name": "owner: Editar only for the author",
+   "ok": true,
+   "detail": [
+    "Resolver",
+    "Archivar"
+   ]
+  },
+  {
+   "name": "owner: no emails in reader frame",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "owner: no page errors",
+   "ok": true,
+   "detail": []
+  },
+  {
+   "name": "alice: reader shows original author Alice",
+   "ok": true,
+   "detail": [
+    {
+     "meta": "Alice Ruiz · correo verificado · 22/10/2026 · Abierto\nÚltima edición: Codex (agente de Alice Ruiz) · conexión de agente",
+     "text": "Reescrito por Codex",
+     "actions": [
+      "Editar"
+     ]
+    }
+   ]
+  },
+  {
+   "name": "alice: reader shows last edit by Codex (agente de Alice Ruiz)",
+   "ok": true,
+   "detail": "Alice Ruiz · correo verificado · 22/10/2026 · Abierto\nÚltima edición: Codex (agente de Alice Ruiz) · conexión de agente"
+  },
+  {
+   "name": "alice: forged author/agent not shown",
+   "ok": true,
+   "detail": "Alice Ruiz · correo verificado · 22/10/2026 · Abierto\nÚltima edición: Codex (agente de Alice Ruiz) · conexión de agente"
+  },
+  {
+   "name": "alice: Editar only for the author",
+   "ok": true,
+   "detail": [
+    "Editar"
+   ]
+  },
+  {
+   "name": "alice: no emails in reader frame",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "alice editing composer shows Alice",
+   "ok": true,
+   "detail": "Alice Ruiz"
+  },
+  {
+   "name": "after human edit: last edit is Alice, agent label gone",
+   "ok": true,
+   "detail": [
+    {
+     "meta": "Alice Ruiz · correo verificado · 22/10/2026 · Abierto\nÚltima edición: Alice Ruiz · correo verificado",
+     "text": "Alice vuelve a escribir",
+     "actions": [
+      "Editar"
+     ]
+    }
+   ]
+  },
+  {
+   "name": "alice: no page errors",
+   "ok": true,
+   "detail": []
+  },
+  {
+   "name": "export: Autor is last editor (human)",
+   "ok": true,
+   "detail": " · c5175326bcd2460a88c1e0e27f3c35cd\nEstado: pendiente\nAutor: Alice Ruiz · 2026-10-22T07:26:49.187000+00:00\nAutor original: Alice Ruiz\nÚltima edición: Alice Ruiz · 2026-10-22T07:26:49.187000+00:00\nIdentidad de la edición (metadatos del servidor): {\"tipo\": \"cuenta verificada\", \"nombre\": \"Alice Ruiz\", \"agente\": null, \"correo_verificado\": true}\nIdentidad (metadatos del servidor): {\"tipo\": \"cuenta veri"
+  },
+  {
+   "name": "export: Autor original + Última edición present",
+   "ok": true,
+   "detail": " · c5175326bcd2460a88c1e0e27f3c35cd\nEstado: pendiente\nAutor: Alice Ruiz · 2026-10-22T07:26:49.187000+00:00\nAutor original: Alice Ruiz\nÚltima edición: Alice Ruiz · 2026-10-22T07:26:49.187000+00:00\nIdentidad de la edición (metadatos del servidor): {\"tipo\": \"cuenta verificada\", \"nombre\": \"Alice Ruiz\", \"agente\": null, \"correo_verificado\": true}\nIdentidad (metadatos del servidor): {\"tipo\": \"cuenta verificada\", \"nombre\": \"Alice Ruiz\", \"agente\": null, \"correo_verificado\": true}\nAbrir contexto: https://portal.test/a/7ac6730651c947f594fa6d96f4db5f90?thread=c5175326bcd2460a88c1e0e27f3c35cd\nVersión de or"
+  },
+  {
+   "name": "export: no participant emails",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "export after agent edit: Autor Codex (agente de Alice Ruiz) + original Alice",
+   "ok": true,
+   "detail": " · c5175326bcd2460a88c1e0e27f3c35cd\nEstado: pendiente\nAutor: Codex (agente de Alice Ruiz) · 2026-10-22T07:26:52.539000+00:00\nAutor original: Alice Ruiz\nÚltima edición: Codex (agente de Alice Ruiz) · 2026-10-22T07:26:52.539000+00:00\nIdentidad de la edición (metadatos del servidor): {\"tipo\": \"agente\", \"nombre\": \"Alice Ruiz\", \"agente\": \"Codex\", \"correo_verificado\": true}\nIdentidad (metadatos del servidor): {\"tipo\": \"agente\", \"nombre\": \"Alice Ruiz\", \"agente\": \"Codex\", \"correo_verificado\": true}\nAbrir contexto: https://portal.test/a/7ac6730651c947f594fa6d96f4db5f90?thread=c5175326bcd2460a88c1e0e27f3c35cd\nVersión de origen: e654a38f21f44dd1b84eeb9462239913\nSHA-256 del HTML original: 2eb7cb8d0b5a2f"
+  }
+ ]
+}

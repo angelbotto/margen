@@ -11,7 +11,8 @@ ROOT_FILES = ['SKILL.md', 'VERSION.json', 'README.md', 'README.es.md', 'LICENSE'
               'CONTRIBUTING.md', 'SECURITY.md', 'CODE_OF_CONDUCT.md', 'CHANGELOG.md', 'ROADMAP.md']
 FOLDERS = ['compat', 'scripts', 'docs', 'examples/content', 'examples/generated', 'agents', 'licenses',
            'packages/core/components', 'packages/core/styles', 'packages/core/themes',
-           'packages/core/brands', 'packages/core/registry', 'packages/core/recipes', 'packages/core/assets']
+           'packages/core/brands', 'packages/core/registry', 'packages/core/recipes', 'packages/core/assets',
+           'packages/core/syntax']
 # Transitional entrypoints exist only in built ZIPs for older installed launchers.
 LEGACY_COMMANDS = {'instalar.py': 'install.py', 'actualizar.py': 'update.py', 'publicar.py': 'publish.py',
                    'crear_artefacto.py': 'create_artifact.py', 'validar_artefacto.py': 'validate_artifact.py', 'catalogo.py': 'catalog.py'}

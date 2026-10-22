@@ -5,6 +5,7 @@
     const id=crypto.randomUUID(),timer=setTimeout(()=>{pending.delete(id);reject(Error('No se pudo guardar. El texto permanece aquí; intenta de nuevo.'));},20000);
     pending.set(id,{resolve,reject,timer});parent.postMessage({bottifact:1,id,op,data},'*');
   });
+  const embedVersion=new URLSearchParams(location.search).get('version');
   let picking=null;
   function captureContext(){
     picking?.();document.querySelector('[data-host-point-picker]')?.remove();
@@ -30,6 +31,7 @@
     if(message.op==='capture-context'){
       captureContext();return;
     }
+    if(message.op==='embed-closed'){document.dispatchEvent(new CustomEvent('margen:embed-closed'));return;}
     if(message.op==='focus-thread'){document.dispatchEvent(new CustomEvent('bottifact:focus-thread',{detail:message.thread}));return;}
     if(message.op==='snapshot'){latest=message.data;listeners.forEach(fn=>fn(latest));return;}
     const request=pending.get(message.id);if(!request)return;
@@ -44,13 +46,21 @@
     subscribe:fn=>{listeners.add(fn);if(latest)fn(latest);return()=>listeners.delete(fn);},
     identify:()=>send('identify').catch(()=>{}),
     exportPrompt:scope=>send('export',{scope}),
+    // Sólo proveedor + ID; el portal construye la URL y monta el reproductor fuera de este documento.
+    embed:spec=>send('embed',{...spec,version:embedVersion}),
+    openSource:spec=>send('open-source',{...spec,version:embedVersion}),
   };
   document.addEventListener('click',event=>{
     const a=event.target.closest?.('a');if(!a)return;
     const href=a.getAttribute('href')||'',base=href.split('#')[0].split('?')[0];
     const mapped=window.BottifactArchiveLinks?.[base]||window.BottifactArchiveLinks?.[base.replace(/^\.\//,'')];
     const path=mapped?(mapped+(href.includes('#')?('#'+href.split('#').slice(1).join('#')):'')):(a.hasAttribute('data-bottifact-link')?href:null);
-    if(!path)return;event.preventDefault();send('navigate',{path}).catch(()=>{});
+    if(path){event.preventDefault();send('navigate',{path}).catch(()=>{});return;}
+    // Cualquier otro enlace navegaría este iframe y perdería el documento: lo resuelve el portal, que muestra el destino
+    // y sólo sale tras un clic en su propio diálogo. Quedan aquí las anclas internas, javascript: y las descargas.
+    // Las fuentes de publicaciones insertadas usan su propia operación exacta (data-embed-source).
+    if(a.hasAttribute('data-embed-source')||a.hasAttribute('download')||!href||href.startsWith('#')||/^\s*javascript:/i.test(href))return;
+    event.preventDefault();if(event.isTrusted)send('external',{href:href.trim(),version:embedVersion}).catch(()=>{});
   },true);
   // The host backs the frame with the document's own surface. Only a parsed opaque RGB triple leaves; null keeps the host default.
   // The version this document is, so the host never paints a replaced version's report.

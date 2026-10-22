@@ -1,0 +1,17 @@
+test_bullet_negative_value_is_drawn_or_rejected (__main__.Defects.test_bullet_negative_value_is_drawn_or_rejected) ... ok
+test_code_link_inside_mark_survives (__main__.Defects.test_code_link_inside_mark_survives) ... ok
+test_code_mark_inside_link_survives (__main__.Defects.test_code_mark_inside_link_survives) ... ok
+test_code_trailing_newline_is_not_a_numbered_line (__main__.Defects.test_code_trailing_newline_is_not_a_numbered_line) ... ok
+test_heatmap_all_zero_is_not_maximum_intensity (__main__.Defects.test_heatmap_all_zero_is_not_maximum_intensity) ... ok
+test_heatmap_legend_does_not_invent_range (__main__.Defects.test_heatmap_legend_does_not_invent_range) ... ok
+test_index_marks_clicked_section_current (__main__.Defects.test_index_marks_clicked_section_current) ... ok
+test_index_marks_clicked_section_current_document (__main__.Defects.test_index_marks_clicked_section_current_document) ... ok
+test_index_marks_cold_anchor_current (__main__.Defects.test_index_marks_cold_anchor_current) ... ok
+/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/contextlib.py:148: ResourceWarning: unclosed <socket.socket fd=3, family=2, type=1, proto=0, laddr=('127.0.0.1', 65084)>
+  next(self.gen)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+
+----------------------------------------------------------------------
+Ran 9 tests in 3.285s
+
+OK

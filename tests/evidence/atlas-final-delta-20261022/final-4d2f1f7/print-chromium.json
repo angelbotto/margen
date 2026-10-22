@@ -1,0 +1,59 @@
+{
+ "engine": "chromium",
+ "checks": [
+  {
+   "name": "media: 36 blocks (31 untouched before, incl. hidden chapters) all listo/exact after print",
+   "ok": true,
+   "detail": []
+  },
+  {
+   "name": "media: no duplicated lines after returning to screen and opening chapters",
+   "ok": true,
+   "detail": []
+  },
+  {
+   "name": "media: no errors/network",
+   "ok": true,
+   "detail": [
+    [],
+    []
+   ]
+  },
+  {
+   "name": "beforeprint: 36 blocks (30 untouched before, incl. hidden chapters) all listo/exact after print",
+   "ok": true,
+   "detail": []
+  },
+  {
+   "name": "beforeprint: no duplicated lines after returning to screen and opening chapters",
+   "ok": true,
+   "detail": []
+  },
+  {
+   "name": "beforeprint: no errors/network",
+   "ok": true,
+   "detail": [
+    [],
+    []
+   ]
+  },
+  {
+   "name": "pdf: 36 blocks (30 untouched before, incl. hidden chapters) all listo/exact after print",
+   "ok": true,
+   "detail": []
+  },
+  {
+   "name": "pdf: no duplicated lines after returning to screen and opening chapters",
+   "ok": true,
+   "detail": []
+  },
+  {
+   "name": "pdf: no errors/network",
+   "ok": true,
+   "detail": [
+    [],
+    []
+   ]
+  }
+ ]
+}

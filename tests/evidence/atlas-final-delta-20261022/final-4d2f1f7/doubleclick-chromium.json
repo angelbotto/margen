@@ -1,0 +1,108 @@
+{
+ "engine": "chromium",
+ "checks": [
+  {
+   "name": "external: single click shows only a preview, no request",
+   "ok": true,
+   "detail": {
+    "opened": true,
+    "req": [],
+    "popups": []
+   }
+  },
+  {
+   "name": "external: double click (60 ms) over the frame (artifact-frame) does not reach attacker/provider",
+   "ok": false,
+   "detail": {
+    "requests": [
+     "https://attacker.example/phish"
+    ],
+    "tabs": [
+     "https://attacker.example/phish"
+    ],
+    "dialog_open": false
+   }
+  },
+  {
+   "name": "external: double click (120 ms) over the frame (artifact-frame) does not reach attacker/provider",
+   "ok": false,
+   "detail": {
+    "requests": [
+     "https://attacker.example/phish"
+    ],
+    "tabs": [
+     "https://attacker.example/phish"
+    ],
+    "dialog_open": false
+   }
+  },
+  {
+   "name": "external: double click (250 ms) over the frame (artifact-frame) does not reach attacker/provider",
+   "ok": false,
+   "detail": {
+    "requests": [
+     "https://attacker.example/phish"
+    ],
+    "tabs": [
+     "https://attacker.example/phish"
+    ],
+    "dialog_open": false
+   }
+  },
+  {
+   "name": "embed: single click shows only a preview, no request",
+   "ok": true,
+   "detail": {
+    "opened": true,
+    "req": [],
+    "popups": []
+   }
+  },
+  {
+   "name": "embed: double click (60 ms) over the frame (artifact-frame) does not reach attacker/provider",
+   "ok": false,
+   "detail": {
+    "requests": [
+     "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Fportal.test"
+    ],
+    "tabs": [],
+    "dialog_open": true
+   }
+  },
+  {
+   "name": "embed: double click (120 ms) over the frame (artifact-frame) does not reach attacker/provider",
+   "ok": false,
+   "detail": {
+    "requests": [
+     "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Fportal.test"
+    ],
+    "tabs": [],
+    "dialog_open": true
+   }
+  },
+  {
+   "name": "embed: double click (250 ms) over the frame (artifact-frame) does not reach attacker/provider",
+   "ok": false,
+   "detail": {
+    "requests": [
+     "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Fportal.test"
+    ],
+    "tabs": [],
+    "dialog_open": true
+   }
+  },
+  {
+   "name": "no page errors",
+   "ok": true,
+   "detail": []
+  }
+ ],
+ "external_requests": [
+  "https://attacker.example/phish",
+  "https://attacker.example/phish",
+  "https://attacker.example/phish",
+  "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Fportal.test",
+  "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Fportal.test",
+  "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Fportal.test"
+ ]
+}

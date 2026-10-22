@@ -1,0 +1,37 @@
+{
+ "engine": "chromium",
+ "trials": [
+  {
+   "mode": "external",
+   "key": "Space",
+   "focus_after_first_key": "icon|\u00d7",
+   "requests": [],
+   "tabs": [],
+   "players": 0
+  },
+  {
+   "mode": "external",
+   "key": "Enter",
+   "focus_after_first_key": "icon|\u00d7",
+   "requests": [],
+   "tabs": [],
+   "players": 0
+  },
+  {
+   "mode": "embed",
+   "key": "Space",
+   "focus_after_first_key": "icon|\u00d7",
+   "requests": [],
+   "tabs": [],
+   "players": 0
+  },
+  {
+   "mode": "embed",
+   "key": "Enter",
+   "focus_after_first_key": "icon|\u00d7",
+   "requests": [],
+   "tabs": [],
+   "players": 0
+  }
+ ]
+}

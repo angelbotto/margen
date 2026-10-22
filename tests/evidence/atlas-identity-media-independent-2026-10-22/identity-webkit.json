@@ -1,0 +1,318 @@
+{
+ "engine": "webkit",
+ "checks": [
+  {
+   "name": "Alice composer shows Alice",
+   "ok": true,
+   "detail": null,
+   "severity_if_fail": null
+  },
+  {
+   "name": "twin composer shows her own name",
+   "ok": true,
+   "detail": null,
+   "severity_if_fail": null
+  },
+  {
+   "name": "twin cannot edit Alice comment (no Editar)",
+   "ok": true,
+   "detail": {
+    "meta": "Alice Ruiz · correo verificado · 22/10/2026 · Abierto",
+    "badge": "correo verificado",
+    "person": "Alice Ruiz",
+    "text": "Comentario original de Alice.",
+    "replies": [],
+    "actions": []
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "twin can edit her own",
+   "ok": true,
+   "detail": {
+    "meta": "Alice Ruiz · correo verificado · 22/10/2026 · Abierto",
+    "badge": "correo verificado",
+    "person": "Alice Ruiz",
+    "text": "Comentario de la gemela.",
+    "replies": [],
+    "actions": [
+     "Editar"
+    ]
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "two accounts with the same name are distinguishable in the reader",
+   "ok": false,
+   "detail": [
+    "Alice Ruiz · correo verificado · 22/10/2026 · Abierto",
+    "Alice Ruiz · correo verificado · 22/10/2026 · Abierto"
+   ],
+   "severity_if_fail": "low"
+  },
+  {
+   "name": "guest composer shows chosen name",
+   "ok": true,
+   "detail": null,
+   "severity_if_fail": null
+  },
+  {
+   "name": "agent token comment accepted",
+   "ok": true,
+   "detail": null,
+   "severity_if_fail": null
+  },
+  {
+   "name": "guest badge says invitado",
+   "ok": true,
+   "detail": {
+    "meta": "Alice Ruiz · correo verificado · invitado · 22/10/2026 · Abierto",
+    "badge": "invitado",
+    "person": "Alice Ruiz · correo verificado",
+    "text": "Comentario de la invitada.",
+    "replies": [],
+    "actions": [
+     "Editar",
+     "Resolver",
+     "Archivar"
+    ]
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "guest chosen name cannot contain the verified badge wording",
+   "ok": false,
+   "detail": {
+    "meta": "Alice Ruiz · correo verificado · invitado · 22/10/2026 · Abierto",
+    "badge": "invitado",
+    "person": "Alice Ruiz · correo verificado",
+    "text": "Comentario de la invitada.",
+    "replies": [],
+    "actions": [
+     "Editar",
+     "Resolver",
+     "Archivar"
+    ]
+   },
+   "severity_if_fail": "low"
+  },
+  {
+   "name": "agent badge says conexión de agente and byline names the account",
+   "ok": true,
+   "detail": {
+    "meta": "Alice Ruiz (agente de Propietaria) · conexión de agente · 22/10/2026 · Abierto",
+    "badge": "conexión de agente",
+    "person": "Alice Ruiz (agente de Propietaria)",
+    "text": "Comentario del agente.",
+    "replies": [],
+    "actions": [
+     "Editar",
+     "Resolver",
+     "Archivar"
+    ]
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "agent label cannot be another person name",
+   "ok": false,
+   "detail": {
+    "meta": "Alice Ruiz (agente de Propietaria) · conexión de agente · 22/10/2026 · Abierto",
+    "badge": "conexión de agente",
+    "person": "Alice Ruiz (agente de Propietaria)",
+    "text": "Comentario del agente.",
+    "replies": [],
+    "actions": [
+     "Editar",
+     "Resolver",
+     "Archivar"
+    ]
+   },
+   "severity_if_fail": "low"
+  },
+  {
+   "name": "owner has no Editar on Alice comment (owner edits only own)",
+   "ok": false,
+   "detail": {
+    "meta": "Alice Ruiz · correo verificado · 22/10/2026 · Abierto",
+    "badge": "correo verificado",
+    "person": "Alice Ruiz",
+    "text": "Comentario original de Alice.",
+    "replies": [],
+    "actions": [
+     "Editar",
+     "Resolver",
+     "Archivar"
+    ]
+   },
+   "severity_if_fail": "high"
+  },
+  {
+   "name": "owner editing Alice comment does not write under Alice name",
+   "ok": false,
+   "detail": {
+    "composerName": "Alice Ruiz",
+    "text": "Comentario original de Alice."
+   },
+   "severity_if_fail": "high"
+  },
+  {
+   "name": "after reload Alice never sees owner words under her own byline",
+   "ok": false,
+   "detail": {
+    "meta": "Alice Ruiz · correo verificado · 22/10/2026 · Abierto",
+    "badge": "correo verificado",
+    "person": "Alice Ruiz",
+    "text": "Texto puesto por la propietaria.",
+    "replies": [],
+    "actions": [
+     "Editar"
+    ]
+   },
+   "severity_if_fail": "high"
+  },
+  {
+   "name": "reply after reload attributed to its writer with badge",
+   "ok": true,
+   "detail": [
+    "Alice Ruiz · correo verificado: Respuesta de Alice."
+   ],
+   "severity_if_fail": null
+  },
+  {
+   "name": "token label creation strips bidi/newline (stored label)",
+   "ok": true,
+   "detail": [
+    {
+     "hash": "f24006f37d531837a7830d28a65382c5b9e504548241371d676d7671b907782a",
+     "label": "Alice Ruiz",
+     "created": 1792650961
+    },
+    {
+     "hash": "3fc7627da6c865c408e743ab3e983852ef8a6966df71f6f2b8bcdad32bce2f3d",
+     "label": "etnemirep Bot",
+     "created": 1792650968
+    }
+   ],
+   "severity_if_fail": null
+  },
+  {
+   "name": "export never contains participant emails",
+   "ok": true,
+   "detail": null,
+   "severity_if_fail": null
+  },
+  {
+   "name": "no page errors",
+   "ok": true,
+   "detail": {
+    "alice": [],
+    "twin": [],
+    "owner": [],
+    "guest": []
+   },
+   "severity_if_fail": null
+  }
+ ],
+ "twin_rows": [
+  {
+   "meta": "Alice Ruiz · correo verificado · 22/10/2026 · Abierto",
+   "badge": "correo verificado",
+   "person": "Alice Ruiz",
+   "text": "Comentario original de Alice.",
+   "replies": [],
+   "actions": []
+  },
+  {
+   "meta": "Alice Ruiz · correo verificado · 22/10/2026 · Abierto",
+   "badge": "correo verificado",
+   "person": "Alice Ruiz",
+   "text": "Comentario de la gemela.",
+   "replies": [],
+   "actions": [
+    "Editar"
+   ]
+  }
+ ],
+ "owner_rows": [
+  {
+   "meta": "Alice Ruiz · correo verificado · 22/10/2026 · Abierto",
+   "badge": "correo verificado",
+   "person": "Alice Ruiz",
+   "text": "Comentario original de Alice.",
+   "replies": [],
+   "actions": [
+    "Editar",
+    "Resolver",
+    "Archivar"
+   ]
+  },
+  {
+   "meta": "Alice Ruiz · correo verificado · 22/10/2026 · Abierto",
+   "badge": "correo verificado",
+   "person": "Alice Ruiz",
+   "text": "Comentario de la gemela.",
+   "replies": [],
+   "actions": [
+    "Editar",
+    "Resolver",
+    "Archivar"
+   ]
+  },
+  {
+   "meta": "Alice Ruiz · correo verificado · invitado · 22/10/2026 · Abierto",
+   "badge": "invitado",
+   "person": "Alice Ruiz · correo verificado",
+   "text": "Comentario de la invitada.",
+   "replies": [],
+   "actions": [
+    "Editar",
+    "Resolver",
+    "Archivar"
+   ]
+  },
+  {
+   "meta": "Alice Ruiz (agente de Propietaria) · conexión de agente · 22/10/2026 · Abierto",
+   "badge": "conexión de agente",
+   "person": "Alice Ruiz (agente de Propietaria)",
+   "text": "Comentario del agente.",
+   "replies": [],
+   "actions": [
+    "Editar",
+    "Resolver",
+    "Archivar"
+   ]
+  }
+ ],
+ "owner_edit_alice": {
+  "composerName": "Alice Ruiz",
+  "text": "Comentario original de Alice."
+ },
+ "alice_after_owner_edit": {
+  "meta": "Alice Ruiz · correo verificado · 22/10/2026 · Abierto",
+  "badge": "correo verificado",
+  "person": "Alice Ruiz",
+  "text": "Texto puesto por la propietaria.",
+  "replies": [],
+  "actions": [
+   "Editar"
+  ]
+ },
+ "export_authors": [
+  "Autor: Alice Ruiz · 2026-10-22T06:35:55.681000+00:00",
+  "Identidad (metadatos del servidor): {\"tipo\": \"cuenta verificada\", \"nombre\": \"Alice Ruiz\", \"agente\": null, \"correo_verificado\": true}",
+  "Identidad (metadatos del servidor): {\"tipo\": \"cuenta verificada\", \"nombre\": \"Alice Ruiz\", \"agente\": null, \"correo_verificado\": true}",
+  "Autor: Alice Ruiz · 2026-10-22T06:35:58.233000+00:00",
+  "Identidad (metadatos del servidor): {\"tipo\": \"cuenta verificada\", \"nombre\": \"Alice Ruiz\", \"agente\": null, \"correo_verificado\": true}",
+  "Autor: Alice Ruiz · correo verificado · 2026-10-22T06:36:00.811000+00:00",
+  "Identidad (metadatos del servidor): {\"tipo\": \"invitado\", \"nombre\": \"Alice Ruiz · correo verificado\", \"agente\": null, \"correo_verificado\": false}",
+  "Autor: Alice Ruiz (agente de Propietaria) · 2026-10-22T06:36:01.712000+00:00",
+  "Identidad (metadatos del servidor): {\"tipo\": \"agente\", \"nombre\": \"Propietaria\", \"agente\": \"Alice Ruiz\", \"correo_verificado\": true}"
+ ],
+ "errors": {
+  "alice": [],
+  "twin": [],
+  "owner": [],
+  "guest": []
+ }
+}

@@ -1,0 +1,739 @@
+[
+  {
+    "path": "/blog/programar-e-uma-merda",
+    "width": 1440,
+    "previous_screens": 8,
+    "previous_total": 12,
+    "screens": [
+      {
+        "index": 8,
+        "file": "blog_programar-e-uma-merda-1440-08.png",
+        "y": 7200,
+        "height": 10654,
+        "bottom": false,
+        "components": {
+          "code": 4,
+          "tweet": 0,
+          "video": 0,
+          "callout": 0,
+          "media": 0,
+          "footer": 1,
+          "table": 0
+        }
+      },
+      {
+        "index": 9,
+        "file": "blog_programar-e-uma-merda-1440-09.png",
+        "y": 8100,
+        "height": 10654,
+        "bottom": false,
+        "components": {
+          "code": 2,
+          "tweet": 0,
+          "video": 0,
+          "callout": 0,
+          "media": 0,
+          "footer": 1,
+          "table": 0
+        }
+      },
+      {
+        "index": 10,
+        "file": "blog_programar-e-uma-merda-1440-10.png",
+        "y": 9000,
+        "height": 10654,
+        "bottom": false,
+        "components": {
+          "code": 0,
+          "tweet": 0,
+          "video": 0,
+          "callout": 1,
+          "media": 0,
+          "footer": 1,
+          "table": 0
+        }
+      },
+      {
+        "index": 11,
+        "file": "blog_programar-e-uma-merda-1440-11.png",
+        "y": 9754,
+        "height": 10654,
+        "bottom": true,
+        "components": {
+          "code": 0,
+          "tweet": 0,
+          "video": 0,
+          "callout": 0,
+          "media": 0,
+          "footer": 2,
+          "table": 0
+        }
+      }
+    ],
+    "complete_to_footer": true
+  },
+  {
+    "path": "/blog/react-19-part-2-the-code",
+    "width": 1440,
+    "previous_screens": 8,
+    "previous_total": 13,
+    "screens": [
+      {
+        "index": 8,
+        "file": "blog_react-19-part-2-the-code-1440-08.png",
+        "y": 7200,
+        "height": 11495,
+        "bottom": false,
+        "components": {
+          "code": 1,
+          "tweet": 0,
+          "video": 0,
+          "callout": 0,
+          "media": 0,
+          "footer": 1,
+          "table": 0
+        }
+      },
+      {
+        "index": 9,
+        "file": "blog_react-19-part-2-the-code-1440-09.png",
+        "y": 8100,
+        "height": 11495,
+        "bottom": false,
+        "components": {
+          "code": 1,
+          "tweet": 0,
+          "video": 0,
+          "callout": 0,
+          "media": 0,
+          "footer": 1,
+          "table": 0
+        }
+      },
+      {
+        "index": 10,
+        "file": "blog_react-19-part-2-the-code-1440-10.png",
+        "y": 9000,
+        "height": 11495,
+        "bottom": false,
+        "components": {
+          "code": 1,
+          "tweet": 1,
+          "video": 0,
+          "callout": 1,
+          "media": 0,
+          "footer": 1,
+          "table": 0
+        }
+      },
+      {
+        "index": 11,
+        "file": "blog_react-19-part-2-the-code-1440-11.png",
+        "y": 9900,
+        "height": 11495,
+        "bottom": false,
+        "components": {
+          "code": 0,
+          "tweet": 1,
+          "video": 0,
+          "callout": 1,
+          "media": 0,
+          "footer": 2,
+          "table": 0
+        }
+      },
+      {
+        "index": 12,
+        "file": "blog_react-19-part-2-the-code-1440-12.png",
+        "y": 10595,
+        "height": 11495,
+        "bottom": true,
+        "components": {
+          "code": 0,
+          "tweet": 0,
+          "video": 0,
+          "callout": 0,
+          "media": 0,
+          "footer": 2,
+          "table": 0
+        }
+      }
+    ],
+    "complete_to_footer": true
+  },
+  {
+    "path": "/blog/react-19-part-1-the-backstory",
+    "width": 1440,
+    "previous_screens": 8,
+    "previous_total": 10,
+    "screens": [
+      {
+        "index": 8,
+        "file": "blog_react-19-part-1-the-backstory-1440-08.png",
+        "y": 7200,
+        "height": 8485,
+        "bottom": false,
+        "components": {
+          "code": 0,
+          "tweet": 0,
+          "video": 0,
+          "callout": 1,
+          "media": 0,
+          "footer": 2,
+          "table": 0
+        }
+      },
+      {
+        "index": 9,
+        "file": "blog_react-19-part-1-the-backstory-1440-09.png",
+        "y": 7585,
+        "height": 8485,
+        "bottom": true,
+        "components": {
+          "code": 0,
+          "tweet": 0,
+          "video": 0,
+          "callout": 0,
+          "media": 0,
+          "footer": 2,
+          "table": 0
+        }
+      }
+    ],
+    "complete_to_footer": true
+  },
+  {
+    "path": "/blog/htnx-a-htmx-like-experience-in-nextjs",
+    "width": 1440,
+    "previous_screens": 8,
+    "previous_total": 11,
+    "screens": [
+      {
+        "index": 8,
+        "file": "blog_htnx-a-htmx-like-experience-in-nextjs-1440-08.png",
+        "y": 7200,
+        "height": 9037,
+        "bottom": false,
+        "components": {
+          "code": 1,
+          "tweet": 0,
+          "video": 0,
+          "callout": 1,
+          "media": 0,
+          "footer": 1,
+          "table": 0
+        }
+      },
+      {
+        "index": 9,
+        "file": "blog_htnx-a-htmx-like-experience-in-nextjs-1440-09.png",
+        "y": 8100,
+        "height": 9037,
+        "bottom": false,
+        "components": {
+          "code": 0,
+          "tweet": 0,
+          "video": 0,
+          "callout": 0,
+          "media": 0,
+          "footer": 2,
+          "table": 0
+        }
+      },
+      {
+        "index": 10,
+        "file": "blog_htnx-a-htmx-like-experience-in-nextjs-1440-10.png",
+        "y": 8137,
+        "height": 9037,
+        "bottom": true,
+        "components": {
+          "code": 0,
+          "tweet": 0,
+          "video": 0,
+          "callout": 0,
+          "media": 0,
+          "footer": 2,
+          "table": 0
+        }
+      }
+    ],
+    "complete_to_footer": true
+  },
+  {
+    "path": "/about",
+    "width": 390,
+    "previous_screens": 8,
+    "previous_total": 9,
+    "screens": [
+      {
+        "index": 8,
+        "file": "about-390-08.png",
+        "y": 6106,
+        "height": 6950,
+        "bottom": true,
+        "components": {
+          "code": 0,
+          "tweet": 0,
+          "video": 0,
+          "callout": 0,
+          "media": 0,
+          "footer": 1,
+          "table": 0
+        }
+      }
+    ],
+    "complete_to_footer": true
+  },
+  {
+    "path": "/blog/programar-e-uma-merda",
+    "width": 390,
+    "previous_screens": 8,
+    "previous_total": 17,
+    "screens": [
+      {
+        "index": 8,
+        "file": "blog_programar-e-uma-merda-390-08.png",
+        "y": 6752,
+        "height": 13914,
+        "bottom": false,
+        "components": {
+          "code": 1,
+          "tweet": 0,
+          "video": 0,
+          "callout": 0,
+          "media": 0,
+          "footer": 1,
+          "table": 0
+        }
+      },
+      {
+        "index": 9,
+        "file": "blog_programar-e-uma-merda-390-09.png",
+        "y": 7596,
+        "height": 13914,
+        "bottom": false,
+        "components": {
+          "code": 0,
+          "tweet": 0,
+          "video": 0,
+          "callout": 0,
+          "media": 0,
+          "footer": 1,
+          "table": 0
+        }
+      },
+      {
+        "index": 10,
+        "file": "blog_programar-e-uma-merda-390-10.png",
+        "y": 8440,
+        "height": 13914,
+        "bottom": false,
+        "components": {
+          "code": 1,
+          "tweet": 0,
+          "video": 0,
+          "callout": 0,
+          "media": 0,
+          "footer": 1,
+          "table": 0
+        }
+      },
+      {
+        "index": 11,
+        "file": "blog_programar-e-uma-merda-390-11.png",
+        "y": 9284,
+        "height": 13914,
+        "bottom": false,
+        "components": {
+          "code": 1,
+          "tweet": 0,
+          "video": 0,
+          "callout": 0,
+          "media": 0,
+          "footer": 1,
+          "table": 0
+        }
+      },
+      {
+        "index": 12,
+        "file": "blog_programar-e-uma-merda-390-12.png",
+        "y": 10128,
+        "height": 13914,
+        "bottom": false,
+        "components": {
+          "code": 3,
+          "tweet": 0,
+          "video": 0,
+          "callout": 0,
+          "media": 0,
+          "footer": 1,
+          "table": 0
+        }
+      },
+      {
+        "index": 13,
+        "file": "blog_programar-e-uma-merda-390-13.png",
+        "y": 10972,
+        "height": 13914,
+        "bottom": false,
+        "components": {
+          "code": 2,
+          "tweet": 0,
+          "video": 0,
+          "callout": 0,
+          "media": 0,
+          "footer": 1,
+          "table": 0
+        }
+      },
+      {
+        "index": 14,
+        "file": "blog_programar-e-uma-merda-390-14.png",
+        "y": 11816,
+        "height": 13914,
+        "bottom": false,
+        "components": {
+          "code": 0,
+          "tweet": 0,
+          "video": 0,
+          "callout": 1,
+          "media": 0,
+          "footer": 1,
+          "table": 0
+        }
+      },
+      {
+        "index": 15,
+        "file": "blog_programar-e-uma-merda-390-15.png",
+        "y": 12660,
+        "height": 13914,
+        "bottom": false,
+        "components": {
+          "code": 0,
+          "tweet": 0,
+          "video": 0,
+          "callout": 0,
+          "media": 0,
+          "footer": 2,
+          "table": 0
+        }
+      },
+      {
+        "index": 16,
+        "file": "blog_programar-e-uma-merda-390-16.png",
+        "y": 13070,
+        "height": 13914,
+        "bottom": true,
+        "components": {
+          "code": 0,
+          "tweet": 0,
+          "video": 0,
+          "callout": 0,
+          "media": 0,
+          "footer": 2,
+          "table": 0
+        }
+      }
+    ],
+    "complete_to_footer": true
+  },
+  {
+    "path": "/blog/react-19-part-2-the-code",
+    "width": 390,
+    "previous_screens": 8,
+    "previous_total": 16,
+    "screens": [
+      {
+        "index": 8,
+        "file": "blog_react-19-part-2-the-code-390-08.png",
+        "y": 6752,
+        "height": 12830,
+        "bottom": false,
+        "components": {
+          "code": 2,
+          "tweet": 0,
+          "video": 0,
+          "callout": 1,
+          "media": 0,
+          "footer": 1,
+          "table": 0
+        }
+      },
+      {
+        "index": 9,
+        "file": "blog_react-19-part-2-the-code-390-09.png",
+        "y": 7596,
+        "height": 12830,
+        "bottom": false,
+        "components": {
+          "code": 1,
+          "tweet": 0,
+          "video": 0,
+          "callout": 0,
+          "media": 0,
+          "footer": 1,
+          "table": 0
+        }
+      },
+      {
+        "index": 10,
+        "file": "blog_react-19-part-2-the-code-390-10.png",
+        "y": 8440,
+        "height": 12830,
+        "bottom": false,
+        "components": {
+          "code": 2,
+          "tweet": 0,
+          "video": 0,
+          "callout": 0,
+          "media": 0,
+          "footer": 1,
+          "table": 0
+        }
+      },
+      {
+        "index": 11,
+        "file": "blog_react-19-part-2-the-code-390-11.png",
+        "y": 9284,
+        "height": 12830,
+        "bottom": false,
+        "components": {
+          "code": 2,
+          "tweet": 0,
+          "video": 0,
+          "callout": 0,
+          "media": 0,
+          "footer": 1,
+          "table": 0
+        }
+      },
+      {
+        "index": 12,
+        "file": "blog_react-19-part-2-the-code-390-12.png",
+        "y": 10128,
+        "height": 12830,
+        "bottom": false,
+        "components": {
+          "code": 1,
+          "tweet": 1,
+          "video": 0,
+          "callout": 1,
+          "media": 0,
+          "footer": 1,
+          "table": 0
+        }
+      },
+      {
+        "index": 13,
+        "file": "blog_react-19-part-2-the-code-390-13.png",
+        "y": 10972,
+        "height": 12830,
+        "bottom": false,
+        "components": {
+          "code": 0,
+          "tweet": 1,
+          "video": 0,
+          "callout": 1,
+          "media": 0,
+          "footer": 2,
+          "table": 0
+        }
+      },
+      {
+        "index": 14,
+        "file": "blog_react-19-part-2-the-code-390-14.png",
+        "y": 11816,
+        "height": 12830,
+        "bottom": false,
+        "components": {
+          "code": 0,
+          "tweet": 0,
+          "video": 0,
+          "callout": 0,
+          "media": 0,
+          "footer": 2,
+          "table": 0
+        }
+      },
+      {
+        "index": 15,
+        "file": "blog_react-19-part-2-the-code-390-15.png",
+        "y": 11986,
+        "height": 12830,
+        "bottom": true,
+        "components": {
+          "code": 0,
+          "tweet": 0,
+          "video": 0,
+          "callout": 0,
+          "media": 0,
+          "footer": 2,
+          "table": 0
+        }
+      }
+    ],
+    "complete_to_footer": true
+  },
+  {
+    "path": "/blog/react-19-part-1-the-backstory",
+    "width": 390,
+    "previous_screens": 8,
+    "previous_total": 13,
+    "screens": [
+      {
+        "index": 8,
+        "file": "blog_react-19-part-1-the-backstory-390-08.png",
+        "y": 6752,
+        "height": 10421,
+        "bottom": false,
+        "components": {
+          "code": 1,
+          "tweet": 0,
+          "video": 0,
+          "callout": 0,
+          "media": 0,
+          "footer": 1,
+          "table": 0
+        }
+      },
+      {
+        "index": 9,
+        "file": "blog_react-19-part-1-the-backstory-390-09.png",
+        "y": 7596,
+        "height": 10421,
+        "bottom": false,
+        "components": {
+          "code": 0,
+          "tweet": 0,
+          "video": 0,
+          "callout": 0,
+          "media": 1,
+          "footer": 1,
+          "table": 0
+        }
+      },
+      {
+        "index": 10,
+        "file": "blog_react-19-part-1-the-backstory-390-10.png",
+        "y": 8440,
+        "height": 10421,
+        "bottom": false,
+        "components": {
+          "code": 0,
+          "tweet": 0,
+          "video": 0,
+          "callout": 1,
+          "media": 0,
+          "footer": 1,
+          "table": 0
+        }
+      },
+      {
+        "index": 11,
+        "file": "blog_react-19-part-1-the-backstory-390-11.png",
+        "y": 9284,
+        "height": 10421,
+        "bottom": false,
+        "components": {
+          "code": 0,
+          "tweet": 0,
+          "video": 0,
+          "callout": 0,
+          "media": 0,
+          "footer": 2,
+          "table": 0
+        }
+      },
+      {
+        "index": 12,
+        "file": "blog_react-19-part-1-the-backstory-390-12.png",
+        "y": 9577,
+        "height": 10421,
+        "bottom": true,
+        "components": {
+          "code": 0,
+          "tweet": 0,
+          "video": 0,
+          "callout": 0,
+          "media": 0,
+          "footer": 2,
+          "table": 0
+        }
+      }
+    ],
+    "complete_to_footer": true
+  },
+  {
+    "path": "/blog/htnx-a-htmx-like-experience-in-nextjs",
+    "width": 390,
+    "previous_screens": 8,
+    "previous_total": 12,
+    "screens": [
+      {
+        "index": 8,
+        "file": "blog_htnx-a-htmx-like-experience-in-nextjs-390-08.png",
+        "y": 6752,
+        "height": 9687,
+        "bottom": false,
+        "components": {
+          "code": 2,
+          "tweet": 0,
+          "video": 0,
+          "callout": 0,
+          "media": 0,
+          "footer": 1,
+          "table": 0
+        }
+      },
+      {
+        "index": 9,
+        "file": "blog_htnx-a-htmx-like-experience-in-nextjs-390-09.png",
+        "y": 7596,
+        "height": 9687,
+        "bottom": false,
+        "components": {
+          "code": 1,
+          "tweet": 0,
+          "video": 0,
+          "callout": 1,
+          "media": 0,
+          "footer": 1,
+          "table": 0
+        }
+      },
+      {
+        "index": 10,
+        "file": "blog_htnx-a-htmx-like-experience-in-nextjs-390-10.png",
+        "y": 8440,
+        "height": 9687,
+        "bottom": false,
+        "components": {
+          "code": 0,
+          "tweet": 0,
+          "video": 0,
+          "callout": 0,
+          "media": 0,
+          "footer": 2,
+          "table": 0
+        }
+      },
+      {
+        "index": 11,
+        "file": "blog_htnx-a-htmx-like-experience-in-nextjs-390-11.png",
+        "y": 8843,
+        "height": 9687,
+        "bottom": true,
+        "components": {
+          "code": 0,
+          "tweet": 0,
+          "video": 0,
+          "callout": 0,
+          "media": 0,
+          "footer": 2,
+          "table": 0
+        }
+      }
+    ],
+    "complete_to_footer": true
+  }
+]

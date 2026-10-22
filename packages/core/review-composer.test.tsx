@@ -113,3 +113,48 @@ it('supports the keyboard context menu and restores focus on Escape',()=>{
  document.activeElement!.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true}));
  expect((document.querySelector('.review-context-menu') as HTMLElement).hidden).toBe(true);expect(document.activeElement).toBe(target);
 });
+it('names the recorded author, not the viewer, on shared threads and agent entries',()=>{
+  const doc=document.title+'@'+location.pathname,anchor={reference:'claim',tag:'P',text:'Three deliveries need review.',quote:'Three',page:'Doc',x:.5,y:.5};
+  const events=[{id:'a1',thread:'a1',kind:'create',author:'Alice Ruiz',actor:'alice',verified:true,time:1,version:'v',text:'Alice point',entry_type:'comment',anchor},
+    {id:'b1',thread:'a1',kind:'reply',author:'Bob Pérez',actor:'bob',verified:true,time:2,version:'v',text:'Bob reply'},
+    {id:'g1',thread:'g1',kind:'create',author:'Ángel Botto',actor:'owner',verified:true,agent:'Codex',time:3,version:'v',text:'Agent point',entry_type:'comment',anchor:{...anchor,x:.9}}];
+  (window as any).BottifactReviewBridge={commit:vi.fn(),subscribe:(fn:any)=>{fn({author:'Ángel Botto',actor:'owner',verified:true,permissions:{comment:true,edit:true},snapshot:{format:'nota-revision',version:2,document:doc,events}});return ()=>{};}};
+  mount();
+  const editor=document.querySelector('[data-revision-editor]') as HTMLDialogElement,panel=document.querySelector('[data-revision-panel]') as HTMLDialogElement;
+  (document.querySelector('.revision-marca') as HTMLElement).click();
+  expect(editor.open).toBe(false);expect(panel.open).toBe(true);
+  const rows=[...document.querySelectorAll('[data-revision-notas] > li')];
+  const alice=rows.find(li=>li.textContent!.includes('Alice point'))!,agent=rows.find(li=>li.textContent!.includes('Agent point'))!;
+  expect(alice.querySelector('.revision-meta')!.textContent).toMatch(/^Alice Ruiz · correo verificado/);
+  expect(alice.querySelector('.revision-respuestas')!.textContent).toBe('Bob Pérez · correo verificado: Bob reply');
+  expect(agent.querySelector('.revision-meta')!.textContent).toMatch(/^Codex \(agente de Ángel Botto\) · conexión de agente/);
+  expect([...alice.querySelectorAll('button')].find(b=>b.textContent==='Editar')).toBeUndefined();
+  ([...agent.querySelectorAll('button')].find(b=>b.textContent==='Editar') as HTMLElement).click();
+  expect(editor.open).toBe(true);
+  expect(document.querySelector('.review-composer-name')!.textContent).toBe('Ángel Botto');
+  editor.close();open();
+  expect(document.querySelector('.review-composer-name')!.textContent).toBe('Ángel Botto');
+  expect(document.querySelector('[data-revision-prompt]')!.textContent).toContain('Autor: Codex (agente de Ángel Botto)');
+});
+
+it('validates imported agent labels and keeps local identity explicitly declared',()=>{
+ mount();open();
+ const input=document.querySelector('[data-revision-texto]') as HTMLTextAreaElement;input.value='Local note';
+ input.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',ctrlKey:true,bubbles:true}));
+ const original=instance.exportData().events[0],validate=(window as any).NotaRevisionStore.validate;
+ for(const agent of [4,{},'','x'.repeat(81)])expect(()=>validate({...original,agent})).toThrow('Identidad de agente inválida');
+ expect(validate({...original,agent:'Analista ñ'}).agent).toBe('Analista ñ');
+});
+
+it('limits Edit to the thread author and displays the provenance of the current text',()=>{
+ const doc=document.title+'@'+location.pathname,anchor={reference:'claim',tag:'P',text:'Three deliveries need review.',quote:'Three',page:'Doc',x:.5,y:.5};
+ const events=[{id:'alice-note',thread:'alice-note',kind:'create',author:'Alice',actor:'alice',verified:true,time:1,text:'Original',anchor},
+ {id:'agent-edit',thread:'alice-note',kind:'edit',author:'Alice',actor:'alice',agent:'Codex',verified:true,time:2,text:'Agent revision'}];
+ (window as any).BottifactReviewBridge={subscribe:(fn:any)=>{fn({author:'Owner',actor:'owner',verified:true,permissions:{comment:true,edit:true},snapshot:{format:'nota-revision',version:2,document:doc,events}});return ()=>{};}};
+ mount();
+ const row=document.querySelector('.revision-hilo')!;
+ expect(row.textContent).toContain('Última edición: Codex (agente de Alice)');
+ expect(row.textContent).toContain('Agent revision');
+ expect([...row.querySelectorAll('button')].some(b=>b.textContent==='Editar')).toBe(false);
+ expect([...row.querySelectorAll('button')].some(b=>b.textContent==='Resolver')).toBe(true);
+});

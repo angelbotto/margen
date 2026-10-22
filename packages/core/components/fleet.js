@@ -1,6 +1,10 @@
 /* NotaFlota: globo operativo local. Datos ficticios y reproducción explícita, sin GPS ni red. */
 (()=>{
  'use strict';
+  // Three.js se pide al acercarse a la vista, una vez por documento; sin red queda el respaldo legible.
+  const tres=window.NotaTres||(window.NotaTres=(()=>{const src='https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js',sri='sha512-vnmn/Qqn6aG0POAc9mIGzjq0IybrvxJXYDafNvp9JSnDGxeF3pbkSqLvf+YGd5ku63pT7sa/jxHn7/d0mU8+tA==';let pending=null;
+   const load=()=>window.THREE?Promise.resolve(window.THREE):pending||(pending=new Promise((ok,fail)=>{const s=document.createElement('script');s.src=src;s.integrity=sri;s.crossOrigin='anonymous';s.async=true;s.onload=()=>window.THREE?ok(window.THREE):fail(new Error('Three.js no disponible'));s.onerror=()=>{pending=null;s.remove();fail(new Error('Three.js no disponible sin conexión'));};(document.head||document.documentElement).append(s);}));
+   return el=>window.THREE?Promise.resolve(window.THREE):new Promise(near=>{if(!('IntersectionObserver' in window))return near();const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){io.disconnect();near();}},{rootMargin:'400px 0px'});io.observe(el);}).then(load);})());
  const instances=new WeakMap(),node=(tag,cls,text)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;};
  const vector=(lat,lon,r=1)=>{const a=lat*Math.PI/180,b=lon*Math.PI/180;return new THREE.Vector3(Math.cos(a)*Math.cos(b)*r,Math.sin(a)*r,-Math.cos(a)*Math.sin(b)*r);};
  const truck='<svg viewBox="0 0 36 26" aria-hidden="true"><path d="M3 5h18v14H3zM21 10h7l5 6v3H21z"/><path d="M24 12h3l3 4h-6z" class="flota-ventana"/><circle cx="10" cy="20" r="3"/><circle cx="27" cy="20" r="3"/></svg>';
@@ -36,7 +40,11 @@
    this.mutation=new MutationObserver(()=>this.theme());this.mutation.observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
    this.scheme=matchMedia('(prefers-color-scheme: dark)');this.listen(this.scheme,'change',()=>this.theme());
    this.observer=new IntersectionObserver(entries=>{this.visible=entries[0].isIntersecting;this.stop();if(this.visible)this.start();},{threshold:0});this.observer.observe(this.stage);
-   try{this.init3D();}catch(error){this.fallback(error);}
+   if(window.THREE){try{this.init3D();}catch(error){this.fallback(error);}}
+   else {
+    element.dataset.tres='cargando';
+    tres(this.stage).then(()=>{if(this.dead)return;delete element.dataset.tres;try{this.init3D();this.sync();this.render();this.start();}catch(error){this.fallback(error);}},error=>{if(!this.dead){delete element.dataset.tres;this.fallback(error);}});
+   }
    this.sync();
   }
   listen(target,type,fn){target.addEventListener(type,fn,{signal:this.abort.signal});}
