@@ -84,6 +84,21 @@ class PortalTests(unittest.TestCase):
         self.assertEqual((self.store.files/(row['sha']+'.html')).read_text(),html)
         self.assertNotIn('<style data-margen-editorial-reference>',self.owner.get(self.path+'/render').text)
 
+    def test_hosted_reader_declares_first_paint_surface(self):
+        registry='<script>/* REGISTRO TEMAS */ const themeRegistry = {"familias":[{"id":"editorial","light":"light","dark":"dark"}]};</script>'
+        html=HTML+'<meta name="nota-tema-inicial" content="editorial"><meta name="nota-modo-inicial" content="dark">'+registry
+        artifact=self.owner.post('/api/artifacts',json={'title':'Oscuro','html':html}).json()
+        path='/api/artifacts/'+artifact['id']
+        self.assertEqual(self.owner.get(path).json()['appearance'],{'mode':'dark'})
+        rendered=self.owner.get(path+'/render').text
+        self.assertIn('<html data-theme="dark">',rendered)
+        self.assertIn(':where(html[data-margen-surface]:not([data-trama])){background-color:var(--papel)}',rendered)
+        with self.store.db() as db:
+            row=db.execute('SELECT sha FROM versions WHERE id=?',(artifact['version'],)).fetchone()
+        self.assertEqual((self.store.files/(row['sha']+'.html')).read_text(),html)
+        self.assertEqual(self.owner.get(self.path).json()['appearance'],{'mode':None})
+        self.assertNotIn('<html data-theme',self.owner.get(self.path+'/render').text)
+
     def test_private_authorization_and_direct_render(self):
         self.assertEqual(self.owner.get(self.path).json()['visibility'],'private')
         for c in [self.other,self.guest]:

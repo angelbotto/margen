@@ -1,0 +1,124 @@
+[
+ {
+  "case": "settled",
+  "state": {
+   "bg": "rgb(255, 255, 255)",
+   "inline": "--reader-surface: rgb(255,255,255);",
+   "sandbox": "allow-scripts allow-downloads"
+  }
+ },
+ {
+  "case": "frame",
+  "color": [
+   1,
+   2,
+   3
+  ],
+  "reply": {
+   "ok": true
+  },
+  "state": {
+   "bg": "rgb(1, 2, 3)",
+   "inline": "--reader-surface: rgb(1,2,3);",
+   "sandbox": "allow-scripts allow-downloads"
+  }
+ },
+ {
+  "case": "frame",
+  "color": "red;background:url(https://evil.test/x)",
+  "reply": {
+   "ok": false
+  },
+  "state": {
+   "bg": "rgb(250, 248, 244)",
+   "inline": "",
+   "sandbox": "allow-scripts allow-downloads"
+  }
+ },
+ {
+  "case": "frame",
+  "color": [
+   300,
+   0,
+   0
+  ],
+  "reply": {
+   "ok": false
+  },
+  "state": {
+   "bg": "rgb(250, 248, 244)",
+   "inline": "",
+   "sandbox": "allow-scripts allow-downloads"
+  }
+ },
+ {
+  "case": "frame",
+  "color": [
+   1.5,
+   2,
+   3
+  ],
+  "reply": {
+   "ok": false
+  },
+  "state": {
+   "bg": "rgb(250, 248, 244)",
+   "inline": "",
+   "sandbox": "allow-scripts allow-downloads"
+  }
+ },
+ {
+  "case": "frame",
+  "color": [
+   1,
+   2
+  ],
+  "reply": {
+   "ok": false
+  },
+  "state": {
+   "bg": "rgb(250, 248, 244)",
+   "inline": "",
+   "sandbox": "allow-scripts allow-downloads"
+  }
+ },
+ {
+  "case": "frame",
+  "color": {
+   "0": 1
+  },
+  "reply": {
+   "ok": false
+  },
+  "state": {
+   "bg": "rgb(250, 248, 244)",
+   "inline": "",
+   "sandbox": "allow-scripts allow-downloads"
+  }
+ },
+ {
+  "case": "frame",
+  "color": [
+   9,
+   9,
+   9,
+   9
+  ],
+  "reply": {
+   "ok": false
+  },
+  "state": {
+   "bg": "rgb(250, 248, 244)",
+   "inline": "",
+   "sandbox": "allow-scripts allow-downloads"
+  }
+ },
+ {
+  "case": "parent-window-source",
+  "state": {
+   "bg": "rgb(250, 248, 244)",
+   "inline": "",
+   "sandbox": "allow-scripts allow-downloads"
+  }
+ }
+]

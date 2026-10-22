@@ -586,7 +586,12 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
             a = artifact_for(db,aid,u);p = permissions(db,a,u)
             owner=bool(u and u['id']==a['owner'])
             fmt=db.execute('SELECT capabilities FROM version_formats WHERE version=?',(a['current_version'],)).fetchone()
-            return {**a,**metadata(db,aid),**enrich(db,a,u),'format':json.loads(fmt['capabilities']) if fmt else None,'permissions':p,'versions':[{**dict(v),'source':v['source'] if owner else '{}'} for v in db.execute("SELECT v.id,v.created,COALESCE(m.state,'published') AS state,m.source FROM versions v LEFT JOIN version_meta m ON m.version=v.id WHERE v.artifact=? ORDER BY v.rowid DESC",(aid,)) if cited_version_readable(db,a,v['id'],u,permissions)],
+            sha=db.execute('SELECT sha FROM versions WHERE id=?',(a['current_version'],)).fetchone()
+            from portal.reader_style import initial_appearance
+            try:
+                with open(store.files/(sha['sha']+'.html'),encoding='utf-8',errors='replace') as f:appearance=initial_appearance(f.read(65536))
+            except (OSError,TypeError):appearance=None
+            return {**a,**metadata(db,aid),**enrich(db,a,u),'format':json.loads(fmt['capabilities']) if fmt else None,'appearance':appearance,'permissions':p,'versions':[{**dict(v),'source':v['source'] if owner else '{}'} for v in db.execute("SELECT v.id,v.created,COALESCE(m.state,'published') AS state,m.source FROM versions v LEFT JOIN version_meta m ON m.version=v.id WHERE v.artifact=? ORDER BY v.rowid DESC",(aid,)) if cited_version_readable(db,a,v['id'],u,permissions)],
                     'grants':[dict(g) for g in db.execute('SELECT email,role FROM grants WHERE artifact=?',(aid,))] if p['manage'] else [],
                     'access_revision':access_revision(db,a) if p['manage'] else None,
                     'domain_grants':[dict(g) for g in db.execute('SELECT domain,role FROM domain_grants WHERE artifact=? ORDER BY domain',(aid,))] if p['manage'] else []}
@@ -728,10 +733,10 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
             if not v: raise HTTPException(404,'Versión no encontrada.')
             content=(store.files/(v['sha']+'.html')).read_text()
         from urllib.parse import quote
-        from portal.reader_style import without_embedded_flow, refresh_editorial_reference
+        from portal.reader_style import without_embedded_flow, refresh_editorial_reference, with_initial_theme
         # The shared reader supplies current rhythm; remove only its old marked CSS block.
         # Stored source, revisions, custom CSS and permissions remain unchanged.
-        content=without_embedded_flow(content)
+        content=with_initial_theme(without_embedded_flow(content))
         content=refresh_editorial_reference(content,
             (ROOT/'static/editorial-reference.css').read_text(),
             (ROOT/'static/editorial-code.js').read_text(),
@@ -744,7 +749,7 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
         content=re.sub(r'(<script\s+data-nota-modulo=[\"\'](?:revision|packages/core/components/review)\.js[\"\'][^>]*>).*?</script>',
                        lambda m:m[1]+revision+'</script>',content,flags=re.S)
         reader_controls=(ROOT/'static/reader-controls.js').read_text()
-        script='<script>'+(ROOT/'static/interface.js').read_text()+'\n'+bridge+'\n'+reader_controls+'</script><style>'+(ROOT/'static/review-additions.css').read_text()+'</style>'
+        script='<script>'+(ROOT/'static/interface.js').read_text()+'\n'+bridge+'\n'+reader_controls+'</script><style>'+(ROOT/'static/review-additions.css').read_text()+'</style><style>@media screen{:where(html[data-margen-surface]:not([data-trama])){background-color:var(--papel)}}</style>'
         head=re.search(r'<head(?:\s[^>]*)?>',content,re.I)
         position=head.end() if head else (re.match(r'\s*<!doctype[^>]*>',content,re.I).end() if re.match(r'\s*<!doctype[^>]*>',content,re.I) else 0)
         result=content[:position]+script+content[position:]

@@ -1804,6 +1804,7 @@
         "action",
         "preferences",
         "controls-ready",
+        "surface",
       ].includes(op)
     )
       return;
@@ -1837,6 +1838,9 @@
           throw Error("Destino no permitido.");
         location.assign(data.path);
         result = { ok: true };
+      } else if (op === "surface") {
+        result = { ok: readerSurface(data?.color, firstSurface && current.id) };
+        firstSurface = false;
       } else if (op === "context") {
         if (!contextRequested) throw Error("Solicitud de contexto vencida.");
         contextRequested = false;
@@ -1945,8 +1949,31 @@
       button.disabled = false;
     }
   });
+  // Backs the frame with the document's surface; only an RGB triple is accepted, never CSS text.
+  // Only the first report of each mount is remembered: it is the surface of the first paint.
+  const surfaceKey = (aid) => "margen-reader-surface:" + aid;
+  let firstSurface = false;
+  function readerSurface(color, remember) {
+    const frame = $("#artifact-frame");
+    const valid =
+      Array.isArray(color) &&
+      color.length === 3 &&
+      color.every((c) => Number.isInteger(c) && c >= 0 && c <= 255);
+    if (valid)
+      frame.style.setProperty("--reader-surface", "rgb(" + color.join(",") + ")");
+    else frame.style.removeProperty("--reader-surface");
+    if (remember)
+      try {
+        if (valid) localStorage.setItem(surfaceKey(remember), JSON.stringify(color));
+        else localStorage.removeItem(surfaceKey(remember));
+      } catch {}
+    return valid;
+  }
   async function reader(aid) {
     document.body.classList.add("reading");
+    let remembered = null;
+    try { remembered = JSON.parse(localStorage.getItem(surfaceKey(aid))); } catch {}
+    readerSurface(remembered);
     $("#library").hidden = true;
     $("#reader").hidden = false;
     try {
@@ -1966,6 +1993,18 @@
       }));
       return;
     }
+    // Until the document reports its surface, back it with its declared first-paint mode.
+    // A surface remembered from an earlier visit stays only while it agrees with that mode.
+    const declared = current.appearance?.mode;
+    const mode = declared === "system"
+      ? (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+      : declared;
+    const frame = $("#artifact-frame");
+    if (mode === "light" || mode === "dark") frame.dataset.surface = mode;
+    else delete frame.dataset.surface;
+    const dark = (c) => c[0] * 0.2126 + c[1] * 0.7152 + c[2] * 0.0722 < 128;
+    if (frame.dataset.surface && readerSurface(remembered) && dark(remembered) !== (mode === "dark"))
+      readerSurface(null);
     const owner = user?.id === current.owner;
     $("#owner-tools").hidden = !owner;
     $("#edit-document").hidden = !owner;
@@ -1996,6 +2035,7 @@
       $("#reader-dock").hidden = false;
       versionControls();
       contextRequested = false;
+      firstSurface = true;
       $("#artifact-frame").src =
         "/api/artifacts/" +
         current.id +

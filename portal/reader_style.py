@@ -1,5 +1,6 @@
 """Refresh only the marked shared reading rules in a rendered copy of old HTML."""
 from html.parser import HTMLParser
+import json
 import re
 
 FLOW = re.compile(r'/\* EDITORIAL FLOW START \*/.*?/\* EDITORIAL FLOW END \*/', re.S)
@@ -158,3 +159,61 @@ def refresh_editorial_reference(content, css, code, pieces=None):
     for start, end, replacement in sorted(parser.edits, reverse=True):
         content = content[:start] + replacement + content[end:]
     return content
+
+
+
+def _initial_metas(content):
+    class Metas(HTMLParser):
+        def __init__(self):
+            super().__init__(convert_charrefs=True)
+            self.values = {}
+
+        def handle_starttag(self, tag, attrs):
+            if tag == 'meta':
+                a = dict(attrs)
+                if a.get('name') in ('nota-modo-inicial', 'nota-tema-inicial'):
+                    self.values.setdefault(a['name'], a.get('content') or '')
+
+    parser = Metas()
+    parser.feed(content[:65536])
+    return parser.values
+
+
+def initial_appearance(content):
+    """Declared first-paint mode, so the host can back the frame before the document paints."""
+    mode = _initial_metas(content).get('nota-modo-inicial')
+    return {'mode': mode if mode in ('light', 'dark', 'system') else None}
+
+
+REGISTRY = '/* REGISTRO TEMAS */ const themeRegistry = '
+
+
+def with_initial_theme(content):
+    """Paint a declared light or dark palette from the first frame.
+
+    The value comes from the document's own embedded theme registry, the same one reader.js
+    applies at the end of the body; system mode, unknown families and existing data-theme stay as they are.
+    """
+    metas = _initial_metas(content)
+    mode, family = metas.get('nota-modo-inicial'), metas.get('nota-tema-inicial')
+    at = content.find(REGISTRY)
+    if mode not in ('light', 'dark') or not family or at < 0:
+        return content
+    try:
+        registry = json.JSONDecoder().raw_decode(content, at + len(REGISTRY))[0]
+        palette = next(f for f in registry['familias'] if f.get('id') == family)[mode]
+    except (ValueError, KeyError, TypeError, StopIteration):
+        return content
+    if not isinstance(palette, str) or not re.fullmatch(r'[a-z0-9-]{1,40}', palette):
+        return content
+    tag = re.search(r'<html\b[^>]*>', content, re.I)
+    first = re.search(r'<(?:script|style|body)\b', content, re.I)
+    if tag and (not first or tag.start() < first.start()):
+        if re.search(r'\sdata-theme\s*=', tag[0], re.I):
+            return content
+        return content[:tag.start() + 5] + ' data-theme="' + palette + '"' + content[tag.start() + 5:]
+    if tag:
+        return content
+    doctype = re.match(r'\s*<!doctype[^>]*>', content, re.I)
+    position = doctype.end() if doctype else 0
+    return content[:position] + '<html data-theme="' + palette + '">' + content[position:]

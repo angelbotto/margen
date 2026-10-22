@@ -1,5 +1,5 @@
 import unittest
-from portal.reader_style import without_embedded_flow
+from portal.reader_style import without_embedded_flow, with_initial_theme, initial_appearance
 
 OLD = '/* EDITORIAL FLOW START */.legacy-flow { margin:0 }/* EDITORIAL FLOW END */'
 
@@ -105,5 +105,24 @@ class EditorialReferenceInertTemplateTest(unittest.TestCase):
         result=refresh_editorial_reference(source,'.hoja{color:blue}','current();')
         self.assertTrue(result.startswith('<style data-margen-editorial-reference>'))
         self.assertTrue(result.endswith(source))
+
+    def test_declared_light_or_dark_palette_paints_from_the_first_frame(self):
+        registry = '<script>/* REGISTRO TEMAS */ const themeRegistry = {"familias":[{"id":"editorial","light":"light","dark":"dark"},{"id":"sea","light":{"papel":"#fff"},"dark":"sea"}]};</script>'
+        meta = lambda family, mode: '<meta name="nota-tema-inicial" content="'+family+'"><meta name="nota-modo-inicial" content="'+mode+'">'
+        dark = '<title>T</title>'+meta('editorial','dark')+'<p>x</p>'+registry
+        self.assertEqual(with_initial_theme(dark), '<html data-theme="dark">'+dark)
+        self.assertEqual(initial_appearance(dark), {'mode': 'dark'})
+        typed = '<!doctype html>'+dark
+        self.assertEqual(with_initial_theme(typed), '<!doctype html><html data-theme="dark">'+dark)
+        tagged = '<!doctype html><html lang="es"><head>'+meta('editorial','light')+'</head><body>'+registry
+        self.assertEqual(with_initial_theme(tagged), tagged.replace('<html lang', '<html data-theme="light" lang'))
+        for unchanged in ('<html data-theme="hacker">'+meta('editorial','dark')+registry,  # author choice wins
+                          meta('editorial','system')+registry,                           # follows the device
+                          meta('sea','light')+registry,                                  # inline palette, left to reader.js
+                          meta('editorial','dark'),                                      # no Margen reader registry
+                          '<p>Documento ajeno</p>'):
+            with self.subTest(html=unchanged[:60]):
+                self.assertEqual(with_initial_theme(unchanged), unchanged)
+        self.assertEqual(initial_appearance('<p>Documento ajeno</p>'), {'mode': None})
 
 if __name__ == '__main__': unittest.main()

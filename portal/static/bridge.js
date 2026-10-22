@@ -52,5 +52,26 @@
     const path=mapped?(mapped+(href.includes('#')?('#'+href.split('#').slice(1).join('#')):'')):(a.hasAttribute('data-bottifact-link')?href:null);
     if(!path)return;event.preventDefault();send('navigate',{path}).catch(()=>{});
   },true);
+  // The host backs the frame with the document's own surface. Only a parsed opaque RGB triple leaves; null keeps the host default.
+  let surface;
+  const root=document.documentElement;
+  const opaque=node=>{const m=/^rgba?\((\d{1,3}), (\d{1,3}), (\d{1,3})(?:, ([\d.]+))?\)$/.exec(getComputedStyle(node).backgroundColor);return m&&(m[4]===undefined||m[4]==='1')?[+m[1],+m[2],+m[3]]:null;};
+  // An opaque root for Margen paper, kept only when it paints exactly what the body would propagate.
+  const backRoot=()=>{
+    root.removeAttribute('data-margen-surface');
+    const body=document.body&&!opaque(root)&&opaque(document.body);
+    if(!body)return;
+    root.setAttribute('data-margen-surface','');
+    if(String(opaque(root))!==String(body))root.removeAttribute('data-margen-surface');
+  };
+  const reportSurface=()=>{
+    backRoot();
+    const color=opaque(root)||(document.body&&opaque(document.body));
+    if(String(color)===surface)return;surface=String(color);send('surface',{color}).catch(()=>{});
+  };
+  document.addEventListener('nota:tema',()=>requestAnimationFrame(reportSurface));
+  window.matchMedia?.('(prefers-color-scheme: dark)').addEventListener('change',()=>requestAnimationFrame(reportSurface));
+  addEventListener('load',reportSurface,{once:true});
+  addEventListener('DOMContentLoaded',reportSurface,{once:true});
   addEventListener('DOMContentLoaded',()=>send('ready',{pins:!!document.querySelector('script[data-nota-modulo="packages/core/components/review.js"]')}).then(value=>{latest=value;listeners.forEach(fn=>fn(value));}).catch(()=>{}),{once:true});
 })();
