@@ -2182,20 +2182,21 @@ NotaEscena adds columnas/arcos/almacen to its XYZ/stage contract and shares pinn
 ```html
 <footer class="ancho pie pie-documento" id="pie-editorial-ejemplo">
   <div class="pie-autoria">
-    <p class="pie-autor">Un cuaderno compartido</p>
+    <p class="pie-autor">Tu nombre o el de tu equipo</p>
     <p class="pie-nota">Ejemplo de cierre editorial. El nombre, los enlaces y esta nota pertenecen a quien escribe el documento.</p>
     <nav class="pie-enlaces" aria-label="Enlaces del cuaderno de ejemplo">
-      <span class="pie-enlace"><a href="https://github.com/angelbotto/margen" rel="noopener noreferrer">Código de Margen</a><span class="pie-detalle">Construir y contribuir</span></span>
-      <span class="pie-enlace"><a href="https://artifacts.botto.is" rel="noopener noreferrer">La plataforma</a><span class="pie-detalle">Publicar y conversar</span></span>
+      <span class="pie-enlace"><a href="https://example.com" rel="noopener noreferrer">Tu sitio</a><span class="pie-detalle">Enlace de ejemplo · personalízalo</span></span>
+      <span class="pie-enlace"><a href="mailto:autor@example.com" rel="noopener noreferrer">Contacto</a><span class="pie-detalle">Dirección de ejemplo · personalízala</span></span>
     </nav>
   </div>
-  <p class="pie-plataforma">Hecho con Margen · Ejemplo ilustrativo</p>
 </footer>
 ```
 
 **Uso:** cierra con la identidad y los enlaces de quien escribe. Las dos columnas se apilan en móvil; las descripciones de enlaces se difuminan solo con puntero fino y se revelan también con foco de teclado. La atribución a Margen queda separada.
 
-El generador ofrece la misma pieza mediante `footer: {author, note, links: [{label, href, detail}], platform}`. No añadas un segundo pie manual cuando uses esa opción. Se aceptan HTTPS sin credenciales y correo `mailto:`. No se inventan redes, licencias, estadísticas ni autoría: los enlaces de esta muestra corresponden al proyecto, no a una persona ficticia. El pie sigue al contenido y conserva la identidad del documento.
+El generador ofrece la misma pieza mediante `footer: {author, note, links: [{label, href, detail}], platform}`. No añadas un segundo pie manual cuando uses esa opción. Se aceptan HTTPS sin credenciales y correo `mailto:`. No se inventan redes, licencias, estadísticas ni autoría: los enlaces de esta muestra usan example.com como marcadores para sustituir. El pie sigue al contenido y conserva la identidad del documento.
+
+Es opcional: omite `footer` para no añadir ningún pie. `platform` vale `false` por defecto. En una presentación, compón una diapositiva de cierre si la necesitas; el generador no inserta un pie de artículo.
 
 ## Compose a standard artifact
 

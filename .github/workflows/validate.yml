@@ -89,6 +89,14 @@ jobs:
           pip install httpx==0.28.1
       - name: Check community creation and sharing
         run: python scripts/test_community_marketplace.py && python scripts/test_portal_shell.py && python scripts/test_developers_runtime_browser.py
+      - name: Check file upload and reader action flows
+        run: |
+          sudo apt-get update && sudo apt-get install -y poppler-utils
+          python scripts/test_upload_browser.py
+          MARGEN_BROWSER=webkit python scripts/test_upload_browser.py
+          python scripts/test_reader_actions_runtime.py
+          python scripts/test_contract_footer.py
+
       - name: Check shared reading rhythm
         run: python scripts/test_editorial_flow.py
 

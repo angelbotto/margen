@@ -5,7 +5,7 @@ import unittest
 from unittest.mock import patch
 from fastapi import HTTPException
 from portal.uploads import Site, title_of, with_document_id, warnings_for, UPLOAD_SLOTS
-from portal.test_app import PortalTests
+from portal import test_app as app_tests
 
 
 class ExpansionTests(unittest.TestCase):
@@ -37,7 +37,10 @@ class ExpansionTests(unittest.TestCase):
         with self.assertRaises(HTTPException): site.render()
 
 
-class UploadConcurrencyTests(PortalTests):
+class UploadConcurrencyTests(unittest.TestCase):
+    setUp = app_tests.PortalTests.setUp
+    tearDown = app_tests.PortalTests.tearDown
+    client = app_tests.PortalTests.client
     def test_busy_import_does_not_read_or_process_another_file(self):
         self.assertTrue(UPLOAD_SLOTS.acquire(False)); self.assertTrue(UPLOAD_SLOTS.acquire(False))
         try:

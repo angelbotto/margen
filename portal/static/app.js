@@ -2011,9 +2011,9 @@
       contextRequested = false;
       const version = current.versions.find((v) => v.id === select.value);
       backVersion(current.id, select.value, version?.appearance ?? null);
-      media.reset();
       readerActions.reset();
       readerActions.load(current);
+      media.reset();
       mounted = { artifact: current.id, version: select.value, first: true };
       $("#artifact-frame").src =
         "/api/artifacts/" +

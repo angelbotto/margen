@@ -31,7 +31,7 @@ Response 200:
 
 ## `POST /api/uploads`
 
-Request: the same `name`, `data`, `entry`, plus optional `title` (default: inspected title), `space` (default `Personal`), `artifact` (revision target), `expected_current` (compare-and-set: 409 when it is not the current version), `source` (`{agent, session, label, device}`), `mode` (`draft | published`) and, for HTML/ZIP only, `attachments` (`[{name, data}]` PDF/PPTX originals validated by the existing publish rules; link them with `data-margen-original`). `visibility` is rejected: uploads are private; change access from Share.
+Request: the same `name`, `data`, `entry`, plus optional `title` (default: inspected title), `space` (default `Personal`), `artifact` (revision target), `expected_current` (required for revisions; compare-and-set: 409 when it is not the current version), `source` (`{agent, session, label, device}`), `mode` (`draft | published`) and, for HTML/ZIP only, `attachments` (`[{name, data}]` PDF/PPTX originals validated by the existing publish rules; link them with `data-margen-original`). `visibility` is rejected: uploads are private; change access from Share.
 
 Response: exactly the publish response `{id, version, url, visibility, state, preview_url}`.
 
@@ -54,6 +54,8 @@ The file is decoded and validated again on publish; an inspect result is never t
 
 Poppler (`pdfinfo`, `pdftoppm`, `pdftotext`) runs as a child process: a temporary folder, an empty environment, its own process group killed on timeout (30 s for metadata, 120 s for rendering), `ulimit` CPU 60 s, file size, 64 descriptors and 1 GiB address space, at most two conversions at a time. Generated output is capped at 200 MiB on disk and 20 MiB of HTML. No code from the PDF is executed. The portal image installs `poppler-utils`.
 
+Two upload jobs may run concurrently; additional jobs receive 503 and can be retried. Metadata title/head extraction uses a bounded window.
+
 ### ZIP rules
 
 - At most 15 MiB compressed, 400 entries, 50 MiB uncompressed, 20 MiB per entry; any entry over 1 MiB and the archive as a whole may not expand more than 100×. Each entry is read up to its declared size and its CRC is verified.
@@ -61,6 +63,7 @@ Poppler (`pdfinfo`, `pdftoppm`, `pdftotext`) runs as a child process: a temporar
 - Allowed types: HTML, CSS, JS/MJS, JSON, TXT, SVG, PNG, JPEG, GIF, WebP, AVIF, ICO, WOFF/WOFF2, TTF/OTF, MP3, MP4, WebM. Everything else is rejected, including nested archives, server code (PHP, Python, shell…), dotfiles, `node_modules`, `package.json`, lock files, `netlify.toml`, `_redirects`, `_headers`, `.htaccess`, `vercel.json`. `__MACOSX/`, `.DS_Store` and `Thumbs.db` are skipped and reported.
 - A ZIP of a single folder uses that folder as the site root.
 - Entry page: `entry`, else `index.html`, else the only HTML file; otherwise 422 listing the pages.
+- Expansion is budgeted before allocating repeated resources: 20 MiB conservative work/output budget, cached data URIs, at most 128 CSS imports and 30 000 HTML elements. Repeated references consume budget too; files below the input limit can therefore be rejected.
 - Inlined: `<link rel=stylesheet>` (with nested `@import` up to four levels and CSS `url()`), `<script src>` (`</script` escaped), `img`/`source` `src` and `srcset`, media `src`/`poster`, icons, SVG `image`/`use`, `style` attributes and `<style>` blocks. Local links to non-HTML files become `data:` links.
 - Remote URLs are left untouched and never fetched by the server; the reader CSP blocks most of them, and inspect warns.
 - One artifact is one page. If the entry links another HTML page in the ZIP, the upload is rejected with the linked pages named, rather than publishing broken navigation. Unlinked extra pages and unreferenced files are not published and are listed in `warnings`.
