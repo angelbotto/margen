@@ -95,6 +95,7 @@ jobs:
           python scripts/test_upload_browser.py
           MARGEN_BROWSER=webkit python scripts/test_upload_browser.py
           python scripts/test_reader_actions_runtime.py
+          python review/reader-actions-review/check_delta.py --browsers chromium --out /tmp/margen-reader-actions-ci
           python scripts/test_contract_footer.py
 
       - name: Check shared reading rhythm
