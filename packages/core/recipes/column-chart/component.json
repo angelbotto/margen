@@ -1,0 +1,16 @@
+{
+  "id": "column-chart",
+  "legacyId": "columnas",
+  "category": "graficas",
+  "title": "Columnas agrupadas o apiladas",
+  "dependencies": [
+    "packages/core/styles/fonts.css",
+    "packages/core/styles/artifact.css",
+    "packages/core/components/audio.js",
+    "packages/core/components/controls.js",
+    "packages/core/components/editorial-pieces.js",
+    "packages/core/components/reader.js",
+    "packages/core/components/chart-core.js",
+    "packages/core/components/charts.js"
+  ]
+}

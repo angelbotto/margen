@@ -32,7 +32,7 @@
     return [r.min, r.max];
   }
   function delta(current, previous, spec = 'auto', lang) {
-    if (current === null || previous === null) return 'Sin comparación: dato ausente';
+    if (current === null || previous === null) return 'Sin comparación · dato ausente';
     const change = current - previous, sign = change > 0 ? '+' : '';
     const absolute = sign + G.format(change, spec, {lang});
     if (previous === 0) return absolute + ' · porcentaje no definido (base 0)';
@@ -131,7 +131,7 @@
       if (!data.length || data.every(r => r.values.every(v => v === null))) { this.add(element('p', 'grafica-vacia', 'Sin datos disponibles.')); return; }
       this.region = this.add(element('div', 'grafica-caja'));
       if (['barras', 'lineas', 'temporal', 'columnas'].includes(type) && heads.length > 2 || type === 'cambio') {
-        this.legend = G.legend(type === 'cambio' ? heads.slice(1) : columns.map(c => c.name), {locale: this.lang, targets: i => [...(this.svg?.querySelectorAll(`[data-mg-serie="${i}"]`) || [])]});
+        this.legend = G.legend(type === 'cambio' ? heads.slice(1) : columns.map(c => c.name), {locale: this.lang, shapes: type === 'cambio', targets: i => [...(this.svg?.querySelectorAll(`[data-mg-serie="${i}"]`) || [])]});
         this.add(this.legend.element);
       }
       if (type === 'calor') this.heatLegend();
@@ -148,7 +148,7 @@
         this.original.push([cell, null, cell.getAttribute('data-nivel')]);
         cell.dataset.nivel = v === null ? 'ausente' : Math.round(this.model.heat.level(v) * 4 / Math.max(1, this.model.heat.levels - 1));
       }));
-      if (type === 'calor') this.model.table.classList.add('tabla-calor');
+      if (type === 'calor') { this.tableClass = this.model.table.getAttribute('class'); this.model.table.classList.add('tabla-calor'); }
       // La figura es la vista principal: la tabla queda a un clic. El estado que elija el lector se respeta.
       if (this.details) this.details.open = false;
       this.watch = G.responsive(this.figure, width => this.draw(width));
@@ -190,7 +190,7 @@
       const count = Math.max(2, Math.min(10, Math.floor((right - left) / 70))), extra = (range[1] - range[0]) * pad;
       const n = G.nice(range[0] - extra, range[1] + extra, count), f = G.tickFormat(n.ticks, spec, {lang: this.lang});
       const x = G.linear([n.min, n.max], [left, right]);
-      const ticks = G.spacedTicks(n.ticks, x, f, this.font);
+      const ticks = G.spacedTicks(n.ticks, x, f, this.font, 12, this.width);
       G.axis(svg, {orient: 'bottom', scale: x, ticks, format: f, from: top, to: bottom, at: bottom + 18, font: this.font});
       svg.dataset.xMin = n.min; svg.dataset.xMax = n.max;
       return x;
@@ -250,7 +250,8 @@
         r.values.forEach((v, i) => {
           const g = G.svg('g', {'data-mg-serie': i});
           const w = stacked ? inner : inner / series, x = stacked ? x0(j) : x0(j) + w * i;
-          if (v === null) g.append(G.svg('rect', {x, y: frame.y(0) - 2, width: Math.max(w - 1, 1), height: 2, class: 'mg-texto-suave', style: 'fill:var(--grafica-linea)'}));
+          // Sin dato: un marcador discontinuo donde empezaría el tramo, nunca una barra de cero.
+          if (v === null) g.append(G.svg('rect', {x: x + 1, y: frame.y(stacked ? base : 0) - 10, width: Math.max(w - 3, 1), height: 9, class: 'mg-sin-dato'}));
           else {
             const a = stacked ? base : 0, b = stacked ? base + v : v;
             g.append(G.svg('rect', {x, y: Math.min(frame.y(a), frame.y(b)), width: Math.max(w - (stacked ? 0 : 1), 1), height: Math.max(Math.abs(frame.y(a) - frame.y(b)), .5), class: 'grafica-barra serie-' + i, style: 'fill:' + this.fill(i), 'data-value': v}));
@@ -277,7 +278,7 @@
         const lo = data[0].x, hi = data.at(-1).x === lo ? lo + 86400000 : data.at(-1).x;
         x = G.linear([lo, hi], [frame.left + pad, frame.right - pad]);
         const t = G.timeTicks(lo, hi, Math.max(2, Math.min(8, Math.floor((frame.right - frame.left) / 100)))), f = v => G.format(v, t.spec, {lang: this.lang});
-        G.spacedTicks(t.ticks, x, f, this.font).forEach(v => {
+        G.spacedTicks(t.ticks, x, f, this.font, 12, this.width).forEach(v => {
           svg.append(G.svg('line', {x1: x(v), x2: x(v), y1: frame.bottom, y2: frame.bottom + 4, class: 'grafica-eje', 'data-tick-x': v}));
           svg.append(G.edgeText(svg, x(v), frame.bottom + 18, f(v), {}, this.font));
         });
@@ -356,7 +357,8 @@
         if (a !== null && b !== null) svg.append(G.svg('line', {x1: x(a), x2: x(b), y1: cy, y2: cy, class: 'mg-conector' + (b > a ? ' mg-sube' : '')}));
         r.values.forEach((v, i) => {
           const g = G.svg('g', {'data-mg-serie': i, 'data-value': v ?? ''});
-          if (v === null) g.append(G.svg('text', {x: left, y: cy + 4, class: 'mg-texto-suave'}, heads[i + 1] + ': ' + this.words.missing));
+          const other = r.values[1 - i];
+          if (v === null) g.append(G.svg('text', {x: other === null ? left : x(other) + 12, y: cy + 4, class: 'mg-texto-suave'}, G.fit(heads[i + 1] + ': ' + this.words.missing, Math.max(40, right - (other === null ? left : x(other) + 12)), this.font, 3)));
           else g.append(G.svg('path', {d: G.shape(i, x(v), cy, 6), class: 'serie-' + i + (i ? ' grafica-barra' : ' grafica-punto mg-forma'), style: i ? 'fill:var(--serie)' : ''}));
           svg.append(g); items.push(g);
           info.push([r.label, heads[i + 1] + ': ' + this.fmtUnit(v, i), 'Cambio: ' + deltas[j]]);
@@ -458,7 +460,8 @@
         if (text !== null) cell.textContent = text;
         if (level === null) delete cell.dataset.nivel; else if (level !== undefined) cell.setAttribute('data-nivel', level);
       });
-      this.model?.table.classList.remove('tabla-calor'); this.figure.classList.remove('nota-grafica');
+      if (this.tableClass !== undefined) { if (this.tableClass === null) this.model.table.removeAttribute('class'); else this.model.table.setAttribute('class', this.tableClass); }
+      this.figure.classList.remove('nota-grafica');
       if (this.details) this.details.open = this.wasOpen;
       instances.delete(this.figure);
     }

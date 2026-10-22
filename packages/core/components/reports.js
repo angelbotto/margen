@@ -82,7 +82,7 @@
         const top=34,height=top+layout.reduce((a,b)=>a+b,0)+34;
         const n=G.niceZero(data.flatMap(r=>[r.from,r.to]),Math.max(2,Math.floor((right-left)/70))),tf=G.tickFormat(n.ticks,spec,{lang}),x=G.linear([n.min,n.max],[left,right]);
         s.dataset.xMin=n.min;s.dataset.xMax=n.max;
-        G.axis(s,{orient:'bottom',scale:x,ticks:G.spacedTicks(n.ticks,x,tf,font),format:tf,from:top-8,to:height-30,at:height-12,font});
+        G.axis(s,{orient:'bottom',scale:x,ticks:G.spacedTicks(n.ticks,x,tf,font,12,width),format:tf,from:top-8,to:height-30,at:height-12,font});
         text(s,0,14,G.fit(unit,width,font,1),{class:'grafica-unidad'});
         const items=[],info=[];let y=top;
         data.forEach((r,i)=>{
@@ -146,6 +146,7 @@
         });
       });
       this.add(group);this.add(status);
+      this.add(G.exporter(this.root,{table,title:table.caption?.textContent||'Múltiplos',getSvg:()=>[...group.querySelectorAll('svg.mg-svg')]}));
     }
     reconcile() {
       const {table,rows}=tableData(this.root,5,5);

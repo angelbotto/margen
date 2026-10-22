@@ -87,7 +87,7 @@
     }
     timeAxis(x, lo, hi, bottom, left, right) {
       const t = G.timeTicks(lo, hi, Math.max(2, Math.min(8, Math.floor((right - left) / 100)))), f = v => G.format(v, t.spec, {lang: this.lang});
-      G.spacedTicks(t.ticks, x, f, this.font).forEach(v => { this.line(x(v), bottom, x(v), bottom + 4, 'grafica-eje'); this.chart.append(G.edgeText(this.chart, x(v), bottom + 18, f(v), {}, this.font)); });
+      G.spacedTicks(t.ticks, x, f, this.font, 12, this.width).forEach(v => { this.line(x(v), bottom, x(v), bottom + 4, 'grafica-eje'); this.chart.append(G.edgeText(this.chart, x(v), bottom + 18, f(v), {}, this.font)); });
       this.text(right, bottom + 34, 'Fecha UTC · distancia temporal real', 'end', 'mg-texto-suave');
     }
     draw(width) {
@@ -171,7 +171,7 @@
       const n = G.nice(min, max, Math.max(2, Math.floor((right - left) / 70))), f = G.tickFormat(n.ticks, this.model.spec, {lang: this.lang}), x = G.linear([n.min, n.max], [left, right]);
       this.domain = [n.min, n.max];
       const top = 44, height = top + rows.length * rowH + 30;
-      G.spacedTicks(n.ticks, x, f, this.font).forEach(v => { this.chart.append(G.edgeText(this.chart, x(v), 34, f(v), {}, this.font)); this.line(x(v), 40, x(v), height - 30); });
+      G.spacedTicks(n.ticks, x, f, this.font, 12, this.width).forEach(v => { this.chart.append(G.edgeText(this.chart, x(v), 34, f(v), {}, this.font)); this.line(x(v), 40, x(v), height - 30); });
       rows.forEach((r, i) => {
         const [lo, q1, med, q3, hi] = r.values, y = top + i * rowH + (narrow ? 38 : 22), g = this.add('g', {}); this.mark(g, i);
         g.append(G.svg('line', {x1: x(lo), y1: y, x2: x(hi), y2: y, stroke: this.color(i), 'stroke-width': 2}), G.svg('rect', {x: x(q1), y: y - 12, width: Math.max(1, x(q3) - x(q1)), height: 24, style: 'fill:' + this.fill(i), 'fill-opacity': .35, stroke: this.color(i)}));

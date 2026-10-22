@@ -16,7 +16,7 @@
   if(dates){const t=G.timeTicks(lo,hi,count);scale=G.linear([lo,hi===lo?lo+DAY:hi],[x0,x1]);ticks=t.ticks;f=v=>G.format(v,t.spec,{lang:ctx.lang});}
   else{const n=zero?G.niceZero([lo,hi],count):G.nice(lo,hi,count);scale=G.linear([n.min,n.max],[x0,x1]);ticks=n.ticks;f=G.tickFormat(n.ticks,ctx.spec,{lang:ctx.lang});ctx.domain=[n.min,n.max];}
   s.append(svg('line',{x1:x0,y1:y,x2:x1,y2:y,class:'ev-eje'}));
-  G.spacedTicks(ticks,scale,f,ctx.font).forEach(v=>{const xx=scale(v);s.append(svg('line',{x1:xx,y1:y,x2:xx,y2:y-6,class:'ev-eje'}),G.edgeText(s,xx,y+18,f(v),{},ctx.font));});
+  G.spacedTicks(ticks,scale,f,ctx.font,12,+s.getAttribute('width')).forEach(v=>{const xx=scale(v);s.append(svg('line',{x1:xx,y1:y,x2:xx,y2:y-6,class:'ev-eje'}),G.edgeText(s,xx,y+18,f(v),{},ctx.font));});
   if(unit)s.append(svg('text',{x:x0,y:y+36,class:'mg-texto-suave'},G.fit(unit,x1-x0,ctx.font,1)));
   return scale;
  }

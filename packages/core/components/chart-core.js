@@ -382,7 +382,7 @@
 
   // ---------- Leyenda que resalta y aísla ----------
   // series: [{name, index}]; targets(i) → elementos de esa serie dentro del SVG.
-  function legend(names, {targets, onChange, locale}) {
+  function legend(names, {targets, onChange, locale, shapes}) {
     const w = words(locale), list = document.createElement('ul'), live = document.createElement('p');
     list.className = 'mg-leyenda';
     live.className = 'mg-oculto';
@@ -398,7 +398,11 @@
       b.title = w.only + ': ' + name;
       swatch.className = 'mg-muestra serie-' + (i % 8);
       swatch.setAttribute('aria-hidden', 'true');
-      b.append(swatch, document.createTextNode(name));
+      if (shapes) {
+        const icon = svgNode('svg', {width: 14, height: 14, class: 'mg-muestra-forma serie-' + (i % 8), 'aria-hidden': 'true'});
+        icon.append(svgNode('path', {d: shape(i, 7, 7, 5), class: i ? 'grafica-barra' : 'grafica-punto mg-forma', style: i ? 'fill:var(--serie)' : ''}));
+        b.append(icon, document.createTextNode(name));
+      } else b.append(swatch, document.createTextNode(name));
       b.addEventListener('click', () => {
         isolated = isolated === i ? null : i;
         buttons.forEach((x, k) => x.setAttribute('aria-pressed', String(k === isolated)));
@@ -438,19 +442,33 @@
     return rows.join('\r\n') + '\r\n';
   }
   const STYLE_KEYS = ['fill', 'fill-opacity', 'stroke', 'stroke-width', 'stroke-dasharray', 'stroke-opacity', 'opacity', 'font-family', 'font-size', 'font-weight', 'text-anchor', 'dominant-baseline', 'paint-order', 'stroke-linecap', 'stroke-linejoin'];
-  function standaloneSvg(svg, {title, source, unit}) {
+  // Copia autónoma: estilos computados en línea (sin var() ni currentColor), sin clases ni foco.
+  function inlineCopy(svg) {
     const copy = svg.cloneNode(true), originals = [svg, ...svg.querySelectorAll('*')], copies = [copy, ...copy.querySelectorAll('*')];
     originals.forEach((el, i) => {
       const s = getComputedStyle(el), target = copies[i];
-      target.removeAttribute('class');
-      target.removeAttribute('tabindex');
-      target.removeAttribute('aria-describedby');
+      for (const name of ['class', 'tabindex', 'aria-describedby', 'role', 'data-mg-i']) target.removeAttribute(name);
+      for (const attr of [...target.attributes]) if (/var\(|currentcolor/i.test(attr.value) && attr.name !== 'style') target.removeAttribute(attr.name);
       target.setAttribute('style', STYLE_KEYS.map(k => s.getPropertyValue(k) ? k + ':' + s.getPropertyValue(k) : '').filter(Boolean).join(';'));
     });
     const box = svg.getBoundingClientRect();
+    copy.setAttribute('width', Math.round(box.width) || +svg.getAttribute('width') || 800);
+    copy.setAttribute('height', Math.round(box.height) || +svg.getAttribute('height') || 400);
+    return copy;
+  }
+  function standaloneSvg(input, {title, source, unit}) {
+    const list = Array.isArray(input) ? input : [input], svg = list[0];
+    let copy;
+    if (list.length === 1) copy = inlineCopy(svg);
+    else {
+      // Varios paneles (múltiplos): uno debajo de otro dentro de un solo SVG.
+      const parts = list.map(inlineCopy), width = Math.max(...parts.map(p => +p.getAttribute('width')));
+      let y = 0;
+      copy = svgNode('svg', {width, viewBox: '0 0 ' + width + ' 1'});
+      parts.forEach(p => { p.setAttribute('y', y); y += +p.getAttribute('height') + 16; copy.append(p); });
+      copy.setAttribute('height', y); copy.setAttribute('viewBox', `0 0 ${width} ${y}`);
+    }
     copy.setAttribute('xmlns', NS);
-    copy.setAttribute('width', Math.round(box.width) || copy.getAttribute('width') || 800);
-    copy.setAttribute('height', Math.round(box.height) || copy.getAttribute('height') || 400);
     copy.querySelectorAll(':scope > title, :scope > desc').forEach(n => n.remove());
     const bg = svgNode('rect', {width: '100%', height: '100%', style: 'fill:' + getComputedStyle(svg.closest('figure,section,div') || svg).getPropertyValue('--grafica-papel')});
     const defs = copy.querySelector(':scope > defs');
@@ -474,7 +492,7 @@
     const unit = figure.getAttribute('data-unidad') || '';
     const make = (text, fn) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = text; b.addEventListener('click', fn); box.append(b); return b; };
     if (table) make(w.csv, () => download(slug(title) + '.csv', 'text/csv;charset=utf-8', '﻿' + tableCsv(table)));
-    make(w.svg, () => { const svg = getSvg(); if (svg) download(slug(title) + '.svg', 'image/svg+xml', standaloneSvg(svg, {title, source, unit})); });
+    make(w.svg, () => { const svg = getSvg(); if (svg && (!Array.isArray(svg) || svg.length)) download(slug(title) + '.svg', 'image/svg+xml', standaloneSvg(svg, {title, source, unit})); });
     return box;
   }
 
@@ -530,13 +548,16 @@
     return svgNode('text', {x: anchor === 'start' ? Math.max(0, x - 4) : anchor === 'end' ? Math.min(width, x + 4) : x, y, 'text-anchor': anchor, ...attrs}, text);
   }
   // Rótulos de ticks horizontales que no se pisan: reduce la lista hasta que haya hueco.
-  function spacedTicks(ticks, scale, format, font, gap = 12) {
-    let step = 1;
-    while (step < ticks.length) {
-      const kept = ticks.filter((_, i) => i % step === 0);
-      const ok = kept.every((v, i) => !i || scale(v) - scale(kept[i - 1]) >= (textWidth(format(v), font) + textWidth(format(kept[i - 1]), font)) / 2 + gap);
-      if (ok) return kept;
-      step++;
+  // Usa la misma regla de anclaje que edgeText para medir cada rótulo donde de verdad se dibuja.
+  function spacedTicks(ticks, scale, format, font, gap = 12, width = Infinity) {
+    const box = v => {
+      const x = scale(v), w = textWidth(format(v), font);
+      const left = x - w / 2 < 0 ? Math.max(0, x - 4) : x + w / 2 > width ? Math.min(width, x + 4) - w : x - w / 2;
+      return [left, left + w];
+    };
+    for (let step = 1; step < ticks.length; step++) {
+      const kept = ticks.filter((_, i) => i % step === 0), boxes = kept.map(box);
+      if (boxes.every((b, i) => !i || b[0] - boxes[i - 1][1] >= gap)) return kept;
     }
     return ticks.slice(0, 1);
   }

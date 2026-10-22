@@ -62,6 +62,18 @@
     "example": "bar-chart/example.html"
   },
   {
+    "file": "column-chart/README.md",
+    "example": "column-chart/example.html"
+  },
+  {
+    "file": "dumbbell-chart/README.md",
+    "example": "dumbbell-chart/example.html"
+  },
+  {
+    "file": "bullet-chart/README.md",
+    "example": "bullet-chart/example.html"
+  },
+  {
     "file": "line-chart/README.md",
     "example": "line-chart/example.html"
   },

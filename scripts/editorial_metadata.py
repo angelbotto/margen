@@ -11,3 +11,5 @@ ETIQUETAS.update({'apuntes':'Apuntes manuscritos al margen','cards-trazadas':'Ca
 ETIQUETAS.update({'marco':'Marco de líneas desvanecidas','estanteria':'Estantería editorial','invitacion':'Invitación editorial','lista-estados':'Listas de estado','lista-proyectos':'Lista de proyectos','conversacion':'Conversación en el artículo','navegacion':'Navegación editorial','pie-editorial':'Footer editorial'})
 
 ETIQUETAS.update({'actividad-editorial':'Actividad con contexto editorial','codigo-lineas':'Código numerado y destacado','enlaces-icono':'Enlaces con icono','avisos-animados':'Avisos con icono animado','trayectoria':'Cronología vertical','galeria':'Galería deslizable'})
+
+ETIQUETAS.update({'columnas': 'Columnas agrupadas o apiladas', 'cambio': 'Antes y después', 'meta': 'Avance frente a meta'})

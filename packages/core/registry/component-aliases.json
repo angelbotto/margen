@@ -93,5 +93,8 @@
   "sitio-editorial": "web-shell",
   "x-post": "x-post",
   "youtube": "youtube",
-  "instagram": "instagram"
+  "instagram": "instagram",
+  "columnas": "column-chart",
+  "cambio": "dumbbell-chart",
+  "meta": "bullet-chart"
 }

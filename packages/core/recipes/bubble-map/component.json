@@ -11,6 +11,7 @@
     "packages/core/components/editorial-pieces.js",
     "packages/core/components/reader.js",
     "packages/core/components/geography.js",
+    "packages/core/components/chart-core.js",
     "packages/core/components/analytics.js"
   ]
 }
