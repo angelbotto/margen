@@ -111,6 +111,16 @@ class ReaderActionsRuntime(unittest.TestCase):
   self.reader.put('/api/artifacts/'+self.doc+'/reader-actions',json={'saved':False},headers={'X-Margen-Reader-Action':'1'})
   page.close()
 
+ def test_a_thin_figure_edge_never_overlays_the_icon_targets(self):
+  page=self.open(self.doc);overlay=page.locator('.reader-actions-anchor');overlay.wait_for(state='visible')
+  frame=page.frame_locator('#artifact-frame')
+  for edge in ('top','bottom'):
+   frame.locator('[data-acciones-lector]').evaluate('''(slot,edge)=>{const r=slot.getBoundingClientRect(),cover=document.createElement('div');cover.id='edge-cover';Object.assign(cover.style,{position:'fixed',left:r.left+'px',top:(edge==='top'?r.top:r.bottom-4)+'px',width:r.width+'px',height:'4px',background:'red',zIndex:'99999'});document.body.append(cover);dispatchEvent(new Event('scroll'));}''',edge)
+   overlay.wait_for(state='hidden')
+   frame.locator('#edge-cover').evaluate('e=>{e.remove();dispatchEvent(new Event("scroll"));}')
+   overlay.wait_for(state='visible')
+  page.close()
+
  def test_forged_messages_and_held_keys_never_mutate(self):
   page=self.open(self.doc);page.locator('.reader-actions-anchor').wait_for(state='visible',timeout=5000)
   before=len(self.puts())

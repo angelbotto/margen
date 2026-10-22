@@ -6053,8 +6053,8 @@ main.hoja[data-presentation]{margin-top:22px}
    // A host overlay cannot inherit the iframe stacking context. Report a slot only
    // when its entire button area is uncovered by wide figures or the sticky header.
    const visible=!!target&&r.width>=40&&r.top>=0&&r.bottom<=innerHeight&&
-    [4,Math.min(r.width-4,100),Math.min(r.width-4,210)].every(x=>[8,r.height/2,r.height-8].every(y=>slot.contains(document.elementFromPoint(r.left+x,r.top+y))));
-   const data=visible?{visible:true,x:Math.max(0,Math.round(r.left)),y:Math.round(r.top),width:Math.min(Math.round(r.width),640,innerWidth-Math.max(0,Math.round(r.left))),height:Math.round(r.height),vw:innerWidth,vh:innerHeight}:{visible:false};
+    [.5,r.width/4,r.width/2,r.width*3/4,r.width-.5].every(x=>[.5,r.height/4,r.height/2,r.height*3/4,r.height-.5].every(y=>slot.contains(document.elementFromPoint(r.left+x,r.top+y))));
+   const data=visible?{visible:true,x:Math.max(0,r.left),y:r.top,width:Math.min(r.width,640,innerWidth-Math.max(0,r.left)),height:r.height,vw:innerWidth,vh:innerHeight}:{visible:false};
    const key=JSON.stringify(data);if(key!==last){last=key;post(data);}};
   const schedule=()=>{if(slot&&!frame)frame=requestAnimationFrame(report);};
   addEventListener('message',e=>{const d=e.data;if(e.source!==parent||d?.bottifact!==1||d.op!=='reader-actions-slot'||slot)return;
