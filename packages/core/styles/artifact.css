@@ -2973,6 +2973,8 @@ body.web-editorial > .web-bordes { position:fixed; inset:0 0 auto; }
 .review-new-comment{grid-column:1/-1;justify-self:start}
 @media(pointer:coarse){.review-context-menu button{min-height:44px}}
 @media print{.review-context-menu{display:none!important}}
+
+.revision-ui .revision-identidad{display:inline-block;border:1px solid currentColor;border-radius:3px;padding:0 .3em;font-size:.85em;white-space:nowrap;unicode-bidi:isolate}
 /* REVIEW COMPOSER END */
 
 /* PRESENTATION START */
