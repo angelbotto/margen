@@ -39,6 +39,7 @@
 .codigo pre[data-desborde~=inicio] { --codigo-fade-i:transparent; }
 .codigo pre[data-desborde~=fin] { --codigo-fade-f:transparent; }
 .codigo pre[data-desborde]:focus-visible { -webkit-mask-image:none; mask-image:none; }
+.codigo .codigo-linea-final::before { content:none; }
 .codigo .cab > .codigo-aviso { grid-column:1/-1; color:var(--tinta-3); font-size:12px; }
 .terminal .codigo-puntuacion,.terminal .codigo-funcion,.terminal .codigo-etiqueta { color:inherit; }
 @media (forced-colors:active) { .codigo pre[data-desborde] { -webkit-mask-image:none; mask-image:none; } }

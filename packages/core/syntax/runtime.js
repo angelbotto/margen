@@ -102,11 +102,13 @@
   let offset = 0;
   while (walker.nextNode()) {
    const node = walker.currentNode, end = offset + node.data.length;
-   let wrapper = null;
-   for (let p = node.parentElement; p && p !== el; p = p.parentElement) if (p.matches(OVERLAY)) wrapper = p;
-   if (wrapper && end > offset) {
+   // Toda la cadena de envoltorios, de fuera hacia dentro: <mark><a>…</a></mark> y <a><mark>…</mark></a>.
+   const chain = [];
+   for (let p = node.parentElement; p && p !== el; p = p.parentElement) if (p.matches(OVERLAY)) chain.unshift(p);
+   if (chain.length && end > offset) {
     const last = ranges[ranges.length - 1];
-    if (last && last[2] === wrapper && last[1] === offset) last[1] = end; else ranges.push([offset, end, wrapper]);
+    if (last && last[1] === offset && last[2].length === chain.length && last[2].every((w, i) => w === chain[i])) last[1] = end;
+    else ranges.push([offset, end, chain]);
    }
    offset = end;
   }
@@ -127,8 +129,8 @@
  // Construye por tramos para no bloquear al lector; el texto visible no cambia hasta el reemplazo final.
  function* build(el, source, pieces, layers, numbered) {
   const frag = document.createDocumentFragment(), selected = selectedLines(el);
-  let number = 1, line = null, container = null, layer = -1, li = 0, count = 0;
-  const target = () => container || line || frag;
+  let number = 1, line = null, stack = [], li = 0, count = 0;
+  const target = () => stack.length ? stack[stack.length - 1][1] : line || frag;
   const newLine = () => {
    if (!numbered) return;
    line = document.createElement('span');
@@ -136,11 +138,20 @@
    line.dataset.numero = String(number++);
    frag.append(line);
   };
-  const text = (start, end, kind, wrap) => {
-   if (wrap !== layer) {
-    layer = wrap; container = null;
-    if (wrap >= 0) { container = layers[wrap][2].cloneNode(false); container.removeAttribute('id'); (line || frag).append(container); }
+  // Reutiliza los envoltorios abiertos que coinciden y clona el resto, anidados en el mismo orden.
+  const wrap = chain => {
+   let keep = 0;
+   while (keep < stack.length && keep < chain.length && stack[keep][0] === chain[keep]) keep++;
+   stack.length = keep;
+   for (let i = keep; i < chain.length; i++) {
+    const clone = chain[i].cloneNode(false);
+    clone.removeAttribute('id');
+    target().append(clone);
+    stack.push([chain[i], clone]);
    }
+  };
+  const text = (start, end, kind, layer) => {
+   wrap(layer >= 0 ? layers[layer][2] : []);
    const value = source.slice(start, end);
    if (!kind) { target().append(value); return; }
    const span = document.createElement('span');
@@ -160,9 +171,12 @@
     if (stop > at) text(at, stop, kind, inLayer);
     at = stop;
     if (nl === at && at < end) {
-     layer = -1; container = null;
+     // Cada línea cierra sus envoltorios; un salto final termina la última línea sin abrir otra vacía.
+     stack = [];
      frag.append('\n');
-     newLine();
+     if (at + 1 < source.length) newLine();
+     // Fila sin número: sin una caja tras el salto, Chromium lo omite al copiar una selección.
+     else if (numbered) { const end = document.createElement('span'); end.className = 'codigo-linea codigo-linea-final'; frag.append(end); }
      at++;
      if (++count % 200 === 0) yield;
     }

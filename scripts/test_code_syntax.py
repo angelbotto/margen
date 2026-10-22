@@ -119,8 +119,8 @@ class CodeSyntax(unittest.TestCase):
   self.assertEqual(page.locator('#exacto').text_content(), EXACT)
   dynamic = page.evaluate("""()=>{const s='a\\r\\nb\\tc\\u{1F9ED}\\n';const box=document.createElement('div');box.className='codigo';
    box.innerHTML='<pre tabindex="0" aria-label="x"><code data-lenguaje="js"></code></pre>';const code=box.querySelector('code');code.textContent=s;
-   document.querySelector('#uno').append(box);NotaCodigo.init(box,{inmediato:true});return [code.textContent===s,code.querySelectorAll('.codigo-linea').length];}""")
-  self.assertEqual(dynamic, [True, 3])
+   document.querySelector('#uno').append(box);NotaCodigo.init(box,{inmediato:true});return [code.textContent===s,code.querySelectorAll('.codigo-linea[data-numero]').length];}""")
+  self.assertEqual(dynamic, [True, 2])  # a final newline ends line 2; it does not open an empty line 3
   before = marked.evaluate('e=>e.innerHTML')
   page.evaluate('NotaCodigo.init();NotaCodigo.init(document.getElementById("marcado"))')
   self.assertEqual(marked.evaluate('e=>e.innerHTML'), before)
@@ -128,6 +128,22 @@ class CodeSyntax(unittest.TestCase):
   button = page.locator('#marcado').locator('xpath=ancestor::div[contains(@class,"codigo")]').locator('[data-codigo-copiar]')
   button.click()
   self.assertEqual(page.evaluate('navigator.clipboard.readText()'), MARKED)
+
+ def test_nested_wrappers_and_trailing_newline(self):
+  page = self.page()
+  result = page.evaluate("""()=>{const box=document.createElement('div');box.className='codigo';
+   box.innerHTML='<pre tabindex="0" aria-label="x"><code data-lenguaje="js">const a = <mark>uno(<a href="#uno">dos</a>)</mark>;\\nconst b = <a href="#dos"><mark class="m">tres</mark> + 1</a>;\\n</code></pre>';
+   const code=box.querySelector('code'),source=code.textContent;document.querySelector('#uno').append(box);NotaCodigo.init(box,{inmediato:true});
+   const pairs=[...code.querySelectorAll('mark a, a mark')].map(e=>[e.parentElement.tagName,e.tagName,e.getAttribute('href')||e.className,e.textContent]);
+   return {same:code.textContent===source,pairs,lines:[...code.querySelectorAll('.codigo-linea[data-numero]')].map(l=>l.textContent),final:code.lastElementChild.matches('.codigo-linea-final:not([data-numero]):empty'),
+    links:[...code.querySelectorAll('a')].map(a=>[a.getAttribute('href'),a.textContent]),marks:[...code.querySelectorAll('mark')].map(m=>m.textContent)}}""")
+  self.assertTrue(result['same'])
+  self.assertIn(['MARK', 'A', '#uno', 'dos'], result['pairs'])
+  self.assertIn(['A', 'MARK', 'm', 'tres'], result['pairs'])
+  self.assertEqual(result['links'], [['#uno', 'dos'], ['#dos', 'tres + 1']])
+  self.assertEqual(''.join(result['marks']), 'uno(dos)tres')
+  self.assertEqual(result['lines'], ['const a = uno(dos);', 'const b = tres + 1;'])
+  self.assertTrue(result['final'])
 
  def test_theme_switch_keeps_tokens_and_contrast_in_every_palette(self):
   page = self.page()
