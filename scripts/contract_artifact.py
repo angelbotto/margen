@@ -185,10 +185,23 @@ def build(title,pages,description='',brand='Margen',theme=None,style=None,docume
  return result
 
 def composition_warnings(html):
- """Flag custom prose wrappers whose rhythm cannot be inferred from canonical CSS."""
+ """Flag authored prose and narrative tables that need a deliberate reading layout."""
  doc=Document(html);warnings=[]
  css=(ROOT/'packages/core/styles/artifact.css').read_text()
  known=set(re.findall(r'\.([A-Za-z_][A-Za-z0-9_-]*)',css))
+ for table in (n for n in doc.live if n.tag=='table'):
+  ancestors=[];parent=table.parent
+  while parent:ancestors.append(parent);parent=parent.parent
+  if not any('hoja' in n.classes for n in ancestors):continue
+  if any('data-presentation' in n.attrs or n.attrs.get('data-ritmo')=='propio' or 'data-visor' in n.attrs or 'data-explorador' in n.attrs for n in [table,*ancestors]):continue
+  cells=[n for n in table.descendants() if n.tag in {'td','th'}]
+  if not any(len(' '.join(n.text().split()))>=180 for n in cells):continue
+  caption=next((n.text().strip() for n in table.children if n.tag=='caption'),'table')
+  label=table.attrs.get('id') or caption[:100]
+  if any('densa' in n.classes for n in [table,*ancestors]):
+   warnings.append(label+': narrative table cells use dense spacing; remove "densa" and give definitions room to wrap. Verify the longest cell at 390px and desktop.')
+  if not any(n.classes & {'ancho','amplio'} for n in ancestors):
+   warnings.append(label+': narrative table has no wide evidence wrapper; place it in .ancho or .amplio beside prose, or explicitly own its layout with data-ritmo="propio".')
  for node in doc.live:
   if node.tag not in {'section','article','div'} or not node.classes:continue
   ancestors=[];parent=node

@@ -717,7 +717,7 @@
       table.tHead.setAttribute("role", "rowgroup");
       table.tHead.rows[0].setAttribute("role", "row");
       headers.forEach((h) => h.setAttribute("role", "columnheader"));
-      rows.forEach((row) => {
+      rows.forEach((row, r) => {
         row.setAttribute("role", "row");
         [...row.cells].forEach((cell, c) => {
           cell.setAttribute(
@@ -727,6 +727,7 @@
           cell.dataset.label = names[c];
           cell.dataset.primary = String(c === 0);
           cell.dataset.valueType = types[c];
+          cell.dataset.narrative = String(types[c] === "texto" && values[r][c].length >= 140 && /\s/.test(values[r][c]));
         });
       });
       // Facets expose distinct source values with counts, without guessing business semantics.

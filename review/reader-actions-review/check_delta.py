@@ -47,7 +47,9 @@ def contrast(a, b):
 def rgb(css):
     import re
     nums = re.findall(r'[\d.]+', css)
-    return [round(float(n)) for n in nums[:3]] if len(nums) >= 3 else None
+    # CSS color-mix resolves to color(srgb 0..1), not rgb(0..255).
+    scale = 255 if css.startswith('color(srgb ') else 1
+    return [round(float(n) * scale) for n in nums[:3]] if len(nums) >= 3 else None
 
 
 def probe_dock(p, b, engine, docs):

@@ -135,7 +135,7 @@
   let slot=null,last='',frame=0;
   const index=()=>[...document.querySelectorAll('.lectura-guiada:not([data-presentation]) .indice')].find(n=>n.getClientRects().length&&n.querySelector(':scope > .ceja'));
   const post=data=>parent.postMessage({bottifact:1,id:'acciones-'+Math.random().toString(36).slice(2),op:'reader-actions-anchor',data},'*');
-  const report=()=>{frame=0;const target=index();if(target&&slot.parentElement!==target)target.querySelector(':scope > .ceja').after(slot);
+  const report=()=>{frame=0;const target=index();if(target&&slot.parentElement!==target)target.append(slot);
    const r=slot.getBoundingClientRect();
    // A host overlay cannot inherit the iframe stacking context. Report a slot only
    // when its entire button area is uncovered by wide figures or the sticky header.
@@ -146,8 +146,8 @@
   const schedule=()=>{if(slot&&!frame)frame=requestAnimationFrame(report);};
   addEventListener('message',e=>{const d=e.data;if(e.source!==parent||d?.bottifact!==1||d.op!=='reader-actions-slot'||slot)return;
    const h=Number(d.height),target=index();if(!(h>=24&&h<=96)||!target)return;
-   slot=document.createElement('div');slot.className='acciones-lector';slot.setAttribute('data-acciones-lector','');slot.setAttribute('aria-hidden','true');slot.style.blockSize=h+'px';
-   target.querySelector(':scope > .ceja').after(slot);
+   slot=document.createElement('div');slot.className='acciones-lector';slot.setAttribute('data-acciones-lector','');slot.setAttribute('aria-hidden','true');slot.style.blockSize=h+'px';slot.style.marginBlockStart='16px';
+   target.append(slot);
    // Las reacciones locales del pie no se duplican con el «Me gusta» de la cuenta.
    document.querySelectorAll('[data-reacciones]').forEach(n=>{n.hidden=true;});
    addEventListener('scroll',schedule,{passive:true,capture:true});addEventListener('resize',schedule,{passive:true});

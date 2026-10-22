@@ -30,7 +30,7 @@ The catalog prints a compact index unless an ID is selected. Search matches Engl
 
 1. Run `python3 scripts/publish.py status` when a connection exists. Verify the intended account; each teammate uses their own token (`connect --email THEIR_EMAIL`). Never infer the intended person from credentials. `publish_on_create` authorizes private publication of new artifacts unless the user requests local work. Preserve the configured server; report failed publication rather than choosing another host.
 2. Resolve [project identity](docs/project-identity.md) from `.margen.json` or an explicit project root. Theme, light/dark/system mode, typography and company identity are independent. For company branding, consult [brands](docs/brands.md); do not infer ownership from prose.
-3. Write semantic source HTML with stable section IDs. Compose useful evidence, tables, charts, left/right marginal notes, decisions and next actions. Choose variety for its explanatory value; neither a wall of prose nor an arbitrary component quota satisfies a rich brief.
+3. Write semantic source HTML with stable section IDs. For a developed report, plan the decision → evidence → interpretation → uncertainty → action reading path before choosing components. Preserve requested depth: an overview must link to substantive detail, not replace it. Use wide comparisons for a few definitions, `data-explorer` for record investigation, and charts only when sourced values support them. Long narrative table cells require normal density and deliberate widths. Follow [report composition](docs/composition.md); neither a wall of prose nor an arbitrary component quota satisfies a rich brief.
 4. Use the canonical generator and validator:
 
 ```bash

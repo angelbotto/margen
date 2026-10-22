@@ -1745,7 +1745,6 @@ body:has(.revision-barra) { padding-bottom:0; }
 [data-explorador] .tabla-caja { border:1px solid var(--pieza-linea); border-radius:8px; }
 [data-explorador] table { min-width:620px; font:14px/1.5 var(--sans); }
 [data-explorador] th,[data-explorador] td { padding:12px 16px; }
-[data-explorador] td:last-child { font:13px var(--mono); text-align:right; }
 [data-explorador] thead th { background:var(--pieza-suave); }
 [data-explorador-estado] { font:12px/1.5 var(--sans); color:var(--pieza-secundaria); }
 .visor-herramientas { padding:10px; border:1px solid var(--pieza-linea); border-radius:9px; background:var(--pieza-papel); }
@@ -3744,6 +3743,9 @@ main.hoja[data-presentation]{margin-top:22px}
 .bf-inline-detail{margin-top:8px;white-space:normal;font:12px/1.5 var(--sans,system-ui)}.bf-inline-detail>summary{width:fit-content;cursor:pointer;color:var(--tinta-2,#666);padding:5px 0}.bf-inline-detail[open]>.bf-detail-grid{margin-top:10px;min-width:min(420px,100%)}
 @media(max-width:640px){.bf-inline-detail>summary{min-height:44px;display:flex;align-items:center}.bf-person,.bf-media{overflow-wrap:anywhere}.bf-detail-card{padding:12px}}
 .bf-record-subtitle{display:block;font:11px/1.5 var(--sans,system-ui);color:var(--tinta-2);margin-top:3px}
+/* Type, not column position, controls alignment. Narrative fields get a full record row. */
+.explorer-ready :is(td,th)[data-value-type=texto]{text-align:left;font-family:var(--sans);line-height:1.5}
+.explorer-ready:is([data-layout=cards],[data-layout=list],[data-layout=board]) tbody :is(td,th)[data-narrative=true]{grid-column:1/-1}
 /* TABLE CONTENT END */
 
 /* CHART CORE START */
@@ -9905,7 +9907,7 @@ window.NotaGeografia=Object.freeze({
   let slot=null,last='',frame=0;
   const index=()=>[...document.querySelectorAll('.lectura-guiada:not([data-presentation]) .indice')].find(n=>n.getClientRects().length&&n.querySelector(':scope > .ceja'));
   const post=data=>parent.postMessage({bottifact:1,id:'acciones-'+Math.random().toString(36).slice(2),op:'reader-actions-anchor',data},'*');
-  const report=()=>{frame=0;const target=index();if(target&&slot.parentElement!==target)target.querySelector(':scope > .ceja').after(slot);
+  const report=()=>{frame=0;const target=index();if(target&&slot.parentElement!==target)target.append(slot);
    const r=slot.getBoundingClientRect();
    // A host overlay cannot inherit the iframe stacking context. Report a slot only
    // when its entire button area is uncovered by wide figures or the sticky header.
@@ -9916,8 +9918,8 @@ window.NotaGeografia=Object.freeze({
   const schedule=()=>{if(slot&&!frame)frame=requestAnimationFrame(report);};
   addEventListener('message',e=>{const d=e.data;if(e.source!==parent||d?.bottifact!==1||d.op!=='reader-actions-slot'||slot)return;
    const h=Number(d.height),target=index();if(!(h>=24&&h<=96)||!target)return;
-   slot=document.createElement('div');slot.className='acciones-lector';slot.setAttribute('data-acciones-lector','');slot.setAttribute('aria-hidden','true');slot.style.blockSize=h+'px';
-   target.querySelector(':scope > .ceja').after(slot);
+   slot=document.createElement('div');slot.className='acciones-lector';slot.setAttribute('data-acciones-lector','');slot.setAttribute('aria-hidden','true');slot.style.blockSize=h+'px';slot.style.marginBlockStart='16px';
+   target.append(slot);
    // Las reacciones locales del pie no se duplican con el «Me gusta» de la cuenta.
    document.querySelectorAll('[data-reacciones]').forEach(n=>{n.hidden=true;});
    addEventListener('scroll',schedule,{passive:true,capture:true});addEventListener('resize',schedule,{passive:true});
@@ -13469,7 +13471,7 @@ globalThis.BottifactTableModel=TableModel;
       table.tHead.setAttribute("role", "rowgroup");
       table.tHead.rows[0].setAttribute("role", "row");
       headers.forEach((h) => h.setAttribute("role", "columnheader"));
-      rows.forEach((row) => {
+      rows.forEach((row, r) => {
         row.setAttribute("role", "row");
         [...row.cells].forEach((cell, c) => {
           cell.setAttribute(
@@ -13479,6 +13481,7 @@ globalThis.BottifactTableModel=TableModel;
           cell.dataset.label = names[c];
           cell.dataset.primary = String(c === 0);
           cell.dataset.valueType = types[c];
+          cell.dataset.narrative = String(types[c] === "texto" && values[r][c].length >= 140 && /\s/.test(values[r][c]));
         });
       });
       // Facets expose distinct source values with counts, without guessing business semantics.
@@ -14606,7 +14609,7 @@ globalThis.BottifactTableModel=TableModel;
   let slot=null,last='',frame=0;
   const index=()=>[...document.querySelectorAll('.lectura-guiada:not([data-presentation]) .indice')].find(n=>n.getClientRects().length&&n.querySelector(':scope > .ceja'));
   const post=data=>parent.postMessage({bottifact:1,id:'acciones-'+Math.random().toString(36).slice(2),op:'reader-actions-anchor',data},'*');
-  const report=()=>{frame=0;const target=index();if(target&&slot.parentElement!==target)target.querySelector(':scope > .ceja').after(slot);
+  const report=()=>{frame=0;const target=index();if(target&&slot.parentElement!==target)target.append(slot);
    const r=slot.getBoundingClientRect();
    // A host overlay cannot inherit the iframe stacking context. Report a slot only
    // when its entire button area is uncovered by wide figures or the sticky header.
@@ -14617,8 +14620,8 @@ globalThis.BottifactTableModel=TableModel;
   const schedule=()=>{if(slot&&!frame)frame=requestAnimationFrame(report);};
   addEventListener('message',e=>{const d=e.data;if(e.source!==parent||d?.bottifact!==1||d.op!=='reader-actions-slot'||slot)return;
    const h=Number(d.height),target=index();if(!(h>=24&&h<=96)||!target)return;
-   slot=document.createElement('div');slot.className='acciones-lector';slot.setAttribute('data-acciones-lector','');slot.setAttribute('aria-hidden','true');slot.style.blockSize=h+'px';
-   target.querySelector(':scope > .ceja').after(slot);
+   slot=document.createElement('div');slot.className='acciones-lector';slot.setAttribute('data-acciones-lector','');slot.setAttribute('aria-hidden','true');slot.style.blockSize=h+'px';slot.style.marginBlockStart='16px';
+   target.append(slot);
    // Las reacciones locales del pie no se duplican con el «Me gusta» de la cuenta.
    document.querySelectorAll('[data-reacciones]').forEach(n=>{n.hidden=true;});
    addEventListener('scroll',schedule,{passive:true,capture:true});addEventListener('resize',schedule,{passive:true});

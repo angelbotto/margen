@@ -75,3 +75,7 @@ At narrow widths, records use the card presentation by default; Table remains av
 Test 320/390 px, keyboard and touch-compatible controls, light/dark modes, filtered selections, saved views and export order. Do not call this tested on a physical phone unless it was.
 
 References: [shadcn Data Table](https://ui.shadcn.com/docs/components/data-table), [shadcn Popover](https://ui.shadcn.com/docs/components/radix/popover), [Radix Popover](https://www.radix-ui.com/primitives/docs/components/popover), [Radix Avatar](https://www.radix-ui.com/primitives/docs/components/avatar).
+
+## Narrative columns
+
+Column type controls alignment; a last column is not implicitly numeric. Text uses the reading face and left alignment. Portable text fields of at least 140 characters containing whitespace span a complete row in Cards, List and Board, so definitions do not get squeezed beside a short category. Original cells, values, search, CSV and comment anchors stay intact. Hosted Margen documents refresh the marked explorer/model modules and shared table-content CSS; arbitrary uploaded HTML keeps its own styling.

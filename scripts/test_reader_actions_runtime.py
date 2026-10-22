@@ -74,12 +74,15 @@ class ReaderActionsRuntime(unittest.TestCase):
 
  def state(self,aid):return self.reader.get('/api/artifacts/'+aid+'/reader-actions').json()
 
- def test_anchor_sits_under_the_index_heading_and_keyboard_saves_to_a_useful_list(self):
+ def test_icon_actions_follow_all_index_links_and_keyboard_saves_to_a_useful_list(self):
   page=self.open(self.doc);overlay=page.locator('.reader-actions-anchor')
   overlay.wait_for(state='visible',timeout=5000)
   frame=page.frame_locator('#artifact-frame')
-  ceja=frame.locator('.indice > .ceja').bounding_box();slot=frame.locator('.indice > [data-acciones-lector]').bounding_box();box=overlay.bounding_box()
-  self.assertLessEqual(abs(slot['y']-(ceja['y']+ceja['height'])),12)
+  links=frame.locator('.indice > ol').bounding_box();slot=frame.locator('.indice > [data-acciones-lector]').bounding_box();box=overlay.bounding_box()
+  self.assertGreaterEqual(slot['y']-(links['y']+links['height']),15)
+  self.assertEqual(overlay.locator('button svg').count(),2)
+  self.assertEqual(overlay.locator('[data-action=liked] .reader-action-caption').text_content(),'0')
+  self.assertEqual(overlay.locator('[data-action=saved]').evaluate('e=>getComputedStyle(e).borderTopWidth'),'0px')
   self.assertLessEqual(abs(box['y']-slot['y']),1);self.assertLessEqual(abs(box['x']-slot['x']),1)
   # Las reacciones locales del pie no se duplican con el «Me gusta» de la cuenta.
   self.assertTrue(frame.locator('[data-reacciones]').evaluate('n=>n.hidden'))

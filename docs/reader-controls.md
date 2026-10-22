@@ -19,3 +19,7 @@ The original Margen mark is an outlined cube with dotted silhouette and hidden e
 ## Boundaries
 
 Opening a contextual menu grants no permissions. Both the composer and the server enforce access. Draft text survives save errors. Local files keep review in the browser until explicitly exported; hosted artifacts use the portal. Copying review context does not send it to an agent or resume a session.
+
+## Account actions after the contents
+
+Hosted Save and Like actions follow the complete contents list, separated by 16px. The bookmark and heart use 52px targets, an accessible action name, a visible saved state and a real like count. They are portal-owned; the document only reserves a slot. Plain HTML and presentations retain the host fallback dock. The anchored actions keep their authenticated confirmation dialog and iframe intent boundary.

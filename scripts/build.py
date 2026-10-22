@@ -40,13 +40,14 @@ if (ROOT/'portal/static').is_dir():
     # Hosted refresh of other marked modules in older documents (portal/reader_style.py).
     component = lambda name: 'packages/core/components/' + name
     refreshed = [component(name) for name in ('reader.js', 'chapters.js', 'prototype.js', 'chart-core.js', 'charts.js', 'analytics.js', 'reports.js',
-                                              'evidence.js', 'attention-map.js', 'geography.js', 'globe.js', 'scene.js', 'fleet.js', 'embeds.js')]
+                                              'evidence.js', 'attention-map.js', 'geography.js', 'globe.js', 'scene.js', 'fleet.js', 'embeds.js', 'table-model.js', 'data-explorer.js')]
     # Chart runtimes now draw through the shared core, which older documents never carried.
     requires = {component(name): [component('chart-core.js')] for name in ('charts.js', 'analytics.js', 'reports.js', 'evidence.js', 'attention-map.js')}
+    requires[component('data-explorer.js')] = [component('table-model.js')]
     (ROOT/'portal/static/runtime-refresh.json').write_text(json.dumps({
         'modules': {name: (ROOT/name).read_text() for name in refreshed},
         'requires': requires,
-        'css': '\n/* CHART CORE (refresh) */\n' + (ROOT/'packages/core/styles/chart-core.css').read_text()}, ensure_ascii=False) + '\n')
+        'css': '\n/* CHART CORE (refresh) */\n' + (ROOT/'packages/core/styles/chart-core.css').read_text() + '\n/* TABLE CONTENT (refresh) */\n' + (ROOT/'packages/core/styles/table-content.css').read_text()}, ensure_ascii=False) + '\n')
 from recipes import assemble as assemble_recipes
 assemble_recipes()
 from themes import generate as generate_theme_registry

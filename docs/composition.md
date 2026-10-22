@@ -19,7 +19,32 @@ Use the component registry and `scripts/catalog.py --id ID` to inspect recipes, 
 
 ## Rhythm and hierarchy
 
-Text stays within 35rem; evidence can expand to 62/76rem. Use wide figures as siblings of narrow reading blocks. One outer dotted frame is enough. Alternate explanation, evidence and interpretation; do not replace all structure with cards. Use left/right marginal annotations for nuance, keeping critical conditions in normal text. Animation should reveal a brief secondary note when seen, with a small replay control.
+Editorial prose defaults to 33rem (528px), code to 48rem (768px), and wide evidence to 64rem (1024px), with 24px mobile gutters. Use wide figures as siblings of narrow reading blocks. One outer dotted frame is enough. Alternate explanation, evidence and interpretation; do not replace all structure with cards. Use left/right marginal annotations for nuance, keeping critical conditions in normal text. Animation should reveal a brief secondary note when seen, with a small replay control.
+
+## Reports need an argument, not just formatted prose
+
+When the request is for a developed report, preserve its depth. A title, several paragraphs and a repeated three-column table are not a substitute for explaining what the evidence means. Plan the reading path before generating: the decision, the supporting evidence, the interpretation, the uncertainty, and the next action. Use chapters when each initiative or evidence family needs its own explanation; keep a brief overview with links to the detail. A requested short memo should stay short.
+
+For each substantive section, explain the situation and consequence, present the relevant evidence, and interpret it. Distinguish current results from proposed targets and historical context. If the source supplies definitions but no observations, build a measurement specification rather than an invented dashboard. Preserve all supplied facts; identify missing baselines, denominators, sources and owners instead of adding fictional numbers to make a chart possible.
+
+Choose a form for the reading task:
+
+| Reader task | Composition |
+| --- | --- |
+| Compare a few definitions or alternatives | Wide semantic table, descriptive caption, deliberate column widths and comfortable multiline cells |
+| Search or inspect a record collection | `data-explorer`, stable row IDs, typed columns, meaningful default view and details for long descriptions |
+| Understand a process | `steps` or a sequence diagram, followed by dependencies and failure conditions |
+| Judge measured change | Chart with units, period, source and denominator; preserve a table alternative |
+| Understand an unknown or historical limitation | Adjacent callout or note; never present an old number as current performance |
+| Act on a recommendation | Decision and action list with the real owner, timing and verification criterion; mark unassigned fields |
+
+Do not add charts, filters, cards or length merely to meet a quota. Explain why a component helps the reader. Use the registry's actual recipes and capabilities; do not hand-roll a plain table when the reader needs record inspection. Conversely, a seven-row comparison does not automatically need a data explorer.
+
+### Tables with narrative cells
+
+Put `.tabla-caja` inside a direct `.ancho` or `.amplio` sibling of prose. Do not bury it in a narrow paragraph container. Reserve `.densa` for short scalar cells; paragraphs, measurement definitions and limitations need normal density, a wide description column, top alignment and line wrapping. Preserve complete text and comment anchors. On mobile use a labeled local scroller or the explorer's record view; never shrink all text until a desktop table fits.
+
+Before publication, check the longest cell at 390px and at desktop width, the difference between the overview and detail, and whether every section adds explanation or evidence. Run `validate_artifact.py --strict-composition` on authored reports and address its structural warnings. Passing that check does not establish editorial depth: read the report as its intended recipient.
 
 ## Data and interaction
 

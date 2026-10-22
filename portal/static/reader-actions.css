@@ -1,13 +1,18 @@
-/* Margen · acciones del lector (portal). El ancla se superpone al hueco bajo «En esta página». */
+/* Margen · acciones del lector (portal), después de los enlaces del índice. */
 #reader-personal-actions{position:fixed;right:max(22px,env(safe-area-inset-right));bottom:calc(84px + env(safe-area-inset-bottom));z-index:5}
 .reader-actions-dock{display:flex;gap:8px}
 .reader-actions-dock[hidden],.reader-actions-anchor[hidden]{display:none}
 .reader-actions-dock .reader-action{position:relative;color:var(--ink)}
 .reader-actions-dock .reader-action[aria-pressed=true] svg{fill:currentColor}
 .reader-action-count{position:absolute;right:-4px;top:-4px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--ink,#1d1b19);color:var(--bg,#fff);font:600 10px/18px var(--sans,system-ui);text-align:center}
-.reader-actions-anchor{position:fixed;z-index:4;display:flex;align-items:center;gap:6px;box-sizing:border-box;pointer-events:none}
-.reader-actions-anchor .reader-action{pointer-events:auto;height:30px;padding:0 12px;border:1px solid var(--line,#d8d3cc);border-radius:15px;background:var(--bg,#fff);color:var(--ink,#1d1b19);font-size:12px;line-height:1;white-space:nowrap}
-.reader-actions-anchor .reader-action[data-on=true]{background:var(--ink,#1d1b19);color:var(--bg,#fff);border-color:var(--ink,#1d1b19)}
+.reader-actions-anchor{position:fixed;z-index:4;display:flex;align-items:center;gap:8px;box-sizing:border-box;pointer-events:none}
+.reader-actions-anchor .reader-action{pointer-events:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:52px;height:52px;padding:4px 6px;border:0;border-radius:6px;background:transparent;color:var(--muted,#6b665f);font:400 11px/14px var(--sans,system-ui);cursor:pointer;transition:color 150ms,background-color 150ms}
+.reader-actions-anchor .reader-action svg{flex:none;width:20px;height:20px}
+.reader-action-caption{font-variant-numeric:tabular-nums}
+.reader-actions-anchor .reader-action[data-on=true]{color:var(--ink,#1d1b19)}
+.reader-actions-anchor .reader-action[data-on=true] svg{fill:currentColor}
+.reader-actions-anchor .reader-action:focus-visible{background:color-mix(in srgb,var(--ink) 6%,var(--bg))}
+@media(hover:hover){.reader-actions-anchor .reader-action:hover{color:var(--ink,#1d1b19);background:color-mix(in srgb,var(--ink) 6%,var(--bg))}}
 .reader-actions-anchor .reader-action:focus-visible,.reader-actions-dialog .reader-action:focus-visible{outline:2px solid var(--accent,currentColor);outline-offset:2px}
 .reader-actions-dialog{width:min(380px,calc(100vw - 32px));border:1px solid var(--line,#d8d3cc);border-radius:16px;padding:18px;background:var(--bg,#fff);color:var(--ink,#1d1b19)}
 .reader-actions-dialog::backdrop{background:#0002;backdrop-filter:blur(6px)}
@@ -24,7 +29,7 @@
 .reader-saved-list li{display:grid;gap:2px;padding:12px 0;border-bottom:1px solid var(--line,#d8d3cc)}
 .reader-saved-list a{font:18px/1.3 var(--serif,Georgia,serif)}
 .reader-saved-list .muted{font-size:12px}
-@media(prefers-reduced-motion:reduce){.reader-actions-anchor{transition:none}}
+@media(prefers-reduced-motion:reduce){.reader-actions-anchor,.reader-actions-anchor .reader-action{transition:none}}
 
 .reader-saved-heading{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
 .reader-saved-panel{max-width:840px;padding-block:8px 32px}

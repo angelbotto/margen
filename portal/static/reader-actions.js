@@ -1,11 +1,11 @@
 /* Margen · Guardar y «Me gusta» del lector, siempre en el DOM del portal.
-   El artefacto (iframe opaco) sólo puede pedir dónde dibujar el ancla bajo «En esta página»; nunca muta.
+   El artefacto (iframe opaco) sólo puede pedir dónde dibujar el ancla al final del índice; nunca muta.
    El ancla abre un diálogo del portal con retardo de intención; el dock fijo actúa con un clic real. */
 (() => {
   'use strict';
   const HEADER = 'X-Margen-Reader-Action';
   const INTENT_DELAY = 650;
-  const SLOT_HEIGHT = 44;
+  const SLOT_HEIGHT = 52;
   const DOCK_WAIT = 1200;
   const ANCHOR_KEYS = ['visible', 'slot', 'x', 'y', 'width', 'height', 'vw', 'vh'];
 
@@ -17,7 +17,7 @@
   };
   const ICONS = {saved: '<path d="M7 4h10v16l-5-4-5 4Z"/>', liked: '<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/>'};
   const icon = (node, key, count) => {
-    node.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true">' + ICONS[key] + '</svg>';
+    node.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' + ICONS[key] + '</svg>';
     if (count) node.append(make('span', {class: 'reader-action-count', 'aria-hidden': 'true'}, String(count)));
   };
   const finite = (v, min, max) => typeof v === 'number' && Number.isFinite(v) && v >= min && v <= max;
@@ -80,8 +80,11 @@
     function paint() {
       const s = state || {saved: false, liked: false, likes: 0, can_act: false};
       const likes = s.likes ? ' · ' + s.likes : '';
-      for (const b of [anchorSave, save]) b.textContent = s.saved ? 'Guardado' : 'Guardar';
-      for (const b of [anchorLike, like]) b.textContent = 'Me gusta' + likes;
+      save.textContent = s.saved ? 'Guardado' : 'Guardar';
+      like.textContent = 'Me gusta' + likes;
+      icon(anchorSave, 'saved'); icon(anchorLike, 'liked');
+      anchorSave.append(make('span', {class: 'reader-action-caption', 'aria-hidden': 'true'}, s.saved ? 'Guardado' : 'Guardar'));
+      anchorLike.append(make('span', {class: 'reader-action-caption', 'aria-hidden': 'true'}, String(s.likes || 0)));
       icon(dockSave, 'saved'); icon(dockLike, 'liked', s.likes);
       for (const b of [dockSave, anchorSave, save]) {
         b.setAttribute('aria-label', s.saved ? 'Guardado en tu lista. Quitar de guardados' : 'Guardar en tu lista');
@@ -92,6 +95,8 @@
       for (const b of [dockSave, save]) b.setAttribute('aria-pressed', String(!!s.saved));
       for (const b of [dockLike, like]) b.setAttribute('aria-pressed', String(!!s.liked));
       anchorSave.dataset.on = String(!!s.saved); anchorLike.dataset.on = String(!!s.liked);
+      anchorSave.title = s.saved ? 'Guardado en tu lista' : 'Guardar para volver';
+      anchorLike.title = s.liked ? 'Te gusta este documento' : 'Me gusta este documento';
       // Sin cuenta verificada se ve el total, pero sólo el diálogo explica cómo entrar.
       for (const b of [dockSave, dockLike]) b.disabled = busy;
       save.hidden = like.hidden = !s.can_act;

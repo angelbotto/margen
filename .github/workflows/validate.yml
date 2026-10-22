@@ -99,7 +99,9 @@ jobs:
           python scripts/test_contract_footer.py
 
       - name: Check shared reading rhythm
-        run: python scripts/test_editorial_flow.py
+        run: |
+          python scripts/test_editorial_flow.py
+          python scripts/test_narrative_tables.py
 
       - name: Check measured editorial components and optional web shell
         run: |
