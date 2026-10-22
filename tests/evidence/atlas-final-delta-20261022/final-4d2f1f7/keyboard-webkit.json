@@ -1,0 +1,45 @@
+{
+ "engine": "webkit",
+ "trials": [
+  {
+   "mode": "external",
+   "key": "Space",
+   "focus_after_first_key": "media-source button primary|Abrir en pesta\u00f1a nueva",
+   "requests": [],
+   "tabs": [],
+   "players": 0
+  },
+  {
+   "mode": "external",
+   "key": "Enter",
+   "focus_after_first_key": "media-source button primary|Abrir en pesta\u00f1a nueva",
+   "requests": [
+    "https://attacker.example/phish"
+   ],
+   "tabs": [
+    "https://attacker.example/phish"
+   ],
+   "players": 0
+  },
+  {
+   "mode": "embed",
+   "key": "Space",
+   "focus_after_first_key": "primary media-play|Reproducir aqu\u00ed",
+   "requests": [
+    "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Fportal.test"
+   ],
+   "tabs": [],
+   "players": 1
+  },
+  {
+   "mode": "embed",
+   "key": "Enter",
+   "focus_after_first_key": "primary media-play|Reproducir aqu\u00ed",
+   "requests": [
+    "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Fportal.test"
+   ],
+   "tabs": [],
+   "players": 1
+  }
+ ]
+}

@@ -1,0 +1,1223 @@
+{
+ "engine": "webkit",
+ "checks": [
+  {
+   "name": "portal reader CSP frame-src exact provider prefixes only",
+   "ok": true,
+   "detail": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-src 'self' https://www.youtube-nocookie.com/embed/ https://www.instagram.com/p/ https://www.instagram.com/reel/; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'",
+   "severity_if_fail": null
+  },
+  {
+   "name": "artifact iframe sandbox unchanged (allow-scripts allow-downloads)",
+   "ok": true,
+   "detail": {
+    "sandbox": "allow-scripts allow-downloads"
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "artifact stays opaque",
+   "ok": true,
+   "detail": null,
+   "severity_if_fail": null
+  },
+  {
+   "name": "no provider/external request on load",
+   "ok": true,
+   "detail": [
+    {
+     "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Fportal.test",
+     "t": 1792654553.3134642,
+     "phase": "yt"
+    },
+    {
+     "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Fportal.test",
+     "t": 1792654557.768685,
+     "phase": "yt"
+    },
+    {
+     "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Fportal.test",
+     "t": 1792654561.1691258,
+     "phase": "yt"
+    },
+    {
+     "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Fportal.test",
+     "t": 1792654563.862497,
+     "phase": "yt"
+    },
+    {
+     "url": "https://www.instagram.com/p/fA9uwTtkSN/embed/",
+     "t": 1792654567.6144278,
+     "phase": "ig"
+    },
+    {
+     "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Fportal.test",
+     "t": 1792654570.652787,
+     "phase": "ig"
+    },
+    {
+     "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Fportal.test",
+     "t": 1792654574.195755,
+     "phase": "ig"
+    },
+    {
+     "url": "https://example.org/perfil",
+     "t": 1792654579.553192,
+     "phase": "footer"
+    },
+    {
+     "url": "https://x.com/margen_test/status/1234567890123",
+     "t": 1792654581.0255659,
+     "phase": "footer"
+    },
+    {
+     "url": "http://example.org/inseguro",
+     "t": 1792654591.8196979,
+     "phase": "footer"
+    }
+   ],
+   "severity_if_fail": null
+  },
+  {
+   "name": "scripted embed without user activation opens nothing",
+   "ok": true,
+   "detail": {
+    "open": false,
+    "provider": null,
+    "title": "",
+    "status": "",
+    "link": "",
+    "linkText": "",
+    "linkTarget": "",
+    "linkRel": "",
+    "players": 0,
+    "src": null,
+    "sandbox": null,
+    "allow": null,
+    "referrerpolicy": null,
+    "height": null,
+    "active": "portal-app reading|\nSaltar al contenido\n\n\nMargenTu espacio de trabajo×\nBibliotecaMis artefactosCompartidos conmigoComentarios y notas ConocimientoGrafo de conocimientoMi trabajoVisitasCrear con MargenTemasComponentesDevelopersConectar un agenteGestionarAvisos PúblicosArchivoTodos los artefactosAdministración\n\nDUDueña SintéticaCuenta personal⌃\nCuentaowner@owner.testCambiar aparienciaEntrarCerrar sesión\n\n\nBiblioteca/Mis artefactos\n\n\nTu archivo de trabajoMis artefactosSolo documentos de tu cuenta. Los de otras personas están en Compartidos conmigo.Nuevo artefacto\nArtefactos0Pendientes0Compartidos0Aperturas · 30 días—\n\nBuscar artefacto o comentario⌘ KFiltrosCopiar todosCopiar pendientesPreparar contexto\nTipoComentarios y notasComentarios compartidosMis notas privadasEstadoTodosPendientesSin leerResueltos\nCategoríaTodasTodasTodasEmpresa / espacioTodas las empresas / espaciosTodas las empresas / espaciosTodas las empresas / espaciosColecciónTodasTodasTodasTemaTodasTodasTodasAccesoTodos los accesosPrivadoInvitadosCon enlacePúblicoSitio anteriorTodos los accesosTodos los accesosPrivadoInvitadosCon enlacePúblicoSitio anteriorOrdenarActualizadoRelevanciaTítuloComentarios pendientesEmpresa / espacioCategoríaAgenteActualizadoActualizadoRelevanciaTítuloComentarios pendientesEmpresa / espacioCategoríaAgenteDirecciónAutomáticaAscendenteDescendenteAutomáticaAutomáticaAscendenteDescendenteAgenteTodosCodexClaudeHermesTodosTodosCodexClaudeHermesRevisiónTodasCon pendientesSin pendientesTodasTodasCon pendientesSin pendientesLimpiar filtros\nColumnasCategoríaEmpresa / espacioOrigenActualizadoPendientesDensidadCómodaCompactaOrden y filtros se aplican a toda la biblioteca; las filas se cargan al avanzar.\nCondicionesMesas y vistasOrganizar conocimiento\nCargar más\n\n\n\n\n\n\n\nTu artefacto×\nMediosPersonal · Privado\nEditar contenidoNombre y espacioOrganizar\nVersiónPublicada · 22/10/2026, 2:35:45Anterior · 22/10/2026, 2:35:45\nOrigen de esta versión sin registrarVersión que abre el enlace compartido.Historial de cambiosComparar versionesPublicar esta versiónCompartirSubir revisiónCopiar prompt para IA\nRevisión compartida\n← Volver a mi biblioteca\n\n\n\n\nMargen · Tus documentos, tus decisiones.Open source · MIT · Construyamos Margen\nPublicación de otra versión.\nNombre y espacio×NombreEspacioEl enlace y el contenido del documento se conservan.CancelarGuardar\nPublicar artefacto×Los nuevos documentos son privados. Las revisiones se guardan como borrador: el enlace compartido no cambia hasta publicar la versión.TítuloEspacioPersonalLiftitTikinCatabumAgente de origenDispositivo de creaciónSesión o encargo de origenHTML de MargenOriginal PDF o PPTX (opcional, junto a su vista HTML)CancelarGuardar artefacto\nCompartir artefacto×Quién puede entrarPrivado · mi cuentaPersonas y dominios autorizadosCualquiera con el enlacePúblico · aparece en la biblioteca públicaTodo un equipoAutoriza un dominio y sus cuentas verificadas podrán encontrar este artefacto en Compartidos.ComentarVerAñadirGoogle o código por correo. Coincidencia exacta: no incluye subdominios. La edición se concede a personas, no a todo el dominio.Personas específicasComentarVerEditarAñadirCada persona entra con Google o con su correo y un código personal. Añadir un correo concede acceso; comparte el enlace para avisarle. No se envía una invitación automática.Opciones de comentariosQuién ve la conversaciónMi cuenta y las personas autorizadasTodos los lectores del documentoPermitir comentarios con nombre, sin correo verificadoLa administración del portal puede acceder a todos los documentos. Esta opción requiere que la conversación sea visible para los lectores. Los participantes sin correo se identifican como invitados.Copiar enlace actualGuardar permisos\n¿Cómo te llamas?×Tu nombre acompañará los comentarios. Lo recordaremos en este navegador.NombreContinuar con GoogleEntrarContinuar como invitado\nComentario o nota×ContextoTipoComentario compartidoNota privada · sólo yoSesión o encargoTu comentarioGuardar\nPrompt con contexto para IA×Selecciona y copia el texto si tu navegador no permite copiar automáticamente.Seleccionar todo\nOrganizar artefacto×Categoría Clasificar automáticamente por contenidoColeccionesEtiquetasSepara con comas. Hasta 20 por campo. Agrupar no cambia los permisos.Archivar en mi bibliotecaEl enlace sigue funcionando. Puedes recuperarlo desde Archivo.CancelarGuardar\nComparar versiones×DesdeHastaComparar\nActualizar la versión compartida×El mismo enlace mostrará esta versión. El historial, los comentarios y la audiencia se conservan.Seguir revisandoPublicar versión\nVista previa×\n\n×",
+    "intent": null,
+    "place": "",
+    "tag": "",
+    "play": true,
+    "linkHidden": false,
+    "ua": {
+     "a": true
+    }
+   },
+   "severity_if_fail": "high"
+  },
+  {
+   "name": "D2 laundered external: no tab, no request; at most a portal preview naming the real destination",
+   "ok": true,
+   "detail": {
+    "popups": [],
+    "dialog": {
+     "open": false,
+     "provider": null,
+     "title": "",
+     "status": "",
+     "link": "",
+     "linkText": "",
+     "linkTarget": "",
+     "linkRel": "",
+     "players": 0,
+     "src": null,
+     "sandbox": null,
+     "allow": null,
+     "referrerpolicy": null,
+     "height": null,
+     "active": "|",
+     "intent": null,
+     "place": "",
+     "tag": "",
+     "play": true,
+     "linkHidden": false,
+     "ua": {
+      "a": true
+     }
+    },
+    "reqs": []
+   },
+   "severity_if_fail": "medium"
+  },
+  {
+   "name": "D2 laundered embed: no player and no provider request without the portal button",
+   "ok": true,
+   "detail": {
+    "dialog": {
+     "open": false,
+     "provider": null,
+     "title": "",
+     "status": "",
+     "link": "",
+     "linkText": "",
+     "linkTarget": "",
+     "linkRel": "",
+     "players": 0,
+     "src": null,
+     "sandbox": null,
+     "allow": null,
+     "referrerpolicy": null,
+     "height": null,
+     "active": "|",
+     "intent": null,
+     "place": "",
+     "tag": "",
+     "play": true,
+     "linkHidden": false,
+     "ua": {
+      "a": true
+     }
+    },
+    "reqs": []
+   },
+   "severity_if_fail": "medium"
+  },
+  {
+   "name": "host never calls window.open",
+   "ok": true,
+   "detail": 0,
+   "severity_if_fail": null
+  },
+  {
+   "name": "card click opens portal preview with neutral close focus, no player",
+   "ok": true,
+   "detail": {
+    "open": true,
+    "provider": "youtube",
+    "title": "Video de YouTube",
+    "status": "",
+    "link": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "linkText": "Abrir en YouTube",
+    "linkTarget": "_blank",
+    "linkRel": "noopener noreferrer",
+    "players": 0,
+    "src": null,
+    "sandbox": null,
+    "allow": null,
+    "referrerpolicy": null,
+    "height": null,
+    "active": "icon|×",
+    "intent": "confirm",
+    "place": "youtube.com",
+    "tag": "YouTube · video",
+    "play": true,
+    "linkHidden": false,
+    "ua": {
+     "a": true
+    }
+   },
+   "severity_if_fail": "high"
+  },
+  {
+   "name": "0 provider requests before the portal button",
+   "ok": true,
+   "detail": [],
+   "severity_if_fail": "high"
+  },
+  {
+   "name": "preview link is the exact source in a new tab",
+   "ok": true,
+   "detail": {
+    "open": true,
+    "provider": "youtube",
+    "title": "Video de YouTube",
+    "status": "",
+    "link": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "linkText": "Abrir en YouTube",
+    "linkTarget": "_blank",
+    "linkRel": "noopener noreferrer",
+    "players": 0,
+    "src": null,
+    "sandbox": null,
+    "allow": null,
+    "referrerpolicy": null,
+    "height": null,
+    "active": "icon|×",
+    "intent": "confirm",
+    "place": "youtube.com",
+    "tag": "YouTube · video",
+    "play": true,
+    "linkHidden": false,
+    "ua": {
+     "a": true
+    }
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "portal button mounts exact player URL",
+   "ok": true,
+   "detail": {
+    "open": true,
+    "provider": "youtube",
+    "title": "Video de YouTube",
+    "status": "Reproduciendo sin sonido. Actívalo en el propio reproductor.",
+    "link": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "linkText": "Abrir en YouTube",
+    "linkTarget": "_blank",
+    "linkRel": "noopener noreferrer",
+    "players": 1,
+    "src": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Fportal.test",
+    "sandbox": "allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation",
+    "allow": "autoplay; encrypted-media; picture-in-picture; fullscreen",
+    "referrerpolicy": "strict-origin",
+    "height": "",
+    "active": "icon|×",
+    "intent": "player",
+    "place": "youtube.com",
+    "tag": "YouTube · video",
+    "play": false,
+    "linkHidden": false,
+    "ua": {
+     "a": true
+    }
+   },
+   "severity_if_fail": "high"
+  },
+  {
+   "name": "player sandbox/allow/referrer exact",
+   "ok": true,
+   "detail": {
+    "open": true,
+    "provider": "youtube",
+    "title": "Video de YouTube",
+    "status": "Reproduciendo sin sonido. Actívalo en el propio reproductor.",
+    "link": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "linkText": "Abrir en YouTube",
+    "linkTarget": "_blank",
+    "linkRel": "noopener noreferrer",
+    "players": 1,
+    "src": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Fportal.test",
+    "sandbox": "allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation",
+    "allow": "autoplay; encrypted-media; picture-in-picture; fullscreen",
+    "referrerpolicy": "strict-origin",
+    "height": "",
+    "active": "icon|×",
+    "intent": "player",
+    "place": "youtube.com",
+    "tag": "YouTube · video",
+    "play": false,
+    "linkHidden": false,
+    "ua": {
+     "a": true
+    }
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "playback liveness from provider postMessage (stub says playing)",
+   "ok": true,
+   "detail": {
+    "open": true,
+    "provider": "youtube",
+    "title": "Video de YouTube",
+    "status": "Reproduciendo sin sonido. Actívalo en el propio reproductor.",
+    "link": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "linkText": "Abrir en YouTube",
+    "linkTarget": "_blank",
+    "linkRel": "noopener noreferrer",
+    "players": 1,
+    "src": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Fportal.test",
+    "sandbox": "allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation",
+    "allow": "autoplay; encrypted-media; picture-in-picture; fullscreen",
+    "referrerpolicy": "strict-origin",
+    "height": "",
+    "active": "icon|×",
+    "intent": "player",
+    "place": "youtube.com",
+    "tag": "YouTube · video",
+    "play": false,
+    "linkHidden": false,
+    "ua": {
+     "a": true
+    }
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "only the exact player URL requested after the portal button",
+   "ok": true,
+   "detail": [
+    "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Fportal.test"
+   ],
+   "severity_if_fail": null
+  },
+  {
+   "name": "forged provider error from the artifact is ignored",
+   "ok": true,
+   "detail": {
+    "open": true,
+    "provider": "youtube",
+    "title": "Video de YouTube",
+    "status": "Reproduciendo sin sonido. Actívalo en el propio reproductor.",
+    "link": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "linkText": "Abrir en YouTube",
+    "linkTarget": "_blank",
+    "linkRel": "noopener noreferrer",
+    "players": 1,
+    "src": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Fportal.test",
+    "sandbox": "allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation",
+    "allow": "autoplay; encrypted-media; picture-in-picture; fullscreen",
+    "referrerpolicy": "strict-origin",
+    "height": "",
+    "active": "icon|×",
+    "intent": "player",
+    "place": "youtube.com",
+    "tag": "YouTube · video",
+    "play": false,
+    "linkHidden": false,
+    "ua": {
+     "a": true
+    }
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "Escape closes and removes the player",
+   "ok": true,
+   "detail": {
+    "open": false,
+    "provider": "",
+    "title": "Video de YouTube",
+    "status": "",
+    "link": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "linkText": "Abrir en YouTube",
+    "linkTarget": "_blank",
+    "linkRel": "noopener noreferrer",
+    "players": 0,
+    "src": null,
+    "sandbox": null,
+    "allow": null,
+    "referrerpolicy": null,
+    "height": null,
+    "active": "|",
+    "intent": "",
+    "place": "youtube.com",
+    "tag": "YouTube · video",
+    "play": false,
+    "linkHidden": false,
+    "ua": {
+     "a": true
+    }
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "focus returns to the card button inside the artifact",
+   "ok": true,
+   "detail": "Cargar video",
+   "severity_if_fail": null
+  },
+  {
+   "name": "D8 card no longer claims an open player after closing",
+   "ok": true,
+   "detail": "",
+   "severity_if_fail": "low"
+  },
+  {
+   "name": "cancelling the preview loads nothing and returns focus",
+   "ok": true,
+   "detail": [],
+   "severity_if_fail": null
+  },
+  {
+   "name": "repeated opening keeps at most one player and the dialog usable",
+   "ok": true,
+   "detail": {
+    "open": true,
+    "provider": "youtube",
+    "title": "Video de YouTube",
+    "status": "Reproduciendo sin sonido. Actívalo en el propio reproductor.",
+    "link": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "linkText": "Abrir en YouTube",
+    "linkTarget": "_blank",
+    "linkRel": "noopener noreferrer",
+    "players": 1,
+    "src": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Fportal.test",
+    "sandbox": "allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation",
+    "allow": "autoplay; encrypted-media; picture-in-picture; fullscreen",
+    "referrerpolicy": "strict-origin",
+    "height": "",
+    "active": "icon|×",
+    "intent": "player",
+    "place": "youtube.com",
+    "tag": "YouTube · video",
+    "play": false,
+    "linkHidden": false,
+    "ua": {
+     "a": true
+    }
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "after repeated cycles closing leaves zero players",
+   "ok": true,
+   "detail": {
+    "open": false,
+    "provider": "",
+    "title": "Video de YouTube",
+    "status": "",
+    "link": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "linkText": "Abrir en YouTube",
+    "linkTarget": "_blank",
+    "linkRel": "noopener noreferrer",
+    "players": 0,
+    "src": null,
+    "sandbox": null,
+    "allow": null,
+    "referrerpolicy": null,
+    "height": null,
+    "active": "|",
+    "intent": "",
+    "place": "youtube.com",
+    "tag": "YouTube · video",
+    "play": false,
+    "linkHidden": false,
+    "ua": {
+     "a": true
+    }
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "Instagram preview makes no request",
+   "ok": true,
+   "detail": {
+    "d": {
+     "open": true,
+     "provider": "instagram",
+     "title": "Publicación de Instagram",
+     "status": "",
+     "link": "https://www.instagram.com/p/fA9uwTtkSN/",
+     "linkText": "Abrir en Instagram",
+     "linkTarget": "_blank",
+     "linkRel": "noopener noreferrer",
+     "players": 0,
+     "src": null,
+     "sandbox": null,
+     "allow": null,
+     "referrerpolicy": null,
+     "height": null,
+     "active": "icon|×",
+     "intent": "confirm",
+     "place": "instagram.com",
+     "tag": "Instagram · publicación",
+     "play": true,
+     "linkHidden": false,
+     "ua": {
+      "a": true
+     }
+    },
+    "reqs": []
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "Instagram portal button mounts exact /embed/ URL with no-referrer",
+   "ok": true,
+   "detail": {
+    "open": true,
+    "provider": "instagram",
+    "title": "Publicación de Instagram",
+    "status": "",
+    "link": "https://www.instagram.com/p/fA9uwTtkSN/",
+    "linkText": "Abrir en Instagram",
+    "linkTarget": "_blank",
+    "linkRel": "noopener noreferrer",
+    "players": 1,
+    "src": "https://www.instagram.com/p/fA9uwTtkSN/embed/",
+    "sandbox": "allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation",
+    "allow": "autoplay; encrypted-media; picture-in-picture; fullscreen",
+    "referrerpolicy": "no-referrer",
+    "height": "900px",
+    "active": "icon|×",
+    "intent": "player",
+    "place": "instagram.com",
+    "tag": "Instagram · publicación",
+    "play": false,
+    "linkHidden": false,
+    "ua": {
+     "a": true
+    }
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "Instagram MEASURE height bounded (5000 ignored, 900 applied)",
+   "ok": true,
+   "detail": {
+    "open": true,
+    "provider": "instagram",
+    "title": "Publicación de Instagram",
+    "status": "",
+    "link": "https://www.instagram.com/p/fA9uwTtkSN/",
+    "linkText": "Abrir en Instagram",
+    "linkTarget": "_blank",
+    "linkRel": "noopener noreferrer",
+    "players": 1,
+    "src": "https://www.instagram.com/p/fA9uwTtkSN/embed/",
+    "sandbox": "allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation",
+    "allow": "autoplay; encrypted-media; picture-in-picture; fullscreen",
+    "referrerpolicy": "no-referrer",
+    "height": "900px",
+    "active": "icon|×",
+    "intent": "player",
+    "place": "instagram.com",
+    "tag": "Instagram · publicación",
+    "play": false,
+    "linkHidden": false,
+    "ua": {
+     "a": true
+    }
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "popstate closes dialog and removes player",
+   "ok": true,
+   "detail": {
+    "open": false,
+    "provider": "",
+    "title": "Video de YouTube",
+    "status": "",
+    "link": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "linkText": "Abrir en YouTube",
+    "linkTarget": "_blank",
+    "linkRel": "noopener noreferrer",
+    "players": 0,
+    "src": null,
+    "sandbox": null,
+    "allow": null,
+    "referrerpolicy": null,
+    "height": null,
+    "active": "|",
+    "intent": "",
+    "place": "youtube.com",
+    "tag": "YouTube · video",
+    "play": false,
+    "linkHidden": false,
+    "ua": {
+     "a": true
+    }
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "switching version closes dialog and removes player",
+   "ok": true,
+   "detail": {
+    "open": false,
+    "provider": "",
+    "title": "Video de YouTube",
+    "status": "",
+    "link": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "linkText": "Abrir en YouTube",
+    "linkTarget": "_blank",
+    "linkRel": "noopener noreferrer",
+    "players": 0,
+    "src": null,
+    "sandbox": null,
+    "allow": null,
+    "referrerpolicy": null,
+    "height": null,
+    "active": "|",
+    "intent": "",
+    "place": "youtube.com",
+    "tag": "YouTube · video",
+    "play": false,
+    "linkHidden": false,
+    "ua": {
+     "a": true
+    }
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "request carrying another version is refused",
+   "ok": true,
+   "detail": {
+    "open": false,
+    "provider": "",
+    "title": "Video de YouTube",
+    "status": "",
+    "link": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "linkText": "Abrir en YouTube",
+    "linkTarget": "_blank",
+    "linkRel": "noopener noreferrer",
+    "players": 0,
+    "src": null,
+    "sandbox": null,
+    "allow": null,
+    "referrerpolicy": null,
+    "height": null,
+    "active": "|",
+    "intent": "",
+    "place": "youtube.com",
+    "tag": "YouTube · video",
+    "play": false,
+    "linkHidden": false,
+    "ua": {
+     "a": true
+    }
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "footer https click shows portal preview, no tab, no request yet",
+   "ok": true,
+   "detail": {
+    "d": {
+     "open": true,
+     "provider": "link",
+     "title": "Abrir enlace",
+     "status": "",
+     "link": "https://example.org/perfil",
+     "linkText": "Abrir en pestaña nueva",
+     "linkTarget": "_blank",
+     "linkRel": "noopener noreferrer",
+     "players": 0,
+     "src": null,
+     "sandbox": null,
+     "allow": null,
+     "referrerpolicy": null,
+     "height": null,
+     "active": "icon|×",
+     "intent": "link",
+     "place": "example.org",
+     "tag": "Enlace externo",
+     "play": false,
+     "linkHidden": false,
+     "ua": {
+      "a": true
+     }
+    },
+    "new": []
+   },
+   "severity_if_fail": "high"
+  },
+  {
+   "name": "portal link opens exactly one tab, no opener, no referrer, dialog closes",
+   "ok": true,
+   "detail": {
+    "popups": [
+     "https://example.org/perfil"
+    ],
+    "info": {
+     "url": "https://example.org/perfil",
+     "opener": "null",
+     "referrer": ""
+    },
+    "dialog_open": false
+   },
+   "severity_if_fail": "high"
+  },
+  {
+   "name": "X source href regenerated from ID",
+   "ok": true,
+   "detail": null,
+   "severity_if_fail": null
+  },
+  {
+   "name": "X source click previews x.com in the portal, no tab yet",
+   "ok": true,
+   "detail": {
+    "d": {
+     "open": true,
+     "provider": "link",
+     "title": "Abrir la fuente",
+     "status": "",
+     "link": "https://x.com/margen_test/status/1234567890123",
+     "linkText": "Abrir en X",
+     "linkTarget": "_blank",
+     "linkRel": "noopener noreferrer",
+     "players": 0,
+     "src": null,
+     "sandbox": null,
+     "allow": null,
+     "referrerpolicy": null,
+     "height": null,
+     "active": "icon|×",
+     "intent": "link",
+     "place": "x.com",
+     "tag": "Enlace externo",
+     "play": false,
+     "linkHidden": false,
+     "ua": {
+      "a": true
+     }
+    },
+    "new": []
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "portal link opens the x.com status",
+   "ok": true,
+   "detail": [
+    "https://x.com/margen_test/status/1234567890123"
+   ],
+   "severity_if_fail": null
+  },
+  {
+   "name": "focus returns to the X source link",
+   "ok": true,
+   "detail": "Ver en X",
+   "severity_if_fail": "low"
+  },
+  {
+   "name": "D7 #l-cred: document kept, portal answers (info)",
+   "ok": true,
+   "detail": {
+    "dialog": {
+     "open": true,
+     "intent": "info",
+     "link": "",
+     "linkHidden": true,
+     "title": "Este enlace no se abre aquí",
+     "tag": "Enlace no disponible",
+     "place": "example.org",
+     "status": ""
+    },
+    "popups": [],
+    "reqs": [],
+    "frames": [
+     "https://portal.test/a/880a9e8d2adb4ed18c56ee2f00254778",
+     "https://portal.test/api/artifacts/880a9e8d2adb4ed18c56ee2f00254778/render?version=3cd32446910c47609145934792a15210"
+    ]
+   },
+   "severity_if_fail": "medium"
+  },
+  {
+   "name": "D7 #l-http: document kept, portal answers (link)",
+   "ok": true,
+   "detail": {
+    "dialog": {
+     "open": true,
+     "intent": "link",
+     "link": "http://example.org/inseguro",
+     "linkHidden": false,
+     "title": "Abrir enlace",
+     "tag": "Enlace http · sin cifrar",
+     "place": "example.org",
+     "status": ""
+    },
+    "popups": [],
+    "reqs": [],
+    "frames": [
+     "https://portal.test/a/880a9e8d2adb4ed18c56ee2f00254778",
+     "https://portal.test/api/artifacts/880a9e8d2adb4ed18c56ee2f00254778/render?version=3cd32446910c47609145934792a15210"
+    ]
+   },
+   "severity_if_fail": "medium"
+  },
+  {
+   "name": "D7 #l-rel: document kept, portal answers (info)",
+   "ok": true,
+   "detail": {
+    "dialog": {
+     "open": true,
+     "intent": "info",
+     "link": "",
+     "linkHidden": true,
+     "title": "Este enlace no se abre aquí",
+     "tag": "Enlace no disponible",
+     "place": "otra.html",
+     "status": ""
+    },
+    "popups": [],
+    "reqs": [],
+    "frames": [
+     "https://portal.test/a/880a9e8d2adb4ed18c56ee2f00254778",
+     "https://portal.test/api/artifacts/880a9e8d2adb4ed18c56ee2f00254778/render?version=3cd32446910c47609145934792a15210"
+    ]
+   },
+   "severity_if_fail": "medium"
+  },
+  {
+   "name": "D7 #l-tel: document kept, portal answers (link)",
+   "ok": true,
+   "detail": {
+    "dialog": {
+     "open": true,
+     "intent": "link",
+     "link": "tel:+5712345",
+     "linkHidden": false,
+     "title": "Abrir enlace",
+     "tag": "Teléfono",
+     "place": "+5712345",
+     "status": ""
+    },
+    "popups": [],
+    "reqs": [],
+    "frames": [
+     "https://portal.test/a/880a9e8d2adb4ed18c56ee2f00254778",
+     "https://portal.test/api/artifacts/880a9e8d2adb4ed18c56ee2f00254778/render?version=3cd32446910c47609145934792a15210"
+    ]
+   },
+   "severity_if_fail": "medium"
+  },
+  {
+   "name": "D7 #l-mailto: document kept, portal answers (link)",
+   "ok": true,
+   "detail": {
+    "dialog": {
+     "open": true,
+     "intent": "link",
+     "link": "mailto:autor@example.org",
+     "linkHidden": false,
+     "title": "Abrir enlace",
+     "tag": "Correo",
+     "place": "autor@example.org",
+     "status": ""
+    },
+    "popups": [],
+    "reqs": [],
+    "frames": [
+     "https://portal.test/a/880a9e8d2adb4ed18c56ee2f00254778",
+     "https://portal.test/api/artifacts/880a9e8d2adb4ed18c56ee2f00254778/render?version=3cd32446910c47609145934792a15210"
+    ]
+   },
+   "severity_if_fail": "medium"
+  },
+  {
+   "name": "http: portal link opens the http destination on explicit click",
+   "ok": true,
+   "detail": [
+    "http://example.org/inseguro"
+   ],
+   "severity_if_fail": null
+  },
+  {
+   "name": "javascript: link stays inside the document (no dialog, frame kept)",
+   "ok": true,
+   "detail": [
+    "https://portal.test/a/880a9e8d2adb4ed18c56ee2f00254778",
+    "https://portal.test/api/artifacts/880a9e8d2adb4ed18c56ee2f00254778/render?version=3cd32446910c47609145934792a15210"
+   ],
+   "severity_if_fail": null
+  },
+  {
+   "name": "scripted (untrusted) click on a relative link neither navigates nor asks the portal",
+   "ok": true,
+   "detail": [
+    "https://portal.test/a/880a9e8d2adb4ed18c56ee2f00254778",
+    "https://portal.test/api/artifacts/880a9e8d2adb4ed18c56ee2f00254778/render?version=3cd32446910c47609145934792a15210"
+   ],
+   "severity_if_fail": null
+  },
+  {
+   "name": "no page errors",
+   "ok": true,
+   "detail": [],
+   "severity_if_fail": null
+  }
+ ],
+ "external_requests": [
+  {
+   "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Fportal.test",
+   "t": 1792654553.3134642,
+   "phase": "yt"
+  },
+  {
+   "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Fportal.test",
+   "t": 1792654557.768685,
+   "phase": "yt"
+  },
+  {
+   "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Fportal.test",
+   "t": 1792654561.1691258,
+   "phase": "yt"
+  },
+  {
+   "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Fportal.test",
+   "t": 1792654563.862497,
+   "phase": "yt"
+  },
+  {
+   "url": "https://www.instagram.com/p/fA9uwTtkSN/embed/",
+   "t": 1792654567.6144278,
+   "phase": "ig"
+  },
+  {
+   "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Fportal.test",
+   "t": 1792654570.652787,
+   "phase": "ig"
+  },
+  {
+   "url": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Fportal.test",
+   "t": 1792654574.195755,
+   "phase": "ig"
+  },
+  {
+   "url": "https://example.org/perfil",
+   "t": 1792654579.553192,
+   "phase": "footer"
+  },
+  {
+   "url": "https://x.com/margen_test/status/1234567890123",
+   "t": 1792654581.0255659,
+   "phase": "footer"
+  },
+  {
+   "url": "http://example.org/inseguro",
+   "t": 1792654591.8196979,
+   "phase": "footer"
+  }
+ ],
+ "launder_external": {
+  "popups": [],
+  "dialog": {
+   "open": false,
+   "provider": null,
+   "title": "",
+   "status": "",
+   "link": "",
+   "linkText": "",
+   "linkTarget": "",
+   "linkRel": "",
+   "players": 0,
+   "src": null,
+   "sandbox": null,
+   "allow": null,
+   "referrerpolicy": null,
+   "height": null,
+   "active": "|",
+   "intent": null,
+   "place": "",
+   "tag": "",
+   "play": true,
+   "linkHidden": false,
+   "ua": {
+    "a": true
+   }
+  },
+  "reqs": []
+ },
+ "launder_embed": {
+  "dialog": {
+   "open": false,
+   "provider": null,
+   "title": "",
+   "status": "",
+   "link": "",
+   "linkText": "",
+   "linkTarget": "",
+   "linkRel": "",
+   "players": 0,
+   "src": null,
+   "sandbox": null,
+   "allow": null,
+   "referrerpolicy": null,
+   "height": null,
+   "active": "|",
+   "intent": null,
+   "place": "",
+   "tag": "",
+   "play": true,
+   "linkHidden": false,
+   "ua": {
+    "a": true
+   }
+  },
+  "reqs": []
+ },
+ "youtube_preview": {
+  "open": true,
+  "provider": "youtube",
+  "title": "Video de YouTube",
+  "status": "",
+  "link": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+  "linkText": "Abrir en YouTube",
+  "linkTarget": "_blank",
+  "linkRel": "noopener noreferrer",
+  "players": 0,
+  "src": null,
+  "sandbox": null,
+  "allow": null,
+  "referrerpolicy": null,
+  "height": null,
+  "active": "icon|×",
+  "intent": "confirm",
+  "place": "youtube.com",
+  "tag": "YouTube · video",
+  "play": true,
+  "linkHidden": false,
+  "ua": {
+   "a": true
+  }
+ },
+ "youtube_dialog": {
+  "open": true,
+  "provider": "youtube",
+  "title": "Video de YouTube",
+  "status": "Reproduciendo sin sonido. Actívalo en el propio reproductor.",
+  "link": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+  "linkText": "Abrir en YouTube",
+  "linkTarget": "_blank",
+  "linkRel": "noopener noreferrer",
+  "players": 1,
+  "src": "https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1&origin=https%3A%2F%2Fportal.test",
+  "sandbox": "allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation",
+  "allow": "autoplay; encrypted-media; picture-in-picture; fullscreen",
+  "referrerpolicy": "strict-origin",
+  "height": "",
+  "active": "icon|×",
+  "intent": "player",
+  "place": "youtube.com",
+  "tag": "YouTube · video",
+  "play": false,
+  "linkHidden": false,
+  "ua": {
+   "a": true
+  }
+ },
+ "footer_preview": {
+  "open": true,
+  "provider": "link",
+  "title": "Abrir enlace",
+  "status": "",
+  "link": "https://example.org/perfil",
+  "linkText": "Abrir en pestaña nueva",
+  "linkTarget": "_blank",
+  "linkRel": "noopener noreferrer",
+  "players": 0,
+  "src": null,
+  "sandbox": null,
+  "allow": null,
+  "referrerpolicy": null,
+  "height": null,
+  "active": "icon|×",
+  "intent": "link",
+  "place": "example.org",
+  "tag": "Enlace externo",
+  "play": false,
+  "linkHidden": false,
+  "ua": {
+   "a": true
+  }
+ },
+ "footer_open": {
+  "popups": [
+   "https://example.org/perfil"
+  ],
+  "info": {
+   "url": "https://example.org/perfil",
+   "opener": "null",
+   "referrer": ""
+  },
+  "dialog_open": false
+ },
+ "schemes": {
+  "#l-cred": {
+   "dialog": {
+    "open": true,
+    "intent": "info",
+    "link": "",
+    "linkHidden": true,
+    "title": "Este enlace no se abre aquí",
+    "tag": "Enlace no disponible",
+    "place": "example.org",
+    "status": ""
+   },
+   "popups": [],
+   "reqs": [],
+   "frames": [
+    "https://portal.test/a/880a9e8d2adb4ed18c56ee2f00254778",
+    "https://portal.test/api/artifacts/880a9e8d2adb4ed18c56ee2f00254778/render?version=3cd32446910c47609145934792a15210"
+   ]
+  },
+  "#l-http": {
+   "dialog": {
+    "open": true,
+    "intent": "link",
+    "link": "http://example.org/inseguro",
+    "linkHidden": false,
+    "title": "Abrir enlace",
+    "tag": "Enlace http · sin cifrar",
+    "place": "example.org",
+    "status": ""
+   },
+   "popups": [],
+   "reqs": [],
+   "frames": [
+    "https://portal.test/a/880a9e8d2adb4ed18c56ee2f00254778",
+    "https://portal.test/api/artifacts/880a9e8d2adb4ed18c56ee2f00254778/render?version=3cd32446910c47609145934792a15210"
+   ]
+  },
+  "#l-rel": {
+   "dialog": {
+    "open": true,
+    "intent": "info",
+    "link": "",
+    "linkHidden": true,
+    "title": "Este enlace no se abre aquí",
+    "tag": "Enlace no disponible",
+    "place": "otra.html",
+    "status": ""
+   },
+   "popups": [],
+   "reqs": [],
+   "frames": [
+    "https://portal.test/a/880a9e8d2adb4ed18c56ee2f00254778",
+    "https://portal.test/api/artifacts/880a9e8d2adb4ed18c56ee2f00254778/render?version=3cd32446910c47609145934792a15210"
+   ]
+  },
+  "#l-tel": {
+   "dialog": {
+    "open": true,
+    "intent": "link",
+    "link": "tel:+5712345",
+    "linkHidden": false,
+    "title": "Abrir enlace",
+    "tag": "Teléfono",
+    "place": "+5712345",
+    "status": ""
+   },
+   "popups": [],
+   "reqs": [],
+   "frames": [
+    "https://portal.test/a/880a9e8d2adb4ed18c56ee2f00254778",
+    "https://portal.test/api/artifacts/880a9e8d2adb4ed18c56ee2f00254778/render?version=3cd32446910c47609145934792a15210"
+   ]
+  },
+  "#l-mailto": {
+   "dialog": {
+    "open": true,
+    "intent": "link",
+    "link": "mailto:autor@example.org",
+    "linkHidden": false,
+    "title": "Abrir enlace",
+    "tag": "Correo",
+    "place": "autor@example.org",
+    "status": ""
+   },
+   "popups": [],
+   "reqs": [],
+   "frames": [
+    "https://portal.test/a/880a9e8d2adb4ed18c56ee2f00254778",
+    "https://portal.test/api/artifacts/880a9e8d2adb4ed18c56ee2f00254778/render?version=3cd32446910c47609145934792a15210"
+   ]
+  }
+ },
+ "errors": [],
+ "console": [
+  "Refused to load https://pbs.twimg.com/media/remota.jpg because it does not appear in the img-src directive of the Content Security Policy.",
+  "Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy.",
+  "Error while parsing the 'sandbox' attribute: 'allow-presentation' is an invalid sandbox flag.",
+  "Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy.",
+  "Error while parsing the 'sandbox' attribute: 'allow-presentation' is an invalid sandbox flag.",
+  "Error while parsing the 'sandbox' attribute: 'allow-presentation' is an invalid sandbox flag.",
+  "Error while parsing the 'sandbox' attribute: 'allow-presentation' is an invalid sandbox flag.",
+  "Error while parsing the 'sandbox' attribute: 'allow-presentation' is an invalid sandbox flag.",
+  "Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy.",
+  "Error while parsing the 'sandbox' attribute: 'allow-presentation' is an invalid sandbox flag.",
+  "Error while parsing the 'sandbox' attribute: 'allow-presentation' is an invalid sandbox flag.",
+  "Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy.",
+  "Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy.",
+  "Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy."
+ ]
+}

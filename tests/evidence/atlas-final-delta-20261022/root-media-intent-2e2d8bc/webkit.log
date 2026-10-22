@@ -1,0 +1,46 @@
+/Users/angelbotto/orca/workspaces/margen/margen-lector-voz/.venv/lib/python3.14/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+PASS portal reader CSP frame-src exact provider prefixes only 
+PASS artifact iframe sandbox unchanged (allow-scripts allow-downloads) 
+PASS artifact stays opaque 
+PASS no provider/external request on load 
+PASS scripted embed without user activation opens nothing 
+PASS D2 laundered external: no tab, no request; at most a portal preview naming the real destination 
+PASS D2 laundered embed: no player and no provider request without the portal button 
+PASS host never calls window.open 
+PASS card click opens portal preview with focus on its play button, no player 
+PASS 0 provider requests before the portal button 
+PASS preview link is the exact source in a new tab 
+PASS portal button mounts exact player URL 
+PASS player sandbox/allow/referrer exact 
+PASS playback liveness from provider postMessage (stub says playing) 
+PASS only the exact player URL requested after the portal button 
+PASS forged provider error from the artifact is ignored 
+PASS Escape closes and removes the player 
+PASS focus returns to the card button inside the artifact 
+PASS D8 card no longer claims an open player after closing 
+PASS cancelling the preview loads nothing and returns focus 
+PASS repeated opening keeps at most one player and the dialog usable 
+PASS after repeated cycles closing leaves zero players 
+PASS Instagram preview makes no request 
+PASS Instagram portal button mounts exact /embed/ URL with no-referrer 
+PASS Instagram MEASURE height bounded (5000 ignored, 900 applied) 
+PASS popstate closes dialog and removes player 
+PASS switching version closes dialog and removes player 
+PASS request carrying another version is refused 
+PASS footer https click shows portal preview, no tab, no request yet 
+PASS portal link opens exactly one tab, no opener, no referrer, dialog closes 
+PASS X source href regenerated from ID 
+PASS X source click previews x.com in the portal, no tab yet 
+PASS portal link opens the x.com status 
+PASS focus returns to the X source link 
+PASS D7 #l-cred: document kept, portal answers (info) 
+PASS D7 #l-http: document kept, portal answers (link) 
+PASS D7 #l-rel: document kept, portal answers (info) 
+PASS D7 #l-tel: document kept, portal answers (link) 
+PASS D7 #l-mailto: document kept, portal answers (link) 
+PASS http: portal link opens the http destination on explicit click 
+PASS javascript: link stays inside the document (no dialog, frame kept) 
+PASS scripted (untrusted) click on a relative link neither navigates nor asks the portal 
+PASS no page errors 
+43 / 43

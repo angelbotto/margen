@@ -1,0 +1,101 @@
+{
+ "engine": "webkit",
+ "checks": [
+  {
+   "name": "c1: textContent byte-exact",
+   "ok": true,
+   "detail": {
+    "text": "const a = 1;\nconst b = 2;\n",
+    "numbered": 2,
+    "rows": 3
+   }
+  },
+  {
+   "name": "c5: textContent byte-exact",
+   "ok": true,
+   "detail": {
+    "text": "x\n\n",
+    "numbered": 2,
+    "rows": 3
+   }
+  },
+  {
+   "name": "c6: textContent byte-exact",
+   "ok": true,
+   "detail": {
+    "text": "const a = 1;\nconst b = 2;\n",
+    "numbered": 2,
+    "rows": 3
+   }
+  },
+  {
+   "name": "c1: 2 numbered rows for 2 real lines",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "c5 (x\\n\\n): blank real line keeps its number (2 numbered)",
+   "ok": true,
+   "detail": [
+    [
+     "1",
+     "x"
+    ],
+    [
+     "2",
+     ""
+    ],
+    [
+     null,
+     ""
+    ]
+   ]
+  },
+  {
+   "name": "trailing newline adds no visible extra line (pre height c1 vs c4)",
+   "ok": false,
+   "detail": [
+    98,
+    76
+   ]
+  },
+  {
+   "name": "c1: selection toString keeps final newline",
+   "ok": true,
+   "detail": "'const a = 1;\\nconst b = 2;\\n'"
+  },
+  {
+   "name": "c6: selection toString keeps final newline",
+   "ok": true,
+   "detail": "'const a = 1;\\nconst b = 2;\\n'"
+  },
+  {
+   "name": "c2: link kept inside mark",
+   "ok": true,
+   "detail": "<span class=\"codigo-linea\" data-numero=\"1\"><mark><span class=\"com\">// ver </span><a href=\"#s1\"><span class=\"com\">enlace</span></a></mark></span>\n<span class=\"codigo-linea\" data-numero=\"2\">x <span class=\"codigo-puntuacion\">=</span> <span class=\"codigo-numero\">1</span><span class=\"codigo-puntuacion\">;</span></span>"
+  },
+  {
+   "name": "c2: real click on nested link navigates to #s1",
+   "ok": true,
+   "detail": "#s1"
+  },
+  {
+   "name": "c3: mark kept inside link",
+   "ok": true,
+   "detail": "<span class=\"codigo-linea\" data-numero=\"1\"><span class=\"kw\">const</span> <a href=\"#s1\"><mark>marcado</mark></a> <span class=\"codigo-puntuacion\">=</span> <span class=\"codigo-numero\">3</span><span class=\"codigo-puntuacion\">;</span></span>"
+  },
+  {
+   "name": "c2/c3 textContent unchanged",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "name": "no page errors / no network",
+   "ok": true,
+   "detail": [
+    [],
+    []
+   ]
+  }
+ ]
+}

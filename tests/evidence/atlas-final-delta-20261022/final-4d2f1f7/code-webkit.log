@@ -1,0 +1,13 @@
+PASS c1: textContent byte-exact 
+PASS c5: textContent byte-exact 
+PASS c6: textContent byte-exact 
+PASS c1: 2 numbered rows for 2 real lines 
+PASS c5 (x\n\n): blank real line keeps its number (2 numbered) 
+FAIL trailing newline adds no visible extra line (pre height c1 vs c4) [98, 76]
+PASS c1: selection toString keeps final newline 
+PASS c6: selection toString keeps final newline 
+PASS c2: link kept inside mark 
+PASS c2: real click on nested link navigates to #s1 
+PASS c3: mark kept inside link 
+PASS c2/c3 textContent unchanged 
+PASS no page errors / no network 

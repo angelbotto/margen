@@ -1,0 +1,914 @@
+{
+ "engine": "webkit",
+ "checks": [
+  {
+   "name": "portal reader CSP frame-src exact provider prefixes only",
+   "ok": true,
+   "detail": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-src 'self' https://www.youtube-nocookie.com/embed/ https://www.instagram.com/p/ https://www.instagram.com/reel/; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'",
+   "severity_if_fail": null
+  },
+  {
+   "name": "artifact iframe sandbox unchanged (allow-scripts allow-downloads)",
+   "ok": true,
+   "detail": {
+    "sandbox": "allow-scripts allow-downloads",
+    "allow": "clipboard-write"
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "artifact stays opaque and cannot read the portal",
+   "ok": true,
+   "detail": {
+    "origin": "null",
+    "parentAccess": "blocked"
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "no provider/external request before any click",
+   "ok": true,
+   "detail": [
+    {
+     "url": "https://example.org/perfil",
+     "t": 1792653072.3892999,
+     "phase": "footer"
+    }
+   ],
+   "severity_if_fail": null
+  },
+  {
+   "name": "YouTube and Instagram cards expose a load button, X does not",
+   "ok": true,
+   "detail": [
+    {
+     "p": "youtube",
+     "btnHidden": false,
+     "links": [
+      [
+       "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+       "_blank",
+       "noopener noreferrer"
+      ]
+     ]
+    },
+    {
+     "p": "instagram",
+     "btnHidden": false,
+     "links": [
+      [
+       "https://www.instagram.com/p/fA9uwTtkSN/",
+       "_blank",
+       "noopener noreferrer"
+      ]
+     ]
+    },
+    {
+     "p": "x",
+     "btnHidden": null,
+     "links": []
+    },
+    {
+     "p": "x",
+     "btnHidden": null,
+     "links": [
+      [
+       "https://x.com/margen_test/status/1234567890123",
+       "_blank",
+       "noopener noreferrer"
+      ]
+     ]
+    }
+   ],
+   "severity_if_fail": null
+  },
+  {
+   "name": "scripted embed without user activation is refused and opens nothing",
+   "ok": true,
+   "detail": {
+    "reply": {
+     "bottifact": 1,
+     "id": "nc0.313448608726525",
+     "error": "Publicación de otra versión."
+    },
+    "dialog": {
+     "open": false,
+     "provider": null,
+     "title": "",
+     "status": "",
+     "link": "",
+     "linkText": "",
+     "linkTarget": "",
+     "linkRel": "",
+     "players": 0,
+     "src": null,
+     "sandbox": null,
+     "allow": null,
+     "referrerpolicy": null,
+     "height": null,
+     "active": "portal-app reading|\nSaltar al contenido\n\n\nMargenTu espacio de trabajo×\nBibliotecaMis artefactosCompartidos conmigoComentarios y notas ConocimientoGrafo de conocimientoMi trabajoVisitasCrear con MargenTemasComponentesDevelopersConectar un agenteGestionarAvisos PúblicosArchivoTodos los artefactosAdministración\n\nDUDueña SintéticaCuenta personal⌃\nCuentaowner@owner.testCambiar aparienciaEntrarCerrar sesión\n\n\nBiblioteca/Mis artefactos\n\n\nTu archivo de trabajoMis artefactosSolo documentos de tu cuenta. Los de otras personas están en Compartidos conmigo.Nuevo artefacto\nArtefactos0Pendientes0Compartidos0Aperturas · 30 días—\n\nBuscar artefacto o comentario⌘ KFiltrosCopiar todosCopiar pendientesPreparar contexto\nTipoComentarios y notasComentarios compartidosMis notas privadasEstadoTodosPendientesSin leerResueltos\nCategoríaTodasTodasTodasEmpresa / espacioTodas las empresas / espaciosTodas las empresas / espaciosTodas las empresas / espaciosColecciónTodasTodasTodasTemaTodasTodasTodasAccesoTodos los accesosPrivadoInvitadosCon enlacePúblicoSitio anteriorTodos los accesosTodos los accesosPrivadoInvitadosCon enlacePúblicoSitio anteriorOrdenarActualizadoRelevanciaTítuloComentarios pendientesEmpresa / espacioCategoríaAgenteActualizadoActualizadoRelevanciaTítuloComentarios pendientesEmpresa / espacioCategoríaAgenteDirecciónAutomáticaAscendenteDescendenteAutomáticaAutomáticaAscendenteDescendenteAgenteTodosCodexClaudeHermesTodosTodosCodexClaudeHermesRevisiónTodasCon pendientesSin pendientesTodasTodasCon pendientesSin pendientesLimpiar filtros\nColumnasCategoríaEmpresa / espacioOrigenActualizadoPendientesDensidadCómodaCompactaOrden y filtros se aplican a toda la biblioteca; las filas se cargan al avanzar.\nCondicionesMesas y vistasOrganizar conocimiento\nCargar más\n\n\n\n\n\n\n\nTu artefacto×\nMediosPersonal · Privado\nEditar contenidoNombre y espacioOrganizar\nVersiónPublicada · 22/10/2026, 2:10:49Anterior · 22/10/2026, 2:10:49\nOrigen de esta versión sin registrarVersión que abre el enlace compartido.Historial de cambiosComparar versionesPublicar esta versiónCompartirSubir revisiónCopiar prompt para IA\nRevisión compartida\n← Volver a mi biblioteca\n\n\n\n\nMargen · Tus documentos, tus decisiones.Open source · MIT · Construyamos Margen\nPublicación de otra versión.\nNombre y espacio×NombreEspacioEl enlace y el contenido del documento se conservan.CancelarGuardar\nPublicar artefacto×Los nuevos documentos son privados. Las revisiones se guardan como borrador: el enlace compartido no cambia hasta publicar la versión.TítuloEspacioPersonalLiftitTikinCatabumAgente de origenDispositivo de creaciónSesión o encargo de origenHTML de MargenOriginal PDF o PPTX (opcional, junto a su vista HTML)CancelarGuardar artefacto\nCompartir artefacto×Quién puede entrarPrivado · mi cuentaPersonas y dominios autorizadosCualquiera con el enlacePúblico · aparece en la biblioteca públicaTodo un equipoAutoriza un dominio y sus cuentas verificadas podrán encontrar este artefacto en Compartidos.ComentarVerAñadirGoogle o código por correo. Coincidencia exacta: no incluye subdominios. La edición se concede a personas, no a todo el dominio.Personas específicasComentarVerEditarAñadirCada persona entra con Google o con su correo y un código personal. Añadir un correo concede acceso; comparte el enlace para avisarle. No se envía una invitación automática.Opciones de comentariosQuién ve la conversaciónMi cuenta y las personas autorizadasTodos los lectores del documentoPermitir comentarios con nombre, sin correo verificadoLa administración del portal puede acceder a todos los documentos. Esta opción requiere que la conversación sea visible para los lectores. Los participantes sin correo se identifican como invitados.Copiar enlace actualGuardar permisos\n¿Cómo te llamas?×Tu nombre acompañará los comentarios. Lo recordaremos en este navegador.NombreContinuar con GoogleEntrarContinuar como invitado\nComentario o nota×ContextoTipoComentario compartidoNota privada · sólo yoSesión o encargoTu comentarioGuardar\nPrompt con contexto para IA×Selecciona y copia el texto si tu navegador no permite copiar automáticamente.Seleccionar todo\nOrganizar artefacto×Categoría Clasificar automáticamente por contenidoColeccionesEtiquetasSepara con comas. Hasta 20 por campo. Agrupar no cambia los permisos.Archivar en mi bibliotecaEl enlace sigue funcionando. Puedes recuperarlo desde Archivo.CancelarGuardar\nComparar versiones×DesdeHastaComparar\nActualizar la versión compartida×El mismo enlace mostrará esta versión. El historial, los comentarios y la audiencia se conservan.Seguir revisandoPublicar versión\nVista previa×\n\n×",
+     "ua": {
+      "a": true
+     }
+    }
+   },
+   "severity_if_fail": "high"
+  },
+  {
+   "name": "YouTube click opens the portal dialog with exact player URL",
+   "ok": false,
+   "detail": {
+    "open": true,
+    "provider": "youtube",
+    "title": "Video de YouTube",
+    "status": "",
+    "link": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "linkText": "Abrir en YouTube",
+    "linkTarget": "_blank",
+    "linkRel": "noopener noreferrer",
+    "players": 0,
+    "src": null,
+    "sandbox": null,
+    "allow": null,
+    "referrerpolicy": null,
+    "height": null,
+    "active": "primary media-play|Reproducir aquí",
+    "ua": {
+     "a": true
+    }
+   },
+   "severity_if_fail": "high"
+  },
+  {
+   "name": "player sandbox/allow/referrer exact",
+   "ok": false,
+   "detail": {
+    "open": true,
+    "provider": "youtube",
+    "title": "Video de YouTube",
+    "status": "",
+    "link": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "linkText": "Abrir en YouTube",
+    "linkTarget": "_blank",
+    "linkRel": "noopener noreferrer",
+    "players": 0,
+    "src": null,
+    "sandbox": null,
+    "allow": null,
+    "referrerpolicy": null,
+    "height": null,
+    "active": "primary media-play|Reproducir aquí",
+    "ua": {
+     "a": true
+    }
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "player liveness comes from provider postMessage (stub says playing)",
+   "ok": false,
+   "detail": {
+    "open": true,
+    "provider": "youtube",
+    "title": "Video de YouTube",
+    "status": "",
+    "link": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "linkText": "Abrir en YouTube",
+    "linkTarget": "_blank",
+    "linkRel": "noopener noreferrer",
+    "players": 0,
+    "src": null,
+    "sandbox": null,
+    "allow": null,
+    "referrerpolicy": null,
+    "height": null,
+    "active": "primary media-play|Reproducir aquí",
+    "ua": {
+     "a": true
+    }
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "only the exact player URL is requested after the click",
+   "ok": false,
+   "detail": [],
+   "severity_if_fail": null
+  },
+  {
+   "name": "forged provider error from the artifact is ignored",
+   "ok": true,
+   "detail": {
+    "open": true,
+    "provider": "youtube",
+    "title": "Video de YouTube",
+    "status": "",
+    "link": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "linkText": "Abrir en YouTube",
+    "linkTarget": "_blank",
+    "linkRel": "noopener noreferrer",
+    "players": 0,
+    "src": null,
+    "sandbox": null,
+    "allow": null,
+    "referrerpolicy": null,
+    "height": null,
+    "active": "primary media-play|Reproducir aquí",
+    "ua": {
+     "a": true
+    }
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "Escape closes and removes the player",
+   "ok": true,
+   "detail": {
+    "open": false,
+    "provider": "",
+    "title": "Video de YouTube",
+    "status": "",
+    "link": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "linkText": "Abrir en YouTube",
+    "linkTarget": "_blank",
+    "linkRel": "noopener noreferrer",
+    "players": 0,
+    "src": null,
+    "sandbox": null,
+    "allow": null,
+    "referrerpolicy": null,
+    "height": null,
+    "active": "|",
+    "ua": {
+     "a": true
+    }
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "focus returns to the card button inside the artifact",
+   "ok": true,
+   "detail": "Cargar video",
+   "severity_if_fail": null
+  },
+  {
+   "name": "repeated opening keeps at most one player and the dialog usable",
+   "ok": true,
+   "detail": {
+    "open": true,
+    "provider": "youtube",
+    "title": "Video de YouTube",
+    "status": "",
+    "link": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "linkText": "Abrir en YouTube",
+    "linkTarget": "_blank",
+    "linkRel": "noopener noreferrer",
+    "players": 0,
+    "src": null,
+    "sandbox": null,
+    "allow": null,
+    "referrerpolicy": null,
+    "height": null,
+    "active": "primary media-play|Reproducir aquí",
+    "ua": {
+     "a": true
+    }
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "after repeated cycles closing leaves zero players",
+   "ok": true,
+   "detail": {
+    "open": false,
+    "provider": "",
+    "title": "Video de YouTube",
+    "status": "",
+    "link": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "linkText": "Abrir en YouTube",
+    "linkTarget": "_blank",
+    "linkRel": "noopener noreferrer",
+    "players": 0,
+    "src": null,
+    "sandbox": null,
+    "allow": null,
+    "referrerpolicy": null,
+    "height": null,
+    "active": "|",
+    "ua": {
+     "a": true
+    }
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "Instagram click mounts exact /embed/ URL with no-referrer",
+   "ok": false,
+   "detail": {
+    "d": {
+     "open": true,
+     "provider": "instagram",
+     "title": "Publicación de Instagram",
+     "status": "",
+     "link": "https://www.instagram.com/p/fA9uwTtkSN/",
+     "linkText": "Abrir en Instagram",
+     "linkTarget": "_blank",
+     "linkRel": "noopener noreferrer",
+     "players": 0,
+     "src": null,
+     "sandbox": null,
+     "allow": null,
+     "referrerpolicy": null,
+     "height": null,
+     "active": "primary media-play|Cargar aquí",
+     "ua": {
+      "a": true
+     }
+    },
+    "reqs": []
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "Instagram MEASURE height bounded (5000 ignored, 900 applied)",
+   "ok": false,
+   "detail": {
+    "open": true,
+    "provider": "instagram",
+    "title": "Publicación de Instagram",
+    "status": "",
+    "link": "https://www.instagram.com/p/fA9uwTtkSN/",
+    "linkText": "Abrir en Instagram",
+    "linkTarget": "_blank",
+    "linkRel": "noopener noreferrer",
+    "players": 0,
+    "src": null,
+    "sandbox": null,
+    "allow": null,
+    "referrerpolicy": null,
+    "height": null,
+    "active": "primary media-play|Cargar aquí",
+    "ua": {
+     "a": true
+    }
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "history navigation (popstate) closes dialog and removes player",
+   "ok": true,
+   "detail": {
+    "open": false,
+    "provider": "",
+    "title": "Video de YouTube",
+    "status": "",
+    "link": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "linkText": "Abrir en YouTube",
+    "linkTarget": "_blank",
+    "linkRel": "noopener noreferrer",
+    "players": 0,
+    "src": null,
+    "sandbox": null,
+    "allow": null,
+    "referrerpolicy": null,
+    "height": null,
+    "active": "|",
+    "ua": {
+     "a": true
+    }
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "switching version closes dialog and removes player",
+   "ok": true,
+   "detail": {
+    "open": false,
+    "provider": "",
+    "title": "Video de YouTube",
+    "status": "",
+    "link": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "linkText": "Abrir en YouTube",
+    "linkTarget": "_blank",
+    "linkRel": "noopener noreferrer",
+    "players": 0,
+    "src": null,
+    "sandbox": null,
+    "allow": null,
+    "referrerpolicy": null,
+    "height": null,
+    "active": "|",
+    "ua": {
+     "a": true
+    }
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "embed request carrying another version is refused",
+   "ok": true,
+   "detail": {
+    "bottifact": 1,
+    "id": "st0.6282285990797392",
+    "error": "Publicación de otra versión."
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "click on plain text cannot be reused by artifact script to open an arbitrary external URL",
+   "ok": false,
+   "detail": {
+    "popups": [],
+    "dialog": {
+     "open": true,
+     "provider": "link",
+     "title": "Abrir enlace",
+     "status": "",
+     "link": "https://attacker.example/phish",
+     "linkText": "Abrir en pestaña nueva",
+     "linkTarget": "_blank",
+     "linkRel": "noopener noreferrer",
+     "players": 0,
+     "src": null,
+     "sandbox": null,
+     "allow": null,
+     "referrerpolicy": null,
+     "height": null,
+     "active": "media-source button primary|Abrir en pestaña nueva",
+     "ua": {
+      "a": true
+     }
+    }
+   },
+   "severity_if_fail": "medium"
+  },
+  {
+   "name": "click on plain text cannot be reused to load a different provider player",
+   "ok": true,
+   "detail": {
+    "open": true,
+    "provider": "youtube",
+    "title": "Video de YouTube",
+    "status": "",
+    "link": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    "linkText": "Abrir en YouTube",
+    "linkTarget": "_blank",
+    "linkRel": "noopener noreferrer",
+    "players": 0,
+    "src": null,
+    "sandbox": null,
+    "allow": null,
+    "referrerpolicy": null,
+    "height": null,
+    "active": "primary media-play|Reproducir aquí",
+    "ua": {
+     "a": true
+    }
+   },
+   "severity_if_fail": "medium"
+  },
+  {
+   "name": "footer https link opens exactly one tab or a usable fallback",
+   "ok": true,
+   "detail": {
+    "popups": [],
+    "info": null,
+    "dialog": {
+     "open": true,
+     "provider": "link",
+     "title": "Abrir enlace",
+     "status": "",
+     "link": "https://example.org/perfil",
+     "linkText": "Abrir en pestaña nueva",
+     "linkTarget": "_blank",
+     "linkRel": "noopener noreferrer",
+     "players": 0,
+     "src": null,
+     "sandbox": null,
+     "allow": null,
+     "referrerpolicy": null,
+     "height": null,
+     "active": "media-source button primary|Abrir en pestaña nueva",
+     "ua": {
+      "a": true
+     }
+    }
+   },
+   "severity_if_fail": "high"
+  },
+  {
+   "name": "blocked popup shows dialog with the exact link, new tab target and focus on it",
+   "ok": true,
+   "detail": {
+    "open": true,
+    "provider": "link",
+    "title": "Abrir enlace",
+    "status": "",
+    "link": "https://example.org/perfil",
+    "linkText": "Abrir en pestaña nueva",
+    "linkTarget": "_blank",
+    "linkRel": "noopener noreferrer",
+    "players": 0,
+    "src": null,
+    "sandbox": null,
+    "allow": null,
+    "referrerpolicy": null,
+    "height": null,
+    "active": "media-source button primary|Abrir en pestaña nueva",
+    "ua": {
+     "a": true
+    }
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "fallback link opens the tab on click",
+   "ok": true,
+   "detail": [
+    "https://example.org/perfil"
+   ],
+   "severity_if_fail": null
+  },
+  {
+   "name": "X source href regenerated from ID (authored href ignored)",
+   "ok": true,
+   "detail": "https://x.com/margen_test/status/1234567890123",
+   "severity_if_fail": null
+  },
+  {
+   "name": "X source link opens x.com status URL (tab or fallback)",
+   "ok": true,
+   "detail": {
+    "popups": [],
+    "dialog": {
+     "open": true,
+     "provider": "link",
+     "title": "Abrir la fuente",
+     "status": "",
+     "link": "https://x.com/margen_test/status/1234567890123",
+     "linkText": "Abrir en X",
+     "linkTarget": "_blank",
+     "linkRel": "noopener noreferrer",
+     "players": 0,
+     "src": null,
+     "sandbox": null,
+     "allow": null,
+     "referrerpolicy": null,
+     "height": null,
+     "active": "media-source button primary|Abrir en X",
+     "ua": {
+      "a": true
+     }
+    }
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "credentialed https link is not opened",
+   "ok": false,
+   "detail": {
+    "popups": [],
+    "dialog": {
+     "open": true,
+     "link": "",
+     "title": "Este enlace no se abre aquí"
+    },
+    "frames": [
+     "https://portal.test/a/1c5303652dd14632a462c75db1ff927e",
+     "https://portal.test/api/artifacts/1c5303652dd14632a462c75db1ff927e/render?version=5b907b81040d4db28fbb99b70c0df275"
+    ],
+    "reqs": []
+   },
+   "severity_if_fail": null
+  },
+  {
+   "name": "credentialed https link gives the reader visible feedback",
+   "ok": true,
+   "detail": {
+    "popups": [],
+    "dialog": {
+     "open": true,
+     "link": "",
+     "title": "Este enlace no se abre aquí"
+    },
+    "frames": [
+     "https://portal.test/a/1c5303652dd14632a462c75db1ff927e",
+     "https://portal.test/api/artifacts/1c5303652dd14632a462c75db1ff927e/render?version=5b907b81040d4db28fbb99b70c0df275"
+    ],
+    "reqs": []
+   },
+   "severity_if_fail": "low"
+  },
+  {
+   "name": "http:// footer link is usable (tab or fallback) or explained",
+   "ok": true,
+   "detail": {
+    "popups": [],
+    "dialog": {
+     "open": true,
+     "link": "http://example.org/inseguro",
+     "title": "Abrir enlace"
+    },
+    "frames": [
+     "https://portal.test/a/1c5303652dd14632a462c75db1ff927e",
+     "https://portal.test/api/artifacts/1c5303652dd14632a462c75db1ff927e/render?version=5b907b81040d4db28fbb99b70c0df275"
+    ],
+    "reqs": []
+   },
+   "severity_if_fail": "medium"
+  },
+  {
+   "name": "mailto opens nothing in a new browsing context and stays in the reader",
+   "ok": true,
+   "detail": {
+    "popups": [],
+    "dialog": {
+     "open": true,
+     "link": "mailto:autor@example.org",
+     "title": "Abrir enlace"
+    },
+    "frames": [
+     "https://portal.test/a/1c5303652dd14632a462c75db1ff927e",
+     "https://portal.test/api/artifacts/1c5303652dd14632a462c75db1ff927e/render?version=5b907b81040d4db28fbb99b70c0df275"
+    ],
+    "reqs": []
+   },
+   "severity_if_fail": null
+  }
+ ],
+ "external_requests": [
+  {
+   "url": "https://example.org/perfil",
+   "t": 1792653072.3892999,
+   "phase": "footer"
+  }
+ ],
+ "portal_csp": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-src 'self' https://www.youtube-nocookie.com/embed/ https://www.instagram.com/p/ https://www.instagram.com/reel/; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'",
+ "cards": [
+  {
+   "p": "youtube",
+   "btnHidden": false,
+   "links": [
+    [
+     "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+     "_blank",
+     "noopener noreferrer"
+    ]
+   ]
+  },
+  {
+   "p": "instagram",
+   "btnHidden": false,
+   "links": [
+    [
+     "https://www.instagram.com/p/fA9uwTtkSN/",
+     "_blank",
+     "noopener noreferrer"
+    ]
+   ]
+  },
+  {
+   "p": "x",
+   "btnHidden": null,
+   "links": []
+  },
+  {
+   "p": "x",
+   "btnHidden": null,
+   "links": [
+    [
+     "https://x.com/margen_test/status/1234567890123",
+     "_blank",
+     "noopener noreferrer"
+    ]
+   ]
+  }
+ ],
+ "youtube_dialog": {
+  "open": true,
+  "provider": "youtube",
+  "title": "Video de YouTube",
+  "status": "",
+  "link": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+  "linkText": "Abrir en YouTube",
+  "linkTarget": "_blank",
+  "linkRel": "noopener noreferrer",
+  "players": 0,
+  "src": null,
+  "sandbox": null,
+  "allow": null,
+  "referrerpolicy": null,
+  "height": null,
+  "active": "primary media-play|Reproducir aquí",
+  "ua": {
+   "a": true
+  }
+ },
+ "youtube_card_status": "Abierto en el portal. Confirma ahí para reproducir.",
+ "instagram_dialog": {
+  "open": true,
+  "provider": "instagram",
+  "title": "Publicación de Instagram",
+  "status": "",
+  "link": "https://www.instagram.com/p/fA9uwTtkSN/",
+  "linkText": "Abrir en Instagram",
+  "linkTarget": "_blank",
+  "linkRel": "noopener noreferrer",
+  "players": 0,
+  "src": null,
+  "sandbox": null,
+  "allow": null,
+  "referrerpolicy": null,
+  "height": null,
+  "active": "primary media-play|Cargar aquí",
+  "ua": {
+   "a": true
+  }
+ },
+ "launder_external": {
+  "popups": [],
+  "dialog": {
+   "open": true,
+   "provider": "link",
+   "title": "Abrir enlace",
+   "status": "",
+   "link": "https://attacker.example/phish",
+   "linkText": "Abrir en pestaña nueva",
+   "linkTarget": "_blank",
+   "linkRel": "noopener noreferrer",
+   "players": 0,
+   "src": null,
+   "sandbox": null,
+   "allow": null,
+   "referrerpolicy": null,
+   "height": null,
+   "active": "media-source button primary|Abrir en pestaña nueva",
+   "ua": {
+    "a": true
+   }
+  }
+ },
+ "launder_embed": {
+  "open": true,
+  "provider": "youtube",
+  "title": "Video de YouTube",
+  "status": "",
+  "link": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+  "linkText": "Abrir en YouTube",
+  "linkTarget": "_blank",
+  "linkRel": "noopener noreferrer",
+  "players": 0,
+  "src": null,
+  "sandbox": null,
+  "allow": null,
+  "referrerpolicy": null,
+  "height": null,
+  "active": "primary media-play|Reproducir aquí",
+  "ua": {
+   "a": true
+  }
+ },
+ "footer_https": {
+  "popups": [],
+  "info": null,
+  "dialog": {
+   "open": true,
+   "provider": "link",
+   "title": "Abrir enlace",
+   "status": "",
+   "link": "https://example.org/perfil",
+   "linkText": "Abrir en pestaña nueva",
+   "linkTarget": "_blank",
+   "linkRel": "noopener noreferrer",
+   "players": 0,
+   "src": null,
+   "sandbox": null,
+   "allow": null,
+   "referrerpolicy": null,
+   "height": null,
+   "active": "media-source button primary|Abrir en pestaña nueva",
+   "ua": {
+    "a": true
+   }
+  }
+ },
+ "blocked_fallback": {
+  "open": true,
+  "provider": "link",
+  "title": "Abrir enlace",
+  "status": "",
+  "link": "https://example.org/perfil",
+  "linkText": "Abrir en pestaña nueva",
+  "linkTarget": "_blank",
+  "linkRel": "noopener noreferrer",
+  "players": 0,
+  "src": null,
+  "sandbox": null,
+  "allow": null,
+  "referrerpolicy": null,
+  "height": null,
+  "active": "media-source button primary|Abrir en pestaña nueva",
+  "ua": {
+   "a": true
+  }
+ },
+ "x_href": "https://x.com/margen_test/status/1234567890123",
+ "x_source": {
+  "popups": [],
+  "dialog": {
+   "open": true,
+   "provider": "link",
+   "title": "Abrir la fuente",
+   "status": "",
+   "link": "https://x.com/margen_test/status/1234567890123",
+   "linkText": "Abrir en X",
+   "linkTarget": "_blank",
+   "linkRel": "noopener noreferrer",
+   "players": 0,
+   "src": null,
+   "sandbox": null,
+   "allow": null,
+   "referrerpolicy": null,
+   "height": null,
+   "active": "media-source button primary|Abrir en X",
+   "ua": {
+    "a": true
+   }
+  }
+ },
+ "schemes": {
+  "#l-cred": {
+   "popups": [],
+   "dialog": {
+    "open": true,
+    "link": "",
+    "title": "Este enlace no se abre aquí"
+   },
+   "frames": [
+    "https://portal.test/a/1c5303652dd14632a462c75db1ff927e",
+    "https://portal.test/api/artifacts/1c5303652dd14632a462c75db1ff927e/render?version=5b907b81040d4db28fbb99b70c0df275"
+   ],
+   "reqs": []
+  },
+  "#l-http": {
+   "popups": [],
+   "dialog": {
+    "open": true,
+    "link": "http://example.org/inseguro",
+    "title": "Abrir enlace"
+   },
+   "frames": [
+    "https://portal.test/a/1c5303652dd14632a462c75db1ff927e",
+    "https://portal.test/api/artifacts/1c5303652dd14632a462c75db1ff927e/render?version=5b907b81040d4db28fbb99b70c0df275"
+   ],
+   "reqs": []
+  },
+  "#l-rel": {
+   "popups": [],
+   "dialog": {
+    "open": true,
+    "link": "",
+    "title": "Este enlace no se abre aquí"
+   },
+   "frames": [
+    "https://portal.test/a/1c5303652dd14632a462c75db1ff927e",
+    "https://portal.test/api/artifacts/1c5303652dd14632a462c75db1ff927e/render?version=5b907b81040d4db28fbb99b70c0df275"
+   ],
+   "reqs": []
+  },
+  "#l-tel": {
+   "popups": [],
+   "dialog": {
+    "open": true,
+    "link": "tel:+5712345",
+    "title": "Abrir enlace"
+   },
+   "frames": [
+    "https://portal.test/a/1c5303652dd14632a462c75db1ff927e",
+    "https://portal.test/api/artifacts/1c5303652dd14632a462c75db1ff927e/render?version=5b907b81040d4db28fbb99b70c0df275"
+   ],
+   "reqs": []
+  },
+  "#l-mailto": {
+   "popups": [],
+   "dialog": {
+    "open": true,
+    "link": "mailto:autor@example.org",
+    "title": "Abrir enlace"
+   },
+   "frames": [
+    "https://portal.test/a/1c5303652dd14632a462c75db1ff927e",
+    "https://portal.test/api/artifacts/1c5303652dd14632a462c75db1ff927e/render?version=5b907b81040d4db28fbb99b70c0df275"
+   ],
+   "reqs": []
+  }
+ },
+ "errors": [],
+ "console": [
+  "Refused to load https://pbs.twimg.com/media/remota.jpg because it does not appear in the img-src directive of the Content Security Policy.",
+  "Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy.",
+  "Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy.",
+  "Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy.",
+  "Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy."
+ ]
+}

@@ -1,0 +1,83 @@
+{
+ "engine": "chromium",
+ "checks": [
+  {
+   "name": "1440: cold deep link #receta-glosario is current",
+   "ok": true,
+   "detail": "#receta-glosario"
+  },
+  {
+   "name": "1440: physical click on each of 14 Lectura TOC links marks it current (unless page bottom)",
+   "ok": false,
+   "detail": [
+    {
+     "href": "#receta-lista-estados",
+     "unclickable": "iting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <div id=\"apuntes-ejemplo\" class=\"apuntes ancho\">…</div> intercepts pointer events\n    - retrying click action\n      - waiting 500ms\n"
+    },
+    {
+     "href": "#receta-lista-proyectos",
+     "unclickable": "le\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <section class=\"apunte\">…</section> from <div id=\"apuntes-ejemplo\" class=\"apuntes ancho\">…</div> subtree intercepts pointer events\n    - retrying click action\n      - waiting 500ms\n"
+    },
+    {
+     "href": "#receta-conversacion",
+     "unclickable": "le\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <section class=\"apunte\">…</section> from <div id=\"apuntes-ejemplo\" class=\"apuntes ancho\">…</div> subtree intercepts pointer events\n    - retrying click action\n      - waiting 500ms\n"
+    },
+    {
+     "href": "#receta-enlaces-icono",
+     "unclickable": "le\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <section class=\"apunte\">…</section> from <div id=\"apuntes-ejemplo\" class=\"apuntes ancho\">…</div> subtree intercepts pointer events\n    - retrying click action\n      - waiting 500ms\n"
+    },
+    {
+     "href": "#receta-avisos-animados",
+     "unclickable": "le\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <section class=\"apunte\">…</section> from <div id=\"apuntes-ejemplo\" class=\"apuntes ancho\">…</div> subtree intercepts pointer events\n    - retrying click action\n      - waiting 500ms\n"
+    },
+    {
+     "href": "#receta-relato-visual",
+     "unclickable": "iting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <div id=\"apuntes-ejemplo\" class=\"apuntes ancho\">…</div> intercepts pointer events\n    - retrying click action\n      - waiting 500ms\n"
+    },
+    {
+     "href": "#receta-reacciones",
+     "unclickable": "ement to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <details id=\"fuente-apuntes\" class=\"receta-copia ancho\">…</details> intercepts pointer events\n    - retrying click action\n      - waiting 500ms\n"
+    }
+   ]
+  },
+  {
+   "name": "1328: cold deep link #receta-glosario is current",
+   "ok": true,
+   "detail": "#receta-glosario"
+  },
+  {
+   "name": "1328: physical click on each of 14 Lectura TOC links marks it current (unless page bottom)",
+   "ok": false,
+   "detail": [
+    {
+     "href": "#receta-lista-estados",
+     "unclickable": "iting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <div id=\"apuntes-ejemplo\" class=\"apuntes ancho\">…</div> intercepts pointer events\n    - retrying click action\n      - waiting 500ms\n"
+    },
+    {
+     "href": "#receta-lista-proyectos",
+     "unclickable": "le\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <section class=\"apunte\">…</section> from <div id=\"apuntes-ejemplo\" class=\"apuntes ancho\">…</div> subtree intercepts pointer events\n    - retrying click action\n      - waiting 500ms\n"
+    },
+    {
+     "href": "#receta-conversacion",
+     "unclickable": "le\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <section class=\"apunte\">…</section> from <div id=\"apuntes-ejemplo\" class=\"apuntes ancho\">…</div> subtree intercepts pointer events\n    - retrying click action\n      - waiting 500ms\n"
+    },
+    {
+     "href": "#receta-enlaces-icono",
+     "unclickable": "le\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <section class=\"apunte\">…</section> from <div id=\"apuntes-ejemplo\" class=\"apuntes ancho\">…</div> subtree intercepts pointer events\n    - retrying click action\n      - waiting 500ms\n"
+    },
+    {
+     "href": "#receta-avisos-animados",
+     "unclickable": "le\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <section class=\"apunte\">…</section> from <div id=\"apuntes-ejemplo\" class=\"apuntes ancho\">…</div> subtree intercepts pointer events\n    - retrying click action\n      - waiting 500ms\n"
+    },
+    {
+     "href": "#receta-relato-visual",
+     "unclickable": "iting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <div id=\"apuntes-ejemplo\" class=\"apuntes ancho\">…</div> intercepts pointer events\n    - retrying click action\n      - waiting 500ms\n"
+    },
+    {
+     "href": "#receta-reacciones",
+     "unclickable": "ement to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <details id=\"fuente-apuntes\" class=\"receta-copia ancho\">…</details> intercepts pointer events\n    - retrying click action\n      - waiting 500ms\n"
+    }
+   ]
+  }
+ ]
+}
