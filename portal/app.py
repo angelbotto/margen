@@ -579,6 +579,14 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
         from portal.formats import CAPABILITIES
         return {'version':1,'formats':CAPABILITIES}
 
+    @lru_cache(maxsize=4096)
+    def appearance_of(sha):
+        # Versions are content-addressed, so a sha's declared appearance never changes.
+        from portal.reader_style import initial_appearance
+        try:
+            with open(store.files/(sha+'.html'),encoding='utf-8',errors='replace') as f:return initial_appearance(f.read(65536))
+        except (OSError,TypeError):return None
+
     @app.get('/api/artifacts/{aid}')
     def artifact(aid: str, request: Request):
         u = who(request)
@@ -586,7 +594,10 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
             a = artifact_for(db,aid,u);p = permissions(db,a,u)
             owner=bool(u and u['id']==a['owner'])
             fmt=db.execute('SELECT capabilities FROM version_formats WHERE version=?',(a['current_version'],)).fetchone()
-            return {**a,**metadata(db,aid),**enrich(db,a,u),'format':json.loads(fmt['capabilities']) if fmt else None,'permissions':p,'versions':[{**dict(v),'source':v['source'] if owner else '{}'} for v in db.execute("SELECT v.id,v.created,COALESCE(m.state,'published') AS state,m.source FROM versions v LEFT JOIN version_meta m ON m.version=v.id WHERE v.artifact=? ORDER BY v.rowid DESC",(aid,)) if cited_version_readable(db,a,v['id'],u,permissions)],
+            # Each version declares its own first-paint mode; the reader backs whichever one it opens.
+            versions=[{'id':v['id'],'created':v['created'],'state':v['state'],'source':v['source'] if owner else '{}','appearance':appearance_of(v['sha'])} for v in db.execute("SELECT v.id,v.sha,v.created,COALESCE(m.state,'published') AS state,m.source FROM versions v LEFT JOIN version_meta m ON m.version=v.id WHERE v.artifact=? ORDER BY v.rowid DESC",(aid,)) if cited_version_readable(db,a,v['id'],u,permissions)]
+            sha=db.execute('SELECT sha FROM versions WHERE id=?',(a['current_version'],)).fetchone()
+            return {**a,**metadata(db,aid),**enrich(db,a,u),'format':json.loads(fmt['capabilities']) if fmt else None,'appearance':appearance_of(sha['sha']) if sha else None,'permissions':p,'versions':versions,
                     'grants':[dict(g) for g in db.execute('SELECT email,role FROM grants WHERE artifact=?',(aid,))] if p['manage'] else [],
                     'access_revision':access_revision(db,a) if p['manage'] else None,
                     'domain_grants':[dict(g) for g in db.execute('SELECT domain,role FROM domain_grants WHERE artifact=? ORDER BY domain',(aid,))] if p['manage'] else []}
@@ -728,10 +739,10 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
             if not v: raise HTTPException(404,'Versión no encontrada.')
             content=(store.files/(v['sha']+'.html')).read_text()
         from urllib.parse import quote
-        from portal.reader_style import without_embedded_flow, refresh_editorial_reference
+        from portal.reader_style import without_embedded_flow, refresh_editorial_reference, with_initial_theme, head_insertion_point
         # The shared reader supplies current rhythm; remove only its old marked CSS block.
         # Stored source, revisions, custom CSS and permissions remain unchanged.
-        content=without_embedded_flow(content)
+        content=with_initial_theme(without_embedded_flow(content))
         content=refresh_editorial_reference(content,
             (ROOT/'static/editorial-reference.css').read_text(),
             (ROOT/'static/editorial-code.js').read_text(),
@@ -744,9 +755,8 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
         content=re.sub(r'(<script\s+data-nota-modulo=[\"\'](?:revision|packages/core/components/review)\.js[\"\'][^>]*>).*?</script>',
                        lambda m:m[1]+revision+'</script>',content,flags=re.S)
         reader_controls=(ROOT/'static/reader-controls.js').read_text()
-        script='<script>'+(ROOT/'static/interface.js').read_text()+'\n'+bridge+'\n'+reader_controls+'</script><style>'+(ROOT/'static/review-additions.css').read_text()+'</style>'
-        head=re.search(r'<head(?:\s[^>]*)?>',content,re.I)
-        position=head.end() if head else (re.match(r'\s*<!doctype[^>]*>',content,re.I).end() if re.match(r'\s*<!doctype[^>]*>',content,re.I) else 0)
+        script='<script>'+(ROOT/'static/interface.js').read_text()+'\n'+bridge+'\n'+reader_controls+'</script><style>'+(ROOT/'static/review-additions.css').read_text()+'</style><style>@media screen{:where(html[data-margen-surface]:not([data-trama])){background-color:var(--papel)}}</style>'
+        position=head_insertion_point(content)
         result=content[:position]+script+content[position:]
         return HTMLResponse(result,headers={'Content-Security-Policy':"sandbox allow-scripts allow-downloads; default-src 'none'; script-src 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'unsafe-inline'; img-src data: blob:; font-src data:; media-src data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'self'"})
 

@@ -1,5 +1,6 @@
 """Refresh only the marked shared reading rules in a rendered copy of old HTML."""
 from html.parser import HTMLParser
+import json
 import re
 
 FLOW = re.compile(r'/\* EDITORIAL FLOW START \*/.*?/\* EDITORIAL FLOW END \*/', re.S)
@@ -158,3 +159,128 @@ def refresh_editorial_reference(content, css, code, pieces=None):
     for start, end, replacement in sorted(parser.edits, reverse=True):
         content = content[:start] + replacement + content[end:]
     return content
+
+
+
+def _initial_metas(content):
+    class Metas(HTMLParser):
+        def __init__(self):
+            super().__init__(convert_charrefs=True)
+            self.values = {}
+
+        def handle_starttag(self, tag, attrs):
+            if tag == 'meta':
+                a = dict(attrs)
+                if a.get('name') in ('nota-modo-inicial', 'nota-tema-inicial'):
+                    self.values.setdefault(a['name'], a.get('content') or '')
+
+    parser = Metas()
+    parser.feed(content[:65536])
+    return parser.values
+
+
+def initial_appearance(content):
+    """Declared first-paint mode, so the host can back the frame before the document paints."""
+    mode = _initial_metas(content).get('nota-modo-inicial')
+    return {'mode': mode if mode in ('light', 'dark', 'system') else None}
+
+
+REGISTRY = '/* REGISTRO TEMAS */ const themeRegistry = '
+
+
+def with_initial_theme(content):
+    """Paint a declared light or dark palette from the first frame.
+
+    The value comes from the document's own embedded theme registry, the same one reader.js
+    applies at the end of the body; system mode, unknown families and existing data-theme stay as they are.
+    """
+    metas = _initial_metas(content)
+    mode, family = metas.get('nota-modo-inicial'), metas.get('nota-tema-inicial')
+    at = content.find(REGISTRY)
+    if mode not in ('light', 'dark') or not family or at < 0:
+        return content
+    try:
+        registry = json.JSONDecoder().raw_decode(content, at + len(REGISTRY))[0]
+        palette = next(f for f in registry['familias'] if f.get('id') == family)[mode]
+    except (ValueError, KeyError, TypeError, StopIteration):
+        return content
+    if not isinstance(palette, str) or not re.fullmatch(r'[a-z0-9-]{1,40}', palette):
+        return content
+    root = _root_markup(content)
+    if root['themed']:
+        return content
+    if root['html'] is not None:
+        position = root['html'] + 5
+        return content[:position] + ' data-theme="' + palette + '"' + content[position:]
+    position = root['doctype'] if root['doctype'] is not None else root['bom']
+    return content[:position] + '<html data-theme="' + palette + '">' + content[position:]
+
+
+LITERAL = {'script', 'style', 'textarea', 'title', 'xmp', 'iframe', 'noembed', 'noframes', 'plaintext'}
+
+
+def _root_markup(content):
+    """Offsets of the real doctype, <html> and <head> tags.
+
+    Comments, scripts, templates and other literal text are not markup, so a tag-like
+    string inside them never moves an insertion; whatever precedes a real doctype stays before it.
+    """
+    offsets = [0] + [match.end() for match in re.finditer('\n', content)]
+    bom = len(content) - len(content.lstrip('\ufeff'))
+
+    class Root(HTMLParser):
+        def __init__(self):
+            super().__init__(convert_charrefs=False)
+            self.found = {'doctype': None, 'html': None, 'html_end': None, 'head': None, 'themed': False, 'bom': bom}
+            self.literal = None
+            self.inert = 0
+            self.started = False
+
+        def pos(self):
+            line, column = self.getpos()
+            return offsets[line - 1] + column
+
+        def handle_decl(self, declaration):
+            if (not self.started and not self.literal and not self.inert and self.found['doctype'] is None
+                    and re.match(r'doctype(?:\s|$)', declaration, re.I)):
+                self.found['doctype'] = self.pos() + len(declaration) + 3
+
+        def handle_startendtag(self, tag, attrs):
+            self.handle_starttag(tag, attrs)
+
+        def handle_starttag(self, tag, attrs):
+            if self.literal:
+                return
+            leading, self.started = not self.started, True
+            if tag == 'template':
+                self.inert += 1
+            elif tag in LITERAL:
+                self.literal = tag
+            elif self.inert:
+                return
+            elif tag == 'html':
+                self.found['themed'] = self.found['themed'] or any(name == 'data-theme' for name, _ in attrs)
+                if self.found['html'] is None:
+                    self.found['html'] = self.pos()
+                    if leading:
+                        self.found['html_end'] = self.pos() + len(self.get_starttag_text())
+            elif tag == 'head' and self.found['head'] is None:
+                self.found['head'] = self.pos() + len(self.get_starttag_text())
+
+        def handle_endtag(self, tag):
+            if self.literal:
+                if tag == self.literal:
+                    self.literal = None
+            elif tag == 'template' and self.inert:
+                self.inert -= 1
+
+    parser = Root()
+    parser.feed(content)
+    parser.close()
+    return parser.found
+
+
+def head_insertion_point(content):
+    """Where host scripts go: after the real <head> or <html>, else after the real doctype, never before it."""
+    root = _root_markup(content)
+    return next(offset for offset in (root['head'], root['html_end'], root['doctype'], root['bom']) if offset is not None)

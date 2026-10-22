@@ -1,5 +1,5 @@
 {
-  "version": "2026.10.21-library.1",
+  "version": "2026.10.21-library.2",
   "contrato": "4",
   "componentes": 90,
   "temas": [
@@ -40,5 +40,5 @@
     "formats": 1,
     "python": "3.10"
   },
-  "release_sequence": 2026102101
+  "release_sequence": 2026102102
 }
