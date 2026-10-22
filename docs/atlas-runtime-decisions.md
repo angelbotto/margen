@@ -10,6 +10,8 @@ La elección debe comparar tamaño comprimido, tiempo de tokenización y precisi
 
 Conservar exactamente el texto copiado, tabs, saltos, entidades, `mark`, rangos y números de 1–1000. Tokens como comentarios, strings, funciones, etiquetas y propiedades deben tomar variables del tema, sin retokenizar al alternar claro/oscuro. Lenguaje desconocido debe conservar texto legible y nombre original. Un bloque muy grande debe seguir siendo copiable si se pospone o limita el coloreado.
 
+Prueba aislada de candidato: Prism 1.30.0, núcleo y 21 gramáticas: 54.392 bytes, 19.361 bytes gzip; tokenizar mil líneas JavaScript en Node tomó 12,5 ms en la primera pasada y 4–5,6 ms en cuatro pasadas calientes. Se descargó el tarball oficial con scripts desactivados; integridad y ensayo en `/tmp/margen-syntax-evaluation/`. No incluye DOM ni carga del navegador y no es aún una mejora integrada.
+
 ## Páginas y coste inicial
 
 El atlas base tiene diez páginas, 90 recetas y unas 35.000 etiquetas tras inicializar. `chapters.js` cambia `hidden`, pero los runtimes ya recorrieron todo el documento. El contenido de ejemplo también contiene artículos anidados: una sustitución con regex hasta el primer `</article>` no puede convertirlo correctamente a carga diferida.

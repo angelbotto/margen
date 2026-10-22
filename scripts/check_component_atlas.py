@@ -22,7 +22,7 @@ class QuietHandler(SimpleHTTPRequestHandler):
         pass
 
 
-def check(html: Path, coverage: Path, output: Path, full: bool) -> dict:
+def check(html: Path, coverage: Path, output: Path, full: bool, engine: str) -> dict:
     expected = json.loads(coverage.read_text())
     ids = [r['id'] for r in expected['components']]
     assert len(set(ids)) == expected['registry_count'] == len(ids)
@@ -30,15 +30,15 @@ def check(html: Path, coverage: Path, output: Path, full: bool) -> dict:
     server = ThreadingHTTPServer(('127.0.0.1', 0), partial(QuietHandler, directory=str(html.parent)))
     threading.Thread(target=server.serve_forever, daemon=True).start()
     url = f'http://127.0.0.1:{server.server_port}/{quote(html.name)}'
-    report = {'source': str(html), 'registry_count': len(ids), 'checks': [], 'errors': [], 'network_blocked': []}
+    report = {'source': str(html), 'engine': engine, 'registry_count': len(ids), 'checks': [], 'errors': [], 'network_blocked': []}
 
     def record(name, passed, details=None):
         report['checks'].append({'name': name, 'passed': bool(passed), 'details': details})
 
     try:
         with sync_playwright() as pw:
-            browser = pw.chromium.launch()
-            context = browser.new_context(viewport={'width': 1440, 'height': 900}, reduced_motion='reduce', permissions=['clipboard-read', 'clipboard-write'])
+            browser = getattr(pw, engine).launch()
+            context = browser.new_context(viewport={'width': 1440, 'height': 900}, reduced_motion='reduce', permissions=['clipboard-read', 'clipboard-write'] if engine == 'chromium' else [])
 
             def route(request):
                 if urlsplit(request.request.url).hostname == '127.0.0.1':
@@ -51,7 +51,11 @@ def check(html: Path, coverage: Path, output: Path, full: bool) -> dict:
             page = context.new_page()
             page.on('pageerror', lambda error: report['errors'].append(str(error)))
             page.add_init_script("""window.atlasTasks=[];
-                new PerformanceObserver(l=>atlasTasks.push(...l.getEntries().map(e=>({start:e.startTime,duration:e.duration})))).observe({type:'longtask',buffered:true});""")
+                if(PerformanceObserver.supportedEntryTypes.includes('longtask'))new PerformanceObserver(l=>atlasTasks.push(...l.getEntries().map(e=>({start:e.startTime,duration:e.duration})))).observe({type:'longtask',buffered:true});""")
+            if engine == 'webkit':
+                # WebKit has no Playwright clipboard grant. Observe the application's
+                # requested write; actual system clipboard is tested in Chromium.
+                page.add_init_script("Object.defineProperty(navigator,'clipboard',{value:{writeText:async text=>{window.atlasCopied=text}}})")
             page.goto(url, wait_until='load')
             page.evaluate('document.fonts.ready')
             page.wait_for_timeout(100)
@@ -100,8 +104,8 @@ def check(html: Path, coverage: Path, output: Path, full: bool) -> dict:
             numbers = code.locator('.codigo-linea').evaluate_all('(els)=>els.map(e=>e.dataset.numero)')
             record('1000 sequential line numbers', numbers == [str(n) for n in range(1, 1001)])
             page.locator('#prueba-mil-lineas .cab button').first.click()
-            copied = page.evaluate('navigator.clipboard.readText()')
-            record('clipboard excludes line numbers', copied == source)
+            copied = page.evaluate('navigator.clipboard.readText()' if engine == 'chromium' else 'window.atlasCopied')
+            record('clipboard excludes line numbers' if engine == 'chromium' else 'copy request excludes line numbers (clipboard stub)', copied == source)
             code.evaluate('e=>{const p=e.closest("pre");p.scrollTop=p.scrollHeight;}')
             page.screenshot(path=str(output / 'thousand-lines.png'))
 
@@ -137,8 +141,9 @@ if __name__ == '__main__':
     parser.add_argument('--html', type=Path, required=True)
     parser.add_argument('--coverage', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--browser', choices=['chromium', 'webkit'], default='chromium')
     parser.add_argument('--full', action='store_true', help='Run all five widths, three families and both modes.')
     args = parser.parse_args()
-    result = check(args.html.resolve(), args.coverage.resolve(), args.output.resolve(), args.full)
+    result = check(args.html.resolve(), args.coverage.resolve(), args.output.resolve(), args.full, args.browser)
     print(json.dumps({'passed': result['passed'], 'checks': len(result['checks']), 'failed': [r for r in result['checks'] if not r['passed']], 'report': str(args.output / 'atlas-check.json')}, ensure_ascii=False))
     raise SystemExit(0 if result['passed'] else 1)
