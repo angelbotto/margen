@@ -1935,8 +1935,9 @@ body:has(.revision-barra) { padding-bottom:0; }
 .codigo-editorial .cab { border-bottom:1px dotted var(--linea-fuerte); }
 .codigo-editorial pre { padding:16px 0; }
 .codigo-editorial code[data-lineas] { display:block; min-width:100%; width:max-content; }
-.codigo-linea { position:relative; display:inline-block; min-width:100%; padding-inline:52px 20px; border-left:2px solid transparent; }
-.codigo-linea::before { content:attr(data-numero); position:absolute; left:12px; width:24px; text-align:right; color:var(--tinta-2); font:inherit; }
+/* The gutter grows with the digit count and never inherits author wrapping. */
+.codigo-linea { position:relative; display:inline-block; min-width:100%; padding-inline:calc(max(24px,var(--codigo-cifras,1)*1ch) + 28px) 20px; border-left:2px solid transparent; }
+.codigo-linea::before { content:attr(data-numero); position:absolute; left:12px; width:max(24px,var(--codigo-cifras,1)*1ch); text-align:right; white-space:nowrap; overflow-wrap:normal; word-break:normal; color:var(--tinta-2); font:inherit; font-variant-numeric:tabular-nums; }
 .codigo-linea.destacada { background:var(--naranja-suave); border-left-color:var(--naranja); }
 .codigo-linea.destacada::before { color:var(--naranja); }
 .boton-icono-copia { display:inline-grid; place-items:center; min-width:44px; min-height:44px; padding:10px; border:0!important; background:transparent; color:var(--tinta-2); cursor:pointer; }
@@ -3206,8 +3207,9 @@ body:has(.revision-barra) { padding-bottom:0; }
 @media screen {
  .hoja:not([data-presentation]) { --texto:33rem; --ancho:64rem; --gutter:24px; }
  /* Scoped selectors without :scope are implicitly descendants of it, so :root
-    never matched here and body kept 16px/1.65. :scope is the document element. */
- :scope:not([data-lectura-comoda]) .hoja:not([data-presentation]) { font-size:15.5px; line-height:1.55; }
+    never matched here and body kept 16px/1.65. :scope is the document element.
+    Reader-chosen serif styles keep their own 1.8 rhythm. */
+ :scope:not([data-lectura-comoda],[data-estilo=libro],[data-estilo=revista],[data-estilo=bitacora]) .hoja:not([data-presentation]) { font-size:15.5px; line-height:1.55; }
  .hoja:not([data-presentation]) h1:not([data-ritmo=propio] *) { font-size:44.5px; line-height:49.4444px; }
  .hoja:not([data-presentation]) h2:not([data-ritmo=propio] *) { font-size:36.4px; line-height:43.68px; }
  @media(max-width:639px) { .hoja:not([data-presentation]) h1:not([data-ritmo=propio] *) { font-size:36.4px; line-height:43.68px; } }
@@ -3227,8 +3229,8 @@ body:has(.revision-barra) { padding-bottom:0; }
 .codigo.codigo-editorial pre { position:relative; margin:0; padding:16px 0; overflow:auto; overscroll-behavior-inline:contain; background:color-mix(in srgb,var(--panel) 25%,transparent); -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); font:13.7px/22px var(--mono); letter-spacing:.05px; scrollbar-width:thin; }
 .codigo.codigo-editorial pre:focus-visible { outline:2px dashed var(--foco); outline-offset:4px; }
 .codigo-editorial code[data-lineas] { display:block; width:max-content; min-width:100%; }
-.codigo-editorial .codigo-linea { min-height:1lh; vertical-align:top; padding-inline:48px 16px; border-left:0; }
-.codigo-editorial .codigo-linea::before { left:16px; width:16px; color:var(--tinta-3); }
+.codigo-editorial .codigo-linea { min-height:1lh; vertical-align:top; padding-inline:calc(max(16px,var(--codigo-cifras,1)*1ch) + 32px) 16px; border-left:0; }
+.codigo-editorial .codigo-linea::before { left:16px; width:max(16px,var(--codigo-cifras,1)*1ch); white-space:nowrap; overflow-wrap:normal; word-break:normal; color:var(--tinta-3); font-variant-numeric:tabular-nums; }
 .codigo-editorial .codigo-linea.destacada { box-shadow:inset 2px 0 var(--naranja); }
 .codigo-editorial mark { color:var(--naranja); background:var(--naranja-suave); border:1px solid color-mix(in srgb,var(--naranja) 22%,transparent); border-radius:4px; padding:1px 3px; }
 .codigo.codigo-editorial::before,.codigo.codigo-editorial::after { content:''; position:absolute; pointer-events:none; z-index:1; }
@@ -10415,7 +10417,7 @@ window.NotaGeografia=Object.freeze({
    const frag=document.createDocumentFragment();let number=1,line;
    const next=()=>{line=document.createElement('span');line.className='codigo-linea'+(selected.has(number)?' destacada':'');line.dataset.numero=String(number++);frag.append(line);};next();
    tokens(source,lang).forEach(({text,kind})=>text.split('\n').forEach((part,i)=>{if(i){frag.append(document.createTextNode('\n'));sourceOffset++;next();}if(!part)return;const span=document.createElement('span');if(kind)span.className=kind;append(span,part);line.append(span);}));
-   el.replaceChildren(frag);return;
+   el.style.setProperty('--codigo-cifras',String(String(number-1).length));el.replaceChildren(frag);return;
   }
   const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT),nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
   for(const node of nodes){if(node.parentElement.closest('.kw,.str,.com,.subra,.tenue'))continue;const frag=document.createDocumentFragment();tokens(node.textContent,lang).forEach(({text,kind})=>{if(!text)return;if(!kind){frag.append(document.createTextNode(text));return;}const span=document.createElement('span');span.className=kind;span.textContent=text;frag.append(span);});node.replaceWith(frag);}

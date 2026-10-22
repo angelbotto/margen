@@ -39,7 +39,7 @@
    const frag=document.createDocumentFragment();let number=1,line;
    const next=()=>{line=document.createElement('span');line.className='codigo-linea'+(selected.has(number)?' destacada':'');line.dataset.numero=String(number++);frag.append(line);};next();
    tokens(source,lang).forEach(({text,kind})=>text.split('\n').forEach((part,i)=>{if(i){frag.append(document.createTextNode('\n'));sourceOffset++;next();}if(!part)return;const span=document.createElement('span');if(kind)span.className=kind;append(span,part);line.append(span);}));
-   el.replaceChildren(frag);return;
+   el.style.setProperty('--codigo-cifras',String(String(number-1).length));el.replaceChildren(frag);return;
   }
   const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT),nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
   for(const node of nodes){if(node.parentElement.closest('.kw,.str,.com,.subra,.tenue'))continue;const frag=document.createDocumentFragment();tokens(node.textContent,lang).forEach(({text,kind})=>{if(!text)return;if(!kind){frag.append(document.createTextNode(text));return;}const span=document.createElement('span');span.className=kind;span.textContent=text;frag.append(span);});node.replaceWith(frag);}

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Live Chromium checks of measured editorial geometry and interactions; offline."""
-import json,sys,unittest
+import base64,json,sys,unittest
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[1]
@@ -176,6 +176,14 @@ class EditorialReference(unittest.TestCase):
      self.assertEqual(errors,[]);page.close()
   page,_=self.page(html=html);page.evaluate('document.documentElement.setAttribute("data-lectura-comoda","")')
   self.assertEqual(page.locator('#first p').evaluate('e=>getComputedStyle(e).fontSize'),'18px')
+  # Reader-selected styles stay independent of the measured body type.
+  body='e=>[getComputedStyle(e).fontSize,getComputedStyle(e).lineHeight]'
+  for comfortable in (False,True):
+   for style,expected in (('editorial',['15.5px','24.025px']),('sobrio',['15.5px','24.025px']),('tecnico',['15.5px','24.025px']),('libro',['16px','28.8px']),('revista',['16px','28.8px']),('bitacora',['16px','28.8px'])):
+    with self.subTest(style=style,comfortable=comfortable):
+     page.evaluate('([s,c])=>{const r=document.documentElement;r.dataset.estilo=s;r.toggleAttribute("data-lectura-comoda",c)}',[style,comfortable])
+     want=(['18px','32.4px'] if style in ('libro','revista','bitacora') else ['18px','30.6px']) if comfortable else expected
+     self.assertEqual(page.locator('#first p').evaluate(body),want)
  def test_code_blur_is_rendered_over_index(self):
   # Computed blur is not enough: the index must contribute blurred pixels behind code.
   html=self.html.replace('Leer con atención','Leer con atención: ejemplos y decisiones con suficiente contexto')
@@ -188,7 +196,74 @@ class EditorialReference(unittest.TestCase):
   page.locator('#snippet pre').evaluate('e=>e.style.backdropFilter="none"');sharp=page.screenshot(clip=clip)
   page.locator('#snippet pre').evaluate('e=>e.style.backdropFilter=""');page.locator('.indice').evaluate('e=>e.style.visibility="hidden"')
   hidden=page.screenshot(clip=clip)
-  self.assertNotEqual(blurred,hidden);self.assertNotEqual(blurred,sharp);self.assertEqual(errors,[])
+  # PNG bytes differ from capture noise alone; decode and require real pixel change.
+  changed='''async([a,b])=>{const px=async s=>{const i=await createImageBitmap(await (await fetch('data:image/png;base64,'+s)).blob()),c=new OffscreenCanvas(i.width,i.height),x=c.getContext('2d');x.drawImage(i,0,0);return x.getImageData(0,0,i.width,i.height).data};
+   const [p,q]=await Promise.all([px(a),px(b)]);let n=0;for(let i=0;i<p.length;i+=4)if(Math.max(Math.abs(p[i]-q[i]),Math.abs(p[i+1]-q[i+1]),Math.abs(p[i+2]-q[i+2]))>8)n++;return n/(p.length/4)}'''
+  encode=lambda png:base64.b64encode(png).decode()
+  self.assertGreaterEqual(page.evaluate(changed,[encode(blurred),encode(sharp)]),.05)
+  self.assertGreaterEqual(page.evaluate(changed,[encode(blurred),encode(hidden)]),.05)
+  page.locator('.indice').evaluate('e=>e.style.visibility=""');self.assertLess(page.evaluate(changed,[encode(blurred),encode(page.screenshot(clip=clip))]),.01)
+  self.assertEqual(errors,[])
+ def test_line_numbers_stay_one_per_line(self):
+  # Regression seen on 2026-10-21: inside a reading section (overflow-wrap:anywhere)
+  # an author pre with inline white-space:pre-wrap let the 16px number gutter wrap,
+  # so 10+ broke into stacked, overlapping digits. One readable number per line.
+  import html as html_lib
+  long_line='const resumen = "'+'palabra '*40+'";'
+  big='\n'.join('' if n%7==0 else long_line if n in (50,999) else f'let fila{n} = {n};' for n in range(1,1001))
+  mid='\n'.join(f'• regla {n}' for n in range(1,121))
+  short='a = 1\n\nb = 2'
+  def block(id,source,pre='',code=''):return f'<figure class="codigo" id="{id}"><pre tabindex="0" aria-label="Código"{pre}><code data-lenguaje="javascript"{code}>{html_lib.escape(source)}</code></pre></figure>'
+  content=(block('mil',big)+'<section>'+block('envuelto',mid,pre=' style="white-space:pre-wrap;max-height:34rem;overflow:auto"')+'</section>'+block('corto',short,code=' data-destacar="1"')
+   +block('sin',short,code=' data-sin-lineas')+'<figure class="codigo" id="marcas"><pre tabindex="0" aria-label="Código"><code data-lenguaje="javascript">let <mark>a</mark> = 1;</code></pre></figure>')
+  check='''e=>{const ls=[...e.querySelectorAll('.codigo-linea')],out=[];for(const n of [1,2,9,10,99,100,120,999,1000]){const l=ls[n-1];if(!l)continue;
+    const b=getComputedStyle(l,'::before'),s=getComputedStyle(l),probe=document.createElement('span');probe.style.cssText='position:absolute;visibility:hidden;white-space:pre';probe.textContent=l.dataset.numero;l.append(probe);
+    out.push({n,number:l.dataset.numero,height:parseFloat(b.height),row:parseFloat(s.lineHeight),text:probe.getBoundingClientRect().width,width:parseFloat(b.width),end:parseFloat(b.left)+parseFloat(b.width),start:parseFloat(s.paddingLeft),color:b.color});probe.remove();}
+   return out}'''
+  def luminance(color):
+   r,g,b=[int(v)/255 for v in color[color.index('(')+1:color.index(')')].split(',')[:3]]
+   return sum(k*(c/12.92 if c<=.04045 else ((c+.055)/1.055)**2.4) for k,c in zip((.2126,.7152,.0722),(r,g,b)))
+  for theme,mode in (('editorial','light'),('editorial','dark'),('catabum','light'),('catabum','dark')):
+   html=build('Numeración',[{'id':'lineas','titulo':'Numeración','html':content}],theme=theme,mode=mode)
+   for width in (320,390,1440):
+    for media in ('screen','print'):
+     with self.subTest(theme=theme,mode=mode,width=width,media=media):
+      page,errors=self.page(width,html=html,scheme=mode);page.emulate_media(media=media)
+      self.assertLessEqual(page.evaluate('document.documentElement.scrollWidth'),width)
+      for id,source,total in (('mil',big,1000),('envuelto',mid,120),('corto',short,3)):
+       code=page.locator(f'#{id} code');self.assertEqual(code.text_content(),source)
+       self.assertEqual(code.locator('.codigo-linea').count(),total)
+       for line in code.evaluate(check):
+        self.assertEqual(line['number'],str(line['n']))
+        self.assertAlmostEqual(line['height'],line['row'],delta=.5,msg=line)
+        self.assertLessEqual(line['text'],line['width']+.5,line)
+        self.assertLessEqual(line['end']+8,line['start'],line)
+       if media=='screen':
+        paper=page.evaluate('getComputedStyle(document.body).backgroundColor');ink=code.evaluate(check)[0]['color']
+        light,dark=sorted((luminance(paper),luminance(ink)),reverse=True);self.assertGreaterEqual((light+.05)/(dark+.05),4.5,(paper,ink))
+      if media=='screen':
+       pre=page.locator('#mil pre');self.assertGreater(pre.evaluate('e=>e.scrollWidth-e.clientWidth'),0)
+       self.assertEqual(page.locator('#sin .codigo-linea').count(),0);self.assertEqual(page.locator('#sin code').text_content(),short)
+       self.assertEqual(page.locator('#marcas mark').text_content(),'a')
+       self.assertEqual(page.locator('#corto .codigo-linea.destacada').count(),1)
+       if width==390 and theme=='catabum':page.locator('#envuelto pre').evaluate('e=>e.scrollTop=e.scrollHeight');page.screenshot(path=f'/tmp/margen-line-numbers-{mode}.png',full_page=False)
+      self.assertEqual(errors,[]);page.close()
+  page,_=self.page(html=html);page.locator('#envuelto button').click();self.assertEqual(page.evaluate('navigator.clipboard.readText()'),mid)
+  page.locator('#envuelto code').evaluate('e=>{const r=document.createRange();r.selectNodeContents(e);getSelection().removeAllRanges();getSelection().addRange(r)}')
+  self.assertEqual(page.evaluate('getSelection().toString()'),mid)
+  # Hosted upgrade replaces only the reference layer and code runtime; an old
+  # embedded base gutter must not bring the wrapping back.
+  import re
+  sys.path.insert(0,str(ROOT))
+  from portal.reader_style import refresh_editorial_reference
+  old=re.sub(r'/\* EDITORIAL REFERENCE START \*/.*?/\* EDITORIAL REFERENCE END \*/','',html,flags=re.S)
+  old=re.sub(r'\.codigo-linea::before \{[^}]*\}','.codigo-linea::before { content:attr(data-numero); position:absolute; left:12px; width:24px; text-align:right; color:var(--tinta-2); font:inherit; }',old,count=1)
+  old=re.sub(r'(<script data-nota-modulo="packages/core/components/code.js">).*?</script>',r'\1/* stale code runtime */</script>',old,flags=re.S)
+  css=(ROOT/'packages/core/styles/editorial-reference.css').read_text();runtime=(ROOT/'packages/core/components/code.js').read_text()
+  page,errors=self.page(390,html=refresh_editorial_reference(old,css,runtime))
+  for line in page.locator('#envuelto code').evaluate(check):
+   self.assertAlmostEqual(line['height'],line['row'],delta=.5,msg=line);self.assertLessEqual(line['text'],line['width']+.5,line)
+  self.assertEqual(errors,[])
  def test_no_script(self):
   page,_=self.page(js=False);self.assertEqual(page.locator('#source').text_content(),SOURCE);self.assertTrue(page.locator('#snippet .cab > span').first.is_visible())
 if __name__=='__main__':unittest.main()
