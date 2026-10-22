@@ -96,7 +96,7 @@ def date_markup(dates):
  when=lambda d:'<time datetime="'+d.isoformat()+'">'+str(d.day)+' '+MONTHS[d.month-1]+' '+str(d.year)+'</time>'
  return '<p class="cabecera-fecha">'+('Publicado '+when(published)+' · Actualizado '+when(updated) if updated and updated!=published else when(published))+'</p>'
 def footer_options(value):
- """Validate a per-document footer: author identity, optional links, separate platform line."""
+ """Validate an optional author-owned footer; the platform credit is opt-in (platform: true)."""
  if value is None:return None
  if not isinstance(value,dict) or not set(value)<={'author','note','links','platform'}:raise ValueError('footer: claves permitidas author, note, links y platform.')
  links=value.get('links',[])
@@ -105,7 +105,7 @@ def footer_options(value):
  for i,link in enumerate(links):
   if not isinstance(link,dict) or not {'label','href'}<=set(link)<={'label','href','detail'}:raise ValueError('footer.links['+str(i)+']: requiere label y href; detail es opcional.')
   clean.append((plain_text(link['label'],'footer.links['+str(i)+'].label',60),safe_url(link['href'],'footer.links['+str(i)+'].href'),plain_text(link.get('detail'),'footer.links['+str(i)+'].detail',80)))
- platform=value.get('platform',True)
+ platform=value.get('platform',False)
  if not isinstance(platform,bool):raise ValueError('footer.platform: true o false.')
  result={'author':plain_text(value.get('author'),'footer.author',120),'note':plain_text(value.get('note'),'footer.note',280),'links':clean,'platform':platform}
  if not (result['author'] or result['note'] or clean or platform):raise ValueError('footer: no puede quedar vacío.')
@@ -113,9 +113,10 @@ def footer_options(value):
 def reactions_markup():
  buttons=''.join('<button type="button" data-reaccion="'+key+'" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+icon+'</svg><span>'+label+'</span></button>' for key,label,icon in REACTIONS)
  return '<div class="reacciones" data-reacciones role="group" aria-labelledby="reacciones-titulo"><p class="ceja" id="reacciones-titulo">¿Cómo te dejó esta lectura?</p><div class="reacciones-botones">'+buttons+'</div><p class="reacciones-nota">Se guardan solo en este navegador. No hay conteos compartidos.</p></div>'
-def footer_markup(options,brand,title,reactions):
+def footer_markup(options,reactions):
  extra=reactions_markup() if reactions else ''
- if options is None:return '<footer class="pie">'+extra+'<p>'+escape(brand)+' · '+escape(title)+'</p></footer>'
+ # Sin pie del autor no hay pie: ni marca ni título repetidos. Las reacciones locales quedan solas.
+ if options is None:return extra
  author=''.join(['<p class="pie-autor">'+escape(options['author'])+'</p>' if options['author'] else '','<p class="pie-nota">'+escape(options['note'])+'</p>' if options['note'] else ''])
  if options['links']:author+='<nav class="pie-enlaces" aria-label="'+escape('Enlaces de '+options['author'] if options['author'] else 'Enlaces del documento',quote=True)+'">'+''.join('<span class="pie-enlace"><a href="'+escape(href,quote=True)+'" rel="noopener noreferrer">'+escape(label)+'</a>'+(' <span class="pie-detalle">'+escape(detail)+'</span>' if detail else '')+'</span>' for label,href,detail in options['links'])+'</nav>'
  return '<footer class="pie pie-documento">'+('<div class="pie-autoria">'+author+'</div>' if author else '')+extra+('<p class="pie-plataforma">Hecho con Margen</p>' if options['platform'] else '')+'</footer>'
@@ -139,6 +140,7 @@ def build(title,pages,description='',brand='Margen',theme=None,style=None,docume
  if not isinstance(description,str) or any(not isinstance(p,dict) or any(not isinstance(p.get(k),str) for k in ['id','titulo','html']) for p in pages):raise ValueError('Cada página requiere id, titulo y html de texto.')
  dates=document_dates(date);footer=footer_options(footer)
  if not isinstance(reactions,bool):raise ValueError('reactions: true o false.')
+ if format=='presentation' and (footer or reactions):raise ValueError('Las presentaciones no llevan pie ni reacciones de artículo; usa la última diapositiva.')
  page_dates=[document_dates(p.get('date'),'pages['+str(i)+'].date') for i,p in enumerate(pages)]
  ids=[p['id'] for p in pages]
  if len(ids)!=len(set(ids)) or any(not re.fullmatch(r'[a-z][a-z0-9-]*',i) for i in ids):raise ValueError('IDs de página únicos: minúsculas, números y guiones.')
@@ -164,7 +166,7 @@ def build(title,pages,description='',brand='Margen',theme=None,style=None,docume
   if multi:block='<article class="pagina'+(' viva' if i==0 else '')+'" id="'+p['id']+'" data-pagina'+('' if i==0 else ' hidden')+'>'+block+'</article>'
   pieces.append(block)
  pag='<div class="paginacion" data-paginacion><button type="button" data-nav="prev"><span class="et">Anterior</span><span class="tit"></span></button><button type="button" data-nav="next"><span class="et">Siguiente</span><span class="tit"></span></button></div>' if multi else ''
- main='<main class="hoja lectura-guiada nota-estandar marcos-editoriales'+(' multipagina edicion' if multi else '')+'" data-lectura'+(' data-presentation' if format=='presentation' else '')+(' data-progreso-pagina data-historial data-enlaces-internos' if multi else '')+' lang="es">'+''.join(pieces)+pag+footer_markup(footer,brand,title,reactions)+'</main>'
+ main='<main class="hoja lectura-guiada nota-estandar marcos-editoriales'+(' multipagina edicion' if multi else '')+'" data-lectura'+(' data-presentation' if format=='presentation' else '')+(' data-progreso-pagina data-historial data-enlaces-internos' if multi else '')+' lang="es">'+''.join(pieces)+pag+footer_markup(footer,reactions)+'</main>'
  ruler='<div class="regla regla-guiada" role="slider" tabindex="0" aria-orientation="horizontal" aria-label="Progreso de lectura" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="ticks"></div><div class="cursor"></div><span class="val">0%</span></div>'
  files=['packages/core/styles/fonts.css','packages/core/styles/artifact.css',*modules]
  manifest={'version':VERSION,'paginas':ids,'modulos':modules,'fuentes':{f:hashlib.sha256((ROOT/f).read_text().encode('utf-8')).hexdigest() for f in files}}

@@ -42,7 +42,7 @@ class EditorialAtlas(unittest.TestCase):
   # Keep antialiasing fixed so the pixel comparison measures index bleed-through.
   cls.pw=sync_playwright().start();cls.browser=cls.pw.chromium.launch(args=['--disable-lcd-text'])
   cls.html=build('La forma de leer',[{'id':'content','titulo':'La forma de leer','html':CONTENT}],theme='editorial',mode='dark',date={'published':'2026-10-01','updated':'2026-10-22'},
-   footer={'author':'Ana Autora','note':'Notas de campo.','links':[{'label':'Sitio','href':'https://ana.example/','detail':'proyectos y notas'},{'label':'Correo','href':'mailto:ana@ana.example'}]},reactions=True)
+   footer={'author':'Ana Autora','note':'Notas de campo.','links':[{'label':'Sitio','href':'https://ana.example/','detail':'proyectos y notas'},{'label':'Correo','href':'mailto:ana@ana.example'}],'platform':True},reactions=True)
   cls.html=cls.html.replace('id="datos"','id="datos" data-presentation="auto"')
   long=CONTENT.replace(code('cien',120),code('mil',1000))
   cls.chapters=build('Atlas de prueba',[{'id':'uno','titulo':'Uno','html':long},{'id':'dos','titulo':'Dos','html':'<section class="prosa" id="d1"><h2>Dos</h2><p>Otra página.</p></section>'}],theme='editorial',mode='dark',format='chapters')
@@ -223,7 +223,7 @@ class EditorialAtlas(unittest.TestCase):
   footer.locator('.pie-enlaces a').first.focus();page.wait_for_timeout(350);self.assertEqual(detail.evaluate('e=>getComputedStyle(e).filter'),'none')
   self.assertEqual(errors,[])
   plain=build('Sin pie',[{'id':'a','titulo':'Sin pie','html':'<p>texto</p>'}])
-  self.assertNotIn('class="cabecera-fecha"',plain);self.assertNotIn('class="pie pie-documento"',plain);self.assertIn('<footer class="pie"><p>Margen · Sin pie</p></footer>',plain)
+  self.assertNotIn('class="cabecera-fecha"',plain);self.assertNotIn('class="pie pie-documento"',plain);self.assertNotIn('<footer',plain)
 
  def test_reactions_are_local_and_uncounted(self):
   page,_=self.page()
