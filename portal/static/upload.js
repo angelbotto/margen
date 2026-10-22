@@ -7,7 +7,7 @@ window.MargenUpload = (() => {
     const input = form.elements.file, drop = form.querySelector('[data-upload-drop]');
     const report = form.querySelector('[data-upload-report]'), status = form.querySelector('[data-upload-status]');
     const error = form.querySelector('.form-error'), submit = form.querySelector('[type=submit]');
-    let selected = null, inspection = null, encoded = null, revision = null, generation = 0, busy = false;
+    let selected = null, inspection = null, encoded = null, revision = null, generation = 0, busy = false, autoTitle = ''; 
     const node = (tag, text, cls) => { const el = document.createElement(tag); el.textContent = text; if(cls) el.className = cls; return el; };
     const base64 = file => new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -19,7 +19,7 @@ window.MargenUpload = (() => {
       status.textContent = message;
       form.setAttribute('aria-busy', String(working));
       submit.disabled = working || !inspection;
-      submit.textContent = working && busy ? 'Guardando…' : revision ? 'Guardar revisión privada' : 'Crear artefacto privado';
+      submit.textContent = working && busy ? 'Guardando…' : revision ? 'Guardar borrador' : 'Crear artefacto privado';
     }
     async function choose(files) {
       if (busy) return;
@@ -39,7 +39,9 @@ window.MargenUpload = (() => {
         const result = await api('/api/uploads/inspect', {method: 'POST', body: JSON.stringify({name: file.name, data})});
         if (ticket !== generation) return;
         inspection = result; encoded = data;
-        if (!form.elements.title.value.trim()) form.elements.title.value = result.title || file.name.replace(/\.[^.]+$/, '');
+        if (!form.elements.title.value.trim() || form.elements.title.value === autoTitle) { autoTitle = result.title || file.name.replace(/\.[^.]+$/, ''); form.elements.title.value = autoTitle; }
+        form.elements.original.disabled = result.kind === 'pdf';
+        if (result.kind === 'pdf') form.elements.original.value = ''; 
         report.replaceChildren();
         const heading = node('div', '', 'upload-file-heading');
         heading.append(node('strong', file.name), node('span', `${result.kind.toUpperCase()} · ${size(file.size)}`, 'upload-file-meta'));
@@ -70,7 +72,7 @@ window.MargenUpload = (() => {
     form.addEventListener('submit', async e => {
       e.preventDefault();
       if (busy || !inspection || !selected || !encoded || !form.reportValidity()) return;
-      busy = true; error.textContent = ''; state('Guardando tu artefacto privado…', true);
+      busy = true; error.textContent = ''; state(revision ? 'Guardando la revisión como borrador…' : 'Guardando tu artefacto privado…', true);
       for (const el of form.querySelectorAll('[data-close],input,select')) el.disabled = true;
       try {
         const body = {name:selected.name, data:encoded, title:form.elements.title.value, space:form.elements.space.value,
@@ -85,14 +87,14 @@ window.MargenUpload = (() => {
         const result = await api('/api/uploads', {method:'POST', body:JSON.stringify(body)});
         navigate('/a/' + encodeURIComponent(result.id) + (result.state === 'draft' ? '?version=' + encodeURIComponent(result.version) : ''));
       } catch (e) { error.textContent = e.message; }
-      finally { busy = false; for (const el of form.querySelectorAll('[data-close],input,select')) el.disabled = false; state(inspection ? 'Archivo preparado para guardar.' : ''); }
+      finally { busy = false; for (const el of form.querySelectorAll('[data-close],input,select')) el.disabled = false; form.elements.original.disabled = inspection?.kind === 'pdf'; state(inspection ? 'Archivo preparado para guardar.' : ''); }
     });
     dialog.addEventListener('cancel', e => { if (busy) e.preventDefault(); });
     dialog.addEventListener('close', () => { ++generation; selected = inspection = encoded = null; });
     return {open(artifact = null) {
       if (busy) return;
       ++generation; revision = artifact ? {id:artifact.id, current_version:artifact.current_version} : null;
-      selected = inspection = encoded = null; form.reset(); error.textContent = ''; report.hidden = true;
+      selected = inspection = encoded = null; autoTitle = ''; form.reset(); form.elements.original.disabled = false; error.textContent = ''; report.hidden = true;
       form.elements.title.value = artifact?.title || ''; form.elements.space.value = artifact?.space || 'Personal';
       form.querySelector('#upload-heading').textContent = artifact ? 'Subir una revisión' : 'Un archivo. Un enlace.';
       form.querySelector('[data-upload-intro]').textContent = artifact ? 'Revisa una nueva versión antes de cambiar lo que ven tus lectores. El enlace y los comentarios se conservan.' : 'Arrastra tu documento y compártelo cuando esté listo. Empieza privado, con tu diseño y tu contenido.';

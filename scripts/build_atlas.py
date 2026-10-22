@@ -40,7 +40,7 @@ TRIALS = {
     "escenario": "Modifica los supuestos y comprueba qué resultados cambian. Las cifras son una simulación, no una previsión.",
     "pestanas": "Recorre las pestañas con las flechas del teclado. Solo el panel seleccionado debe quedar visible y accesible.",
     "metodologia": "Abre y cierra el detalle usando Enter. La explicación debe mantener su separación y legibilidad al pasar por el índice.",
-    "pie-editorial": "Recorre los enlaces con Tab. La identidad y las redes pertenecen al autor de cada documento, mientras la atribución de Margen es independiente.",
+    "pie-editorial": "Esta es una muestra opcional: el atlas no añade un pie al documento. En un informe puedes incluir tus enlaces; en una presentación puedes omitirlo por completo.",
     "encabezado-fecha": "La fecha viene de los metadatos del documento. Reduce el ancho: el día, el mes y el año deben mantenerse juntos.",
     "reacciones": "Selecciona una reacción y vuelve a pulsarla. El estado es local; la nota explica si se conserva en el navegador o solo mientras la página siga abierta.",
     "columnas": "Compara los grupos con la tabla, aísla una serie desde su leyenda y exporta los datos. Las alturas deben conservar la misma escala.",
@@ -185,10 +185,7 @@ def prepare(output: Path, render: bool = False) -> dict:
     pages.append({"id": "atlas-pruebas", "title": "Pruebas de lectura", "content": "pruebas.html"})
     config = {"title": "Margen · Atlas de componentes", "description": "Una biblioteca que puedes recorrer, probar y comentar.",
               "document_id": DOCUMENT_ID, "format": "chapters", "theme": "editorial", "mode": "dark", "pages": pages,
-              "date": "2026-10-22", "reactions": True,
-              "footer": {"author": "Una biblioteca compartida", "note": "Las mejores piezas empiezan con una observación. Prueba, comenta y comparte lo que debería cambiar.",
-                         "links": [{"label": "Proyecto", "href": "https://github.com/angelbotto/margen", "detail": "Código abierto y contribuciones"},
-                                   {"label": "Plataforma", "href": "https://artifacts.botto.is", "detail": "Leer, publicar y conversar"}], "platform": True}}
+              "date": "2026-10-22", "reactions": False, "footer": None}
     (output / "atlas.json").write_text(json.dumps(config, ensure_ascii=False, indent=2) + '\n')
     (output / "coverage.json").write_text(json.dumps({"registry_count": len(ids), "components": coverage,
             "layouts": [{"id": "chapter-layout", "mode": "atlas-shell"}, {"id": "report-layout", "page": "atlas-reportes"}]}, ensure_ascii=False, indent=2) + '\n')
