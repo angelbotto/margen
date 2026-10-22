@@ -156,6 +156,7 @@
       if (dialog.open) return;
       const s = session; session = null;
       if (s) clearTimeout(s.timer);
+      place();
       if (s?.opener?.isConnected && !s.opener.closest('[hidden]')) s.opener.focus();
       else frame()?.focus();
     });
@@ -206,6 +207,18 @@
     }
 
     return {
+      surface(color) {
+        const valid = Array.isArray(color) && color.length === 3 && color.every(c => Number.isInteger(c) && c >= 0 && c <= 255);
+        const channels = valid ? color.map(c => c / 255).map(c => c <= .04045 ? c / 12.92 : ((c + .055) / 1.055) ** 2.4) : [];
+        const dark = valid && channels[0] * .2126 + channels[1] * .7152 + channels[2] * .0722 < .179;
+        for (const node of [dock, overlay, dialog]) {
+          if (!valid) { for (const key of ['--bg', '--ink', '--line', '--muted']) node.style.removeProperty(key); continue; }
+          node.style.setProperty('--bg', 'rgb(' + color.join(',') + ')');
+          node.style.setProperty('--ink', dark ? '#fff' : '#000');
+          node.style.setProperty('--line', 'color-mix(in srgb,var(--ink) 24%,var(--bg))');
+          node.style.setProperty('--muted', 'color-mix(in srgb,var(--ink) 75%,var(--bg))');
+        }
+      },
       async load(artifact) {
         mountNodes();
         current = artifact && typeof artifact.id === 'string' ? {id: artifact.id, title: String(artifact.title || '')} : null;

@@ -97,6 +97,17 @@ describe('frontera de confianza', () => {
     expect(dock.hidden).toBe(true);
   });
 
+  it('el color de lectura sólo acepta RGB y mantiene contraste independiente del administrador', async () => {
+    const {actions} = host();
+    actions.surface([20, 18, 16]);
+    expect(actions.nodes.overlay.style.getPropertyValue('--bg')).toBe('rgb(20,18,16)');
+    expect(actions.nodes.overlay.style.getPropertyValue('--ink')).toBe('#fff');
+    actions.surface([252, 248, 244]);
+    expect(actions.nodes.overlay.style.getPropertyValue('--ink')).toBe('#000');
+    actions.surface(['url(https://invalid.test)', 0, 0]);
+    expect(actions.nodes.overlay.style.getPropertyValue('--bg')).toBe('');
+  });
+
   it('cambiar de documento descarta el estado y el ancla previos', async () => {
     const {actions} = host();
     await actions.load({id: 'a1', title: 'Informe'});

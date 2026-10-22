@@ -1,7 +1,8 @@
 /* Margen · acciones del lector (portal). El ancla se superpone al hueco bajo «En esta página». */
+#reader-personal-actions{position:fixed;right:max(22px,env(safe-area-inset-right));bottom:calc(84px + env(safe-area-inset-bottom));z-index:5}
 .reader-actions-dock{display:flex;gap:8px}
 .reader-actions-dock[hidden],.reader-actions-anchor[hidden]{display:none}
-.reader-actions-dock .reader-action{position:relative}
+.reader-actions-dock .reader-action{position:relative;color:var(--ink)}
 .reader-actions-dock .reader-action[aria-pressed=true] svg{fill:currentColor}
 .reader-action-count{position:absolute;right:-4px;top:-4px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--ink,#1d1b19);color:var(--bg,#fff);font:600 10px/18px var(--sans,system-ui);text-align:center}
 .reader-actions-anchor{position:fixed;z-index:4;display:flex;align-items:center;gap:6px;box-sizing:border-box;pointer-events:none}

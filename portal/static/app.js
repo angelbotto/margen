@@ -1731,7 +1731,7 @@
     origin: location.origin,
   });
   const readerActions = window.MargenReaderActions.create({
-    frame: () => $("#artifact-frame"), dock: () => $("#reader-dock"), toast,
+    frame: () => $("#artifact-frame"), dock: () => $("#reader-personal-actions"), toast,
   });
   addEventListener("pagehide", () => readerActions.reset());
   addEventListener("message", async (event) => {
@@ -1926,6 +1926,7 @@
   function readerSurface(color) {
     const frame = $("#artifact-frame");
     const valid = validSurface(color);
+    readerActions.surface(valid ? color : null);
     if (valid)
       frame.style.setProperty("--reader-surface", "rgb(" + color.join(",") + ")");
     else frame.style.removeProperty("--reader-surface");

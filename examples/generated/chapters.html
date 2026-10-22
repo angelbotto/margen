@@ -6064,7 +6064,11 @@ estado: pendiente de medir</code></pre></div><figcaption>Datos de ejemplo, sin u
   const index=()=>[...document.querySelectorAll('.lectura-guiada:not([data-presentation]) .indice')].find(n=>n.getClientRects().length&&n.querySelector(':scope > .ceja'));
   const post=data=>parent.postMessage({bottifact:1,id:'acciones-'+Math.random().toString(36).slice(2),op:'reader-actions-anchor',data},'*');
   const report=()=>{frame=0;const target=index();if(target&&slot.parentElement!==target)target.querySelector(':scope > .ceja').after(slot);
-   const r=slot.getBoundingClientRect(),visible=!!target&&r.width>=40&&r.bottom>0&&r.top<innerHeight;
+   const r=slot.getBoundingClientRect();
+   // A host overlay cannot inherit the iframe stacking context. Report a slot only
+   // when its entire button area is uncovered by wide figures or the sticky header.
+   const visible=!!target&&r.width>=40&&r.top>=0&&r.bottom<=innerHeight&&
+    [4,Math.min(r.width-4,100),Math.min(r.width-4,210)].every(x=>[8,r.height/2,r.height-8].every(y=>slot.contains(document.elementFromPoint(r.left+x,r.top+y))));
    const data=visible?{visible:true,x:Math.max(0,Math.round(r.left)),y:Math.round(r.top),width:Math.min(Math.round(r.width),640,innerWidth-Math.max(0,Math.round(r.left))),height:Math.round(r.height),vw:innerWidth,vh:innerHeight}:{visible:false};
    const key=JSON.stringify(data);if(key!==last){last=key;post(data);}};
   const schedule=()=>{if(slot&&!frame)frame=requestAnimationFrame(report);};
