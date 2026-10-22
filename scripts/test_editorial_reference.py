@@ -188,7 +188,9 @@ class EditorialReference(unittest.TestCase):
   # Computed blur is not enough: the index must contribute blurred pixels behind code.
   html=self.html.replace('Leer con atención','Leer con atención: ejemplos y decisiones con suficiente contexto')
   page,errors=self.page(html=html);offset=page.locator('#snippet pre').bounding_box()['y']-150
-  page.evaluate('top=>scrollTo({top,behavior:"instant"})',offset);page.wait_for_timeout(80);page.mouse.move(1300,980)
+  # Read/active index items change colour over 320 ms (measured reference easing);
+  # compare the settled frame, not one captured mid-transition.
+  page.evaluate('top=>scrollTo({top,behavior:"instant"})',offset);page.wait_for_timeout(400);page.mouse.move(1300,980)
   index=page.locator('.indice').bounding_box();code=page.locator('#snippet pre').bounding_box()
   clip={'x':code['x']+1,'y':code['y']+1,'width':index['x']+index['width']-code['x']-2,'height':code['height']-2}
   self.assertGreater(clip['width'],40)

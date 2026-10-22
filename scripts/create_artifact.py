@@ -15,7 +15,7 @@ def main():
  p.add_argument('--no-project',action='store_true',help='Disable project discovery.')
  p.add_argument('--format',choices=FORMATS,help='Document, chapters or presentation; default follows page count.')
  p.add_argument('--theme-policy',choices=['project','reader'],help='Project defaults or saved reader appearance.')
- p.add_argument('--document-id','--documento-id',dest='documento_id');p.add_argument('--title','--titulo',dest='titulo');p.add_argument('--description','--descripcion',dest='descripcion',default='');p.add_argument('--output','--salida',dest='salida',required=True,type=Path);args=p.parse_args()
+ p.add_argument('--date','--fecha',dest='fecha',help='Explicit publication date, YYYY-MM-DD. Never inferred.');p.add_argument('--document-id','--documento-id',dest='documento_id');p.add_argument('--title','--titulo',dest='titulo');p.add_argument('--description','--descripcion',dest='descripcion',default='');p.add_argument('--output','--salida',dest='salida',required=True,type=Path);args=p.parse_args()
  try:
   config={}
   if args.config:
@@ -29,7 +29,7 @@ def main():
   project={} if args.no_project else resolve(args.project_root or (args.config or args.contenido).resolve().parent,args.project_profile)
   prefs=project.get('preferences',{})
   def option(cli,key,legacy=None):return cli if cli is not None else config.get(key,config.get(legacy)) if key in config or legacy in config else prefs.get(key)
-  result=build(title,pages,description,mode=option(args.modo,'mode','modo'),theme=option(args.tema,'theme','tema'),style=option(args.estilo,'typography','estilo'),document_id=option(args.documento_id,'document_id','documento_id'),marca=option(args.marca,'brand','marca'),project=project,format=option(args.format,'format'),theme_policy=option(args.theme_policy,'themePolicy'))
+  result=build(title,pages,description,mode=option(args.modo,'mode','modo'),theme=option(args.tema,'theme','tema'),style=option(args.estilo,'typography','estilo'),document_id=option(args.documento_id,'document_id','documento_id'),marca=option(args.marca,'brand','marca'),project=project,format=option(args.format,'format'),theme_policy=option(args.theme_policy,'themePolicy'),date=args.fecha if args.fecha is not None else config.get('date',config.get('fecha')),footer=config.get('footer',config.get('pie')),reactions=config.get('reactions',config.get('reacciones',False)))
 
   for warning in composition_warnings(result):print('COMPOSITION: '+warning)
   args.salida.parent.mkdir(parents=True,exist_ok=True);args.salida.write_text(result)

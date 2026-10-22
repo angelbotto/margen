@@ -1,6 +1,6 @@
-/* Actividad, avisos y galería: mejoras locales, sin red ni reproducción automática. */
+/* Actividad, avisos, galería y reacciones: mejoras locales, sin red ni reproducción automática. */
 (()=>{'use strict';
- const instances=new WeakMap(),selector='[data-actividad],[data-aviso-animado],[data-galeria],[data-editorial-web]';
+ const instances=new WeakMap(),selector='[data-actividad],[data-aviso-animado],[data-galeria],[data-editorial-web],[data-reacciones]';
  function mount(el){
   if(instances.has(el))return;
   const clean=[],motion=matchMedia('(prefers-reduced-motion: reduce)');
@@ -62,13 +62,24 @@
     on(track,'pointermove',e=>{if(!drag||e.pointerId!==drag.id||Math.abs(e.clientX-drag.x)<4)return;e.preventDefault();track.classList.add('arrastrando');track.scrollLeft=drag.left-(e.clientX-drag.x);});
     on(track,'pointerup',end);on(track,'pointercancel',end);on(track,'lostpointercapture',end);on(track,'dragstart',e=>e.preventDefault());clean.push(end);
    }
-   const items=[...track.children],original={prev:prev?.disabled,next:next?.disabled,text:status.textContent,fadeStart:track.style.getPropertyValue('--galeria-fade-inicio'),fadeEnd:track.style.getPropertyValue('--galeria-fade-fin')};let timer;
-   const update=()=>{if(el.classList.contains('galeria-fotografica')){const edge=Math.min(track.clientWidth*.12,40);track.style.setProperty('--galeria-fade-inicio',Math.min(edge,Math.max(0,track.scrollLeft))+'px');track.style.setProperty('--galeria-fade-fin',Math.min(edge,Math.max(0,track.scrollWidth-track.clientWidth-track.scrollLeft))+'px');}const r=track.getBoundingClientRect(),index=items.reduce((best,e,i)=>Math.abs(e.getBoundingClientRect().left-r.left)<Math.abs(items[best].getBoundingClientRect().left-r.left)?i:best,0);if(prev)prev.disabled=track.scrollLeft<=1;if(next)next.disabled=track.scrollLeft>=track.scrollWidth-track.clientWidth-1;status.textContent=items.length?'Vista '+(index+1)+' de '+items.length+'. Desliza para recorrer.':'No hay imágenes en esta galería.';};
+   const items=[...track.children],original={prev:prev?.disabled,next:next?.disabled,text:status.textContent,fadeStart:track.style.getPropertyValue('--galeria-fade-inicio'),fadeEnd:track.style.getPropertyValue('--galeria-fade-fin')};let timer,fadeFrame=0;
+   // Edge fades follow the scroll every frame; the status text waits for rest.
+   const fade=()=>{fadeFrame=0;if(!el.classList.contains('galeria-fotografica'))return;const left=track.scrollLeft,room=track.scrollWidth-track.clientWidth,edge=Math.min(track.clientWidth*.12,40);track.style.setProperty('--galeria-fade-inicio',Math.min(edge,Math.max(0,left))+'px');track.style.setProperty('--galeria-fade-fin',Math.min(edge,Math.max(0,room-left))+'px');};
+   const update=()=>{fade();const r=track.getBoundingClientRect(),index=items.reduce((best,e,i)=>Math.abs(e.getBoundingClientRect().left-r.left)<Math.abs(items[best].getBoundingClientRect().left-r.left)?i:best,0);if(prev)prev.disabled=track.scrollLeft<=1;if(next)next.disabled=track.scrollLeft>=track.scrollWidth-track.clientWidth-1;status.textContent=items.length?'Vista '+(index+1)+' de '+items.length+'. Desliza para recorrer.':'No hay imágenes en esta galería.';};
    const move=direction=>{const r=track.getBoundingClientRect(),current=track.scrollLeft,positions=items.map(e=>current+e.getBoundingClientRect().left-r.left),target=direction>0?positions.find(x=>x>current+2):positions.reverse().find(x=>x<current-2);track.scrollTo({left:target??(direction>0?track.scrollWidth:0),behavior:motion.matches?'instant':'smooth'});};
-   if(prev)on(prev,'click',()=>move(-1));if(next)on(next,'click',()=>move(1));on(track,'scroll',()=>{clearTimeout(timer);timer=setTimeout(update,90);},{passive:true});
+   if(prev)on(prev,'click',()=>move(-1));if(next)on(next,'click',()=>move(1));on(track,'scroll',()=>{if(!fadeFrame)fadeFrame=requestAnimationFrame(fade);clearTimeout(timer);timer=setTimeout(update,90);},{passive:true});
    on(motion,'change',()=>{if(motion.matches)track.scrollTo({left:track.scrollLeft,behavior:'instant'});update();});
    const observer=new ResizeObserver(update);observer.observe(track);update();
-   clean.push(()=>{clearTimeout(timer);observer.disconnect();track.scrollTo({left:track.scrollLeft,behavior:'instant'});if(prev)prev.disabled=original.prev;if(next)next.disabled=original.next;status.textContent=original.text;for(const [name,value] of [['--galeria-fade-inicio',original.fadeStart],['--galeria-fade-fin',original.fadeEnd]]){if(value)track.style.setProperty(name,value);else track.style.removeProperty(name);}});
+   clean.push(()=>{clearTimeout(timer);cancelAnimationFrame(fadeFrame);observer.disconnect();track.scrollTo({left:track.scrollLeft,behavior:'instant'});if(prev)prev.disabled=original.prev;if(next)next.disabled=original.next;status.textContent=original.text;for(const [name,value] of [['--galeria-fade-inicio',original.fadeStart],['--galeria-fade-fin',original.fadeEnd]]){if(value)track.style.setProperty(name,value);else track.style.removeProperty(name);}});
+  }
+  if(el.hasAttribute('data-reacciones')){
+   // Solo este navegador: sin conteos compartidos ni red. Sin almacenamiento, siguen funcionando en la sesión.
+   const buttons=[...el.querySelectorAll('[data-reaccion]')];if(!buttons.length)return;
+   const key='margen-reacciones:'+(el.dataset.reacciones||document.querySelector('meta[name="nota-documento"]')?.content||location.pathname);
+   let chosen=new Set();try{const saved=JSON.parse(localStorage.getItem(key)||'[]');if(Array.isArray(saved))chosen=new Set(saved.filter(v=>buttons.some(b=>b.dataset.reaccion===v)));}catch{}
+   const paint=()=>buttons.forEach(b=>b.setAttribute('aria-pressed',String(chosen.has(b.dataset.reaccion))));
+   buttons.forEach(b=>on(b,'click',()=>{const v=b.dataset.reaccion;chosen.has(v)?chosen.delete(v):chosen.add(v);paint();try{localStorage.setItem(key,JSON.stringify([...chosen]));}catch{}}));
+   paint();clean.push(()=>buttons.forEach(b=>b.setAttribute('aria-pressed','false')));
   }
   instances.set(el,api);
  }
@@ -82,4 +93,6 @@
   });
   [...(root.matches?.(selector)?[root]:[]),...root.querySelectorAll(selector)].forEach(mount);}
  window.NotaPiezasEditoriales={init,get:el=>instances.get(el)};init();
+ // Bordes de lectura: capas decorativas fuera del flujo, una sola vez por documento.
+ if(document.querySelector('.hoja.lectura-guiada:not([data-presentation])')&&!document.querySelector('.lectura-bordes')){const edges=document.createElement('div');edges.className='lectura-bordes';edges.setAttribute('aria-hidden','true');edges.innerHTML='<span></span>'.repeat(8);document.body.append(edges);}
 })();

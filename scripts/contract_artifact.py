@@ -2,7 +2,8 @@
 from pathlib import Path
 from html.parser import HTMLParser
 from html import escape
-import hashlib,json,re
+import datetime,hashlib,json,re
+from urllib.parse import urlsplit
 ROOT=Path(__file__).resolve().parents[1]
 VERSION='4'
 from themes import THEMES,FAMILIES,MODES,normalize
@@ -63,7 +64,63 @@ def toc(content):
   items.append((anchor.attrs['id'],n.text().strip()))
  return items
 
-def build(title,pages,description='',brand='Margen',theme=None,style=None,document_id=None,mode=None,marca=None,project=None,format=None,theme_policy=None):
+MONTHS=('ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic')
+REACTIONS=[('util','Útil','<path d="M7 11v9H4v-9h3Zm0 0 4-7a2 2 0 0 1 2 2v3h5a2 2 0 0 1 2 2.3l-1.2 6A2 2 0 0 1 16.8 19H7"/>'),
+ ('volver','Para volver','<path d="M6 4h12v16l-6-4-6 4V4Z"/>'),
+ ('pensar','Me hizo pensar','<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.8V16h5v-.3c0-.7.4-1.4 1-1.8A6 6 0 0 0 12 3Z"/>')]
+def plain_text(value,field,limit):
+ """Short author text: escaped on output, never markup."""
+ if value is None:return None
+ if not isinstance(value,str) or not value.strip() or len(value)>limit or re.search(r'[\x00-\x1f\x7f]',value):raise ValueError(field+': texto de 1 a '+str(limit)+' caracteres, sin controles.')
+ return value.strip()
+def safe_url(value,field):
+ if not isinstance(value,str) or len(value)>2048 or re.search(r'[\s<>"\'`\\\x00-\x1f\x7f]',value):raise ValueError(field+': URL inválida.')
+ parts=urlsplit(value)
+ if parts.scheme=='mailto' and re.fullmatch(r'[^@/?#]+@[^@/?#]+\.[^@/?#]+',parts.path or ''):return value
+ if parts.scheme=='https' and parts.hostname and '@' not in parts.netloc:return value
+ raise ValueError(field+': solo https:// sin credenciales o mailto:.')
+def document_dates(value,field='date'):
+ """Explicit publication/update dates. Nothing is inferred from the build time."""
+ if value is None:return None
+ if isinstance(value,str):value={'published':value}
+ if not isinstance(value,dict) or 'published' not in value or not set(value)<={'published','updated'}:raise ValueError(field+': AAAA-MM-DD o {"published","updated"}.')
+ def day(v,name):
+  if not isinstance(v,str) or not re.fullmatch(r'\d{4}-\d{2}-\d{2}',v):raise ValueError(name+': fecha ISO AAAA-MM-DD.')
+  try:return datetime.date.fromisoformat(v)
+  except ValueError:raise ValueError(name+': fecha inexistente.') from None
+ published=day(value['published'],field+'.published');updated=day(value['updated'],field+'.updated') if value.get('updated') is not None else None
+ if updated and updated<published:raise ValueError(field+': la actualización no puede ser anterior a la publicación.')
+ return published,updated
+def date_markup(dates):
+ published,updated=dates
+ when=lambda d:'<time datetime="'+d.isoformat()+'">'+str(d.day)+' '+MONTHS[d.month-1]+' '+str(d.year)+'</time>'
+ return '<p class="cabecera-fecha">'+('Publicado '+when(published)+' · Actualizado '+when(updated) if updated and updated!=published else when(published))+'</p>'
+def footer_options(value):
+ """Validate a per-document footer: author identity, optional links, separate platform line."""
+ if value is None:return None
+ if not isinstance(value,dict) or not set(value)<={'author','note','links','platform'}:raise ValueError('footer: claves permitidas author, note, links y platform.')
+ links=value.get('links',[])
+ if not isinstance(links,list) or len(links)>8:raise ValueError('footer.links: lista de hasta 8 enlaces.')
+ clean=[]
+ for i,link in enumerate(links):
+  if not isinstance(link,dict) or not {'label','href'}<=set(link)<={'label','href','detail'}:raise ValueError('footer.links['+str(i)+']: requiere label y href; detail es opcional.')
+  clean.append((plain_text(link['label'],'footer.links['+str(i)+'].label',60),safe_url(link['href'],'footer.links['+str(i)+'].href'),plain_text(link.get('detail'),'footer.links['+str(i)+'].detail',80)))
+ platform=value.get('platform',True)
+ if not isinstance(platform,bool):raise ValueError('footer.platform: true o false.')
+ result={'author':plain_text(value.get('author'),'footer.author',120),'note':plain_text(value.get('note'),'footer.note',280),'links':clean,'platform':platform}
+ if not (result['author'] or result['note'] or clean or platform):raise ValueError('footer: no puede quedar vacío.')
+ return result
+def reactions_markup():
+ buttons=''.join('<button type="button" data-reaccion="'+key+'" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+icon+'</svg><span>'+label+'</span></button>' for key,label,icon in REACTIONS)
+ return '<div class="reacciones" data-reacciones role="group" aria-labelledby="reacciones-titulo"><p class="ceja" id="reacciones-titulo">¿Cómo te dejó esta lectura?</p><div class="reacciones-botones">'+buttons+'</div><p class="reacciones-nota">Se guardan solo en este navegador. No hay conteos compartidos.</p></div>'
+def footer_markup(options,brand,title,reactions):
+ extra=reactions_markup() if reactions else ''
+ if options is None:return '<footer class="pie">'+extra+'<p>'+escape(brand)+' · '+escape(title)+'</p></footer>'
+ author=''.join(['<p class="pie-autor">'+escape(options['author'])+'</p>' if options['author'] else '','<p class="pie-nota">'+escape(options['note'])+'</p>' if options['note'] else ''])
+ if options['links']:author+='<nav class="pie-enlaces" aria-label="'+escape('Enlaces de '+options['author'] if options['author'] else 'Enlaces del documento',quote=True)+'">'+''.join('<span class="pie-enlace"><a href="'+escape(href,quote=True)+'" rel="noopener noreferrer">'+escape(label)+'</a>'+(' <span class="pie-detalle">'+escape(detail)+'</span>' if detail else '')+'</span>' for label,href,detail in options['links'])+'</nav>'
+ return '<footer class="pie pie-documento">'+('<div class="pie-autoria">'+author+'</div>' if author else '')+extra+('<p class="pie-plataforma">Hecho con Margen</p>' if options['platform'] else '')+'</footer>'
+
+def build(title,pages,description='',brand='Margen',theme=None,style=None,document_id=None,mode=None,marca=None,project=None,format=None,theme_policy=None,date=None,footer=None,reactions=False):
  if document_id is not None and (not isinstance(document_id,str) or not re.fullmatch(r'[a-zA-Z0-9_-]{1,120}',document_id)):raise ValueError('documento_id: 1–120 letras, números, guiones o subrayados.')
  if theme is not None or mode is not None:theme,mode=normalize(theme,mode)
  project=project or {};company=project.get('company',{});project_info=project.get('project',{})
@@ -80,6 +137,9 @@ def build(title,pages,description='',brand='Margen',theme=None,style=None,docume
  if style is not None and style not in STYLES:raise ValueError('Estilo desconocido: '+str(style))
  if not isinstance(title,str) or not title.strip() or not isinstance(pages,list) or not pages:raise ValueError('Faltan título o páginas.')
  if not isinstance(description,str) or any(not isinstance(p,dict) or any(not isinstance(p.get(k),str) for k in ['id','titulo','html']) for p in pages):raise ValueError('Cada página requiere id, titulo y html de texto.')
+ dates=document_dates(date);footer=footer_options(footer)
+ if not isinstance(reactions,bool):raise ValueError('reactions: true o false.')
+ page_dates=[document_dates(p.get('date'),'pages['+str(i)+'].date') for i,p in enumerate(pages)]
  ids=[p['id'] for p in pages]
  if len(ids)!=len(set(ids)) or any(not re.fullmatch(r'[a-z][a-z0-9-]*',i) for i in ids):raise ValueError('IDs de página únicos: minúsculas, números y guiones.')
  for p in pages:
@@ -95,7 +155,8 @@ def build(title,pages,description='',brand='Margen',theme=None,style=None,docume
  header='<a class="salto" href="#'+ids[0]+'">Saltar al contenido</a><header class="barra capitulos navegacion-editorial" id="nota-inicio"><a class="firma-editorial" aria-label="'+escape(brand,quote=True)+' · Inicio" title="'+escape(brand,quote=True)+'" href="#'+ids[0]+'">'+brand_markup+'</a>'+nav+appearance()+'</header>'
  pieces=[]
  for i,p in enumerate(pages):
-  heading='<header class="cabecera"'+('' if multi else ' id="'+p['id']+'"')+'><h1>'+escape(p['titulo'] if multi else title)+'</h1>'+('<p class="bajada">'+escape(description)+'</p>' if i==0 and description else '')+'</header>'
+  shown=page_dates[i] or (dates if i==0 else None)
+  heading='<header class="cabecera"'+('' if multi else ' id="'+p['id']+'"')+'><h1>'+escape(p['titulo'] if multi else title)+'</h1>'+(date_markup(shown) if shown else '')+('<p class="bajada">'+escape(description)+'</p>' if i==0 and description else '')+'</header>'
   items=toc(p['html'])
   index='<nav class="indice" tabindex="0" aria-label="En esta página"><p class="ceja">En esta página</p><ol>'+''.join('<li><a href="#'+escape(id,quote=True)+'">'+escape(label)+'</a></li>' for id,label in items)+'</ol></nav>' if items else ''
   print_brand='<div class="presentation-print-brand" aria-hidden="true">'+brand_markup+'</div>' if format=='presentation' else ''
@@ -103,7 +164,7 @@ def build(title,pages,description='',brand='Margen',theme=None,style=None,docume
   if multi:block='<article class="pagina'+(' viva' if i==0 else '')+'" id="'+p['id']+'" data-pagina'+('' if i==0 else ' hidden')+'>'+block+'</article>'
   pieces.append(block)
  pag='<div class="paginacion" data-paginacion><button type="button" data-nav="prev"><span class="et">Anterior</span><span class="tit"></span></button><button type="button" data-nav="next"><span class="et">Siguiente</span><span class="tit"></span></button></div>' if multi else ''
- main='<main class="hoja lectura-guiada nota-estandar marcos-editoriales'+(' multipagina edicion' if multi else '')+'" data-lectura'+(' data-presentation' if format=='presentation' else '')+(' data-progreso-pagina data-historial data-enlaces-internos' if multi else '')+' lang="es">'+''.join(pieces)+pag+'<footer class="pie"><p>'+escape(brand)+' · '+escape(title)+'</p></footer></main>'
+ main='<main class="hoja lectura-guiada nota-estandar marcos-editoriales'+(' multipagina edicion' if multi else '')+'" data-lectura'+(' data-presentation' if format=='presentation' else '')+(' data-progreso-pagina data-historial data-enlaces-internos' if multi else '')+' lang="es">'+''.join(pieces)+pag+footer_markup(footer,brand,title,reactions)+'</main>'
  ruler='<div class="regla regla-guiada" role="slider" tabindex="0" aria-orientation="horizontal" aria-label="Progreso de lectura" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="ticks"></div><div class="cursor"></div><span class="val">0%</span></div>'
  files=['packages/core/styles/fonts.css','packages/core/styles/artifact.css',*modules]
  manifest={'version':VERSION,'paginas':ids,'modulos':modules,'fuentes':{f:hashlib.sha256((ROOT/f).read_text().encode('utf-8')).hexdigest() for f in files}}
