@@ -175,6 +175,77 @@
       "criterio_y_limites": "**Use and limits:** Show embedded photos/captures with native horizontal scrolling via trackpad, touch or focused keyboard arrows. The photographic variant has no internal heading, controls or autoplay; short captions overlay a full-image gradient, subtle outline and shadow. Pointer drag uses grab/capture; touch stays native. Superellipse(1.6) corners use 28 px with an 18 px circular fallback. Position announcements enhance rather than replace native scrolling. Use data images and alt text; fixtures are illustrations, not the user's photos. Cover crops may hide edges; use contain for evidence requiring the full image. Long explanations belong outside. No zoom/360 viewer. Reduced motion also disables legacy smooth controls. init/get/destroy preserves content."
     },
     {
+      "id": "x-post",
+      "nombre": "Publicación de X",
+      "capitulo": "publicaciones",
+      "href": "examples/generated/library.html#receta-x-post",
+      "dependencias": [
+        "packages/core/styles/fonts.css",
+        "packages/core/styles/artifact.css",
+        "packages/core/components/interface.js",
+        "packages/core/components/audio.js",
+        "packages/core/components/controls.js",
+        "packages/core/components/editorial-pieces.js",
+        "packages/core/components/reader.js",
+        "packages/core/components/embeds.js"
+      ],
+      "html": "<figure class=\"embed embed-x\" id=\"x-ejemplo\" data-embed=\"x\" data-embed-synthetic>\n<header class=\"embed-cabecera\"><p class=\"embed-autor\"><strong>Laura Méndez</strong><span class=\"embed-handle\">@autora.ejemplo</span></p><span class=\"embed-proveedor\">X</span></header>\n<blockquote class=\"embed-texto\"><p>Cuatro trimestres seguidos de crecimiento en suscripciones. Lo que más movió la aguja no fue el precio: fue acortar el registro de seis pasos a dos.</p></blockquote>\n<img class=\"embed-media\" src=\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MDAgMzAwIj48cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2Y2ZjBlYiIvPjxnIGZpbGw9IiNhMTNmMTkiPjxyZWN0IHg9IjcwIiB5PSIxNzAiIHdpZHRoPSI3MCIgaGVpZ2h0PSI5MCIvPjxyZWN0IHg9IjE5MCIgeT0iMTMwIiB3aWR0aD0iNzAiIGhlaWdodD0iMTMwIi8+PHJlY3QgeD0iMzEwIiB5PSI5NSIgd2lkdGg9IjcwIiBoZWlnaHQ9IjE2NSIvPjxyZWN0IHg9IjQzMCIgeT0iNjAiIHdpZHRoPSI3MCIgaGVpZ2h0PSIyMDAiLz48L2c+PHBhdGggZD0iTTUwIDI2MEg1NTAiIHN0cm9rZT0iIzUxNDczZSIgc3Ryb2tlLXdpZHRoPSIyIi8+PC9zdmc+\" alt=\"Gráfico de barras ilustrativo: cuatro barras que crecen de izquierda a derecha.\" width=\"600\" height=\"300\">\n<figcaption class=\"embed-pie\"><span class=\"embed-sintetico\">Ejemplo sintético</span><time datetime=\"2026-10-20\">20 oct 2026</time><span>Sin publicación original: autora, texto y gráfico son ilustrativos.</span></figcaption>\n</figure>",
+      "criterio_y_limites": "**Use and limits:** A static editorial card for a post on X: author, handle, date, text, source and an optional `data:` image. It never loads `widgets.js` or an X iframe, so it works offline and inside the portal sandbox. Set `data-embed-user` (1–15 letters, digits or `_`) and `data-embed-status` (digits); the runtime rebuilds the link as `https://x.com/<user>/status/<id>` and ignores the author's `href`. Write text as escaped HTML or build the card with `MargenEmbeds.card({name,user,status,text,date,media,synthetic})`, which uses DOM text only. An invented post must carry `data-embed-synthetic`: the runtime then removes any link and labels it «Ejemplo sintético»; use an impossible handle so it cannot match a real account. Never present metrics or verification you did not check. Without JavaScript, offline or in print the card, its text and the source link remain; nothing pretends to play. No remote thumbnails or provider scripts: a poster may only be a `data:` image. Runtime: `packages/core/components/embeds.js` (`MargenEmbeds.init/get/destroy`), styles `packages/core/styles/embeds.css`."
+    },
+    {
+      "id": "youtube",
+      "nombre": "Video de YouTube",
+      "capitulo": "publicaciones",
+      "href": "examples/generated/library.html#receta-youtube",
+      "dependencias": [
+        "packages/core/styles/fonts.css",
+        "packages/core/styles/artifact.css",
+        "packages/core/components/interface.js",
+        "packages/core/components/audio.js",
+        "packages/core/components/controls.js",
+        "packages/core/components/editorial-pieces.js",
+        "packages/core/components/reader.js",
+        "packages/core/components/embeds.js"
+      ],
+      "html": "<figure class=\"embed embed-video embed-youtube\" id=\"youtube-ejemplo\" data-embed=\"youtube\" data-embed-id=\"M7lc1UVf-VE\">\n<div class=\"embed-lienzo\" data-embed-stage></div>\n<figcaption>\n<p class=\"embed-meta\"><span class=\"embed-proveedor\">YouTube</span> · YouTube Developers Live: Embedded Web Player Customization · Google for Developers</p>\n<p class=\"embed-acciones\"><button type=\"button\" data-embed-load hidden>Cargar video</button><a data-embed-source href=\"https://www.youtube.com/watch?v=M7lc1UVf-VE\">Abrir en YouTube</a></p>\n<p class=\"embed-aviso\">Al cargarlo, tu navegador se conecta con YouTube. Empieza sin sonido.</p>\n<p class=\"embed-aviso\" data-embed-status role=\"status\"></p>\n</figcaption>\n</figure>",
+      "criterio_y_limites": "**Use and limits:** A card with title, channel and a permanent «Abrir en YouTube» link; the player only loads after the reader clicks «Cargar video». Only `data-embed-id` (11 characters `A-Z a-z 0-9 _ -`) is read; the link and the player URL are rebuilt from it. The player is `youtube-nocookie.com/embed/<id>` with `autoplay=1&mute=1` after the click (sound is the player's own control), `referrerpolicy=\"strict-origin\"` and a sandbox limited to scripts, same-origin of the provider, popups and presentation. Inside the Margen portal the document only sends provider + ID and the portal opens its own dialog; as a standalone HTTPS page the player mounts in the card; opened as a local `file://` YouTube rejects the page (error 153), so only the link is offered. If the player gives no sign of life in 8 s the card says so; an iframe load is not treated as playback. Restricted, private or embedding-disabled videos only open at the source. Without JavaScript, offline or in print the card, its text and the source link remain; nothing pretends to play. No remote thumbnails or provider scripts: a poster may only be a `data:` image. Runtime: `packages/core/components/embeds.js` (`MargenEmbeds.init/get/destroy`), styles `packages/core/styles/embeds.css`."
+    },
+    {
+      "id": "instagram",
+      "nombre": "Publicación de Instagram",
+      "capitulo": "publicaciones",
+      "href": "examples/generated/library.html#receta-instagram",
+      "dependencias": [
+        "packages/core/styles/fonts.css",
+        "packages/core/styles/artifact.css",
+        "packages/core/components/interface.js",
+        "packages/core/components/audio.js",
+        "packages/core/components/controls.js",
+        "packages/core/components/editorial-pieces.js",
+        "packages/core/components/reader.js",
+        "packages/core/components/embeds.js"
+      ],
+      "html": "<figure class=\"embed embed-video embed-instagram\" id=\"instagram-ejemplo\" data-embed=\"instagram\" data-embed-id=\"fA9uwTtkSN\" data-embed-kind=\"p\">\n<div class=\"embed-lienzo\" data-embed-stage></div>\n<figcaption>\n<p class=\"embed-meta\"><span class=\"embed-proveedor\">Instagram</span> · Publicación pública usada como ejemplo en la documentación de Instagram oEmbed</p>\n<p class=\"embed-acciones\"><button type=\"button\" data-embed-load hidden>Cargar publicación</button><a data-embed-source href=\"https://www.instagram.com/p/fA9uwTtkSN/\">Abrir en Instagram</a></p>\n<p class=\"embed-aviso\">Al cargarla, tu navegador se conecta con Instagram.</p>\n<p class=\"embed-aviso\" data-embed-status role=\"status\"></p>\n</figcaption>\n</figure>",
+      "criterio_y_limites": "**Use and limits:** A card with a permanent «Abrir en Instagram» link; the post only loads after «Cargar publicación». Set `data-embed-kind` to `p` or `reel` and `data-embed-id` to the shortcode (5–40 characters). The frame is `www.instagram.com/<p|reel>/<code>/embed/` without `rd`/`rp` and with `referrerpolicy=\"no-referrer\"`; Instagram's `embed.js` is never loaded, and only its `MEASURE` height messages from that exact frame and origin are read (bounded). Initial height 640 px. Inside the portal the post opens in a portal dialog; standalone or as a local file it mounts in the card. Stories, private, inactive or age-restricted accounts and posts with embedding disabled only open at the source. Caption and author are written by the author (or proposed from oEmbed while authoring, as plain text); provider HTML is never inserted. Without JavaScript, offline or in print the card, its text and the source link remain; nothing pretends to play. No remote thumbnails or provider scripts: a poster may only be a `data:` image. Runtime: `packages/core/components/embeds.js` (`MargenEmbeds.init/get/destroy`), styles `packages/core/styles/embeds.css`."
+    },
+    {
+      "id": "encabezado-fecha",
+      "nombre": "Encabezado con fecha",
+      "capitulo": "publicaciones",
+      "href": "examples/generated/library.html#receta-encabezado-fecha",
+      "dependencias": [
+        "packages/core/styles/fonts.css",
+        "packages/core/styles/artifact.css",
+        "packages/core/components/interface.js",
+        "packages/core/components/audio.js",
+        "packages/core/components/controls.js",
+        "packages/core/components/editorial-pieces.js",
+        "packages/core/components/reader.js"
+      ],
+      "html": "<header class=\"cabecera\" id=\"encabezado-fecha-ejemplo\">\n  <h3>Un lugar para leer con calma</h3>\n  <p class=\"cabecera-fecha\">Publicado <time datetime=\"2026-10-01\">1 oct 2026</time> · Actualizado <time datetime=\"2026-10-22\">22 oct 2026</time></p>\n  <p class=\"bajada\">Fechas ilustrativas para explorar la jerarquía entre título, metadatos y entrada de un artículo.</p>\n</header>",
+      "criterio_y_limites": "**Uso:** conserva fechas explícitas con `<time datetime>`, tipografía monoespaciada y una entrada breve. En un documento completo, el generador crea el título principal y esta fila con `date: \"AAAA-MM-DD\"` o `date: {published, updated}`. También se admite `date` por página. Esta muestra usa h3 para convivir con el título del catálogo; no dupliques el h1 del documento. Las fechas de ejemplo no son datos de una publicación real."
+    },
+    {
       "id": "manuscrita",
       "nombre": "Nota manuscrita",
       "capitulo": "lectura",
@@ -393,10 +464,28 @@
         "packages/core/components/controls.js",
         "packages/core/components/editorial-pieces.js",
         "packages/core/components/reader.js",
+        "packages/core/components/chart-core.js",
         "packages/core/components/evidence.js"
       ],
       "html": "<figure class=\"amplio\" id=\"evidencia-relato\" data-evidencia=\"relato\" data-unidad=\"horas\">\n<div class=\"tabla-caja densa\" role=\"region\" tabindex=\"0\" aria-label=\"Cien horas de trabajo, datos desplazables\">\n<table data-evidencia-datos><caption>Cien horas de trabajo</caption><thead><tr><th scope=\"col\">Paso</th><th scope=\"col\">Horas</th><th scope=\"col\">Lectura</th></tr></thead><tbody>\n<tr><th scope=\"row\">Investigar</th><td data-valor=\"60\">60</td><td>La mayor parte del tiempo se dedicó a comprender el problema.</td></tr>\n<tr><th scope=\"row\">Construir</th><td data-valor=\"25\">25</td><td>La implementación parte de lo aprendido durante la investigación.</td></tr>\n<tr><th scope=\"row\">Revisar</th><td data-valor=\"15\">15</td><td>La revisión reserva tiempo para contrastar el resultado con la pregunta.</td></tr>\n</tbody></table>\n</div>\n<figcaption>Datos ilustrativos: distribución de 100 horas, no productividad medida.</figcaption>\n</figure>",
       "criterio_y_limites": "**Use and limits:** Connect a narrative to one shared figure with 2–8 rows: name, nonnegative magnitude and explanation, each text up to 100 characters. Desktop scroll selects a step; controls allow explicit selection. Mobile restores normal flow and written values. Shared zero-based scale, no data mutation or scroll hijacking. Without JavaScript retain the table. IntersectionObserver is cleaned up; no animation loop. Source data stays in one table (or the image zone list). Declare data-unidad (1–40 characters); numeric magnitude is limited to 10^12. Views round to eight significant digits while source values remain. Load evidence.js; NotaEvidencia.init/get/destroy owns lifecycle. Destroy before changing the source. No network or external libraries; data remains if enhancement fails."
+    },
+    {
+      "id": "reacciones",
+      "nombre": "Reacciones de lectura",
+      "capitulo": "lectura",
+      "href": "examples/generated/library.html#receta-reacciones",
+      "dependencias": [
+        "packages/core/styles/fonts.css",
+        "packages/core/styles/artifact.css",
+        "packages/core/components/interface.js",
+        "packages/core/components/audio.js",
+        "packages/core/components/controls.js",
+        "packages/core/components/editorial-pieces.js",
+        "packages/core/components/reader.js"
+      ],
+      "html": "<div class=\"reacciones\" id=\"reacciones-ejemplo\" data-reacciones=\"ejemplo\" role=\"group\" aria-labelledby=\"reacciones-ejemplo-titulo\">\n  <p class=\"ceja\" id=\"reacciones-ejemplo-titulo\">¿Cómo te dejó esta lectura?</p>\n  <div class=\"reacciones-botones\">\n    <button type=\"button\" data-reaccion=\"util\" aria-pressed=\"false\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7 11v9H4v-9h3Zm0 0 4-7a2 2 0 0 1 2 2v3h5a2 2 0 0 1 2 2.3l-1.2 6A2 2 0 0 1 16.8 19H7\"/></svg><span>Útil</span></button>\n    <button type=\"button\" data-reaccion=\"volver\" aria-pressed=\"false\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 4h12v16l-6-4-6 4V4Z\"/></svg><span>Para volver</span></button>\n    <button type=\"button\" data-reaccion=\"pensar\" aria-pressed=\"false\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.8V16h5v-.3c0-.7.4-1.4 1-1.8A6 6 0 0 0 12 3Z\"/></svg><span>Me hizo pensar</span></button>\n  </div>\n  <p class=\"reacciones-nota\">Se guardan solo en este navegador. No hay conteos compartidos.</p>\n</div>",
+      "criterio_y_limites": "**Uso y límites:** tres respuestas personales con teclado, foco y estado `aria-pressed`. No representan actividad ni conteos de otras personas. Se conservan por documento en el navegador cuando el almacenamiento está disponible; en el lector aislado duran mientras la página esté abierta, y la pieza lo indica. El generador puede añadirlas al pie con `reactions: true`. Evita duplicarlas. Para comentarios compartidos y contexto que otros agentes puedan leer, usa el sistema de comentarios del documento."
     },
     {
       "id": "decision",
@@ -445,6 +534,7 @@
         "packages/core/components/controls.js",
         "packages/core/components/editorial-pieces.js",
         "packages/core/components/reader.js",
+        "packages/core/components/chart-core.js",
         "packages/core/components/reports.js"
       ],
       "html": "<figure class=\"pieza amplio\" id=\"conciliacion-ejemplo\" data-reporte=\"conciliacion\">\n  <h3>Una diferencia necesita explicación</h3>\n  <div class=\"tabla-caja densa\" tabindex=\"0\" role=\"region\" aria-label=\"Conciliación de operaciones, desplazable\">\n    <table class=\"tabla-calculo\"><caption>Operaciones esperadas y observadas · ejemplo</caption>\n      <thead><tr><th scope=\"col\">Canal</th><th scope=\"col\">Esperadas</th><th scope=\"col\">Observadas</th><th scope=\"col\">Diferencia</th><th scope=\"col\">Explicación</th></tr></thead>\n      <tbody>\n        <tr><th scope=\"row\">Web</th><td data-valor=\"120\">120</td><td data-valor=\"118\">118</td><td>−2</td><td>Dos operaciones siguen en revisión.</td></tr>\n        <tr><th scope=\"row\">App</th><td data-valor=\"80\">80</td><td data-valor=\"80\">80</td><td>0</td><td>Conteos coincidentes.</td></tr>\n        <tr><th scope=\"row\">Asistido</th><td data-valor=\"30\">30</td><td data-valor=\"33\">33</td><td>+3</td><td>Tres registros pendientes de clasificar.</td></tr>\n      </tbody>\n      <tfoot><tr><th scope=\"row\">Total</th><td>230</td><td>231</td><td>1</td><td>El saldo neto no compensa las diferencias por canal.</td></tr></tfoot>\n    </table>\n  </div>\n  <figcaption>Datos ilustrativos. Diferencia = observado − esperado; una diferencia cero no prueba igualdad de los registros individuales.</figcaption>\n</figure>",
@@ -463,6 +553,7 @@
         "packages/core/components/controls.js",
         "packages/core/components/editorial-pieces.js",
         "packages/core/components/reader.js",
+        "packages/core/components/chart-core.js",
         "packages/core/components/reports.js"
       ],
       "html": "<div class=\"pieza ancho\" id=\"escenario-ejemplo\" data-reporte=\"escenario\">\n  <h3>¿Qué cambia si la tarea toma menos tiempo?</h3>\n  <p>Explora capacidad mensual con un volumen fijo. Los valores iniciales son ilustrativos.</p>\n  <form class=\"escenario-form\" aria-label=\"Supuestos de capacidad mensual\">\n    <label>Operaciones al mes<input name=\"volumen\" type=\"number\" min=\"0\" max=\"1000000\" step=\"1\" value=\"1200\" required></label>\n    <label>Antes, minutos por operación<input name=\"antes\" type=\"number\" min=\"0\" max=\"1440\" step=\"0.1\" value=\"8\" required></label>\n    <label>Después, minutos por operación<input name=\"despues\" type=\"number\" min=\"0\" max=\"1440\" step=\"0.1\" value=\"5\" required></label>\n    <button type=\"reset\">Restablecer supuestos</button>\n  </form>\n  <div class=\"escenario-resultados\">\n    <output data-resultado aria-live=\"polite\">60 h/mes liberadas</output>\n    <p data-formula>1.200 × (8 − 5) ÷ 60 = 60 h/mes. Es capacidad estimada, no ahorro monetario ni una predicción.</p>\n  </div>\n</div>",
@@ -566,6 +657,7 @@
         "packages/core/components/controls.js",
         "packages/core/components/editorial-pieces.js",
         "packages/core/components/reader.js",
+        "packages/core/components/chart-core.js",
         "packages/core/components/evidence.js"
       ],
       "html": "<figure class=\"amplio\" id=\"evidencia-sensibilidad\" data-evidencia=\"sensibilidad\" data-unidad=\"millones COP\">\n<p>Resultado base: <strong data-evidencia-base data-valor=\"100\">100</strong> millones COP.</p>\n<div class=\"tabla-caja densa\" role=\"region\" tabindex=\"0\" aria-label=\"Resultado ante cambios de un supuesto, datos desplazables\">\n<table data-evidencia-datos><caption>Resultado ante cambios de un supuesto</caption><thead><tr><th scope=\"col\">Supuesto</th><th scope=\"col\">Escenario A</th><th scope=\"col\">Resultado A</th><th scope=\"col\">Escenario B</th><th scope=\"col\">Resultado B</th></tr></thead><tbody>\n<tr><th scope=\"row\">Volumen</th><td>−10 %</td><td data-valor=\"91\">91</td><td>+10 %</td><td data-valor=\"109\">109</td></tr>\n<tr><th scope=\"row\">Precio</th><td>−5 %</td><td data-valor=\"92\">92</td><td>+5 %</td><td data-valor=\"108\">108</td></tr>\n<tr><th scope=\"row\">Combustible</th><td>−10 %</td><td data-valor=\"106\">106</td><td>+10 %</td><td data-valor=\"94\">94</td></tr>\n</tbody></table>\n</div>\n<figcaption>Escenarios ilustrativos independientes. No son una proyección financiera ni combinan efectos.</figcaption>\n</figure>",
@@ -584,6 +676,7 @@
         "packages/core/components/controls.js",
         "packages/core/components/editorial-pieces.js",
         "packages/core/components/reader.js",
+        "packages/core/components/chart-core.js",
         "packages/core/components/evidence.js"
       ],
       "html": "<figure class=\"amplio\" id=\"evidencia-gantt\" data-evidencia=\"gantt\" data-unidad=\"días\">\n<div class=\"tabla-caja densa\" role=\"region\" tabindex=\"0\" aria-label=\"Hoja de ruta de una revisión, datos desplazables\">\n<table data-evidencia-datos><caption>Hoja de ruta de una revisión</caption><thead><tr><th scope=\"col\">ID</th><th scope=\"col\">Tarea</th><th scope=\"col\">Inicio</th><th scope=\"col\">Fin</th><th scope=\"col\">Responsable</th><th scope=\"col\">Estado</th><th scope=\"col\">Depende de</th></tr></thead><tbody>\n<tr><th scope=\"row\">A</th><td>Diagnóstico</td><td>2026-09-01</td><td>2026-09-03</td><td>Operación</td><td>Completada</td><td>—</td></tr>\n<tr><th scope=\"row\">B</th><td>Ensayo</td><td>2026-09-03</td><td>2026-09-08</td><td>Producto</td><td>En curso</td><td>A</td></tr>\n<tr><th scope=\"row\">C</th><td>Revisión</td><td>2026-09-08</td><td>2026-09-10</td><td>Diseño</td><td>Plan</td><td>B</td></tr>\n<tr><th scope=\"row\">D</th><td>Evidencia</td><td>2026-09-03</td><td>2026-09-06</td><td>Operación</td><td>Completada</td><td>A</td></tr>\n<tr><th scope=\"row\">E</th><td>Decisión</td><td>2026-09-10</td><td>2026-09-10</td><td>Equipo</td><td>Plan</td><td>C, D</td></tr>\n</tbody></table>\n</div>\n<figcaption>Calendario ficticio. Fechas UTC. Las barras representan intervalos inicio→fin; igualdad indica un hito.</figcaption>\n</figure>",
@@ -671,10 +764,68 @@
         "packages/core/components/controls.js",
         "packages/core/components/editorial-pieces.js",
         "packages/core/components/reader.js",
+        "packages/core/components/chart-core.js",
         "packages/core/components/charts.js"
       ],
       "html": "<figure class=\"ancho\" id=\"barras-ejemplo\" data-grafica=\"barras\" data-unidad=\"Horas\">\n  <details open><summary>Ver los datos de balance de horas</summary>\n    <div class=\"tabla-caja\" tabindex=\"0\" role=\"region\" aria-label=\"Balance de horas, tabla desplazable\">\n      <table><caption>Balance de horas</caption>\n        <thead><tr><th scope=\"col\">Actividad</th><th scope=\"col\">Horas</th></tr></thead>\n        <tbody><tr><th scope=\"row\">Investigar</th><td data-valor=\"60\">60 h</td></tr>\n<tr><th scope=\"row\">Construir</th><td data-valor=\"25\">25 h</td></tr>\n<tr><th scope=\"row\">Revisar</th><td data-valor=\"15\">15 h</td></tr>\n<tr><th scope=\"row\">Ajuste de registro</th><td data-valor=\"-10\">−10 h</td></tr></tbody>\n      </table>\n    </div>\n  </details>\n  <figcaption>Datos ilustrativos; corte 13-sep-2026.</figcaption>\n</figure>",
-      "criterio_y_limites": "**Use and limits:** Compare magnitudes in one unit. Zero stays in the domain; negatives and up to four grouped series are supported. Up to 500 rows; for many categories prefer a sortable table. The drawing keeps an 800 px local minimum and wraps long category labels. This is not a stacked or normalized percentage chart.\n\nBar charts measure their container, wrap category labels and redraw when a hidden chapter opens or the viewport changes. Numeric labels and the original table remain available; extremely narrow containers may scroll locally. The layout keeps a shared zero baseline for positive and negative values."
+      "criterio_y_limites": "**Use and limits:** Compare magnitudes in one unit. Zero stays in the domain; negatives and up to four grouped series are supported. Up to 500 rows; for many categories prefer a sortable table. The drawing uses the measured width with 12 px text; below 480 px each category label moves above its bars. This is not a stacked or normalized percentage chart: use the column chart for real totals.\n\nBar charts measure their container, wrap category labels and redraw when a hidden chapter opens or the viewport changes. Numeric labels, the tip (pointer, keyboard and touch), CSV/SVG export and the original table remain available; no horizontal scroll is needed at 320 px. The layout keeps a shared zero baseline for positive and negative values."
+    },
+    {
+      "id": "columnas",
+      "nombre": "Columnas agrupadas o apiladas",
+      "capitulo": "graficas",
+      "href": "examples/generated/library.html#receta-columnas",
+      "dependencias": [
+        "packages/core/styles/fonts.css",
+        "packages/core/styles/artifact.css",
+        "packages/core/components/interface.js",
+        "packages/core/components/audio.js",
+        "packages/core/components/controls.js",
+        "packages/core/components/editorial-pieces.js",
+        "packages/core/components/reader.js",
+        "packages/core/components/chart-core.js",
+        "packages/core/components/charts.js"
+      ],
+      "html": "<figure class=\"ancho\" id=\"columnas-ejemplo\" data-grafica=\"columnas\" data-apilado=\"si\" data-unidad=\"pedidos\">\n  <details open><summary>Ver los datos de pedidos por canal</summary>\n    <div class=\"tabla-caja\" tabindex=\"0\" role=\"region\" aria-label=\"Pedidos por canal y trimestre, tabla desplazable\">\n      <table><caption>Pedidos por canal y trimestre</caption>\n        <thead><tr><th scope=\"col\">Trimestre</th><th scope=\"col\">Web</th><th scope=\"col\">App</th><th scope=\"col\">Aliados</th></tr></thead>\n        <tbody><tr><th scope=\"row\">T1 2026</th><td data-valor=\"420\">420</td><td data-valor=\"310\">310</td><td data-valor=\"95\">95</td></tr>\n<tr><th scope=\"row\">T2 2026</th><td data-valor=\"465\">465</td><td data-valor=\"380\">380</td><td data-valor=\"120\">120</td></tr>\n<tr><th scope=\"row\">T3 2026</th><td data-valor=\"440\">440</td><td data-valor=\"455\">455</td><td data-valor=\"160\">160</td></tr>\n<tr><th scope=\"row\">T4 2026</th><td data-valor=\"390\">390</td><td data-valor=\"520\">520</td><td data-valor=\"\">Sin dato</td></tr></tbody>\n      </table>\n    </div>\n  </details>\n  <figcaption>Datos ilustrativos, pedidos contados por canal; no son cifras de ninguna empresa. T4 no informa aliados: su total queda incompleto, no se completa con cero.</figcaption>\n</figure>",
+      "criterio_y_limites": "**Use and limits:** Compare amounts across ordered categories (periods, stages) in one unit. Grouped by default; `data-apilado=\"si\"` stacks series when their sum is a real total (counts, money, hours), never for ratios or percentages. Stacking rejects negative values. Up to eight series and 40 categories; long category names are abbreviated in the axis and stay complete in the tip and table. A missing cell is drawn as a flat mark and its column total is reported as incomplete, not as zero. Needs `chart-core.js` before `charts.js`. For many categories or long names prefer horizontal bars."
+    },
+    {
+      "id": "cambio",
+      "nombre": "Antes y después",
+      "capitulo": "graficas",
+      "href": "examples/generated/library.html#receta-cambio",
+      "dependencias": [
+        "packages/core/styles/fonts.css",
+        "packages/core/styles/artifact.css",
+        "packages/core/components/interface.js",
+        "packages/core/components/audio.js",
+        "packages/core/components/controls.js",
+        "packages/core/components/editorial-pieces.js",
+        "packages/core/components/reader.js",
+        "packages/core/components/chart-core.js",
+        "packages/core/components/charts.js"
+      ],
+      "html": "<figure class=\"ancho\" id=\"cambio-ejemplo\" data-grafica=\"cambio\" data-unidad=\"minutos\">\n  <details open><summary>Ver los datos de tiempo de entrega por zona</summary>\n    <div class=\"tabla-caja\" tabindex=\"0\" role=\"region\" aria-label=\"Tiempo de entrega antes y después, tabla desplazable\">\n      <table><caption>Tiempo mediano de entrega antes y después de reordenar rutas</caption>\n        <thead><tr><th scope=\"col\">Zona</th><th scope=\"col\">Antes</th><th scope=\"col\">Después</th></tr></thead>\n        <tbody><tr><th scope=\"row\">Norte</th><td data-valor=\"58\">58 min</td><td data-valor=\"44\">44 min</td></tr>\n<tr><th scope=\"row\">Centro</th><td data-valor=\"41\">41 min</td><td data-valor=\"38\">38 min</td></tr>\n<tr><th scope=\"row\">Sur</th><td data-valor=\"66\">66 min</td><td data-valor=\"49\">49 min</td></tr>\n<tr><th scope=\"row\">Occidente</th><td data-valor=\"47\">47 min</td><td data-valor=\"52\">52 min</td></tr>\n<tr><th scope=\"row\">Aeropuerto</th><td data-valor=\"35\">35 min</td><td data-valor=\"\">Sin dato</td></tr></tbody>\n      </table>\n    </div>\n  </details>\n  <figcaption>Datos ilustrativos: mediana de dos semanas antes y dos después del cambio, misma definición de entrega. La diferencia no prueba causalidad.</figcaption>\n</figure>",
+      "criterio_y_limites": "**Use and limits:** Show the change of one measure between two moments for up to 30 rows: label, before, after, in the same unit. The axis does not need zero because position, not length, carries the value. The change column shows the absolute difference; the tip adds the percentage, which is undefined when the base is zero. Circle = before, square = after; series can be isolated from the legend. A missing value is named, never drawn at zero. Needs `chart-core.js` before `charts.js`. Do not use for more than two moments: use lines."
+    },
+    {
+      "id": "meta",
+      "nombre": "Avance frente a meta",
+      "capitulo": "graficas",
+      "href": "examples/generated/library.html#receta-meta",
+      "dependencias": [
+        "packages/core/styles/fonts.css",
+        "packages/core/styles/artifact.css",
+        "packages/core/components/interface.js",
+        "packages/core/components/audio.js",
+        "packages/core/components/controls.js",
+        "packages/core/components/editorial-pieces.js",
+        "packages/core/components/reader.js",
+        "packages/core/components/chart-core.js",
+        "packages/core/components/charts.js"
+      ],
+      "html": "<figure class=\"ancho\" id=\"meta-ejemplo\" data-grafica=\"meta\" data-unidad=\"clientes\">\n  <details open><summary>Ver los datos de clientes nuevos frente a la meta</summary>\n    <div class=\"tabla-caja\" tabindex=\"0\" role=\"region\" aria-label=\"Clientes nuevos frente a la meta, tabla desplazable\">\n      <table><caption>Clientes nuevos del trimestre frente a la meta</caption>\n        <thead><tr><th scope=\"col\">Sede</th><th scope=\"col\">Logrado</th><th scope=\"col\">Meta</th><th scope=\"col\">Bajo hasta</th><th scope=\"col\">Aceptable hasta</th><th scope=\"col\">Escala hasta</th></tr></thead>\n        <tbody><tr><th scope=\"row\">Bogotá</th><td data-valor=\"128\">128</td><td data-valor=\"150\">150</td><td data-valor=\"90\">90</td><td data-valor=\"140\">140</td><td data-valor=\"180\">180</td></tr>\n<tr><th scope=\"row\">Medellín</th><td data-valor=\"96\">96</td><td data-valor=\"90\">90</td><td data-valor=\"60\">60</td><td data-valor=\"85\">85</td><td data-valor=\"120\">120</td></tr>\n<tr><th scope=\"row\">Cali</th><td data-valor=\"41\">41</td><td data-valor=\"70\">70</td><td data-valor=\"40\">40</td><td data-valor=\"65\">65</td><td data-valor=\"90\">90</td></tr></tbody>\n      </table>\n    </div>\n  </details>\n  <figcaption>Datos ilustrativos. La barra es lo logrado; la marca vertical, la meta; las bandas, umbrales cualitativos declarados por el equipo. Cada fila es una sede: los porcentajes de avance no se suman ni promedian.</figcaption>\n</figure>",
+      "criterio_y_limites": "**Use and limits:** Compare an achieved value with its target for up to 12 rows sharing one unit: label, value, target and up to three increasing qualitative thresholds (for example low, acceptable, scale). Bands are declared by the author and are not derived from data. The tip states value, target and the share of the target per row; shares are never summed or averaged. A target of zero makes the share undefined. Needs `chart-core.js` before `charts.js`. Prefer a table when rows use different units."
     },
     {
       "id": "lineas",
@@ -689,6 +840,7 @@
         "packages/core/components/controls.js",
         "packages/core/components/editorial-pieces.js",
         "packages/core/components/reader.js",
+        "packages/core/components/chart-core.js",
         "packages/core/components/charts.js"
       ],
       "html": "<figure class=\"ancho\" id=\"lineas-ejemplo\" data-grafica=\"lineas\" data-unidad=\"Horas\">\n  <details open><summary>Ver los datos de tiempo de resolución</summary>\n    <div class=\"tabla-caja\" tabindex=\"0\" role=\"region\" aria-label=\"Tiempo de resolución, tabla desplazable\">\n      <table><caption>Tiempo de resolución</caption>\n        <thead><tr><th scope=\"col\">Etapa</th><th scope=\"col\">Equipo A</th><th scope=\"col\">Equipo B</th></tr></thead>\n        <tbody><tr><th scope=\"row\">Entrada</th><td data-valor=\"12\">12 h</td><td data-valor=\"16\">16 h</td></tr>\n<tr><th scope=\"row\">Revisión</th><td data-valor=\"8\">8 h</td><td data-valor=\"11\">11 h</td></tr>\n<tr><th scope=\"row\">Validación</th><td data-valor=\"\">Sin dato</td><td data-valor=\"9\">9 h</td></tr>\n<tr><th scope=\"row\">Cierre</th><td data-valor=\"6\">6 h</td><td data-valor=\"7\">7 h</td></tr></tbody>\n      </table>\n    </div>\n  </details>\n  <figcaption>Datos ilustrativos; corte 13-sep-2026.</figcaption>\n</figure>",
@@ -707,6 +859,7 @@
         "packages/core/components/controls.js",
         "packages/core/components/editorial-pieces.js",
         "packages/core/components/reader.js",
+        "packages/core/components/chart-core.js",
         "packages/core/components/charts.js"
       ],
       "html": "<figure class=\"ancho\" id=\"temporal-ejemplo\" data-grafica=\"temporal\" data-unidad=\"Solicitudes\">\n  <details open><summary>Ver los datos de solicitudes por día</summary>\n    <div class=\"tabla-caja\" tabindex=\"0\" role=\"region\" aria-label=\"Solicitudes por día, tabla desplazable\">\n      <table><caption>Solicitudes por día</caption>\n        <thead><tr><th scope=\"col\">Día UTC</th><th scope=\"col\">Solicitudes</th></tr></thead>\n        <tbody><tr><th scope=\"row\"><time datetime=\"2026-09-01\">1 sep</time></th><td data-valor=\"80\">80 solicitudes</td></tr>\n<tr><th scope=\"row\"><time datetime=\"2026-09-03\">3 sep</time></th><td data-valor=\"100\">100 solicitudes</td></tr>\n<tr><th scope=\"row\"><time datetime=\"2026-09-08\">8 sep</time></th><td data-valor=\"90\">90 solicitudes</td></tr>\n<tr><th scope=\"row\"><time datetime=\"2026-09-13\">13 sep</time></th><td data-valor=\"120\">120 solicitudes</td></tr></tbody>\n      </table>\n    </div>\n  </details>\n  <figcaption>Ejemplo: conteos diarios independientes. Último registro frente al registro anterior (13 sep frente a 8 sep), no totales de ventanas de distinta duración.</figcaption>\n</figure>",
@@ -725,6 +878,7 @@
         "packages/core/components/controls.js",
         "packages/core/components/editorial-pieces.js",
         "packages/core/components/reader.js",
+        "packages/core/components/chart-core.js",
         "packages/core/components/charts.js"
       ],
       "html": "<figure class=\"ancho\" id=\"dispersion-ejemplo\" data-grafica=\"dispersion\" >\n  <details open><summary>Ver los datos de carga y latencia</summary>\n    <div class=\"tabla-caja\" tabindex=\"0\" role=\"region\" aria-label=\"Carga y latencia, tabla desplazable\">\n      <table><caption>Carga y latencia</caption>\n        <thead><tr><th scope=\"col\">Muestra</th><th scope=\"col\">Carga (solicitudes/s)</th><th scope=\"col\">Latencia (ms)</th></tr></thead>\n        <tbody><tr><th scope=\"row\">A</th><td data-valor=\"10\">10</td><td data-valor=\"80\">80 ms</td></tr>\n<tr><th scope=\"row\">B</th><td data-valor=\"20\">20</td><td data-valor=\"95\">95 ms</td></tr>\n<tr><th scope=\"row\">C</th><td data-valor=\"35\">35</td><td data-valor=\"140\">140 ms</td></tr>\n<tr><th scope=\"row\">D</th><td data-valor=\"50\">50</td><td data-valor=\"170\">170 ms</td></tr>\n<tr><th scope=\"row\">E</th><td data-valor=\"65\">65</td><td data-valor=\"165\">165 ms</td></tr></tbody>\n      </table>\n    </div>\n  </details>\n  <figcaption>Datos ilustrativos; corte 13-sep-2026.</figcaption>\n</figure>",
@@ -743,6 +897,7 @@
         "packages/core/components/controls.js",
         "packages/core/components/editorial-pieces.js",
         "packages/core/components/reader.js",
+        "packages/core/components/chart-core.js",
         "packages/core/components/charts.js"
       ],
       "html": "<figure class=\"ancho\" id=\"distribucion-ejemplo\" data-grafica=\"distribucion\">\n  <details open><summary>Ver los datos de duración</summary>\n    <div class=\"tabla-caja\" tabindex=\"0\" role=\"region\" aria-label=\"Distribución de duración, tabla desplazable\">\n      <table><caption>Duración de 30 sesiones</caption>\n        <thead><tr><th scope=\"col\">Duración (min)</th><th scope=\"col\">Sesiones</th><th scope=\"col\">Sesiones/min</th></tr></thead>\n        <tbody>\n          <tr><th scope=\"row\" data-desde=\"0\" data-hasta=\"10\">0 a menos de 10 min</th><td data-valor=\"5\">5</td><td data-valor=\"\">0,5</td></tr>\n          <tr><th scope=\"row\" data-desde=\"10\" data-hasta=\"20\">10 a menos de 20 min</th><td data-valor=\"15\">15</td><td data-valor=\"\">1,5</td></tr>\n          <tr><th scope=\"row\" data-desde=\"20\" data-hasta=\"40\">20 a 40 min (incluido)</th><td data-valor=\"10\">10</td><td data-valor=\"\">0,5</td></tr>\n        </tbody>\n      </table>\n    </div>\n  </details>\n  <figcaption>Ejemplo de 30 sesiones. Altura = frecuencia / ancho del intervalo; el área representa la frecuencia. El último intervalo tiene el doble de ancho.</figcaption>\n</figure>",
@@ -761,10 +916,11 @@
         "packages/core/components/controls.js",
         "packages/core/components/editorial-pieces.js",
         "packages/core/components/reader.js",
+        "packages/core/components/chart-core.js",
         "packages/core/components/charts.js"
       ],
       "html": "<figure class=\"ancho\" id=\"calor-ejemplo\" data-grafica=\"calor\" data-umbrales=\"0,30,60,90,120,150\" data-unidad=\"Minutos\">\n  <details open><summary>Ver los datos de tiempo por actividad y día</summary>\n    <div class=\"tabla-caja\" tabindex=\"0\" role=\"region\" aria-label=\"Tiempo por actividad y día, tabla desplazable\">\n      <table><caption>Tiempo por actividad y día</caption>\n        <thead><tr><th scope=\"col\">Actividad</th><th scope=\"col\">Lun</th><th scope=\"col\">Mar</th><th scope=\"col\">Mié</th><th scope=\"col\">Jue</th><th scope=\"col\">Vie</th></tr></thead>\n        <tbody><tr><th scope=\"row\">Investigar</th><td data-valor=\"0\">0 min</td><td data-valor=\"30\">30 min</td><td data-valor=\"60\">60 min</td><td data-valor=\"90\">90 min</td><td data-valor=\"120\">120 min</td></tr>\n<tr><th scope=\"row\">Construir</th><td data-valor=\"150\">150 min</td><td data-valor=\"120\">120 min</td><td data-valor=\"90\">90 min</td><td data-valor=\"\">Sin dato</td><td data-valor=\"30\">30 min</td></tr>\n<tr><th scope=\"row\">Revisar</th><td data-valor=\"10\">10 min</td><td data-valor=\"20\">20 min</td><td data-valor=\"40\">40 min</td><td data-valor=\"80\">80 min</td><td data-valor=\"110\">110 min</td></tr></tbody>\n      </table>\n    </div>\n  </details>\n  <figcaption>Ejemplo ilustrativo, minutos por día. Límites de clase: [0,30), [30,60), [60,90), [90,120), [120,150]. Ausencia distinta de cero.</figcaption>\n</figure>",
-      "criterio_y_limites": "<a id=\"recetas-tablas\"></a>\n\n**Use and limits:** Compare intensity across two discrete dimensions. Five levels use six increasing boundaries, with the maximum included in the final level. Out-of-domain data produces an error while preserving the source table, never silent saturation. Up to 31×31 cells, local scrolling and a minimum column width. Each cell retains its value; no hidden row-specific scales or gradient encoding."
+      "criterio_y_limites": "<a id=\"recetas-tablas\"></a>\n\n**Use and limits:** Compare intensity across two discrete dimensions. SVG matrix with row and column axes at the measured width; the coloured table stays as the accessible mode. `data-umbrales` declares 3–6 increasing boundaries (2–5 levels), with the maximum included in the final level; without it, boundaries are data quantiles and the legend says so. `data-centro` makes a diverging scale around a declared midpoint. Out-of-domain data produces an error while preserving the source table, never silent saturation. Missing cells are hatched and labelled «Sin dato ≠ 0». Up to 31×31 cells without page scroll: values print inside cells only when they fit, otherwise the tip (arrows move by row and column) gives them. Each cell retains its value; no hidden row-specific scales or gradient encoding."
     },
     {
       "id": "cascada",
@@ -779,10 +935,11 @@
         "packages/core/components/controls.js",
         "packages/core/components/editorial-pieces.js",
         "packages/core/components/reader.js",
+        "packages/core/components/chart-core.js",
         "packages/core/components/reports.js"
       ],
       "html": "<figure class=\"pieza ancho\" id=\"cascada-ejemplo\" data-reporte=\"cascada\">\n  <h3>Cómo se llega al resultado</h3>\n  <p>Horas disponibles, ajustes y trabajo añadido. Cada tramo empieza donde termina el anterior.</p>\n  <div class=\"tabla-caja\" tabindex=\"0\" role=\"region\" aria-label=\"Balance de capacidad en horas, desplazable\">\n    <table><caption>Balance ilustrativo · eje X en horas</caption>\n      <thead><tr><th scope=\"col\">Concepto</th><th scope=\"col\">Cambio (h)</th><th scope=\"col\">Acumulado (h)</th></tr></thead>\n      <tbody>\n        <tr><th scope=\"row\">Capacidad inicial</th><td data-valor=\"120\">+120</td><td>120</td></tr>\n        <tr><th scope=\"row\">Mantenimiento</th><td data-valor=\"-30\">−30</td><td>90</td></tr>\n        <tr><th scope=\"row\">Apoyo adicional</th><td data-valor=\"20\">+20</td><td>110</td></tr>\n        <tr><th scope=\"row\">Revisión</th><td data-valor=\"-15\">−15</td><td>95</td></tr>\n      </tbody>\n      <tfoot><tr><th scope=\"row\">Resultado</th><td>Horas netas</td><td>95</td></tr></tfoot>\n    </table>\n  </div>\n  <figcaption>Ejemplo: 120 − 30 + 20 − 15 = 95 h. Signos y tabla distinguen aumentos y reducciones sin depender del color.</figcaption>\n</figure>",
-      "criterio_y_limites": "**Use and limits:** Explain a total through positive and negative contributions in one unit. Three columns, 1–60 rows, finite values and running totals within ±10^9. The first row is a change from zero; no intermediate subtotals or resets. The module calculates the third column rather than reading it as input. Zero and every cumulative extreme stay in the domain. Keep the visible table and 860 px local drawing minimum. Do not add rates, percentages or different currencies."
+      "criterio_y_limites": "**Use and limits:** Explain a total through positive and negative contributions in one unit. Three columns, 1–60 rows, finite values and running totals within ±10^9. The first row is a change from zero; no intermediate subtotals or resets. The module calculates the third column rather than reading it as input. Zero and every cumulative extreme stay in the domain. Keep the visible table; the drawing uses the measured width and moves labels above bars below 480 px. Do not add rates, percentages or different currencies."
     },
     {
       "id": "multiples",
@@ -797,10 +954,11 @@
         "packages/core/components/controls.js",
         "packages/core/components/editorial-pieces.js",
         "packages/core/components/reader.js",
+        "packages/core/components/chart-core.js",
         "packages/core/components/reports.js"
       ],
       "html": "<figure class=\"pieza amplio\" id=\"multiples-ejemplo\" data-reporte=\"multiples\">\n  <h3>La misma pregunta en tres sedes</h3>\n  <p>Solicitudes por semana. Los tres paneles comparten el eje Y; el eje X corresponde al orden de la tabla.</p>\n  <div class=\"tabla-caja\" tabindex=\"0\" role=\"region\" aria-label=\"Solicitudes por sede y semana, desplazable\">\n    <table><caption>Solicitudes semanales · ejemplo · eje Y en solicitudes</caption>\n      <thead><tr><th scope=\"col\">Período</th><th scope=\"col\">Bogotá</th><th scope=\"col\">Medellín</th><th scope=\"col\">Cali</th></tr></thead>\n      <tbody>\n        <tr><th scope=\"row\">1 · Semana 1</th><td data-valor=\"40\">40</td><td data-valor=\"20\">20</td><td data-valor=\"30\">30</td></tr>\n        <tr><th scope=\"row\">2 · Semana 2</th><td data-valor=\"60\">60</td><td data-valor=\"30\">30</td><td data-valor=\"\">Sin dato</td></tr>\n        <tr><th scope=\"row\">3 · Semana 3</th><td data-valor=\"50\">50</td><td data-valor=\"35\">35</td><td data-valor=\"40\">40</td></tr>\n        <tr><th scope=\"row\">4 · Semana 4</th><td data-valor=\"80\">80</td><td data-valor=\"40\">40</td><td data-valor=\"45\">45</td></tr>\n      </tbody>\n    </table>\n  </div>\n  <figcaption>Datos ilustrativos. Escala común de 0 a 80; sin dato corta el trazo. La pendiente no demuestra causalidad.</figcaption>\n</figure>",
-      "criterio_y_limites": "**Use and limits:** Compare up to four groups without overlapping their lines. Use the same 2–60 equally spaced periods for every group; irregular dates are unsupported. Finite values up to ±10^9, with missing distinct from zero. Each panel retains a 360 px local minimum. An empty series has an explicit 0–1 auxiliary domain and no invented points."
+      "criterio_y_limites": "**Use and limits:** Compare up to four groups without overlapping their lines. Use the same 2–60 equally spaced periods for every group; irregular dates are unsupported. Finite values up to ±10^9, with missing distinct from zero. Panels draw at their measured width and share one 1-2-5 axis; the first and last period names label the horizontal axis. An empty series has an explicit 0–1 auxiliary domain and no invented points."
     },
     {
       "id": "calendario",
@@ -815,6 +973,7 @@
         "packages/core/components/controls.js",
         "packages/core/components/editorial-pieces.js",
         "packages/core/components/reader.js",
+        "packages/core/components/chart-core.js",
         "packages/core/components/analytics.js"
       ],
       "html": "<figure class=\"ancho\" id=\"analitica-calendario\" data-analitica=\"calendario\" data-unidad=\"conciliaciones\">\n  <details><summary>Consultar los 109 días registrados</summary>\n  <div class=\"tabla-caja\" tabindex=\"0\" role=\"region\" aria-label=\"Datos de Calendario de actividad, desplazables\">\n    <table><caption>Calendario de actividad</caption>\n      <thead><tr><th scope=\"col\">Fecha UTC</th><th scope=\"col\">Conciliaciones</th></tr></thead>\n      <tbody>\n        <tr><th scope=\"row\">2026-05-25</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-05-26</th><td data-valor=\"7\">7</td></tr>\n        <tr><th scope=\"row\">2026-05-27</th><td data-valor=\"14\">14</td></tr>\n        <tr><th scope=\"row\">2026-05-28</th><td data-valor=\"21\">21</td></tr>\n        <tr><th scope=\"row\">2026-05-29</th><td data-valor=\"3\">3</td></tr>\n        <tr><th scope=\"row\">2026-05-30</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-05-31</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-06-01</th><td data-valor=\"2\">2</td></tr>\n        <tr><th scope=\"row\">2026-06-02</th><td data-valor=\"9\">9</td></tr>\n        <tr><th scope=\"row\">2026-06-03</th><td data-valor=\"16\">16</td></tr>\n        <tr><th scope=\"row\">2026-06-04</th><td data-valor=\"23\">23</td></tr>\n        <tr><th scope=\"row\">2026-06-05</th><td data-valor=\"5\">5</td></tr>\n        <tr><th scope=\"row\">2026-06-06</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-06-07</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-06-08</th><td data-valor=\"4\">4</td></tr>\n        <tr><th scope=\"row\">2026-06-09</th><td data-valor=\"11\">11</td></tr>\n        <tr><th scope=\"row\">2026-06-10</th><td data-valor=\"18\">18</td></tr>\n        <tr><th scope=\"row\">2026-06-11</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-06-12</th><td data-valor=\"7\">7</td></tr>\n        <tr><th scope=\"row\">2026-06-13</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-06-14</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-06-15</th><td data-valor=\"6\">6</td></tr>\n        <tr><th scope=\"row\">2026-06-16</th><td data-valor=\"13\">13</td></tr>\n        <tr><th scope=\"row\">2026-06-17</th><td data-valor=\"20\">20</td></tr>\n        <tr><th scope=\"row\">2026-06-18</th><td data-valor=\"2\">2</td></tr>\n        <tr><th scope=\"row\">2026-06-19</th><td data-valor=\"9\">9</td></tr>\n        <tr><th scope=\"row\">2026-06-20</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-06-21</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-06-22</th><td data-valor=\"8\">8</td></tr>\n        <tr><th scope=\"row\">2026-06-23</th><td data-valor=\"15\">15</td></tr>\n        <tr><th scope=\"row\">2026-06-24</th><td data-valor=\"22\">22</td></tr>\n        <tr><th scope=\"row\">2026-06-27</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-06-28</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-06-29</th><td data-valor=\"10\">10</td></tr>\n        <tr><th scope=\"row\">2026-06-30</th><td data-valor=\"17\">17</td></tr>\n        <tr><th scope=\"row\">2026-07-01</th><td data-valor=\"24\">24</td></tr>\n        <tr><th scope=\"row\">2026-07-02</th><td data-valor=\"6\">6</td></tr>\n        <tr><th scope=\"row\">2026-07-03</th><td data-valor=\"13\">13</td></tr>\n        <tr><th scope=\"row\">2026-07-04</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-07-05</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-07-06</th><td data-valor=\"12\">12</td></tr>\n        <tr><th scope=\"row\">2026-07-07</th><td data-valor=\"19\">19</td></tr>\n        <tr><th scope=\"row\">2026-07-08</th><td data-valor=\"1\">1</td></tr>\n        <tr><th scope=\"row\">2026-07-09</th><td data-valor=\"8\">8</td></tr>\n        <tr><th scope=\"row\">2026-07-10</th><td data-valor=\"15\">15</td></tr>\n        <tr><th scope=\"row\">2026-07-11</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-07-12</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-07-13</th><td data-valor=\"14\">14</td></tr>\n        <tr><th scope=\"row\">2026-07-14</th><td data-valor=\"21\">21</td></tr>\n        <tr><th scope=\"row\">2026-07-15</th><td data-valor=\"3\">3</td></tr>\n        <tr><th scope=\"row\">2026-07-16</th><td data-valor=\"10\">10</td></tr>\n        <tr><th scope=\"row\">2026-07-17</th><td data-valor=\"17\">17</td></tr>\n        <tr><th scope=\"row\">2026-07-18</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-07-19</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-07-20</th><td data-valor=\"16\">16</td></tr>\n        <tr><th scope=\"row\">2026-07-21</th><td data-valor=\"23\">23</td></tr>\n        <tr><th scope=\"row\">2026-07-22</th><td data-valor=\"5\">5</td></tr>\n        <tr><th scope=\"row\">2026-07-23</th><td data-valor=\"12\">12</td></tr>\n        <tr><th scope=\"row\">2026-07-24</th><td data-valor=\"19\">19</td></tr>\n        <tr><th scope=\"row\">2026-07-25</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-07-26</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-07-27</th><td data-valor=\"18\">18</td></tr>\n        <tr><th scope=\"row\">2026-07-28</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-07-29</th><td data-valor=\"7\">7</td></tr>\n        <tr><th scope=\"row\">2026-07-30</th><td data-valor=\"14\">14</td></tr>\n        <tr><th scope=\"row\">2026-07-31</th><td data-valor=\"21\">21</td></tr>\n        <tr><th scope=\"row\">2026-08-01</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-08-02</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-08-03</th><td data-valor=\"20\">20</td></tr>\n        <tr><th scope=\"row\">2026-08-04</th><td data-valor=\"2\">2</td></tr>\n        <tr><th scope=\"row\">2026-08-05</th><td data-valor=\"9\">9</td></tr>\n        <tr><th scope=\"row\">2026-08-06</th><td data-valor=\"16\">16</td></tr>\n        <tr><th scope=\"row\">2026-08-07</th><td data-valor=\"23\">23</td></tr>\n        <tr><th scope=\"row\">2026-08-08</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-08-09</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-08-10</th><td data-valor=\"22\">22</td></tr>\n        <tr><th scope=\"row\">2026-08-11</th><td data-valor=\"4\">4</td></tr>\n        <tr><th scope=\"row\">2026-08-12</th><td data-valor=\"11\">11</td></tr>\n        <tr><th scope=\"row\">2026-08-14</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-08-15</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-08-16</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-08-17</th><td data-valor=\"24\">24</td></tr>\n        <tr><th scope=\"row\">2026-08-18</th><td data-valor=\"6\">6</td></tr>\n        <tr><th scope=\"row\">2026-08-19</th><td data-valor=\"13\">13</td></tr>\n        <tr><th scope=\"row\">2026-08-20</th><td data-valor=\"20\">20</td></tr>\n        <tr><th scope=\"row\">2026-08-21</th><td data-valor=\"2\">2</td></tr>\n        <tr><th scope=\"row\">2026-08-22</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-08-23</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-08-24</th><td data-valor=\"1\">1</td></tr>\n        <tr><th scope=\"row\">2026-08-25</th><td data-valor=\"8\">8</td></tr>\n        <tr><th scope=\"row\">2026-08-26</th><td data-valor=\"15\">15</td></tr>\n        <tr><th scope=\"row\">2026-08-27</th><td data-valor=\"22\">22</td></tr>\n        <tr><th scope=\"row\">2026-08-28</th><td data-valor=\"4\">4</td></tr>\n        <tr><th scope=\"row\">2026-08-29</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-08-30</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-08-31</th><td data-valor=\"3\">3</td></tr>\n        <tr><th scope=\"row\">2026-09-01</th><td data-valor=\"10\">10</td></tr>\n        <tr><th scope=\"row\">2026-09-02</th><td data-valor=\"17\">17</td></tr>\n        <tr><th scope=\"row\">2026-09-03</th><td data-valor=\"24\">24</td></tr>\n        <tr><th scope=\"row\">2026-09-04</th><td data-valor=\"6\">6</td></tr>\n        <tr><th scope=\"row\">2026-09-05</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-09-06</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-09-07</th><td data-valor=\"5\">5</td></tr>\n        <tr><th scope=\"row\">2026-09-08</th><td data-valor=\"12\">12</td></tr>\n        <tr><th scope=\"row\">2026-09-09</th><td data-valor=\"19\">19</td></tr>\n        <tr><th scope=\"row\">2026-09-10</th><td data-valor=\"1\">1</td></tr>\n        <tr><th scope=\"row\">2026-09-11</th><td data-valor=\"8\">8</td></tr>\n        <tr><th scope=\"row\">2026-09-12</th><td data-valor=\"0\">0</td></tr>\n        <tr><th scope=\"row\">2026-09-13</th><td data-valor=\"0\">0</td></tr>\n      </tbody>\n    </table>\n  </div>\n  </details>\n  <figcaption>Datos ficticios, 25 may–13 sep 2026. Intensidad diaria, cero distinto de ausencia.</figcaption>\n</figure>",
@@ -833,10 +992,11 @@
         "packages/core/components/controls.js",
         "packages/core/components/editorial-pieces.js",
         "packages/core/components/reader.js",
+        "packages/core/components/chart-core.js",
         "packages/core/components/analytics.js"
       ],
       "html": "<figure class=\"ancho\" id=\"analitica-torta\" data-analitica=\"torta\" data-unidad=\"millones COP\">\n  <div class=\"tabla-caja\" tabindex=\"0\" role=\"region\" aria-label=\"Datos de Torta y donut de composición, desplazables\">\n    <table><caption>Torta y donut de composición</caption>\n      <thead><tr><th scope=\"col\">Destino</th><th scope=\"col\">Millones COP</th></tr></thead>\n      <tbody>\n        <tr><th scope=\"row\">Operación</th><td data-valor=\"48\">48</td></tr>\n        <tr><th scope=\"row\">Reserva</th><td data-valor=\"24\">24</td></tr>\n        <tr><th scope=\"row\">Tecnología</th><td data-valor=\"18\">18</td></tr>\n        <tr><th scope=\"row\">Comisiones</th><td data-valor=\"10\">10</td></tr>\n      </tbody>\n    </table>\n  </div>\n  <figcaption>Distribución ficticia de 100 millones COP. El botón cambia torta ↔ donut sin cambiar cifras.</figcaption>\n</figure>",
-      "criterio_y_limites": "**Use and limits:** Show parts of a positive whole with 1–6 unique nonnegative categories. Zero remains in legend/table without an invented sector. Percentages use the row total, not an external denominator. No negatives or double counting. Names/values remain authoritative where colors repeat. Prefer bars for close comparisons or many categories."
+      "criterio_y_limites": "**Use and limits:** Show parts of a positive whole with 1–8 unique nonnegative categories. Zero remains in legend/table without an invented sector. Percentages use the row total, not an external denominator. No negatives or double counting. Eight theme colours plus texture patterns keep slices distinct without colour; names and values remain authoritative. Prefer bars for close comparisons or many categories."
     },
     {
       "id": "areas",
@@ -851,6 +1011,7 @@
         "packages/core/components/controls.js",
         "packages/core/components/editorial-pieces.js",
         "packages/core/components/reader.js",
+        "packages/core/components/chart-core.js",
         "packages/core/components/analytics.js"
       ],
       "html": "<figure class=\"ancho\" id=\"analitica-areas\" data-analitica=\"areas\" data-unidad=\"millones COP\">\n  <div class=\"tabla-caja\" tabindex=\"0\" role=\"region\" aria-label=\"Datos de Áreas apiladas de ingresos, desplazables\">\n    <table><caption>Áreas apiladas de ingresos</caption>\n      <thead><tr><th scope=\"col\">Fecha UTC</th><th scope=\"col\">Servicios</th><th scope=\"col\">Suscripciones</th><th scope=\"col\">Comisiones</th></tr></thead>\n      <tbody>\n        <tr><th scope=\"row\">2026-04-01</th><td data-valor=\"24\">24</td><td data-valor=\"12\">12</td><td data-valor=\"4\">4</td></tr>\n        <tr><th scope=\"row\">2026-05-01</th><td data-valor=\"28\">28</td><td data-valor=\"16\">16</td><td data-valor=\"6\">6</td></tr>\n        <tr><th scope=\"row\">2026-06-01</th><td data-valor=\"26\">26</td><td data-valor=\"20\">20</td><td data-valor=\"7\">7</td></tr>\n        <tr><th scope=\"row\">2026-07-01</th><td data-valor=\"35\">35</td><td data-valor=\"24\">24</td><td data-valor=\"9\">9</td></tr>\n        <tr><th scope=\"row\">2026-08-01</th><td data-valor=\"40\">40</td><td data-valor=\"28\">28</td><td data-valor=\"12\">12</td></tr>\n      </tbody>\n    </table>\n  </div>\n  <figcaption>Ingresos ficticios en millones COP; cada banda suma al total. No representan utilidades.</figcaption>\n</figure>",
@@ -869,6 +1030,7 @@
         "packages/core/components/controls.js",
         "packages/core/components/editorial-pieces.js",
         "packages/core/components/reader.js",
+        "packages/core/components/chart-core.js",
         "packages/core/components/analytics.js"
       ],
       "html": "<figure class=\"ancho\" id=\"analitica-caja\" data-analitica=\"caja\" data-unidad=\"minutos\">\n  <div class=\"tabla-caja densa\" tabindex=\"0\" role=\"region\" aria-label=\"Datos de Caja y bigotes de entrega, desplazables\">\n    <table><caption>Caja y bigotes de entrega</caption>\n      <thead><tr><th scope=\"col\">Zona</th><th scope=\"col\">Mínimo</th><th scope=\"col\">Q1</th><th scope=\"col\">Mediana</th><th scope=\"col\">Q3</th><th scope=\"col\">Máximo</th></tr></thead>\n      <tbody>\n        <tr><th scope=\"row\">Norte</th><td data-valor=\"20\">20</td><td data-valor=\"32\">32</td><td data-valor=\"40\">40</td><td data-valor=\"55\">55</td><td data-valor=\"90\">90</td></tr>\n        <tr><th scope=\"row\">Centro</th><td data-valor=\"15\">15</td><td data-valor=\"25\">25</td><td data-valor=\"32\">32</td><td data-valor=\"45\">45</td><td data-valor=\"72\">72</td></tr>\n        <tr><th scope=\"row\">Sur</th><td data-valor=\"25\">25</td><td data-valor=\"42\">42</td><td data-valor=\"55\">55</td><td data-valor=\"68\">68</td><td data-valor=\"110\">110</td></tr>\n      </tbody>\n    </table>\n  </div>\n  <figcaption>Resumen ficticio de tiempos de entrega. Bigotes = mínimo y máximo, no 1,5 IQR.</figcaption>\n</figure>",
@@ -887,6 +1049,7 @@
         "packages/core/components/controls.js",
         "packages/core/components/editorial-pieces.js",
         "packages/core/components/reader.js",
+        "packages/core/components/chart-core.js",
         "packages/core/components/analytics.js"
       ],
       "html": "<figure class=\"ancho\" id=\"analitica-velas\" data-analitica=\"velas\" data-unidad=\"índice base 100\">\n  <div class=\"tabla-caja densa\" tabindex=\"0\" role=\"region\" aria-label=\"Datos de Velas financieras OHLC, desplazables\">\n    <table><caption>Velas financieras OHLC</caption>\n      <thead><tr><th scope=\"col\">Fecha UTC</th><th scope=\"col\">Apertura</th><th scope=\"col\">Máximo</th><th scope=\"col\">Mínimo</th><th scope=\"col\">Cierre</th></tr></thead>\n      <tbody>\n        <tr><th scope=\"row\">2026-09-07</th><td data-valor=\"100\">100</td><td data-valor=\"112\">112</td><td data-valor=\"96\">96</td><td data-valor=\"108\">108</td></tr>\n        <tr><th scope=\"row\">2026-09-08</th><td data-valor=\"108\">108</td><td data-valor=\"115\">115</td><td data-valor=\"101\">101</td><td data-valor=\"103\">103</td></tr>\n        <tr><th scope=\"row\">2026-09-09</th><td data-valor=\"103\">103</td><td data-valor=\"111\">111</td><td data-valor=\"99\">99</td><td data-valor=\"109\">109</td></tr>\n        <tr><th scope=\"row\">2026-09-10</th><td data-valor=\"109\">109</td><td data-valor=\"118\">118</td><td data-valor=\"106\">106</td><td data-valor=\"115\">115</td></tr>\n        <tr><th scope=\"row\">2026-09-11</th><td data-valor=\"115\">115</td><td data-valor=\"119\">119</td><td data-valor=\"108\">108</td><td data-valor=\"111\">111</td></tr>\n      </tbody>\n    </table>\n  </div>\n  <figcaption>Serie sintética, no cotización de un activo. Hueca = sube o no cambia; rellena = baja.</figcaption>\n</figure>",
@@ -906,6 +1069,7 @@
         "packages/core/components/editorial-pieces.js",
         "packages/core/components/reader.js",
         "packages/core/components/geography.js",
+        "packages/core/components/chart-core.js",
         "packages/core/components/analytics.js"
       ],
       "html": "<figure class=\"ancho\" id=\"analitica-mapa-rutas\" data-analitica=\"rutas\" data-unidad=\"viajes\">\n  <div class=\"tabla-caja densa\" tabindex=\"0\" role=\"region\" aria-label=\"Datos de Mapa de rutas y volumen, desplazables\">\n    <table><caption>Mapa de rutas y volumen</caption>\n      <thead><tr><th scope=\"col\">Conexión</th><th scope=\"col\">Lat. origen</th><th scope=\"col\">Lon. origen</th><th scope=\"col\">Lat. destino</th><th scope=\"col\">Lon. destino</th><th scope=\"col\">Viajes</th></tr></thead>\n      <tbody>\n        <tr><th scope=\"row\">Bogotá → Medellín</th><td data-valor=\"4.711\">4.711</td><td data-valor=\"-74.072\">-74.072</td><td data-valor=\"6.244\">6.244</td><td data-valor=\"-75.582\">-75.582</td><td data-valor=\"80\">80</td></tr>\n        <tr><th scope=\"row\">Bogotá → Cali</th><td data-valor=\"4.711\">4.711</td><td data-valor=\"-74.072\">-74.072</td><td data-valor=\"3.452\">3.452</td><td data-valor=\"-76.532\">-76.532</td><td data-valor=\"50\">50</td></tr>\n        <tr><th scope=\"row\">Bogotá → Barranquilla</th><td data-valor=\"4.711\">4.711</td><td data-valor=\"-74.072\">-74.072</td><td data-valor=\"10.969\">10.969</td><td data-valor=\"-74.781\">-74.781</td><td data-valor=\"30\">30</td></tr>\n      </tbody>\n    </table>\n  </div>\n  <figcaption>Datos ficticios de logística; no son operaciones de Liftit. Ubicaciones urbanas aproximadas. Contorno: <a href=\"https://www.naturalearthdata.com/about/terms-of-use/\">Natural Earth</a>, dominio público, escala 1:110m.</figcaption>\n</figure>",
@@ -925,6 +1089,7 @@
         "packages/core/components/editorial-pieces.js",
         "packages/core/components/reader.js",
         "packages/core/components/geography.js",
+        "packages/core/components/chart-core.js",
         "packages/core/components/analytics.js"
       ],
       "html": "<figure class=\"ancho\" id=\"analitica-mapa-burbujas\" data-analitica=\"burbujas\" data-unidad=\"entregas\">\n  <div class=\"tabla-caja\" tabindex=\"0\" role=\"region\" aria-label=\"Datos de Mapa de volumen por sede, desplazables\">\n    <table><caption>Mapa de volumen por sede</caption>\n      <thead><tr><th scope=\"col\">Sede</th><th scope=\"col\">Latitud</th><th scope=\"col\">Longitud</th><th scope=\"col\">Entregas</th></tr></thead>\n      <tbody>\n        <tr><th scope=\"row\">Bogotá</th><td data-valor=\"4.711\">4.711</td><td data-valor=\"-74.072\">-74.072</td><td data-valor=\"240\">240</td></tr>\n        <tr><th scope=\"row\">Medellín</th><td data-valor=\"6.244\">6.244</td><td data-valor=\"-75.582\">-75.582</td><td data-valor=\"180\">180</td></tr>\n        <tr><th scope=\"row\">Cali</th><td data-valor=\"3.452\">3.452</td><td data-valor=\"-76.532\">-76.532</td><td data-valor=\"120\">120</td></tr>\n        <tr><th scope=\"row\">Barranquilla</th><td data-valor=\"10.969\">10.969</td><td data-valor=\"-74.781\">-74.781</td><td data-valor=\"60\">60</td></tr>\n      </tbody>\n    </table>\n  </div>\n  <figcaption>Datos ficticios de logística; no son operaciones de Liftit. Ubicaciones urbanas aproximadas. Contorno: <a href=\"https://www.naturalearthdata.com/about/terms-of-use/\">Natural Earth</a>, dominio público, escala 1:110m.</figcaption>\n</figure>",
@@ -943,10 +1108,11 @@
         "packages/core/components/controls.js",
         "packages/core/components/editorial-pieces.js",
         "packages/core/components/reader.js",
+        "packages/core/components/chart-core.js",
         "packages/core/components/attention-map.js"
       ],
       "html": "<figure class=\"ancho\" id=\"atencion-ejemplo\" data-atencion data-unidad=\"horas\">\n  <div class=\"tabla-caja\" tabindex=\"0\" role=\"region\" aria-label=\"Datos del attention map, desplazables\">\n    <table><caption>Dónde se fue la atención</caption><thead><tr><th scope=\"col\">Actividad</th><th scope=\"col\">Horas</th></tr></thead><tbody>\n      <tr><th scope=\"row\">Investigar</th><td data-valor=\"125\">125<small data-contexto>Entrevistas y revisión de fuentes durante cuatro semanas ficticias.</small></td></tr>\n      <tr><th scope=\"row\">Construir</th><td data-valor=\"34\">34</td></tr>\n      <tr><th scope=\"row\">Conversar</th><td data-valor=\"20\">20</td></tr>\n      <tr><th scope=\"row\">Documentar</th><td data-valor=\"12\">12</td></tr>\n      <tr><th scope=\"row\">Revisar</th><td data-valor=\"8\">8</td></tr>\n      <tr><th scope=\"row\">Planear</th><td data-valor=\"6\">6</td></tr>\n      <tr><th scope=\"row\">Administrar</th><td data-valor=\"4\">4</td></tr>\n      <tr><th scope=\"row\">Otros</th><td data-valor=\"3\">3</td></tr>\n    </tbody></table>\n  </div>\n  <figcaption>212 horas ficticias. El área representa la proporción del total; no es un registro real de actividad. Selecciona una celda o una categoría para consultar su valor.</figcaption>\n</figure>",
-      "criterio_y_limites": "**Use and limits:** Partition a positive total across 1–40 unique categories with finite nonnegative values up to 10^9. Binary area partitioning, not fixed placeholder positions or hierarchical squarification. Zero remains in controls/table with no area. Tiny cells may show a number while full names/values remain outside the map. A 1000×380 viewBox uses a 900 px readable local minimum. Hover, focus and touch expose value, share, total and optional plain-text `data-contexto`; Escape dismisses a hoverable tooltip. The table/selector expose equivalent data. No productivity measurement or app connection. init/get/destroy preserves source; destroy/reinitialize after data changes. Prefer bars for precise rankings."
+      "criterio_y_limites": "**Use and limits:** Partition a positive total across 1–40 unique categories with finite nonnegative values up to 10^9. Squarified treemap (Bruls et al.) at the measured width, 380 px tall (320 px below 640 px, laid out in rows); every area is exactly proportional to its value. Labels follow the cmrg.me home map: serif 18 px name and 11.5 px mono value, abbreviated by available area (full, short, minimal or none) and never outside their cell. When the smallest tail would be too small to see or focus, it is grouped into one «Otros (n)» cell whose area is the exact sum and whose tip lists every member; the buttons, status and table still expose each category. Zero stays in controls/table with no area. Arrow keys move between cells, Enter pins the tip, Escape closes it; touch pins on tap. `data-formato=\"duration_min\"` (or `duration`, `duration_h`) shows durations; `data-atencion-modo=\"particion\"` keeps the previous binary layout. Needs `chart-core.js`. No productivity measurement or app connection; prefer bars for precise rankings."
     },
     {
       "id": "sankey",
@@ -961,6 +1127,7 @@
         "packages/core/components/controls.js",
         "packages/core/components/editorial-pieces.js",
         "packages/core/components/reader.js",
+        "packages/core/components/chart-core.js",
         "packages/core/components/evidence.js"
       ],
       "html": "<figure class=\"amplio\" id=\"evidencia-sankey\" data-evidencia=\"sankey\" data-unidad=\"millones COP\">\n<div class=\"tabla-caja densa\" role=\"region\" tabindex=\"0\" aria-label=\"Destino de ingresos de ejemplo, datos desplazables\">\n<table data-evidencia-datos><caption>Destino de ingresos de ejemplo</caption><thead><tr><th scope=\"col\">Origen</th><th scope=\"col\">Destino</th><th scope=\"col\">Millones COP</th></tr></thead><tbody>\n<tr><th scope=\"row\">Carga urbana</th><td>Operación</td><td data-valor=\"65\">65</td></tr>\n<tr><th scope=\"row\">Carga urbana</th><td>Soporte</td><td data-valor=\"10\">10</td></tr>\n<tr><th scope=\"row\">Carga urbana</th><td>Margen</td><td data-valor=\"15\">15</td></tr>\n<tr><th scope=\"row\">Última milla</th><td>Operación</td><td data-valor=\"20\">20</td></tr>\n<tr><th scope=\"row\">Última milla</th><td>Soporte</td><td data-valor=\"5\">5</td></tr>\n<tr><th scope=\"row\">Última milla</th><td>Margen</td><td data-valor=\"5\">5</td></tr>\n</tbody></table>\n</div>\n<figcaption>Datos ficticios, total 120 millones COP. No representan estados financieros de Liftit o Tikin.</figcaption>\n</figure>",
@@ -979,6 +1146,7 @@
         "packages/core/components/controls.js",
         "packages/core/components/editorial-pieces.js",
         "packages/core/components/reader.js",
+        "packages/core/components/chart-core.js",
         "packages/core/components/evidence.js"
       ],
       "html": "<figure class=\"amplio\" id=\"evidencia-cohortes\" data-evidencia=\"cohortes\" data-unidad=\"clientes\">\n<div class=\"tabla-caja densa\" role=\"region\" tabindex=\"0\" aria-label=\"Clientes activos por cohorte, datos desplazables\">\n<table data-evidencia-datos><caption>Clientes activos por cohorte</caption><thead><tr><th scope=\"col\">Cohorte</th><th scope=\"col\">Base</th><th scope=\"col\">Mes 0</th><th scope=\"col\">Mes 1</th><th scope=\"col\">Mes 2</th><th scope=\"col\">Mes 3</th></tr></thead><tbody>\n<tr><th scope=\"row\">Marzo</th><td data-valor=\"120\">120</td><td data-valor=\"120\">120</td><td data-valor=\"96\">96</td><td data-valor=\"84\">84</td><td data-valor=\"72\">72</td></tr>\n<tr><th scope=\"row\">Abril</th><td data-valor=\"100\">100</td><td data-valor=\"100\">100</td><td data-valor=\"83\">83</td><td data-valor=\"70\">70</td><td data-estado=\"pendiente\">Pendiente de observar</td></tr>\n<tr><th scope=\"row\">Mayo</th><td data-valor=\"80\">80</td><td data-valor=\"80\">80</td><td data-valor=\"60\">60</td><td data-estado=\"pendiente\">Pendiente de observar</td><td data-estado=\"pendiente\">Pendiente de observar</td></tr>\n<tr><th scope=\"row\">Junio</th><td data-valor=\"60\">60</td><td data-valor=\"60\">60</td><td data-estado=\"pendiente\">Pendiente de observar</td><td data-estado=\"pendiente\">Pendiente de observar</td><td data-estado=\"pendiente\">Pendiente de observar</td></tr>\n</tbody></table>\n</div>\n<figcaption>Datos ficticios. Corte: 30 junio 2026. Cada celda cuenta personas activas ese mes; pueden regresar.</figcaption>\n</figure>",
@@ -997,6 +1165,7 @@
         "packages/core/components/controls.js",
         "packages/core/components/editorial-pieces.js",
         "packages/core/components/reader.js",
+        "packages/core/components/chart-core.js",
         "packages/core/components/evidence.js"
       ],
       "html": "<figure class=\"amplio\" id=\"evidencia-embudo\" data-evidencia=\"embudo\" data-unidad=\"pedidos\">\n<div class=\"tabla-caja densa\" role=\"region\" tabindex=\"0\" aria-label=\"Del pedido a la entrega, datos desplazables\">\n<table data-evidencia-datos><caption>Del pedido a la entrega</caption><thead><tr><th scope=\"col\">Etapa</th><th scope=\"col\">Pedidos</th><th scope=\"col\">Definición</th></tr></thead><tbody>\n<tr><th scope=\"row\">Solicitudes</th><td data-valor=\"1000\">1000</td><td>Pedidos de una misma cohorte de ejemplo.</td></tr>\n<tr><th scope=\"row\">Validadas</th><td data-valor=\"800\">800</td><td>Solicitudes con datos completos.</td></tr>\n<tr><th scope=\"row\">Programadas</th><td data-valor=\"500\">500</td><td>Solicitudes validadas con programación.</td></tr>\n<tr><th scope=\"row\">Completadas</th><td data-valor=\"450\">450</td><td>Programadas con recepción registrada.</td></tr>\n</tbody></table>\n</div>\n<figcaption>Datos ilustrativos: misma cohorte y ventana de seguimiento para las cuatro etapas.</figcaption>\n</figure>",
@@ -1015,6 +1184,7 @@
         "packages/core/components/controls.js",
         "packages/core/components/editorial-pieces.js",
         "packages/core/components/reader.js",
+        "packages/core/components/chart-core.js",
         "packages/core/components/evidence.js"
       ],
       "html": "<figure class=\"amplio\" id=\"evidencia-incertidumbre\" data-evidencia=\"incertidumbre\" data-unidad=\"pedidos\">\n<p data-evidencia-metodo>Los límites son escenarios declarados por el equipo de ejemplo. No hay un nivel de confianza ni una probabilidad asignada.</p>\n<div class=\"tabla-caja densa\" role=\"region\" tabindex=\"0\" aria-label=\"Escenarios de demanda, datos desplazables\">\n<table data-evidencia-datos><caption>Escenarios de demanda</caption><thead><tr><th scope=\"col\">Fecha</th><th scope=\"col\">Inferior</th><th scope=\"col\">Central</th><th scope=\"col\">Superior</th></tr></thead><tbody>\n<tr><th scope=\"row\">2026-10-01</th><td data-valor=\"80\">80</td><td data-valor=\"100\">100</td><td data-valor=\"125\">125</td></tr>\n<tr><th scope=\"row\">2026-11-01</th><td data-valor=\"85\">85</td><td data-valor=\"112\">112</td><td data-valor=\"145\">145</td></tr>\n<tr><th scope=\"row\">2026-12-01</th><td data-valor=\"90\">90</td><td data-valor=\"120\">120</td><td data-valor=\"160\">160</td></tr>\n<tr><th scope=\"row\">2027-01-01</th><td data-valor=\"100\">100</td><td data-valor=\"132\">132</td><td data-valor=\"180\">180</td></tr>\n</tbody></table>\n</div>\n<figcaption>Datos ficticios de escenarios; no constituyen previsión de Liftit ni intervalo estadístico.</figcaption>\n</figure>",
@@ -1263,6 +1433,7 @@
         "packages/core/components/controls.js",
         "packages/core/components/editorial-pieces.js",
         "packages/core/components/reader.js",
+        "packages/core/components/chart-core.js",
         "packages/core/components/evidence.js"
       ],
       "html": "<figure class=\"amplio\" id=\"evidencia-imagen\" data-evidencia=\"imagen\">\n<h3>Revisar una evidencia en detalle</h3>\n<div data-evidencia-imagen><img src=\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjcyMCIgdmlld0JveD0iMCAwIDEyMDAgNzIwIj48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI3MjAiIGZpbGw9IiNmYWY1ZWQiLz48ZyBmaWxsPSIjMjgyYjM2IiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiI+PHRleHQgeD0iNzIiIHk9IjkwIiBmb250LXNpemU9IjM4Ij5SZWdpc3RybyBkZSB1bmEgcmV2aXNpw7NuPC90ZXh0Pjx0ZXh0IHg9IjcyIiB5PSIxMzYiIGZvbnQtc2l6ZT0iMjIiPklMVVNUUkFDScOTTiDCtyBOTyBFUyBVTkEgRkFDVFVSQSBOSSBVTiBSRUdJU1RSTyBSRUFMPC90ZXh0PjxwYXRoIGQ9Ik03MiAxNzJIMTEyOE03MiA1MDBIMTEyOCIgc3Ryb2tlPSIjOWE4YzdkIi8+PHRleHQgeD0iNzIiIHk9IjIzMCIgZm9udC1zaXplPSIyNCI+RG9jdW1lbnRvPC90ZXh0Pjx0ZXh0IHg9IjY2MCIgeT0iMjMwIiBmb250LXNpemU9IjI0Ij5SRVYtMDQyIMK3IDE1IHNlcHRpZW1icmUgMjAyNjwvdGV4dD48dGV4dCB4PSI3MiIgeT0iMzA2IiBmb250LXNpemU9IjI0Ij5FbnRyZWdhcyByZXZpc2FkYXM8L3RleHQ+PHRleHQgeD0iOTcwIiB5PSIzMDYiIGZvbnQtc2l6ZT0iMzIiPjI0PC90ZXh0Pjx0ZXh0IHg9IjcyIiB5PSIzODIiIGZvbnQtc2l6ZT0iMjQiPlBlbmRpZW50ZXMgZGUgZXZpZGVuY2lhPC90ZXh0Pjx0ZXh0IHg9Ijk3MCIgeT0iMzgyIiBmb250LXNpemU9IjMyIj4zPC90ZXh0Pjx0ZXh0IHg9IjcyIiB5PSI1NzIiIGZvbnQtc2l6ZT0iMjQiPlNpZ3VpZW50ZSBwYXNvPC90ZXh0Pjx0ZXh0IHg9IjcyIiB5PSI2MjAiIGZvbnQtc2l6ZT0iMjgiPlJldmlzYXIgbG9zIHRyZXMgc29wb3J0ZXMgYW50ZXMgZGUgY2VycmFyLjwvdGV4dD48L2c+PC9zdmc+\" width=\"1200\" height=\"720\" alt=\"Ilustración de REV-042: 24 entregas revisadas, tres pendientes de evidencia. Se propone revisar soportes antes de cerrar.\"></div>\n<ol data-evidencia-zonas>\n  <li data-x=\"92\" data-y=\"26\">Fecha y referencia: REV-042, 15 septiembre 2026.</li>\n  <li data-x=\"91\" data-y=\"52\">Tres entregas todavía requieren evidencia.</li>\n  <li data-x=\"89\" data-y=\"86\">Siguiente acción: revisar los tres soportes antes de cerrar.</li>\n</ol>\n<figcaption>Ilustración creada para esta receta; reemplazar por una captura o imagen autorizada.</figcaption>\n</figure>",
@@ -1339,6 +1510,7 @@
         "packages/core/components/reader.js",
         "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js",
         "packages/core/components/globe.js",
+        "packages/core/components/chart-core.js",
         "packages/core/components/reports.js"
       ],
       "html": "<figure class=\"pieza ancho\" id=\"recorrido-ejemplo\" data-reporte=\"recorrido\">\n  <h3>Seguir el viaje de una idea</h3>\n  <p>Una ruta por etapa, con contexto escrito. Selecciona anterior o siguiente para orientar el globo.</p>\n  <div data-recorrido-globo></div>\n  <div class=\"acciones\">\n    <button type=\"button\" data-paso=\"prev\">← Etapa anterior</button>\n    <button type=\"button\" data-paso=\"next\">Etapa siguiente →</button>\n  </div>\n  <p data-recorrido-estado role=\"status\">Tres etapas ilustrativas; el recorrido empieza inmóvil.</p>\n  <ol class=\"recorrido-pasos\">\n    <li data-ruta=\"idea-bog-mad\"><strong><span data-lugar=\"BOG\" data-lat=\"4.711\" data-lon=\"-74.0721\">Bogotá</span> → <span data-lugar=\"MAD\" data-lat=\"40.4168\" data-lon=\"-3.7038\">Madrid</span></strong><p>Se comparte la primera propuesta para revisión.</p></li>\n    <li data-ruta=\"idea-mad-hnd\"><strong><span data-lugar=\"MAD\" data-lat=\"40.4168\" data-lon=\"-3.7038\">Madrid</span> → <span data-lugar=\"HND\" data-lat=\"35.5494\" data-lon=\"139.7798\">Tokio</span></strong><p>La propuesta se convierte en una prueba de interacción.</p></li>\n    <li data-ruta=\"idea-hnd-bog\"><strong><span data-lugar=\"HND\" data-lat=\"35.5494\" data-lon=\"139.7798\">Tokio</span> → <span data-lugar=\"BOG\" data-lat=\"4.711\" data-lon=\"-74.0721\">Bogotá</span></strong><p>Las observaciones regresan al equipo que decide.</p></li>\n  </ol>\n  <figcaption>Relato ficticio. Las coordenadas son geográficas; no representan vuelos, distancias ni actividad real.</figcaption>\n</figure>",

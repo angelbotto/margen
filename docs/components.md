@@ -423,9 +423,78 @@ Keep wide figures as direct children of `.hoja` or `.pagina`, using por-seccion 
 </figure>
 ```
 
-**Use and limits:** Compare magnitudes in one unit. Zero stays in the domain; negatives and up to four grouped series are supported. Up to 500 rows; for many categories prefer a sortable table. The drawing keeps an 800 px local minimum and wraps long category labels. This is not a stacked or normalized percentage chart.
+**Use and limits:** Compare magnitudes in one unit. Zero stays in the domain; negatives and up to four grouped series are supported. Up to 500 rows; for many categories prefer a sortable table. The drawing uses the measured width with 12 px text; below 480 px each category label moves above its bars. This is not a stacked or normalized percentage chart: use the column chart for real totals.
 
-Bar charts measure their container, wrap category labels and redraw when a hidden chapter opens or the viewport changes. Numeric labels and the original table remain available; extremely narrow containers may scroll locally. The layout keeps a shared zero baseline for positive and negative values.
+Bar charts measure their container, wrap category labels and redraw when a hidden chapter opens or the viewport changes. Numeric labels, the tip (pointer, keyboard and touch), CSV/SVG export and the original table remain available; no horizontal scroll is needed at 320 px. The layout keeps a shared zero baseline for positive and negative values.
+
+## Column chart
+
+<!-- nota:ejemplo columnas -->
+
+```html
+<figure class="ancho" id="columnas-ejemplo" data-grafica="columnas" data-apilado="si" data-unidad="pedidos">
+  <details open><summary>Ver los datos de pedidos por canal</summary>
+    <div class="tabla-caja" tabindex="0" role="region" aria-label="Pedidos por canal y trimestre, tabla desplazable">
+      <table><caption>Pedidos por canal y trimestre</caption>
+        <thead><tr><th scope="col">Trimestre</th><th scope="col">Web</th><th scope="col">App</th><th scope="col">Aliados</th></tr></thead>
+        <tbody><tr><th scope="row">T1 2026</th><td data-valor="420">420</td><td data-valor="310">310</td><td data-valor="95">95</td></tr>
+<tr><th scope="row">T2 2026</th><td data-valor="465">465</td><td data-valor="380">380</td><td data-valor="120">120</td></tr>
+<tr><th scope="row">T3 2026</th><td data-valor="440">440</td><td data-valor="455">455</td><td data-valor="160">160</td></tr>
+<tr><th scope="row">T4 2026</th><td data-valor="390">390</td><td data-valor="520">520</td><td data-valor="">Sin dato</td></tr></tbody>
+      </table>
+    </div>
+  </details>
+  <figcaption>Datos ilustrativos, pedidos contados por canal; no son cifras de ninguna empresa. T4 no informa aliados: su total queda incompleto, no se completa con cero.</figcaption>
+</figure>
+```
+
+**Use and limits:** Compare amounts across ordered categories (periods, stages) in one unit. Grouped by default; `data-apilado="si"` stacks series when their sum is a real total (counts, money, hours), never for ratios or percentages. Stacking rejects negative values. Up to eight series and 40 categories; long category names are abbreviated in the axis and stay complete in the tip and table. A missing cell is drawn as a flat mark and its column total is reported as incomplete, not as zero. Needs `chart-core.js` before `charts.js`. For many categories or long names prefer horizontal bars.
+
+## Before and after (dumbbell)
+
+<!-- nota:ejemplo cambio -->
+
+```html
+<figure class="ancho" id="cambio-ejemplo" data-grafica="cambio" data-unidad="minutos">
+  <details open><summary>Ver los datos de tiempo de entrega por zona</summary>
+    <div class="tabla-caja" tabindex="0" role="region" aria-label="Tiempo de entrega antes y después, tabla desplazable">
+      <table><caption>Tiempo mediano de entrega antes y después de reordenar rutas</caption>
+        <thead><tr><th scope="col">Zona</th><th scope="col">Antes</th><th scope="col">Después</th></tr></thead>
+        <tbody><tr><th scope="row">Norte</th><td data-valor="58">58 min</td><td data-valor="44">44 min</td></tr>
+<tr><th scope="row">Centro</th><td data-valor="41">41 min</td><td data-valor="38">38 min</td></tr>
+<tr><th scope="row">Sur</th><td data-valor="66">66 min</td><td data-valor="49">49 min</td></tr>
+<tr><th scope="row">Occidente</th><td data-valor="47">47 min</td><td data-valor="52">52 min</td></tr>
+<tr><th scope="row">Aeropuerto</th><td data-valor="35">35 min</td><td data-valor="">Sin dato</td></tr></tbody>
+      </table>
+    </div>
+  </details>
+  <figcaption>Datos ilustrativos: mediana de dos semanas antes y dos después del cambio, misma definición de entrega. La diferencia no prueba causalidad.</figcaption>
+</figure>
+```
+
+**Use and limits:** Show the change of one measure between two moments for up to 30 rows: label, before, after, in the same unit. The axis does not need zero because position, not length, carries the value. The change column shows the absolute difference; the tip adds the percentage, which is undefined when the base is zero. Circle = before, square = after; series can be isolated from the legend. A missing value is named, never drawn at zero. Needs `chart-core.js` before `charts.js`. Do not use for more than two moments: use lines.
+
+## Progress against target (bullet)
+
+<!-- nota:ejemplo meta -->
+
+```html
+<figure class="ancho" id="meta-ejemplo" data-grafica="meta" data-unidad="clientes">
+  <details open><summary>Ver los datos de clientes nuevos frente a la meta</summary>
+    <div class="tabla-caja" tabindex="0" role="region" aria-label="Clientes nuevos frente a la meta, tabla desplazable">
+      <table><caption>Clientes nuevos del trimestre frente a la meta</caption>
+        <thead><tr><th scope="col">Sede</th><th scope="col">Logrado</th><th scope="col">Meta</th><th scope="col">Bajo hasta</th><th scope="col">Aceptable hasta</th><th scope="col">Escala hasta</th></tr></thead>
+        <tbody><tr><th scope="row">Bogotá</th><td data-valor="128">128</td><td data-valor="150">150</td><td data-valor="90">90</td><td data-valor="140">140</td><td data-valor="180">180</td></tr>
+<tr><th scope="row">Medellín</th><td data-valor="96">96</td><td data-valor="90">90</td><td data-valor="60">60</td><td data-valor="85">85</td><td data-valor="120">120</td></tr>
+<tr><th scope="row">Cali</th><td data-valor="41">41</td><td data-valor="70">70</td><td data-valor="40">40</td><td data-valor="65">65</td><td data-valor="90">90</td></tr></tbody>
+      </table>
+    </div>
+  </details>
+  <figcaption>Datos ilustrativos. La barra es lo logrado; la marca vertical, la meta; las bandas, umbrales cualitativos declarados por el equipo. Cada fila es una sede: los porcentajes de avance no se suman ni promedian.</figcaption>
+</figure>
+```
+
+**Use and limits:** Compare an achieved value with its target for up to 12 rows sharing one unit: label, value, target and up to three increasing qualitative thresholds (for example low, acceptable, scale). Bands are declared by the author and are not derived from data. The tip states value, target and the share of the target per row; shares are never summed or averaged. A target of zero makes the share undefined. Needs `chart-core.js` before `charts.js`. Prefer a table when rows use different units.
 
 ## Line chart
 
@@ -545,7 +614,7 @@ Bar charts measure their container, wrap category labels and redraw when a hidde
 
 <a id="recetas-tablas"></a>
 
-**Use and limits:** Compare intensity across two discrete dimensions. Five levels use six increasing boundaries, with the maximum included in the final level. Out-of-domain data produces an error while preserving the source table, never silent saturation. Up to 31×31 cells, local scrolling and a minimum column width. Each cell retains its value; no hidden row-specific scales or gradient encoding.
+**Use and limits:** Compare intensity across two discrete dimensions. SVG matrix with row and column axes at the measured width; the coloured table stays as the accessible mode. `data-umbrales` declares 3–6 increasing boundaries (2–5 levels), with the maximum included in the final level; without it, boundaries are data quantiles and the legend says so. `data-centro` makes a diverging scale around a declared midpoint. Out-of-domain data produces an error while preserving the source table, never silent saturation. Missing cells are hatched and labelled «Sin dato ≠ 0». Up to 31×31 cells without page scroll: values print inside cells only when they fit, otherwise the tip (arrows move by row and column) gives them. Each cell retains its value; no hidden row-specific scales or gradient encoding.
 
 ## Comparison
 
@@ -1025,7 +1094,7 @@ Embed complete fonts/styles and reader once. Add reports.js for data-reporte, pr
 </figure>
 ```
 
-**Use and limits:** Explain a total through positive and negative contributions in one unit. Three columns, 1–60 rows, finite values and running totals within ±10^9. The first row is a change from zero; no intermediate subtotals or resets. The module calculates the third column rather than reading it as input. Zero and every cumulative extreme stay in the domain. Keep the visible table and 860 px local drawing minimum. Do not add rates, percentages or different currencies.
+**Use and limits:** Explain a total through positive and negative contributions in one unit. Three columns, 1–60 rows, finite values and running totals within ±10^9. The first row is a change from zero; no intermediate subtotals or resets. The module calculates the third column rather than reading it as input. Zero and every cumulative extreme stay in the domain. Keep the visible table; the drawing uses the measured width and moves labels above bars below 480 px. Do not add rates, percentages or different currencies.
 
 ## Small multiples
 
@@ -1050,7 +1119,7 @@ Embed complete fonts/styles and reader once. Add reports.js for data-reporte, pr
 </figure>
 ```
 
-**Use and limits:** Compare up to four groups without overlapping their lines. Use the same 2–60 equally spaced periods for every group; irregular dates are unsupported. Finite values up to ±10^9, with missing distinct from zero. Each panel retains a 360 px local minimum. An empty series has an explicit 0–1 auxiliary domain and no invented points.
+**Use and limits:** Compare up to four groups without overlapping their lines. Use the same 2–60 equally spaced periods for every group; irregular dates are unsupported. Finite values up to ±10^9, with missing distinct from zero. Panels draw at their measured width and share one 1-2-5 axis; the first and last period names label the horizontal axis. An empty series has an explicit 0–1 auxiliary domain and no invented points.
 
 ## Reconciliation
 
@@ -1742,7 +1811,7 @@ ERROR  ejemplo rechazado      1 recurso externo</code></pre></div></section></di
 </figure>
 ```
 
-**Use and limits:** Show parts of a positive whole with 1–6 unique nonnegative categories. Zero remains in legend/table without an invented sector. Percentages use the row total, not an external denominator. No negatives or double counting. Names/values remain authoritative where colors repeat. Prefer bars for close comparisons or many categories.
+**Use and limits:** Show parts of a positive whole with 1–8 unique nonnegative categories. Zero remains in legend/table without an invented sector. Percentages use the row total, not an external denominator. No negatives or double counting. Eight theme colours plus texture patterns keep slices distinct without colour; names and values remain authoritative. Prefer bars for close comparisons or many categories.
 
 ## Area chart
 
@@ -1997,7 +2066,7 @@ NotaEscena adds columnas/arcos/almacen to its XYZ/stage contract and shares pinn
 </figure>
 ```
 
-**Use and limits:** Partition a positive total across 1–40 unique categories with finite nonnegative values up to 10^9. Binary area partitioning, not fixed placeholder positions or hierarchical squarification. Zero remains in controls/table with no area. Tiny cells may show a number while full names/values remain outside the map. A 1000×380 viewBox uses a 900 px readable local minimum. Hover, focus and touch expose value, share, total and optional plain-text `data-contexto`; Escape dismisses a hoverable tooltip. The table/selector expose equivalent data. No productivity measurement or app connection. init/get/destroy preserves source; destroy/reinitialize after data changes. Prefer bars for precise rankings.
+**Use and limits:** Partition a positive total across 1–40 unique categories with finite nonnegative values up to 10^9. Squarified treemap (Bruls et al.) at the measured width, 380 px tall (320 px below 640 px, laid out in rows); every area is exactly proportional to its value. Labels follow the cmrg.me home map: serif 18 px name and 11.5 px mono value, abbreviated by available area (full, short, minimal or none) and never outside their cell. When the smallest tail would be too small to see or focus, it is grouped into one «Otros (n)» cell whose area is the exact sum and whose tip lists every member; the buttons, status and table still expose each category. Zero stays in controls/table with no area. Arrow keys move between cells, Enter pins the tip, Escape closes it; touch pins on tap. `data-formato="duration_min"` (or `duration`, `duration_h`) shows durations; `data-atencion-modo="particion"` keeps the previous binary layout. Needs `chart-core.js`. No productivity measurement or app connection; prefer bars for precise rankings.
 
 ## Frame
 
@@ -2612,3 +2681,86 @@ Insert the generated figure as a sibling of `.prosa`, then compose the complete 
 **Use and limits:** This is a website composition, separate from artifact review controls. The embedded specimen scrolls inside its own region. For a full page, move `web-editorial` and `data-editorial-web` to the document body; use a `main` element for `.web-contenido`. Keep the header, edge decoration, main and footer as siblings. Do not add this shell around a chapter/presentation reader or its comment/preferences dock. `examples/generated/editorial-web.html` demonstrates the full-page topology offline.
 
 Desktop navigation sits at the top; below 640 px it sits 16 px above the bottom safe area. Scroll direction reveals it; keyboard focus always restores it immediately. The footer reveals beneath the main surface. Reduced motion disables directional hiding and animated transitions; reduced transparency removes edge blur. Without JavaScript every link and section remains usable. Keep anchor IDs unique, preserve the skip link and accessible region name, and replace only the illustrative copy and real destinations. This pattern reproduces structure and motion, not the original site's identity or proprietary serif.
+
+## Publicación de X
+
+<!-- nota:ejemplo x-post -->
+
+```html
+<figure class="embed embed-x" id="x-ejemplo" data-embed="x" data-embed-synthetic>
+<header class="embed-cabecera"><p class="embed-autor"><strong>Laura Méndez</strong><span class="embed-handle">@autora.ejemplo</span></p><span class="embed-proveedor">X</span></header>
+<blockquote class="embed-texto"><p>Cuatro trimestres seguidos de crecimiento en suscripciones. Lo que más movió la aguja no fue el precio: fue acortar el registro de seis pasos a dos.</p></blockquote>
+<img class="embed-media" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MDAgMzAwIj48cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2Y2ZjBlYiIvPjxnIGZpbGw9IiNhMTNmMTkiPjxyZWN0IHg9IjcwIiB5PSIxNzAiIHdpZHRoPSI3MCIgaGVpZ2h0PSI5MCIvPjxyZWN0IHg9IjE5MCIgeT0iMTMwIiB3aWR0aD0iNzAiIGhlaWdodD0iMTMwIi8+PHJlY3QgeD0iMzEwIiB5PSI5NSIgd2lkdGg9IjcwIiBoZWlnaHQ9IjE2NSIvPjxyZWN0IHg9IjQzMCIgeT0iNjAiIHdpZHRoPSI3MCIgaGVpZ2h0PSIyMDAiLz48L2c+PHBhdGggZD0iTTUwIDI2MEg1NTAiIHN0cm9rZT0iIzUxNDczZSIgc3Ryb2tlLXdpZHRoPSIyIi8+PC9zdmc+" alt="Gráfico de barras ilustrativo: cuatro barras que crecen de izquierda a derecha." width="600" height="300">
+<figcaption class="embed-pie"><span class="embed-sintetico">Ejemplo sintético</span><time datetime="2026-10-20">20 oct 2026</time><span>Sin publicación original: autora, texto y gráfico son ilustrativos.</span></figcaption>
+</figure>
+```
+
+**Use and limits:** A static editorial card for a post on X: author, handle, date, text, source and an optional `data:` image. It never loads `widgets.js` or an X iframe, so it works offline and inside the portal sandbox. Set `data-embed-user` (1–15 letters, digits or `_`) and `data-embed-status` (digits); the runtime rebuilds the link as `https://x.com/<user>/status/<id>` and ignores the author's `href`. Write text as escaped HTML or build the card with `MargenEmbeds.card({name,user,status,text,date,media,synthetic})`, which uses DOM text only. An invented post must carry `data-embed-synthetic`: the runtime then removes any link and labels it «Ejemplo sintético»; use an impossible handle so it cannot match a real account. Never present metrics or verification you did not check. Without JavaScript, offline or in print the card, its text and the source link remain; nothing pretends to play. No remote thumbnails or provider scripts: a poster may only be a `data:` image. Runtime: `packages/core/components/embeds.js` (`MargenEmbeds.init/get/destroy`), styles `packages/core/styles/embeds.css`.
+
+## Video de YouTube
+
+<!-- nota:ejemplo youtube -->
+
+```html
+<figure class="embed embed-video embed-youtube" id="youtube-ejemplo" data-embed="youtube" data-embed-id="M7lc1UVf-VE">
+<div class="embed-lienzo" data-embed-stage></div>
+<figcaption>
+<p class="embed-meta"><span class="embed-proveedor">YouTube</span> · YouTube Developers Live: Embedded Web Player Customization · Google for Developers</p>
+<p class="embed-acciones"><button type="button" data-embed-load hidden>Cargar video</button><a data-embed-source href="https://www.youtube.com/watch?v=M7lc1UVf-VE">Abrir en YouTube</a></p>
+<p class="embed-aviso">Al cargarlo, tu navegador se conecta con YouTube. Empieza sin sonido.</p>
+<p class="embed-aviso" data-embed-status role="status"></p>
+</figcaption>
+</figure>
+```
+
+**Use and limits:** A card with title, channel and a permanent «Abrir en YouTube» link; the player only loads after the reader clicks «Cargar video». Only `data-embed-id` (11 characters `A-Z a-z 0-9 _ -`) is read; the link and the player URL are rebuilt from it. The player is `youtube-nocookie.com/embed/<id>` with `autoplay=1&mute=1` after the click (sound is the player's own control), `referrerpolicy="strict-origin"` and a sandbox limited to scripts, same-origin of the provider, popups and presentation. Inside the Margen portal the document only sends provider + ID and the portal opens its own dialog; as a standalone HTTPS page the player mounts in the card; opened as a local `file://` YouTube rejects the page (error 153), so only the link is offered. If the player gives no sign of life in 8 s the card says so; an iframe load is not treated as playback. Restricted, private or embedding-disabled videos only open at the source. Without JavaScript, offline or in print the card, its text and the source link remain; nothing pretends to play. No remote thumbnails or provider scripts: a poster may only be a `data:` image. Runtime: `packages/core/components/embeds.js` (`MargenEmbeds.init/get/destroy`), styles `packages/core/styles/embeds.css`.
+
+## Publicación de Instagram
+
+<!-- nota:ejemplo instagram -->
+
+```html
+<figure class="embed embed-video embed-instagram" id="instagram-ejemplo" data-embed="instagram" data-embed-id="fA9uwTtkSN" data-embed-kind="p">
+<div class="embed-lienzo" data-embed-stage></div>
+<figcaption>
+<p class="embed-meta"><span class="embed-proveedor">Instagram</span> · Publicación pública usada como ejemplo en la documentación de Instagram oEmbed</p>
+<p class="embed-acciones"><button type="button" data-embed-load hidden>Cargar publicación</button><a data-embed-source href="https://www.instagram.com/p/fA9uwTtkSN/">Abrir en Instagram</a></p>
+<p class="embed-aviso">Al cargarla, tu navegador se conecta con Instagram.</p>
+<p class="embed-aviso" data-embed-status role="status"></p>
+</figcaption>
+</figure>
+```
+
+**Use and limits:** A card with a permanent «Abrir en Instagram» link; the post only loads after «Cargar publicación». Set `data-embed-kind` to `p` or `reel` and `data-embed-id` to the shortcode (5–40 characters). The frame is `www.instagram.com/<p|reel>/<code>/embed/` without `rd`/`rp` and with `referrerpolicy="no-referrer"`; Instagram's `embed.js` is never loaded, and only its `MEASURE` height messages from that exact frame and origin are read (bounded). Initial height 640 px. Inside the portal the post opens in a portal dialog; standalone or as a local file it mounts in the card. Stories, private, inactive or age-restricted accounts and posts with embedding disabled only open at the source. Caption and author are written by the author (or proposed from oEmbed while authoring, as plain text); provider HTML is never inserted. Without JavaScript, offline or in print the card, its text and the source link remain; nothing pretends to play. No remote thumbnails or provider scripts: a poster may only be a `data:` image. Runtime: `packages/core/components/embeds.js` (`MargenEmbeds.init/get/destroy`), styles `packages/core/styles/embeds.css`.
+
+## Encabezado con fecha
+
+<!-- nota:ejemplo encabezado-fecha -->
+
+```html
+<header class="cabecera" id="encabezado-fecha-ejemplo">
+  <h3>Un lugar para leer con calma</h3>
+  <p class="cabecera-fecha">Publicado <time datetime="2026-10-01">1 oct 2026</time> · Actualizado <time datetime="2026-10-22">22 oct 2026</time></p>
+  <p class="bajada">Fechas ilustrativas para explorar la jerarquía entre título, metadatos y entrada de un artículo.</p>
+</header>
+```
+
+**Uso:** conserva fechas explícitas con `<time datetime>`, tipografía monoespaciada y una entrada breve. En un documento completo, el generador crea el título principal y esta fila con `date: "AAAA-MM-DD"` o `date: {published, updated}`. También se admite `date` por página. Esta muestra usa h3 para convivir con el título del catálogo; no dupliques el h1 del documento. Las fechas de ejemplo no son datos de una publicación real.
+
+## Reacciones de lectura
+
+<!-- nota:ejemplo reacciones -->
+
+```html
+<div class="reacciones" id="reacciones-ejemplo" data-reacciones="ejemplo" role="group" aria-labelledby="reacciones-ejemplo-titulo">
+  <p class="ceja" id="reacciones-ejemplo-titulo">¿Cómo te dejó esta lectura?</p>
+  <div class="reacciones-botones">
+    <button type="button" data-reaccion="util" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 11v9H4v-9h3Zm0 0 4-7a2 2 0 0 1 2 2v3h5a2 2 0 0 1 2 2.3l-1.2 6A2 2 0 0 1 16.8 19H7"/></svg><span>Útil</span></button>
+    <button type="button" data-reaccion="volver" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v16l-6-4-6 4V4Z"/></svg><span>Para volver</span></button>
+    <button type="button" data-reaccion="pensar" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.8V16h5v-.3c0-.7.4-1.4 1-1.8A6 6 0 0 0 12 3Z"/></svg><span>Me hizo pensar</span></button>
+  </div>
+  <p class="reacciones-nota">Se guardan solo en este navegador. No hay conteos compartidos.</p>
+</div>
+```
+
+**Uso y límites:** tres respuestas personales con teclado, foco y estado `aria-pressed`. No representan actividad ni conteos de otras personas. Se conservan por documento en el navegador cuando el almacenamiento está disponible; en el lector aislado duran mientras la página esté abierta, y la pieza lo indica. El generador puede añadirlas al pie con `reactions: true`. Evita duplicarlas. Para comentarios compartidos y contexto que otros agentes puedan leer, usa el sistema de comentarios del documento.
