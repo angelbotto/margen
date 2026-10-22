@@ -53,13 +53,26 @@ class Defects(unittest.TestCase):
         self.assertEqual(self.page.evaluate('document.querySelectorAll("#c3 mark").length'), 1)
 
     def test_code_trailing_newline_is_not_a_numbered_line(self):
-        self.assertEqual(self.page.evaluate('document.querySelectorAll("#c1 .codigo-linea").length'), 2)
+        self.assertEqual(self.page.evaluate('document.querySelectorAll("#c1 .codigo-linea[data-numero]").length'), 2)
 
     def test_index_marks_clicked_section_current(self):
         p = self.page; p.set_viewport_size({'width': 1440, 'height': 900}); p.evaluate('scrollTo(0,0)'); p.wait_for_timeout(200)
         link = p.locator('.pagina.viva .indice a[href="#s3"]'); bb = link.bounding_box()
         p.mouse.click(bb['x'] + 10, bb['y'] + bb['height'] / 2); p.wait_for_timeout(500)
         self.assertEqual(p.evaluate('document.querySelector(".pagina.viva .indice a[aria-current]")?.getAttribute("href")'), '#s3')
+
+    def test_index_marks_cold_anchor_current(self):
+        p=self.browser.new_page(viewport={'width':1440,'height':900},reduced_motion='reduce');self.addCleanup(p.close)
+        p.goto(self.url+'#s3')
+        p.wait_for_function("document.querySelector('.pagina.viva .indice a[aria-current]')?.getAttribute('href')==='#s3'",timeout=5000)
+
+    def test_index_marks_clicked_section_current_document(self):
+        html=build('Documento',[{'id':'uno','titulo':'Uno','html':sections}],format='document',theme='editorial')
+        p=self.browser.new_page(viewport={'width':1440,'height':900},reduced_motion='reduce');self.addCleanup(p.close)
+        p.route('https://doc.test/**',lambda r:r.fulfill(status=200,content_type='text/html',body=html))
+        p.goto('https://doc.test/')
+        p.locator('.indice a[href="#s3"]').click()
+        p.wait_for_function("document.querySelector('.indice a[aria-current]')?.getAttribute('href')==='#s3'",timeout=5000)
 
     def test_heatmap_all_zero_is_not_maximum_intensity(self):
         fills = self.page.evaluate('[...document.querySelectorAll("#g1 .mg-calor-celda")].map(r => r.style.fill)')

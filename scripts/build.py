@@ -39,7 +39,7 @@ if (ROOT/'portal/static').is_dir():
     (ROOT/'portal/static/editorial-pieces.js').write_text((ROOT/'packages/core/components/editorial-pieces.js').read_text())
     # Hosted refresh of other marked modules in older documents (portal/reader_style.py).
     component = lambda name: 'packages/core/components/' + name
-    refreshed = [component(name) for name in ('chapters.js', 'prototype.js', 'chart-core.js', 'charts.js', 'analytics.js', 'reports.js',
+    refreshed = [component(name) for name in ('reader.js', 'chapters.js', 'prototype.js', 'chart-core.js', 'charts.js', 'analytics.js', 'reports.js',
                                               'evidence.js', 'attention-map.js', 'geography.js', 'globe.js', 'scene.js', 'fleet.js', 'embeds.js')]
     # Chart runtimes now draw through the shared core, which older documents never carried.
     requires = {component(name): [component('chart-core.js')] for name in ('charts.js', 'analytics.js', 'reports.js', 'evidence.js', 'attention-map.js')}

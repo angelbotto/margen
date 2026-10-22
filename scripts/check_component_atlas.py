@@ -63,6 +63,7 @@ def check(html: Path, coverage: Path, output: Path, full: bool, engine: str) -> 
                 navigation:performance.getEntriesByType('navigation')[0].toJSON(),
                 livePages:document.querySelectorAll('.pagina:not([hidden])').length})""")
             record('one visible chapter', report['initial']['livePages'] == 1)
+            chart_pages = set()
             # Exercise the public hash route, not a private helper that bypasses navigation.
             for component in expected['components']:
                 page.evaluate('(id)=>{location.hash=id}', component['anchor'])
@@ -70,6 +71,16 @@ def check(html: Path, coverage: Path, output: Path, full: bool, engine: str) -> 
                 visible = page.locator('#' + component['anchor']).is_visible()
                 actual = page.locator('.pagina.viva').get_attribute('id')
                 record('deep link ' + component['id'], visible and actual == component['page'], actual)
+                # Geometry alone does not prove that a chart drew: enforce its visible result too.
+                if actual not in chart_pages:
+                    chart_pages.add(actual)
+                    figures = page.locator('.pagina.viva').locator('[data-grafica],[data-analitica],[data-reporte="cascada"],[data-reporte="multiples"],[data-evidencia]:not([data-evidencia="imagen"]),[data-atencion]')
+                    for index, figure in enumerate(figures.all()):
+                        if not figure.is_visible(): continue
+                        figure.scroll_into_view_if_needed()
+                        figure.locator('svg.mg-svg, .grafica-error, .evidencia-error').first.wait_for(state='attached')
+                        record(f'chart rendered {actual}/{index}', figure.locator('svg.mg-svg').count() > 0 and figure.locator('.grafica-error,.evidencia-error').count() == 0)
+
 
             configurations = [(1440, 'editorial', 'dark'), (390, 'catabum', 'light'), (320, 'kaira', 'dark')]
             if full:

@@ -212,7 +212,8 @@
     // En multipágina el índice pertenece a packages/core/components/chapters.js; no medir páginas ocultas.
     if (article.classList.contains('multipagina')) return;
     let active = -1;
-    sections.forEach((section,index) => { if (section?.getBoundingClientRect().top <= 120) active = index; });
+    const padding = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+    sections.forEach((section,index) => { if (section && section.getBoundingClientRect().top <= padding + (parseFloat(getComputedStyle(section).scrollMarginTop) || 0) + 2) active = index; });
     if (progress === 1 && links.length) active = links.length - 1;
     links.forEach((a,index) => {
       a.closest('li')?.classList.toggle('visto',index < active);
