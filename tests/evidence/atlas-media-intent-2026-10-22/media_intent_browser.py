@@ -127,7 +127,7 @@ with sync_playwright() as p:
     fr.locator('[data-embed="youtube"] [data-embed-load]').click(); pg.wait_for_timeout(1500)
     d = dialog(); results['youtube_preview'] = d
     pg.screenshot(path=str(SHOTS / f'{ENGINE}-youtube-preview.png'))
-    check('card click opens portal preview with focus on its play button, no player', d['open'] and d['intent'] == 'confirm' and d['play'] and d['players'] == 0 and 'media-play' in d['active'], d, 'high')
+    check('card click opens portal preview with neutral close focus, no player', d['open'] and d['intent'] == 'confirm' and d['play'] and d['players'] == 0 and 'icon|' in d['active'], d, 'high')
     check('0 provider requests before the portal button', not ext_since(n0), ext_since(n0), 'high')
     check('preview link is the exact source in a new tab', d['link'] == 'https://www.youtube.com/watch?v=M7lc1UVf-VE' and d['linkTarget'] == '_blank' and 'noopener' in d['linkRel'], d)
     host_play(); d = dialog(); results['youtube_dialog'] = d

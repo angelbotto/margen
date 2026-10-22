@@ -8,6 +8,7 @@
   const SANDBOX = 'allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation';
   const ALLOW = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
   const WAIT = 8000;
+  const INTENT_DELAY = 650;
   const YT_ERRORS = {2: 'El video no tiene un identificador válido.', 5: 'Este navegador no puede reproducir el video aquí.', 100: 'El video no existe o es privado.', 101: 'Quien lo publicó no permite verlo insertado.', 150: 'Quien lo publicó no permite verlo insertado.', 153: 'YouTube no aceptó esta página como origen.'};
   const KEYS = {youtube: ['provider', 'id', 'version'], instagram: ['provider', 'id', 'kind', 'version'], x: ['provider', 'user', 'status', 'version']};
 
@@ -109,7 +110,7 @@
     function teardown() {
       if (!session) return;
       const s = session; session = null;
-      clearTimeout(s.timer); clearInterval(s.poke); s.abort.abort();
+      clearTimeout(s.timer); clearTimeout(s.intentTimer); clearInterval(s.poke); s.abort.abort();
       if (s.player) { s.player.src = 'about:blank'; s.player.remove(); }
       stage.replaceChildren(); status.textContent = ''; dialog.dataset.provider = ''; dialog.dataset.intent = '';
       return s;
@@ -126,18 +127,40 @@
         frame.contentWindow.postMessage({bottifact: 1, op: 'embed-closed'}, '*');
       }
     });
+    // A double-click or held key in the artifact must not carry through into the new dialog.
+    for (const control of [start, link]) {
+      control.addEventListener('pointerdown', event => {
+        if (session) session.pointer = event.isTrusted && performance.now() >= session.readyAt ? control : null;
+      });
+      control.addEventListener('keydown', event => {
+        if (!['Enter', ' '].includes(event.key)) return;
+        if (session) session.repeatedKey = event.repeat;
+        if (event.repeat || !session || performance.now() < session.readyAt) event.preventDefault();
+      });
+      control.addEventListener('keyup', event => {
+        if (session?.repeatedKey && ['Enter', ' '].includes(event.key)) event.preventDefault();
+      });
+    }
+    function intended(event, control) {
+      const s = session;
+      const ok = event.isTrusted && s && performance.now() >= s.readyAt && event.detail <= 1 &&
+        (event.detail === 0 ? !s.repeatedKey : s.pointer === control);
+      if (s) s.pointer = null;
+      if (!ok) event.preventDefault();
+      return ok;
+    }
     // El único camino al proveedor: un clic real en el botón del portal, ligado a la sesión que lo mostró.
     start.addEventListener('click', event => {
-      if (event.isTrusted && session?.spec && !session.player) play(session.spec, session);
+      if (intended(event, start) && session.spec && !session.player) play(session.spec, session);
     });
     // El enlace del portal navega por sí mismo (pestaña nueva sin opener ni referrer, o mailto/tel); luego el diálogo sobra.
-    link.addEventListener('click', event => { if (event.isTrusted && session) setTimeout(() => dialog.close()); });
+    link.addEventListener('click', event => { if (intended(event, link)) setTimeout(() => dialog.close()); });
 
     function begin(provider, intent) {
       if (dialog.open) dialog.close();
       teardown();
       const now = options.mounted();
-      session = {artifact: now.artifact, version: now.version, abort: new AbortController(), timer: 0, poke: 0, player: null, alive: false, spec: null};
+      session = {artifact: now.artifact, version: now.version, abort: new AbortController(), timer: 0, intentTimer: 0, readyAt: Infinity, pointer: null, repeatedKey: false, poke: 0, player: null, alive: false, spec: null};
       dialog.dataset.provider = provider;
       dialog.dataset.intent = intent;
       preview.hidden = false; start.hidden = true;
@@ -146,7 +169,15 @@
     function show(heading, kind, where, full, text) {
       title.textContent = heading; tag.textContent = kind; place.textContent = where; address.textContent = full || '';
       notice.textContent = text;
+      const s = session;
+      s.readyAt = performance.now() + INTENT_DELAY;
+      start.disabled = true; link.setAttribute('aria-disabled', 'true');
       dialog.showModal();
+      close.focus();
+      s.intentTimer = setTimeout(() => {
+        if (session !== s) return;
+        start.disabled = false; link.removeAttribute('aria-disabled');
+      }, INTENT_DELAY);
     }
     function target(href, label, tab) {
       link.hidden = !href;
@@ -202,7 +233,6 @@
       show((video ? 'Video de ' : 'Publicación de ') + NAMES[spec.provider], NAMES[spec.provider] + (video ? ' · video' : ' · publicación'),
         new URL(sourceURL(spec)).hostname.replace(/^www\./, ''), sourceURL(spec),
         'Al reproducirlo, tu navegador se conecta con ' + NAMES[spec.provider] + '. Hasta entonces no se le pide nada.');
-      start.focus();
       return {ok: true, confirm: true};
     }
 
@@ -214,7 +244,6 @@
       const tab = kind === 'https' || kind === 'http';
       target(href, label, tab);
       show(heading, KINDS[kind], shown, href.replace(/^(?:mailto|tel):/, ''), tab ? 'Sale de Margen y se abre en una pestaña nueva, sin datos de esta página.' : 'Se abre con la aplicación de tu equipo.');
-      link.focus();
       return {ok: true, confirm: true};
     }
     const WHY = {
