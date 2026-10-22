@@ -56,10 +56,11 @@
     const mapped=window.BottifactArchiveLinks?.[base]||window.BottifactArchiveLinks?.[base.replace(/^\.\//,'')];
     const path=mapped?(mapped+(href.includes('#')?('#'+href.split('#').slice(1).join('#')):'')):(a.hasAttribute('data-bottifact-link')?href:null);
     if(path){event.preventDefault();send('navigate',{path}).catch(()=>{});return;}
-    // Enlaces externos (pie del autor, referencias): el sandbox no abre pestañas; las abre el portal, sólo tras un clic real.
+    // Cualquier otro enlace navegaría este iframe y perdería el documento: lo resuelve el portal, que muestra el destino
+    // y sólo sale tras un clic en su propio diálogo. Quedan aquí las anclas internas, javascript: y las descargas.
     // Las fuentes de publicaciones insertadas usan su propia operación exacta (data-embed-source).
-    if(!event.isTrusted||a.hasAttribute('data-embed-source')||!/^(?:https:\/\/|mailto:)/i.test(href))return;
-    event.preventDefault();send('external',{href,version:embedVersion}).catch(()=>{});
+    if(a.hasAttribute('data-embed-source')||a.hasAttribute('download')||!href||href.startsWith('#')||/^\s*javascript:/i.test(href))return;
+    event.preventDefault();if(event.isTrusted)send('external',{href:href.trim(),version:embedVersion}).catch(()=>{});
   },true);
   // The host backs the frame with the document's own surface. Only a parsed opaque RGB triple leaves; null keeps the host default.
   // The version this document is, so the host never paints a replaced version's report.

@@ -31,18 +31,24 @@
     if (s.provider === 'instagram') return 'https://www.instagram.com/' + s.kind + '/' + s.id + '/';
     return 'https://x.com/' + s.user + (s.status ? '/status/' + s.status : '');
   }
-  // Enlaces generales del documento (p. ej. el pie): https sin credenciales o mailto con dirección, sin controles.
+  // Cualquier enlace del documento. El portal decide qué ofrece; nada se abre sin un clic en su propio diálogo.
+  // https/http/mailto/tel llevan destino; credenciales, relativos y otros esquemas sólo se explican.
   function external(data) {
     if (!data || typeof data !== 'object' || Array.isArray(data) || Object.keys(data).some(k => k !== 'href' && k !== 'version')) return null;
     const {href, version} = data;
     if (typeof version !== 'string' || !/^[A-Za-z0-9_-]{1,80}$/.test(version)) return null;
-    if (typeof href !== 'string' || href.length > 2048 || /[\s<>"'`\\\x00-\x1f\x7f]/.test(href)) return null;
-    if (/^mailto:[^@/?#:]+@[^@/?#:]+\.[^@/?#:]+(?:\?[^#]*)?$/.test(href)) return {href, version};
-    if (!/^https:\/\//i.test(href)) return null;
-    let url;
-    try { url = new URL(href); } catch { return null; }
-    if (url.protocol !== 'https:' || !url.hostname || url.username || url.password) return null;
-    return {href: url.href, version};
+    if (typeof href !== 'string' || !href || href.length > 2048 || /[\s<>"'`\\\x00-\x1f\x7f]/.test(href)) return null;
+    if (/^mailto:[^@/?#:]+@[^@/?#:]+\.[^@/?#:]+(?:\?[^#]*)?$/i.test(href)) return {kind: 'mailto', href, shown: href.slice(7).split('?')[0], version};
+    if (/^tel:\+?[0-9().-]{3,30}$/i.test(href)) return {kind: 'tel', href, shown: href.slice(4), version};
+    if (/^https?:/i.test(href)) {
+      let url;
+      try { url = new URL(href); } catch { return null; }
+      if (!url.hostname || !/^https?:$/.test(url.protocol) || !/^https?:\/\//i.test(href)) return null;
+      if (url.username || url.password) return {kind: 'credentials', shown: url.hostname, version};
+      return {kind: url.protocol === 'https:' ? 'https' : 'http', href: url.href, shown: url.hostname, version};
+    }
+    if (/^[A-Za-z][A-Za-z0-9+.-]*:/.test(href)) return {kind: 'scheme', shown: href.split(':')[0].slice(0, 20) + ':', version};
+    return {kind: 'relative', shown: href.slice(0, 120), version};
   }
   function playerURL(s, origin) {
     if (s.provider === 'instagram') return ORIGINS.instagram + '/' + s.kind + '/' + s.id + '/embed/';
@@ -75,18 +81,28 @@
     return node;
   }
 
-  /* options: frame() → iframe del artefacto; mounted() → {artifact, version} vigente; origin; userActivation() opcional. */
+  /* options: frame() → iframe del artefacto; mounted() → {artifact, version} vigente; origin; userActivation() opcional.
+     El iframe es opaco y no es de fiar: su activación puede venir de cualquier clic del documento. Por eso nada sale
+     del portal (pestaña, correo, proveedor) hasta un clic en un control de este diálogo, que el artefacto no alcanza. */
   function create(options) {
-    const dialog = make('dialog', {class: 'media-dialog', 'aria-labelledby': 'media-dialog-title'});
+    const dialog = make('dialog', {class: 'media-dialog', 'aria-labelledby': 'media-dialog-title', 'aria-describedby': 'media-dialog-notice'});
     const title = make('h2', {id: 'media-dialog-title'});
     const close = make('button', {type: 'button', class: 'icon', 'aria-label': 'Cerrar'}, '×');
     const head = make('div', {class: 'dialog-head'});
     head.append(title, close);
-    const notice = make('p', {class: 'media-notice'});
+    const preview = make('div', {class: 'media-preview'});
+    const tag = make('span', {class: 'media-tag'});
+    const place = make('strong', {class: 'media-place'});
+    const address = make('span', {class: 'media-address'});
+    preview.append(tag, place, address);
+    const notice = make('p', {class: 'media-notice', id: 'media-dialog-notice'});
     const stage = make('div', {class: 'media-stage'});
     const status = make('p', {class: 'media-status', role: 'status'});
-    const link = make('a', {target: '_blank', rel: 'noopener noreferrer', referrerpolicy: 'no-referrer', class: 'media-source'});
-    dialog.append(head, notice, stage, status, link);
+    const start = make('button', {type: 'button', class: 'primary media-play'});
+    const link = make('a', {class: 'media-source button', referrerpolicy: 'no-referrer'});
+    const actions = make('div', {class: 'media-actions'});
+    actions.append(start, link);
+    dialog.append(head, preview, notice, stage, status, actions);
     document.body.append(dialog);
     let session = null;
 
@@ -95,7 +111,7 @@
       const s = session; session = null;
       clearTimeout(s.timer); clearInterval(s.poke); s.abort.abort();
       if (s.player) { s.player.src = 'about:blank'; s.player.remove(); }
-      stage.replaceChildren(); status.textContent = ''; dialog.dataset.provider = '';
+      stage.replaceChildren(); status.textContent = ''; dialog.dataset.provider = ''; dialog.dataset.intent = '';
       return s;
     }
     close.addEventListener('click', () => dialog.close());
@@ -110,26 +126,44 @@
         frame.contentWindow.postMessage({bottifact: 1, op: 'embed-closed'}, '*');
       }
     });
+    // El único camino al proveedor: un clic real en el botón del portal, ligado a la sesión que lo mostró.
+    start.addEventListener('click', event => {
+      if (event.isTrusted && session?.spec && !session.player) play(session.spec, session);
+    });
+    // El enlace del portal navega por sí mismo (pestaña nueva sin opener ni referrer, o mailto/tel); luego el diálogo sobra.
+    link.addEventListener('click', event => { if (event.isTrusted && session) setTimeout(() => dialog.close()); });
 
-    function begin(provider, href, label) {
+    function begin(provider, intent) {
       if (dialog.open) dialog.close();
       teardown();
       const now = options.mounted();
-      session = {artifact: now.artifact, version: now.version, abort: new AbortController(), timer: 0, poke: 0, player: null, alive: false};
+      session = {artifact: now.artifact, version: now.version, abort: new AbortController(), timer: 0, poke: 0, player: null, alive: false, spec: null};
       dialog.dataset.provider = provider;
-      link.href = href;
-      link.textContent = label;
+      dialog.dataset.intent = intent;
+      preview.hidden = false; start.hidden = true;
       return session;
     }
+    function show(heading, kind, where, full, text) {
+      title.textContent = heading; tag.textContent = kind; place.textContent = where; address.textContent = full || '';
+      notice.textContent = text;
+      dialog.showModal();
+    }
+    function target(href, label, tab) {
+      link.hidden = !href;
+      if (!href) { link.removeAttribute('href'); return; }
+      link.href = href; link.textContent = label;
+      link.classList.toggle('primary', dialog.dataset.intent === 'link');
+      if (tab) { link.target = '_blank'; link.rel = 'noopener noreferrer'; }
+      else { link.removeAttribute('target'); link.rel = 'noreferrer'; }
+    }
 
-    function play(spec, s = begin(spec.provider, sourceURL(spec), 'Abrir en ' + NAMES[spec.provider])) {
-      title.textContent = (spec.provider === 'youtube' ? 'Video de ' : 'Publicación de ') + NAMES[spec.provider];
-      notice.textContent = 'Al cargarlo, tu navegador se conecta con ' + NAMES[spec.provider] + '.';
+    function play(spec, s) {
       const player = make('iframe', {
         title: NAMES[spec.provider] + ': publicación insertada', sandbox: SANDBOX, allow: ALLOW,
         referrerpolicy: REFERRER[spec.provider], class: 'media-player', src: playerURL(spec, options.origin),
       });
       s.player = player;
+      dialog.dataset.intent = 'player'; preview.hidden = true; start.hidden = true;
       const say = text => { if (session === s) status.textContent = text; };
       addEventListener('message', event => {
         if (session !== s || event.source !== player.contentWindow || event.origin !== ORIGINS[spec.provider]) return;
@@ -153,30 +187,46 @@
       s.timer = setTimeout(() => { if (!s.alive) say(NAMES[spec.provider] + ' no respondió. El enlace abre la fuente original.'); }, WAIT);
       stage.replaceChildren(player);
       status.textContent = 'Conectando con ' + NAMES[spec.provider] + '…';
-      if (!dialog.open) dialog.showModal();
       close.focus();
       return {ok: true};
     }
 
-    // Sin API de activación no hay prueba del clic: el lector confirma con un botón del propio portal.
+    // Vista previa sin red: proveedor y fuente exacta. El reproductor se monta sólo con «Reproducir aquí».
     function confirmPlay(spec) {
-      const s = begin(spec.provider, sourceURL(spec), 'Abrir en ' + NAMES[spec.provider]);
-      title.textContent = (spec.provider === 'youtube' ? 'Video de ' : 'Publicación de ') + NAMES[spec.provider];
-      notice.textContent = 'Al cargarlo, tu navegador se conecta con ' + NAMES[spec.provider] + '.';
-      const load = make('button', {type: 'button', class: 'primary'}, 'Cargar aquí');
-      load.addEventListener('click', event => { if (event.isTrusted && session === s) play(spec, s); }, {signal: s.abort.signal});
-      stage.replaceChildren(load);
-      dialog.showModal();
-      load.focus();
+      const s = begin(spec.provider, 'confirm');
+      s.spec = spec;
+      const video = spec.provider === 'youtube';
+      target(sourceURL(spec), 'Abrir en ' + NAMES[spec.provider], true);
+      start.textContent = video ? 'Reproducir aquí' : 'Cargar aquí';
+      start.hidden = false;
+      show((video ? 'Video de ' : 'Publicación de ') + NAMES[spec.provider], NAMES[spec.provider] + (video ? ' · video' : ' · publicación'),
+        new URL(sourceURL(spec)).hostname.replace(/^www\./, ''), sourceURL(spec),
+        'Al reproducirlo, tu navegador se conecta con ' + NAMES[spec.provider] + '. Hasta entonces no se le pide nada.');
+      start.focus();
       return {ok: true, confirm: true};
     }
 
-    function fallback(provider, href, label, heading, text) {
-      begin(provider, href, label);
-      title.textContent = heading;
-      notice.textContent = text;
-      dialog.showModal();
+    const KINDS = {https: 'Enlace externo', http: 'Enlace http · sin cifrar', mailto: 'Correo', tel: 'Teléfono'};
+    const ACTIONS = {https: 'Abrir en pestaña nueva', http: 'Abrir en pestaña nueva', mailto: 'Escribir correo', tel: 'Llamar'};
+    // El destino se muestra entero antes de salir; el clic en el enlace del portal es la intención.
+    function leave(kind, href, shown, heading = 'Abrir enlace', label = ACTIONS[kind]) {
+      begin('link', 'link');
+      const tab = kind === 'https' || kind === 'http';
+      target(href, label, tab);
+      show(heading, KINDS[kind], shown, href.replace(/^(?:mailto|tel):/, ''), tab ? 'Sale de Margen y se abre en una pestaña nueva, sin datos de esta página.' : 'Se abre con la aplicación de tu equipo.');
       link.focus();
+      return {ok: true, confirm: true};
+    }
+    const WHY = {
+      credentials: 'Lleva usuario y contraseña dentro de la dirección. Margen no lo abre para no exponerlos.',
+      relative: 'Apunta a un archivo que acompañaba al documento original y no está publicado en Margen.',
+      scheme: 'Margen abre enlaces web, de correo y de teléfono. Éste usa otro tipo de dirección.',
+    };
+    function explain(kind, shown) {
+      begin('link', 'info');
+      target(null);
+      show('Este enlace no se abre aquí', 'Enlace no disponible', shown, '', WHY[kind]);
+      close.focus();
       return {ok: true, opened: false};
     }
 
@@ -185,45 +235,27 @@
       return navigator.userActivation ? navigator.userActivation.isActive : null;
     }
 
-    // Abre sólo con un clic real del lector; window.open consume esa activación, así que un clic abre como mucho una pestaña.
-    function open(href) {
-      if (href.startsWith('mailto:')) {
-        const a = make('a', {href});
-        a.click();
-        return true;
-      }
-      // Sin noopener para poder detectar el bloqueo; el vínculo se corta antes de navegar.
-      const opened = window.open('', '_blank');
-      if (!opened) return false;
-      opened.opener = null;
-      opened.location.replace(href);
-      return true;
-    }
-
     function handle(op, data) {
       const now = options.mounted();
       if (!now) throw Error('No hay un documento abierto.');
-      const active = activation();
-      // Un mensaje sin clic del lector no abre diálogos ni pestañas: así el documento no puede insistir.
-      if (active === false) throw Error('Hace falta un clic del lector.');
+      // Sin clic reciente del lector no se muestra ni el diálogo: así el documento no puede insistir.
+      if (activation() === false) throw Error('Hace falta un clic del lector.');
       if (op === 'external') {
-        const target = external(data);
-        if (!target) throw Error('Enlace no permitido.');
-        if (target.version !== now.version) throw Error('Enlace de otra versión.');
-        if (active && open(target.href)) return {ok: true, opened: true};
-        const shown = target.href.startsWith('mailto:') ? target.href.slice(7) : target.href;
-        return fallback('link', target.href, shown, 'Abrir enlace', 'Este enlace sale de Margen y se abre en una pestaña nueva.');
+        const link = external(data);
+        if (!link) throw Error('Enlace no permitido.');
+        if (link.version !== now.version) throw Error('Enlace de otra versión.');
+        return link.href ? leave(link.kind, link.href, link.shown) : explain(link.kind, link.shown);
       }
       const spec = validate(data);
       if (!spec) throw Error('Publicación no válida.');
       if (spec.version !== now.version) throw Error('Publicación de otra versión.');
       if (op === 'embed') {
         if (spec.provider === 'x') throw Error('X no se inserta; abre la fuente.');
-        return active ? play(spec) : confirmPlay(spec);
+        return confirmPlay(spec);
       }
       if (op === 'open-source') {
-        if (active && open(sourceURL(spec))) return {ok: true, opened: true};
-        return fallback(spec.provider, sourceURL(spec), 'Abrir en ' + NAMES[spec.provider], 'Abrir la fuente', 'La publicación original se abre en ' + NAMES[spec.provider] + ', en una pestaña nueva.');
+        const href = sourceURL(spec);
+        return leave('https', href, new URL(href).hostname.replace(/^www\./, ''), 'Abrir la fuente', 'Abrir en ' + NAMES[spec.provider]);
       }
       throw Error('Operación no permitida.');
     }

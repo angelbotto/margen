@@ -5,7 +5,8 @@ Levanta portal.app con datos temporales sobre HTTPS local (https://localhost, ce
 autofirmado; WebKit no admite reglas de resolución), crea dos cuentas temporales y un artefacto «unlisted» con las tres recetas,
 el pie con enlaces y el runtime de embeds cableado como lo hará el contrato. Nunca usa producción.
 
-Comprueba: nada del proveedor antes del clic; diálogo del portal con URL, sandbox y referrer exactos;
+Comprueba: nada del proveedor antes del clic en el botón del portal (la tarjeta sólo abre la vista previa);
+diálogo del portal con URL, sandbox y referrer exactos;
 reproducción real (un <video> que avanza, no iframe.onload); Escape/cierre/reapertura con foco de vuelta;
 navegación por hash; mensajes sin clic del lector o de otra ventana ignorados; fuente y pie abiertos sólo
 con clic; red de proveedores bloqueada; HTML portátil por HTTPS, file:// y sin JavaScript.
@@ -156,8 +157,13 @@ def portal_checks(pw, engine, origin, aid, version, session, label, shots, offli
     page.wait_for_timeout(8000)
     row['unactivated_messages_sent'] = artf.evaluate('window.__forged===true')
     row['unactivated_messages_ignored'] = row['unactivated_messages_sent'] and page.locator('dialog.media-dialog[open]').count() == 0 and len(popups) == n and not provider_requests
-    # YouTube: clic real → diálogo del portal.
+    # YouTube: clic real en la tarjeta → vista previa del portal sin red; sólo su botón «Reproducir aquí» monta el reproductor.
     art.locator('#youtube-ejemplo [data-embed-load]').click()
+    page.locator('dialog.media-dialog[open] .media-play').wait_for(timeout=10000)
+    page.wait_for_timeout(600)
+    row['preview_without_provider'] = not provider_requests and page.locator('iframe.media-player').count() == 0
+    row['preview_focus_on_portal_button'] = page.evaluate("document.activeElement?.classList.contains('media-play')")
+    page.locator('dialog.media-dialog .media-play').click()
     page.locator('dialog.media-dialog[open] iframe.media-player').wait_for(timeout=10000)
     player = page.locator('dialog.media-dialog[open] iframe.media-player')
     row['youtube_dialog'] = {k: player.get_attribute(k) for k in ('src', 'sandbox', 'referrerpolicy', 'allow')}
@@ -175,12 +181,14 @@ def portal_checks(pw, engine, origin, aid, version, session, label, shots, offli
     row['escape_closes'] = page.locator('dialog.media-dialog[open]').count() == 0 and page.locator('iframe.media-player').count() == 0
     row['focus_returns'] = artf.evaluate("document.activeElement && document.activeElement.matches('#youtube-ejemplo [data-embed-load]')")
     art.locator('#youtube-ejemplo [data-embed-load]').click()
+    page.locator('dialog.media-dialog .media-play').click()
     page.locator('dialog.media-dialog[open] iframe.media-player').wait_for(timeout=10000)
     page.locator('dialog.media-dialog .dialog-head button').click()
     page.wait_for_timeout(400)
     row['reopen_and_close_button'] = page.locator('iframe.media-player').count() == 0
     # Instagram: no-referrer, sin rd/rp, altura medida.
     art.locator('#instagram-ejemplo [data-embed-load]').click()
+    page.locator('dialog.media-dialog .media-play').click()
     page.locator('dialog.media-dialog[open] iframe.media-player').wait_for(timeout=10000)
     ig = page.locator('dialog.media-dialog[open] iframe.media-player')
     row['instagram_dialog'] = {k: ig.get_attribute(k) for k in ('src', 'sandbox', 'referrerpolicy')}
@@ -197,19 +205,22 @@ def portal_checks(pw, engine, origin, aid, version, session, label, shots, offli
     page.wait_for_timeout(600)
     row['hash_navigation_closes'] = page.locator('dialog.media-dialog[open]').count() == 0 and page.locator('iframe.media-player').count() == 0
     row['frame_requests'] = frame_requests
-    # Fuente y pie: sólo con clic, pestaña nueva sin opener, destino exacto.
+    # Fuente y pie: el clic del documento sólo muestra el destino; la pestaña la abre el enlace del portal, sin opener.
     for key, selector in (('x_source', '#x-real a[data-embed-source]'), ('youtube_source', '#youtube-ejemplo a[data-embed-source]'), ('footer_link', '.pie-enlaces a[href^="https:"]')):
         n = len(popups)
         art.locator(selector).click()
+        page.wait_for_timeout(800)
+        dialog = page.locator('dialog.media-dialog[open] a.media-source')
+        preview = {'popups_before_portal_click': len(popups) - n, 'portal_link': dialog.get_attribute('href') if dialog.count() else None}
+        if dialog.count(): dialog.click()
         page.wait_for_timeout(1200)
         opened = popups[n:]
-        dialog = page.locator('dialog.media-dialog[open] a.media-source')
         if opened: opened[0].wait_for_load_state()
-        row[key] = {'popups': len(opened), 'url': opened[0].url if opened else None,
+        row[key] = {**preview, 'popups': len(opened), 'url': opened[0].url if opened else None,
                     'opener_null': opened[0].evaluate('window.opener===null') if opened else None,
-                    'fallback': dialog.get_attribute('href') if dialog.count() else None}
+                    'dialog_closed': page.locator('dialog.media-dialog[open]').count() == 0}
         for p in opened: p.close()
-        if dialog.count(): page.keyboard.press('Escape')
+        if page.locator('dialog.media-dialog[open]').count(): page.keyboard.press('Escape')
     row['provider_requests'] = len(provider_requests)
     row['stub_referers'] = sorted({str(r) for r in STUB_REFERERS}); STUB_REFERERS.clear()
     ctx.close(); browser.close()
