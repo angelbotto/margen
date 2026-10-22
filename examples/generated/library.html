@@ -3210,9 +3210,12 @@ body:has(.revision-barra) { padding-bottom:0; }
     never matched here and body kept 16px/1.65. :scope is the document element.
     Reader-chosen serif styles keep their own 1.8 rhythm. */
  :scope:not([data-lectura-comoda],[data-estilo=libro],[data-estilo=revista],[data-estilo=bitacora]) .hoja:not([data-presentation]) { font-size:15.5px; line-height:1.55; }
- .hoja:not([data-presentation]) h1:not([data-ritmo=propio] *) { font-size:44.5px; line-height:49.4444px; }
- .hoja:not([data-presentation]) h2:not([data-ritmo=propio] *) { font-size:36.4px; line-height:43.68px; }
- @media(max-width:639px) { .hoja:not([data-presentation]) h1:not([data-ritmo=propio] *) { font-size:36.4px; line-height:43.68px; } }
+ .hoja:not([data-presentation]) h1:not([data-ritmo=propio] *) { font-size:44.5px; line-height:49.4444px; letter-spacing:-.025em; }
+ .hoja:not([data-presentation]) h2:not([data-ritmo=propio] *) { font-size:36.4px; line-height:43.68px; letter-spacing:-.025em; }
+ @media(max-width:639px) {
+  .hoja:not([data-presentation]) h1:not([data-ritmo=propio] *) { font-size:36.4px; line-height:43.68px; }
+  .hoja:not([data-presentation]) h2:not([data-ritmo=propio] *) { font-size:28.5px; line-height:38px; }
+ }
 }
 .hoja:not([data-presentation]) { row-gap:24px; }
 .hoja.lectura-guiada:not([data-presentation]) { margin-inline:0; }
@@ -3255,6 +3258,8 @@ body:has(.revision-barra) { padding-bottom:0; }
  .hoja:not([data-presentation]) > .codigo.codigo-editorial,
  .hoja:not([data-presentation]) > .pagina > .codigo.codigo-editorial { grid-column:1/-1; width:48rem; margin-inline:auto; }
  .hoja:not([data-presentation]) :is(.seccion,.prosa) > .codigo.codigo-editorial:not([data-ritmo=propio] *) { width:48rem; max-width:none; margin-inline:calc((100% - 48rem)/2); }
+}
+@media(min-width:1328px) {
  .hoja.lectura-guiada:not([data-presentation]) > .indice,
  .hoja.lectura-guiada:not([data-presentation]) > .pagina > .indice { left:max(24px,calc(50vw - 648px)); width:min(360px,calc(50vw - 312px)); top:max(128px,var(--lectura-cabecera,128px)); max-height:calc(100dvh - max(128px,var(--lectura-cabecera,128px)) - 48px); padding:0; background:transparent; border:0; font:13.7px/24px var(--sans); }
  .lectura-guiada:not([data-presentation]) .indice ol { margin:0; padding:0; list-style:none; counter-reset:contenido; }
@@ -3270,8 +3275,19 @@ body:has(.revision-barra) { padding-bottom:0; }
  .lectura-guiada:not([data-presentation]) .indice a:focus-visible { outline:2px dashed var(--foco); outline-offset:2px; }
  /* Focused navigation must stay readable and operable through wide figures. */
  .hoja.lectura-guiada:not([data-presentation]) .indice:focus-within { z-index:4; background:var(--papel); outline:1px dashed var(--linea); outline-offset:8px; }
+ .lectura-guiada:not([data-presentation]) .indice[data-indice-trazo] a { position:relative; text-decoration:none; }
+ .lectura-guiada:not([data-presentation]) .indice[data-indice-trazo] :is(li.visto,li.aqui-visto) a { text-decoration:none; }
+ .indice .indice-tachado { position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; color:var(--tinta-3); }
+ .indice-tachado path { fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; opacity:.5; stroke-dasharray:1; stroke-dashoffset:1; transition:stroke-dashoffset 320ms cubic-bezier(.645,.045,.355,1); }
+ .indice :is(.visto,.aqui-visto) .indice-tachado path { stroke-dashoffset:0; }
+ /* This gradient follows the article origin. It is not attached to the viewport.
+    Short chapters retain a readable index; keyboard focus removes the mask. */
+ .indice[data-indice-mascara] { mask-image:linear-gradient(to bottom,transparent var(--indice-fade-y,0px),rgb(0 0 0/.12) calc(var(--indice-fade-y,0px) + 192px),rgb(0 0 0/.38) calc(var(--indice-fade-y,0px) + 384px),rgb(0 0 0/.72) calc(var(--indice-fade-y,0px) + 576px),#000 calc(var(--indice-fade-y,0px) + 768px)); }
+ .indice[data-indice-mascara]:focus-within { mask-image:none; }
 }
-@media(min-width:1280px) and (prefers-reduced-motion:reduce) { .lectura-guiada:not([data-presentation]) .indice a { transition:none; } }
+@media(max-width:1327px) { .indice-tachado { display:none; } }
+@media(min-width:1328px) and (prefers-reduced-motion:reduce) { .lectura-guiada:not([data-presentation]) .indice a,.indice-tachado path { transition:none; } }
+@media(prefers-reduced-transparency:reduce),(forced-colors:active) { .indice[data-indice-mascara] { mask-image:none; } }
 /* Reading edges: progressive blur at the top and bottom of the viewport,
    clamp(40px,10vh,160px) tall. editorial-pieces.js adds four stacked layers per
    edge (1/2/4/8 px), each masked from a later step, so blur grows toward the
@@ -3289,14 +3305,17 @@ body:has(.revision-barra) { padding-bottom:0; }
 @media print,(prefers-reduced-transparency:reduce),(forced-colors:active) { .lectura-bordes { display:none; } }
 /* Header dates come only from explicit document metadata. */
 .cabecera-fecha { margin:0; color:var(--tinta-3); font:13.7px/19.5714px var(--mono); letter-spacing:.05px; }
-.cabecera-fecha time { white-space:nowrap; font-variant-numeric:tabular-nums; }
+.cabecera-fecha time { display:inline-block; white-space:nowrap; font-variant-numeric:tabular-nums; }
+.hoja:not([data-presentation]) .cabecera:has(> .cabecera-fecha) { row-gap:0; }
+.cabecera-fecha + .bajada { margin-top:16px; }
 /* Author footer: identity and optional links belong to the document; the
    platform line is separate and can be omitted. */
-.pie.pie-documento { display:grid; gap:16px; }
+.pie.pie-documento { display:grid; gap:24px; border-top:1px solid var(--linea); padding-top:32px; }
+.hoja:not([data-presentation]) > .pie.pie-documento { grid-column:1/-1; width:min(64rem,calc(100% - 48px)); margin-inline:auto; }
 .pie-documento .pie-autoria { display:grid; gap:8px; }
-.pie-documento .pie-autor { margin:0; color:var(--tinta); font:400 18.5px/28.7778px var(--serif); }
+.pie-documento .pie-autor { margin:0; color:var(--tinta); font:400 28.5px/38px var(--serif); }
 .pie-documento .pie-nota { margin:0; color:var(--tinta-2); font:13.7px/21.235px var(--sans); }
-.pie-documento .pie-enlaces { display:flex; flex-wrap:wrap; gap:4px 24px; }
+.pie-documento .pie-enlaces { display:flex; flex-direction:column; align-items:start; gap:0; }
 .pie-documento .pie-enlace { display:inline-flex; align-items:baseline; gap:8px; }
 .pie-documento .pie-enlaces a { display:inline-flex; align-items:center; min-height:32px; color:var(--tinta-2); text-decoration:underline; text-decoration-color:var(--linea-fuerte); text-underline-offset:3px; transition:color 150ms cubic-bezier(.075,.82,.165,1); }
 .pie-documento .pie-enlaces a:hover { color:var(--tinta); }
@@ -3309,6 +3328,18 @@ body:has(.revision-barra) { padding-bottom:0; }
 @media(prefers-reduced-motion:reduce) { .pie-documento .pie-detalle { transition:none; } }
 @media print { .pie-documento .pie-detalle { filter:none; } }
 .pie-documento .pie-plataforma { margin:0; color:var(--tinta-3); font:12.1px/16.1333px var(--mono); }
+@media(min-width:768px) {
+ .pie.pie-documento { grid-template-columns:minmax(0,1fr) minmax(0,1fr); grid-template-areas:'author note' 'links note' 'reactions platform'; gap:16px 48px; }
+ .pie-documento .pie-autoria { display:contents; }
+ .pie-documento .pie-autor { grid-area:author; }
+ .pie-documento .pie-nota { grid-area:note; align-self:center; text-align:right; }
+ .pie-documento .pie-enlaces { grid-area:links; }
+ .pie-documento .reacciones { grid-area:reactions; }
+ .pie-documento .pie-plataforma { grid-area:platform; align-self:end; text-align:right; }
+}
+/* WebKit's native select can contribute its unpainted option text to the
+   ancestor scroll area. Clip the control contents, preserving its focus outline. */
+.evidencia-controles select { overflow:hidden; }
 /* Reactions are local to this browser: no shared counts are shown. */
 .reacciones { display:grid; gap:8px; }
 .reacciones-botones { display:flex; flex-wrap:wrap; gap:4px; }
@@ -3320,7 +3351,7 @@ body:has(.revision-barra) { padding-bottom:0; }
 .reacciones-nota { margin:0; color:var(--tinta-3); font:12.1px/16.1333px var(--mono); }
 @media(prefers-reduced-motion:reduce) { .pie-documento .pie-enlaces a,.reacciones button { transition:none; } }
 @media print { .reacciones { display:none; } }
-@media(min-width:1200px) and (max-width:1279px) {
+@media(min-width:1200px) and (max-width:1327px) {
  .hoja.lectura-guiada:not([data-presentation]) > .indice,
  .hoja.lectura-guiada:not([data-presentation]) > .pagina > .indice { position:static; width:auto; max-height:none; }
 }
@@ -3450,7 +3481,7 @@ body.web-editorial > .web-bordes { position:fixed; inset:0 0 auto; }
    must also reach author-owned layouts and data views whose data-presentation
    attribute is unrelated to slides. Slide documents opt out through .hoja. */
 :root[data-trama] { --margen-grano:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22180%22%20height%3D%22180%22%3E%3Cfilter%20id%3D%22grano%22%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%22.78%22%20numOctaves%3D%223%22%20seed%3D%2217%22%20stitchTiles%3D%22stitch%22%2F%3E%3CfeColorMatrix%20type%3D%22saturate%22%20values%3D%220%22%2F%3E%3CfeComponentTransfer%3E%3CfeFuncA%20type%3D%22linear%22%20slope%3D%22.19%22%2F%3E%3C%2FfeComponentTransfer%3E%3C%2Ffilter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url%28%23grano%29%22%20opacity%3D%22.75%22%2F%3E%3C%2Fsvg%3E"); }
-@media screen and (min-width:1280px) {
+@media screen and (min-width:1328px) {
  /* The fixed index (z 2) passes beneath every wide surface (z 3), as wide media
     covers the table of contents in the reference. Surfaces are opaque paper, so
     their fades, gaps and open details never reveal index text; code keeps its
@@ -5533,14 +5564,26 @@ main.hoja[data-presentation]{margin-top:22px}
     &lt;div&gt;&lt;h3&gt;¿Qué sumarías?&lt;/h3&gt;&lt;p&gt;Una lectura, una pregunta o una idea que merezca entrar en la siguiente versión.&lt;/p&gt;&lt;/div&gt;
     &lt;form aria-label=&quot;Preparar una recomendación&quot;&gt;&lt;label for=&quot;invitacion-texto&quot;&gt;Tu idea&lt;/label&gt;&lt;textarea id=&quot;invitacion-texto&quot; name=&quot;idea&quot; maxlength=&quot;1000&quot; required placeholder=&quot;Un título, un enlace o una nota…&quot; aria-describedby=&quot;invitacion-estado&quot;&gt;&lt;/textarea&gt;&lt;button type=&quot;button&quot; data-invitacion-copiar&gt;Copiar mi idea ↗&lt;/button&gt;&lt;p role=&quot;status&quot; id=&quot;invitacion-estado&quot;&gt;Borrador local; copia antes de cerrar.&lt;/p&gt;&lt;/form&gt;
   &lt;/div&gt;
-&lt;/section&gt;</code></pre></div></details><section class="seccion" id="receta-pie-editorial" tabindex="-1"><p class="ceja">Componente / Footer editorial</p><h2>Footer editorial</h2></section><footer class="ancho pie-editorial" id="pie-editorial-ejemplo">
-  <div><h3>Margen</h3><nav aria-label="Más del cuaderno"><a href="report.html#resumen">El informe</a><a href="report.html#evidencia">Las fuentes y sus límites</a><a href="report.html#siguientes">Lo que sigue</a></nav></div>
-  <div class="pie-carta"><h3>Una nota para quien viene después.</h3><p>Dejamos las preguntas, las fuentes y las decisiones a la vista. Que la siguiente versión pueda comenzar desde aquí.</p><p><em>Este cuaderno sigue abierto.</em></p></div>
-  <div class="pie-colofon"><span>Edición ilustrativa · <time datetime="2026-09-14">14 sep 2026</time></span><span>Lectura · evidencia · conversación</span></div>
-</footer><div class="receta-guia"><p><strong>Use and limits:</strong> Close with identity, useful links, editorial context and a real date where known. Two columns stack on mobile. An optional global sound button is appropriate only when another sound control is absent. Do not invent contact details, commit statistics or licensing. The main footer follows content and does not cover the final section.</p></div><details class="receta-copia ancho"><summary>Copiar HTML · Footer editorial</summary><p class="procedencia">Dependencias: packages/core/styles/fonts.css, packages/core/styles/artifact.css, packages/core/components/interface.js, packages/core/components/audio.js, packages/core/components/controls.js, packages/core/components/editorial-pieces.js, packages/core/components/reader.js</p><div class="codigo"><div class="cab"><span>Footer editorial</span><button type="button" data-copiar="biblioteca-codigo-pie-editorial" aria-label="Copiar HTML de Footer editorial">Copiar HTML</button><span role="status" class="copia-estado"></span></div><pre tabindex="0" aria-label="HTML de Footer editorial, desplazable"><code id="biblioteca-codigo-pie-editorial">&lt;footer class=&quot;ancho pie-editorial&quot; id=&quot;pie-editorial-ejemplo&quot;&gt;
-  &lt;div&gt;&lt;h3&gt;Margen&lt;/h3&gt;&lt;nav aria-label=&quot;Más del cuaderno&quot;&gt;&lt;a href=&quot;examples/generated/report.html#resumen&quot;&gt;El informe&lt;/a&gt;&lt;a href=&quot;examples/generated/report.html#evidencia&quot;&gt;Las fuentes y sus límites&lt;/a&gt;&lt;a href=&quot;examples/generated/report.html#siguientes&quot;&gt;Lo que sigue&lt;/a&gt;&lt;/nav&gt;&lt;/div&gt;
-  &lt;div class=&quot;pie-carta&quot;&gt;&lt;h3&gt;Una nota para quien viene después.&lt;/h3&gt;&lt;p&gt;Dejamos las preguntas, las fuentes y las decisiones a la vista. Que la siguiente versión pueda comenzar desde aquí.&lt;/p&gt;&lt;p&gt;&lt;em&gt;Este cuaderno sigue abierto.&lt;/em&gt;&lt;/p&gt;&lt;/div&gt;
-  &lt;div class=&quot;pie-colofon&quot;&gt;&lt;span&gt;Edición ilustrativa · &lt;time datetime=&quot;2026-09-14&quot;&gt;14 sep 2026&lt;/time&gt;&lt;/span&gt;&lt;span&gt;Lectura · evidencia · conversación&lt;/span&gt;&lt;/div&gt;
+&lt;/section&gt;</code></pre></div></details><section class="seccion" id="receta-pie-editorial" tabindex="-1"><p class="ceja">Componente / Footer editorial</p><h2>Footer editorial</h2></section><footer class="ancho pie pie-documento" id="pie-editorial-ejemplo">
+  <div class="pie-autoria">
+    <p class="pie-autor">Un cuaderno compartido</p>
+    <p class="pie-nota">Ejemplo de cierre editorial. El nombre, los enlaces y esta nota pertenecen a quien escribe el documento.</p>
+    <nav class="pie-enlaces" aria-label="Enlaces del cuaderno de ejemplo">
+      <span class="pie-enlace"><a href="https://github.com/angelbotto/margen" rel="noopener noreferrer">Código de Margen</a><span class="pie-detalle">Construir y contribuir</span></span>
+      <span class="pie-enlace"><a href="https://artifacts.botto.is" rel="noopener noreferrer">La plataforma</a><span class="pie-detalle">Publicar y conversar</span></span>
+    </nav>
+  </div>
+  <p class="pie-plataforma">Hecho con Margen · Ejemplo ilustrativo</p>
+</footer><div class="receta-guia"><p><strong>Uso:</strong> cierra con la identidad y los enlaces de quien escribe. Las dos columnas se apilan en móvil; las descripciones de enlaces se difuminan solo con puntero fino y se revelan también con foco de teclado. La atribución a Margen queda separada.</p><p>El generador ofrece la misma pieza mediante <code>footer: {author, note, links: [{label, href, detail}], platform}</code>. No añadas un segundo pie manual cuando uses esa opción. Se aceptan HTTPS sin credenciales y correo <code>mailto:</code>. No se inventan redes, licencias, estadísticas ni autoría: los enlaces de esta muestra corresponden al proyecto, no a una persona ficticia. El pie sigue al contenido y conserva la identidad del documento.</p></div><details class="receta-copia ancho"><summary>Copiar HTML · Footer editorial</summary><p class="procedencia">Dependencias: packages/core/styles/fonts.css, packages/core/styles/artifact.css, packages/core/components/interface.js, packages/core/components/audio.js, packages/core/components/controls.js, packages/core/components/editorial-pieces.js, packages/core/components/reader.js</p><div class="codigo"><div class="cab"><span>Footer editorial</span><button type="button" data-copiar="biblioteca-codigo-pie-editorial" aria-label="Copiar HTML de Footer editorial">Copiar HTML</button><span role="status" class="copia-estado"></span></div><pre tabindex="0" aria-label="HTML de Footer editorial, desplazable"><code id="biblioteca-codigo-pie-editorial">&lt;footer class=&quot;ancho pie pie-documento&quot; id=&quot;pie-editorial-ejemplo&quot;&gt;
+  &lt;div class=&quot;pie-autoria&quot;&gt;
+    &lt;p class=&quot;pie-autor&quot;&gt;Un cuaderno compartido&lt;/p&gt;
+    &lt;p class=&quot;pie-nota&quot;&gt;Ejemplo de cierre editorial. El nombre, los enlaces y esta nota pertenecen a quien escribe el documento.&lt;/p&gt;
+    &lt;nav class=&quot;pie-enlaces&quot; aria-label=&quot;Enlaces del cuaderno de ejemplo&quot;&gt;
+      &lt;span class=&quot;pie-enlace&quot;&gt;&lt;a href=&quot;https://github.com/angelbotto/margen&quot; rel=&quot;noopener noreferrer&quot;&gt;Código de Margen&lt;/a&gt;&lt;span class=&quot;pie-detalle&quot;&gt;Construir y contribuir&lt;/span&gt;&lt;/span&gt;
+      &lt;span class=&quot;pie-enlace&quot;&gt;&lt;a href=&quot;https://artifacts.botto.is&quot; rel=&quot;noopener noreferrer&quot;&gt;La plataforma&lt;/a&gt;&lt;span class=&quot;pie-detalle&quot;&gt;Publicar y conversar&lt;/span&gt;&lt;/span&gt;
+    &lt;/nav&gt;
+  &lt;/div&gt;
+  &lt;p class=&quot;pie-plataforma&quot;&gt;Hecho con Margen · Ejemplo ilustrativo&lt;/p&gt;
 &lt;/footer&gt;</code></pre></div></details><section class="seccion" id="receta-actividad-editorial" tabindex="-1"><p class="ceja">Componente / Actividad con contexto editorial</p><h2>Actividad con contexto editorial</h2></section><section class="pieza amplio actividad-editorial" id="actividad-editorial-ejemplo" data-actividad data-actividad-tabla="actividad-editorial-datos">
   <div><p class="ceja">Actividad de ejemplo / ocho semanas</p><h3>Pequeños avances,<br>una historia visible.</h3><p>Cada cuadrado representa una semana. La intensidad indica cuántas acciones se registraron; no mide calidad ni productividad.</p><a class="enlace-icono" href="https://www.cmrg.me/now">Ver la referencia editorial ↗</a></div>
   <div><div class="actividad-mosaico" data-actividad-mapa role="group" aria-label="Acciones por semana"></div><div class="actividad-escala" data-actividad-escala aria-label="Escala de acciones"></div><p data-actividad-estado role="status">Los conteos completos están en la tabla.</p></div>
@@ -8325,12 +8368,47 @@ window.NotaGeografia=Object.freeze({
 <script>
 /* Actividad, avisos, galería y reacciones: mejoras locales, sin red ni reproducción automática. */
 (()=>{'use strict';
- const instances=new WeakMap(),selector='[data-actividad],[data-aviso-animado],[data-galeria],[data-editorial-web],[data-reacciones]';
+ const instances=new WeakMap(),selector='[data-actividad],[data-aviso-animado],[data-galeria],[data-editorial-web],[data-reacciones],.lectura-guiada:not([data-presentation]) .indice';
+ const indexJobs=new Map();let indexFrame=0,indexRedraw=false;
+ const indexUpdate=()=>{indexFrame=0;const redraw=indexRedraw;indexRedraw=false;
+  for(const [el,job] of indexJobs){if(!el.isConnected){instances.get(el)?.destroy();continue;}if(!el.getClientRects().length)continue;job.mask();if(redraw)job.draw();}
+ };
+ const scheduleIndex=(redraw=false)=>{indexRedraw=indexRedraw||redraw;if(!indexFrame)indexFrame=requestAnimationFrame(indexUpdate);};
+ addEventListener('scroll',()=>scheduleIndex(),{passive:true});
+ addEventListener('resize',()=>scheduleIndex(true),{passive:true});
+ document.addEventListener('nota:pagina',()=>scheduleIndex(true));
+ document.addEventListener('nota:tema',()=>scheduleIndex(true));
+ document.fonts?.ready.then(()=>scheduleIndex(true));
  function mount(el){
   if(instances.has(el))return;
   const clean=[],motion=matchMedia('(prefers-reduced-motion: reduce)');
   const on=(node,type,fn,opts)=>{node.addEventListener(type,fn,opts);clean.push(()=>node.removeEventListener(type,fn,opts));};
   let api={motion,destroy(){clean.splice(0).forEach(fn=>fn());instances.delete(el);}};
+  if(el.classList.contains('indice')){
+   const links=[...el.querySelectorAll('a')],NS='http://www.w3.org/2000/svg';
+   const decorated=links.map(a=>{
+    const label=document.createElement('span');label.className='indice-rotulo';label.append(...a.childNodes);a.append(label);
+    const svg=document.createElementNS(NS,'svg');svg.classList.add('indice-tachado');svg.setAttribute('aria-hidden','true');svg.setAttribute('focusable','false');a.append(svg);
+    return {a,label,svg};
+   });
+   const draw=()=>{if(getComputedStyle(el).position!=='fixed')return;
+    for(const {a,label,svg} of decorated){const box=a.getBoundingClientRect();if(!box.width)continue;
+     svg.setAttribute('viewBox',`0 0 ${box.width} ${box.height}`);
+     const range=document.createRange();range.selectNodeContents(label);const paths=[];
+     [...range.getClientRects()].filter(r=>r.width>0).forEach((r,i)=>{
+      const x=i?Math.max(0,r.left-box.left):0,end=Math.min(box.width,r.right-box.left+2),y=r.top-box.top+r.height*.57,w=end-x;
+      const path=document.createElementNS(NS,'path');path.setAttribute('d',`M${x} ${y+.6} C${x+w*.28} ${y-1.1} ${x+w*.65} ${y+1.3} ${end} ${y-.5}`);path.setAttribute('pathLength','1');paths.push(path);
+     });svg.replaceChildren(...paths);
+    }
+   };
+   const mask=()=>{const chapter=el.closest('.pagina')||el.closest('.hoja'),fixed=getComputedStyle(el).position==='fixed';
+    const enabled=fixed&&chapter&&chapter.offsetHeight>innerHeight+768;el.toggleAttribute('data-indice-mascara',!!enabled);
+    if(enabled){const y=Math.round(chapter.getBoundingClientRect().top-el.getBoundingClientRect().top);el.style.setProperty('--indice-fade-y',y+'px');}
+   };
+   el.setAttribute('data-indice-trazo','');indexJobs.set(el,{draw,mask});
+   const observer=new ResizeObserver(()=>scheduleIndex(true));observer.observe(el);scheduleIndex(true);
+   clean.push(()=>{observer.disconnect();indexJobs.delete(el);el.removeAttribute('data-indice-trazo');el.removeAttribute('data-indice-mascara');el.style.removeProperty('--indice-fade-y');for(const {label,svg} of decorated){svg.remove();label.replaceWith(...label.childNodes);}});
+  }
   if(el.hasAttribute('data-editorial-web')){
    const navigation=el.querySelector(':scope > .web-navegacion'),footer=el.querySelector(':scope > .web-pie');if(!navigation||!footer)return;
    const full=el===document.body,scrollNode=full?window:el,position=()=>full?scrollY:el.scrollTop;
@@ -8400,10 +8478,11 @@ window.NotaGeografia=Object.freeze({
   if(el.hasAttribute('data-reacciones')){
    // Solo este navegador: sin conteos compartidos ni red. Sin almacenamiento, siguen funcionando en la sesión.
    const buttons=[...el.querySelectorAll('[data-reaccion]')];if(!buttons.length)return;
-   const key='margen-reacciones:'+(el.dataset.reacciones||document.querySelector('meta[name="nota-documento"]')?.content||location.pathname);
-   let chosen=new Set();try{const saved=JSON.parse(localStorage.getItem(key)||'[]');if(Array.isArray(saved))chosen=new Set(saved.filter(v=>buttons.some(b=>b.dataset.reaccion===v)));}catch{}
+   const key='margen-reacciones:'+(document.querySelector('meta[name="nota-documento"]')?.content||location.pathname)+':'+(el.dataset.reacciones||'documento');
+   let chosen=new Set();const temporary=()=>{const note=el.querySelector('.reacciones-nota');if(note)note.textContent='La selección se conserva mientras esta página siga abierta. No hay conteos compartidos.';};
+   try{const saved=JSON.parse(localStorage.getItem(key)||'[]');if(Array.isArray(saved))chosen=new Set(saved.filter(v=>buttons.some(b=>b.dataset.reaccion===v)));}catch{temporary();}
    const paint=()=>buttons.forEach(b=>b.setAttribute('aria-pressed',String(chosen.has(b.dataset.reaccion))));
-   buttons.forEach(b=>on(b,'click',()=>{const v=b.dataset.reaccion;chosen.has(v)?chosen.delete(v):chosen.add(v);paint();try{localStorage.setItem(key,JSON.stringify([...chosen]));}catch{}}));
+   buttons.forEach(b=>on(b,'click',()=>{const v=b.dataset.reaccion;chosen.has(v)?chosen.delete(v):chosen.add(v);paint();try{localStorage.setItem(key,JSON.stringify([...chosen]));}catch{temporary();}}));
    paint();clean.push(()=>buttons.forEach(b=>b.setAttribute('aria-pressed','false')));
   }
   instances.set(el,api);
@@ -12352,12 +12431,47 @@ globalThis.BottifactTableModel=TableModel;
 <script>
 /* Actividad, avisos, galería y reacciones: mejoras locales, sin red ni reproducción automática. */
 (()=>{'use strict';
- const instances=new WeakMap(),selector='[data-actividad],[data-aviso-animado],[data-galeria],[data-editorial-web],[data-reacciones]';
+ const instances=new WeakMap(),selector='[data-actividad],[data-aviso-animado],[data-galeria],[data-editorial-web],[data-reacciones],.lectura-guiada:not([data-presentation]) .indice';
+ const indexJobs=new Map();let indexFrame=0,indexRedraw=false;
+ const indexUpdate=()=>{indexFrame=0;const redraw=indexRedraw;indexRedraw=false;
+  for(const [el,job] of indexJobs){if(!el.isConnected){instances.get(el)?.destroy();continue;}if(!el.getClientRects().length)continue;job.mask();if(redraw)job.draw();}
+ };
+ const scheduleIndex=(redraw=false)=>{indexRedraw=indexRedraw||redraw;if(!indexFrame)indexFrame=requestAnimationFrame(indexUpdate);};
+ addEventListener('scroll',()=>scheduleIndex(),{passive:true});
+ addEventListener('resize',()=>scheduleIndex(true),{passive:true});
+ document.addEventListener('nota:pagina',()=>scheduleIndex(true));
+ document.addEventListener('nota:tema',()=>scheduleIndex(true));
+ document.fonts?.ready.then(()=>scheduleIndex(true));
  function mount(el){
   if(instances.has(el))return;
   const clean=[],motion=matchMedia('(prefers-reduced-motion: reduce)');
   const on=(node,type,fn,opts)=>{node.addEventListener(type,fn,opts);clean.push(()=>node.removeEventListener(type,fn,opts));};
   let api={motion,destroy(){clean.splice(0).forEach(fn=>fn());instances.delete(el);}};
+  if(el.classList.contains('indice')){
+   const links=[...el.querySelectorAll('a')],NS='http://www.w3.org/2000/svg';
+   const decorated=links.map(a=>{
+    const label=document.createElement('span');label.className='indice-rotulo';label.append(...a.childNodes);a.append(label);
+    const svg=document.createElementNS(NS,'svg');svg.classList.add('indice-tachado');svg.setAttribute('aria-hidden','true');svg.setAttribute('focusable','false');a.append(svg);
+    return {a,label,svg};
+   });
+   const draw=()=>{if(getComputedStyle(el).position!=='fixed')return;
+    for(const {a,label,svg} of decorated){const box=a.getBoundingClientRect();if(!box.width)continue;
+     svg.setAttribute('viewBox',`0 0 ${box.width} ${box.height}`);
+     const range=document.createRange();range.selectNodeContents(label);const paths=[];
+     [...range.getClientRects()].filter(r=>r.width>0).forEach((r,i)=>{
+      const x=i?Math.max(0,r.left-box.left):0,end=Math.min(box.width,r.right-box.left+2),y=r.top-box.top+r.height*.57,w=end-x;
+      const path=document.createElementNS(NS,'path');path.setAttribute('d',`M${x} ${y+.6} C${x+w*.28} ${y-1.1} ${x+w*.65} ${y+1.3} ${end} ${y-.5}`);path.setAttribute('pathLength','1');paths.push(path);
+     });svg.replaceChildren(...paths);
+    }
+   };
+   const mask=()=>{const chapter=el.closest('.pagina')||el.closest('.hoja'),fixed=getComputedStyle(el).position==='fixed';
+    const enabled=fixed&&chapter&&chapter.offsetHeight>innerHeight+768;el.toggleAttribute('data-indice-mascara',!!enabled);
+    if(enabled){const y=Math.round(chapter.getBoundingClientRect().top-el.getBoundingClientRect().top);el.style.setProperty('--indice-fade-y',y+'px');}
+   };
+   el.setAttribute('data-indice-trazo','');indexJobs.set(el,{draw,mask});
+   const observer=new ResizeObserver(()=>scheduleIndex(true));observer.observe(el);scheduleIndex(true);
+   clean.push(()=>{observer.disconnect();indexJobs.delete(el);el.removeAttribute('data-indice-trazo');el.removeAttribute('data-indice-mascara');el.style.removeProperty('--indice-fade-y');for(const {label,svg} of decorated){svg.remove();label.replaceWith(...label.childNodes);}});
+  }
   if(el.hasAttribute('data-editorial-web')){
    const navigation=el.querySelector(':scope > .web-navegacion'),footer=el.querySelector(':scope > .web-pie');if(!navigation||!footer)return;
    const full=el===document.body,scrollNode=full?window:el,position=()=>full?scrollY:el.scrollTop;
@@ -12427,10 +12541,11 @@ globalThis.BottifactTableModel=TableModel;
   if(el.hasAttribute('data-reacciones')){
    // Solo este navegador: sin conteos compartidos ni red. Sin almacenamiento, siguen funcionando en la sesión.
    const buttons=[...el.querySelectorAll('[data-reaccion]')];if(!buttons.length)return;
-   const key='margen-reacciones:'+(el.dataset.reacciones||document.querySelector('meta[name="nota-documento"]')?.content||location.pathname);
-   let chosen=new Set();try{const saved=JSON.parse(localStorage.getItem(key)||'[]');if(Array.isArray(saved))chosen=new Set(saved.filter(v=>buttons.some(b=>b.dataset.reaccion===v)));}catch{}
+   const key='margen-reacciones:'+(document.querySelector('meta[name="nota-documento"]')?.content||location.pathname)+':'+(el.dataset.reacciones||'documento');
+   let chosen=new Set();const temporary=()=>{const note=el.querySelector('.reacciones-nota');if(note)note.textContent='La selección se conserva mientras esta página siga abierta. No hay conteos compartidos.';};
+   try{const saved=JSON.parse(localStorage.getItem(key)||'[]');if(Array.isArray(saved))chosen=new Set(saved.filter(v=>buttons.some(b=>b.dataset.reaccion===v)));}catch{temporary();}
    const paint=()=>buttons.forEach(b=>b.setAttribute('aria-pressed',String(chosen.has(b.dataset.reaccion))));
-   buttons.forEach(b=>on(b,'click',()=>{const v=b.dataset.reaccion;chosen.has(v)?chosen.delete(v):chosen.add(v);paint();try{localStorage.setItem(key,JSON.stringify([...chosen]));}catch{}}));
+   buttons.forEach(b=>on(b,'click',()=>{const v=b.dataset.reaccion;chosen.has(v)?chosen.delete(v):chosen.add(v);paint();try{localStorage.setItem(key,JSON.stringify([...chosen]));}catch{temporary();}}));
    paint();clean.push(()=>buttons.forEach(b=>b.setAttribute('aria-pressed','false')));
   }
   instances.set(el,api);
