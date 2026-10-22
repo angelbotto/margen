@@ -2,6 +2,11 @@
 window.MargenUpload = (() => {
   const MiB = 1024 * 1024;
   const size = bytes => bytes < MiB ? `${Math.ceil(bytes / 1024)} KB` : `${(bytes / MiB).toFixed(1)} MB`;
+  // Archivo y original viajan en base64 dentro de un JSON: MAX_BODY de portal/app.py.
+  const MAX_BODY = 22 * MiB, FIELDS = 64 * 1024, encodedSize = bytes => Math.ceil(bytes / 3) * 4;
+  const tooLarge = (file, original) => encodedSize(file.size) + encodedSize(original?.size || 0) + FIELDS > MAX_BODY
+    ? `${original ? 'El archivo y el original juntos ocupan' : 'El archivo ocupa'} ${size(file.size + (original?.size || 0))} y un envío admite hasta ${size(Math.floor((MAX_BODY - FIELDS) / 4) * 3)}. ${original ? 'Quita el original adjunto o sube un archivo más liviano.' : 'Sube un archivo más liviano.'}`
+    : '';
   function create({api, navigate = url => location.assign(url)}) {
     const dialog = document.querySelector('#upload-dialog'), form = dialog.querySelector('form');
     const input = form.elements.file, drop = form.querySelector('[data-upload-drop]');
@@ -66,6 +71,7 @@ window.MargenUpload = (() => {
       } catch (e) { if (ticket === generation) { inspection = null; error.textContent = e.message; state('No se pudo preparar el archivo.'); } }
     }
     input.addEventListener('change', () => choose(input.files));
+    form.elements.original.addEventListener('change', () => { if (selected && !busy) error.textContent = tooLarge(selected, form.elements.original.files[0]); });
     drop.addEventListener('dragover', e => { e.preventDefault(); if (!busy) drop.dataset.dragging = ''; });
     drop.addEventListener('dragleave', e => { if (!drop.contains(e.relatedTarget)) delete drop.dataset.dragging; });
     drop.addEventListener('drop', e => { e.preventDefault(); delete drop.dataset.dragging; choose(e.dataTransfer.files); });
@@ -82,9 +88,12 @@ window.MargenUpload = (() => {
         const original = form.elements.original.files[0];
         if (original) {
           if (original.size > 12 * MiB) throw Error('El original debe ocupar menos de 12 MB.');
+          if (tooLarge(selected, original)) throw Error(tooLarge(selected, original));
           body.attachments = [{name:'original.' + original.name.split('.').pop().toLowerCase(), data:await base64(original)}];
         }
-        const result = await api('/api/uploads', {method:'POST', body:JSON.stringify(body)});
+        const json = JSON.stringify(body);
+        if (new TextEncoder().encode(json).length > MAX_BODY) throw Error(tooLarge(selected, original) || `El envío supera ${size(MAX_BODY)}. Quita el original adjunto o acorta el título y la procedencia.`);
+        const result = await api('/api/uploads', {method:'POST', body:json});
         navigate('/a/' + encodeURIComponent(result.id) + (result.state === 'draft' ? '?version=' + encodeURIComponent(result.version) : ''));
       } catch (e) { error.textContent = e.message; }
       finally { busy = false; for (const el of form.querySelectorAll('[data-close],input,select')) el.disabled = false; form.elements.original.disabled = inspection?.kind === 'pdf'; state(inspection ? 'Archivo preparado para guardar.' : ''); }

@@ -44,7 +44,10 @@ LIMITS = {
     "zip_entry_bytes": 20 * MiB,
     "zip_ratio": 100,
 }
-PDF_TIMEOUT = 120
+# Plazo de toda la conversión (metadatos, páginas y texto) y memoria virtual por proceso
+# de Poppler. Producción: contenedor de 768 MiB y /tmp tmpfs de 32 MiB, un PDF a la vez.
+PDF_TIMEOUT = 90
+PDF_CHILD_MEMORY = 384 * MiB
 DOCUMENT_ID = re.compile(r'<meta\s+name=["\']nota-documento["\']\s+content=["\']([a-zA-Z0-9_-]{1,120})["\']')
 ASSET_TYPES = {
     ".html": "text/html", ".htm": "text/html", ".css": "text/css", ".js": "text/javascript",
@@ -57,6 +60,9 @@ ASSET_TYPES = {
 # Archivos de servidor o de compilación: un sitio estático no los necesita y no se ejecutan.
 DENIED_NAMES = {"package.json", "package-lock.json", "yarn.lock", "pnpm-lock.yaml", "netlify.toml",
                 "_redirects", "_headers", ".htaccess", "vercel.json", "dockerfile", "makefile"}
+# Atributos que cargan o navegan a otra página: si apuntan a una página del ZIP, el
+# documento publicado quedaría roto (una página por artefacto).
+NAVIGATING = {"src": ("iframe", "frame", "embed"), "data": ("object",), "action": ("form",), "formaction": ("button", "input")}
 SKIPPED = re.compile(r"(^|/)(__MACOSX/|\.DS_Store$|Thumbs\.db$)")
 PDF_SLOTS = threading.BoundedSemaphore(1)
 UPLOAD_SLOTS = threading.BoundedSemaphore(2)
@@ -113,41 +119,103 @@ def text_of(raw, label):
         reject(label + " debe estar guardado como UTF-8.")
 
 
+HEAD_TAGS = {"html", "head", "title", "meta", "link", "style", "script", "base", "noscript", "template"}
+
+
+class Metadata(HTMLParser):
+    """Título, documento-id y posición de <head> leídos como HTML: nunca dentro de
+    comentarios, script, style ni template. Se detiene al llegar al cuerpo."""
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.template = 0
+        self.active, self.text = None, ""
+        self.values = {"title": "", "h1": ""}
+        self.document_id = None
+        self.head = None
+        self.body = False
+        self.done = False
+
+    def handle_starttag(self, tag, attrs, closed=False):
+        if tag == "template" and not closed:
+            self.template += 1
+        if self.template:
+            return
+        if tag == "head" and self.head is None and not self.body:
+            line, column = self.getpos()
+            self.head = (line, column, len(self.get_starttag_text()))
+        elif tag == "body" or (tag not in HEAD_TAGS and not self.body):
+            # Como el navegador: una etiqueta que no va en <head> abre el cuerpo.
+            self.body = True
+            self.done = bool(self.values["title"])
+        elif tag == "meta" and self.document_id is None:
+            values = dict(attrs)
+            if values.get("name") == "nota-documento" and re.fullmatch(r"[a-zA-Z0-9_-]{1,120}", values.get("content") or ""):
+                self.document_id = values["content"]
+        if tag in self.values and not self.values[tag] and not closed:
+            self.active, self.text = tag, ""
+
+    def handle_startendtag(self, tag, attrs):
+        self.handle_starttag(tag, attrs, True)
+
+    def handle_endtag(self, tag):
+        if tag == "template" and self.template:
+            self.template -= 1
+        elif tag == self.active:
+            # Sólo un elemento cerrado cuenta: un <title> sin cierre no es el título.
+            self.values[tag], self.active = self.text, None
+            self.done = self.body and bool(self.values["title"] or self.values["h1"])
+
+    def handle_data(self, data):
+        if self.active and not self.template:
+            self.text = (self.text + data[:200])[:200]
+
+
+def metadata(content):
+    parser = Metadata()
+    # Parsing incremental: el cuerpo de una página grande no se recorre. HTMLParser es
+    # lineal y libera el GIL entre bloques, al contrario que una regex sobre todo el texto.
+    for start in range(0, len(content), 65536):
+        parser.feed(content[start:start + 65536])
+        if parser.done or (parser.body and start >= 65536 * 4):
+            break
+    else:
+        parser.close()
+    head = None
+    if parser.head:
+        line, column, length = parser.head
+        offset = 0
+        for _ in range(line - 1):
+            offset = content.index("\n", offset) + 1
+        head = offset + column + length
+    title = " ".join((parser.values["title"] or parser.values["h1"]).split())
+    return {"title": title[:200], "document_id": parser.document_id, "head": head}
+
+
 def title_of(content, fallback):
-    class Heading(HTMLParser):
-        def __init__(self):
-            super().__init__()
-            self.active = None
-            self.values = {"title": "", "h1": ""}
-
-        def handle_starttag(self, tag, attrs):
-            if tag in self.values and not self.values[tag]:
-                self.active = tag
-
-        def handle_endtag(self, tag):
-            if tag == self.active:
-                self.active = None
-
-        def handle_data(self, data):
-            if self.active:
-                self.values[self.active] = (self.values[self.active] + data[:200])[:200]
-
-    parser = Heading()
-    # Metadata extraction is bounded even for adversarial unfinished tags.
-    parser.feed(content[:32768])
-    text = " ".join((parser.values["title"] or parser.values["h1"]).split())
-    return (text or fallback)[:200]
+    return metadata(content)["title"] or fallback[:200]
 
 
 def with_document_id(content, document_id):
-    """Inserta el documento-id sólo cuando falta; no toca nada más del HTML."""
-    if DOCUMENT_ID.search(content):
-        return content
-    meta = '<meta name="nota-documento" content="' + document_id + '">'
-    head = re.search(r"<head(?:\s[^>]{0,2048})?>", content[:32768], re.I)
-    doctype = re.match(r"\s*<!doctype[^>]*>", content, re.I)
-    position = head.end() if head else doctype.end() if doctype else 0
-    return content[:position] + meta + content[position:]
+    """Conserva el documento-id declarado o inserta uno al abrir el <head> real.
+    publish() lee la primera coincidencia textual: debe ser la misma identidad."""
+    found = metadata(content)
+    if found["document_id"]:
+        out, document_id = content, found["document_id"]
+    else:
+        meta = '<meta name="nota-documento" content="' + document_id + '">'
+        doctype = re.match(r"\s*<!doctype[^>]{0,1024}>", content, re.I)
+        position = found["head"] if found["head"] is not None else doctype.end() if doctype else 0
+        out = content[:position] + meta + content[position:]
+    first = DOCUMENT_ID.search(out)
+    if not first or first[1] != document_id:
+        reject('El HTML tiene un nota-documento dentro de un comentario o script, o con un formato que el portal no lee. '
+               'Escribe <meta name="nota-documento" content="…"> en el <head> o quítalo.')
+    return out
+
+
+def declared_id(content):
+    return metadata(content)["document_id"]
 
 
 def warnings_for(content):
@@ -171,30 +239,46 @@ def poppler():
     return tools if all(tools.values()) else None
 
 
-def bounded_run(command, folder, timeout):
-    """Ejecuta Poppler con límites del sistema, entorno vacío y grupo de procesos propio."""
-    # ulimit en un sh intermedio evita preexec_fn dentro del servidor multihilo.
-    limits = "ulimit -t 60; ulimit -f 4096; ulimit -n 64; ulimit -v 1048576 2>/dev/null; exec \"$@\""
-    # stdout is a bounded file too, never an unbounded PIPE allocation.
-    with tempfile.TemporaryFile(dir=folder) as output:
+PDF_HEAVY = ("El PDF es demasiado pesado para generar la vista previa en este servidor (memoria, tiempo o tamaño). "
+             "Reduce la resolución de sus imágenes, divídelo en partes o súbelo como adjunto de un HTML.")
+PDF_SLOW = "El PDF tardó demasiado en procesarse (máximo " + str(PDF_TIMEOUT) + " s por documento). Divídelo en partes o reduce sus imágenes."
+
+
+def bounded_run(command, folder, deadline):
+    """Ejecuta Poppler con límites del sistema, entorno vacío y grupo de procesos propio.
+    deadline es compartido por toda la conversión, metadatos incluidos."""
+    seconds = deadline - time.monotonic()
+    if seconds <= 0:
+        reject(PDF_SLOW)
+    # ulimit en un sh intermedio evita preexec_fn dentro del servidor multihilo. La memoria
+    # por proceso deja sitio al portal dentro de los 768 MiB del contenedor.
+    limits = ("ulimit -t " + str(min(60, int(seconds) + 1)) + "; ulimit -f 4096; ulimit -n 64; ulimit -v "
+              + str(PDF_CHILD_MEMORY // 1024) + " 2>/dev/null; exec \"$@\"")
+    # stdout/stderr are bounded files too, never an unbounded PIPE allocation.
+    with tempfile.TemporaryFile(dir=folder) as output, tempfile.TemporaryFile(dir=folder) as errors:
         process = subprocess.Popen(["/bin/sh", "-c", limits, "sh", *command], cwd=folder, env={"PATH": "/usr/bin:/bin", "LANG": "C.UTF-8"},
-                                   stdin=subprocess.DEVNULL, stdout=output, stderr=subprocess.DEVNULL, start_new_session=True)
+                                   stdin=subprocess.DEVNULL, stdout=output, stderr=errors, start_new_session=True)
         try:
-            process.wait(timeout=timeout)
+            process.wait(timeout=seconds)
         except subprocess.TimeoutExpired:
             os.killpg(process.pid, signal.SIGKILL)
             process.wait()
-            reject("El PDF tardó demasiado en procesarse.")
+            reject(PDF_SLOW)
         if process.returncode != 0:
-            reject("No se pudo leer el PDF; puede estar dañado, protegido o superar los límites de procesamiento.")
+            errors.seek(0)
+            detail = errors.read(4096).decode("utf-8", "replace").lower()
+            # Señal (CPU, tamaño de archivo, abort por memoria) o falta de memoria declarada.
+            if process.returncode < 0 or process.returncode >= 128 or "memory" in detail or "bad_alloc" in detail:
+                reject(PDF_HEAVY)
+            reject("No se pudo leer el PDF; puede estar dañado o protegido con contraseña.")
         output.seek(0)
         return output.read(65536).decode("utf-8", "replace")
 
 
-def pdf_info(raw, folder, tools):
+def pdf_info(raw, folder, tools, deadline):
     source = Path(folder) / "original.pdf"
     source.write_bytes(raw)
-    info = bounded_run([tools["pdfinfo"], str(source)], folder, 30)
+    info = bounded_run([tools["pdfinfo"], str(source)], folder, min(deadline, time.monotonic() + 30))
     pages = re.search(r"^Pages:\s+(\d+)", info, re.M)
     if not pages or not 0 < int(pages[1]) <= LIMITS["pdf_pages"]:
         reject("La vista previa admite PDF de 1 a 80 páginas.")
@@ -213,7 +297,7 @@ def inspect_pdf(name, raw):
             raise HTTPException(503, "Hay otros PDF en proceso. Intenta en un momento.")
         try:
             with tempfile.TemporaryDirectory(prefix="margen-upload-") as folder:
-                _, report["pages"], title = pdf_info(raw, folder, tools)
+                _, report["pages"], title = pdf_info(raw, folder, tools, time.monotonic() + 30)
         finally:
             PDF_SLOTS.release()
     else:
@@ -232,22 +316,18 @@ def build_pdf(name, raw, document_id, title):
     try:
         with tempfile.TemporaryDirectory(prefix="margen-upload-") as folder:
             root = Path(folder)
-            source, count, _ = pdf_info(raw, folder, tools)
-            scale = "1400" if count <= 20 else "1000"
             deadline = time.monotonic() + PDF_TIMEOUT
-            def remaining():
-                seconds = deadline - time.monotonic()
-                if seconds <= 0: reject("El PDF tardó demasiado en procesarse.")
-                return min(30, seconds)
+            source, count, _ = pdf_info(raw, folder, tools, deadline)
+            scale = "1400" if count <= 20 else "1000"
             pages, used = [], 8192
             # One page on disk at a time fits the production 32 MiB tmpfs,
             # including a 12 MiB original. Reserve output before base64 encoding.
             for i in range(1, count + 1):
                 path = root / "page.jpg"
                 bounded_run([tools["pdftoppm"], "-f", str(i), "-l", str(i), "-singlefile", "-jpeg", "-scale-to", scale,
-                             "-jpegopt", "quality=72", str(source), str(root / "page")], folder, remaining())
+                             "-jpegopt", "quality=72", str(source), str(root / "page")], folder, deadline)
                 if not path.is_file(): reject("No se pudo generar la vista previa del PDF.")
-                text = bounded_run([tools["pdftotext"], "-f", str(i), "-l", str(i), "-enc", "UTF-8", str(source), "-"], folder, remaining()).strip()
+                text = bounded_run([tools["pdftotext"], "-f", str(i), "-l", str(i), "-enc", "UTF-8", str(source), "-"], folder, deadline).strip()
                 used += ((path.stat().st_size + 2) // 3) * 4 + len(html_module.escape(text).encode()) + 512
                 if used > LIMITS["output_bytes"]: reject("La vista previa del PDF supera 20 MB.")
                 pages.append('<figure id="page-' + str(i) + '"><img alt="Página ' + str(i) + '" src="data:image/jpeg;base64,'
@@ -353,6 +433,12 @@ def is_local(ref):
     return True
 
 
+def script_text(code):
+    # "<!--" seguido de "<script" deja al parser HTML en estado double-escaped y se
+    # traga el resto de la página; "</script" lo cerraría antes de tiempo.
+    return re.sub(r"<(/script|!--)", r"<\\\1", code, flags=re.I)
+
+
 def resolve(ref, base):
     path = unquote(urlsplit(ref.strip()).path)
     if not path:
@@ -365,7 +451,7 @@ def resolve(ref, base):
 class Tags(HTMLParser):
     def __init__(self):
         super().__init__(convert_charrefs=True)
-        self.tags, self.styles = [], []
+        self.tags, self.styles, self.scripts = [], [], {}
 
     def handle_starttag(self, tag, attrs):
         if len(self.tags) >= 30000:
@@ -377,6 +463,11 @@ class Tags(HTMLParser):
     def handle_data(self, data):
         if self.lasttag == "style" and self.cdata_elem == "style":
             self.styles.append((self.getpos(), data))
+        elif self.cdata_elem == "script" and self.tags and self.tags[-1][2] == "script":
+            # Cuerpo del último <script>: se descarta si su src se incrusta.
+            index = len(self.tags) - 1
+            pos, text = self.scripts.get(index, (self.getpos(), ""))
+            self.scripts[index] = (pos, text + data)
 
 
 class Site:
@@ -389,6 +480,7 @@ class Site:
         self.remaining = LIMITS["output_bytes"] - len(contents[entry])
         self.encoded = {}
         self.css_imports = 0
+        self.inlined_script = False
 
     def spend(self, size):
         # Conservative work/output budget, charged BEFORE each expansion, including
@@ -416,6 +508,25 @@ class Site:
             self.pages.add(path)
             return ref
         return self.data_uri(path)
+
+    def page(self, ref, base):
+        """Devuelve la página del ZIP a la que navega ref (about/, /about, about.html…), o None."""
+        if not is_local(ref):
+            return None
+        path = resolve(ref, base)
+        if path is None:
+            return None
+        directory = "" if path == "." else path + "/"
+        for candidate in (path, path + ".html", path + ".htm", directory + "index.html", directory + "index.htm"):
+            if candidate in self.contents and PurePosixPath(candidate).suffix.lower() in (".html", ".htm"):
+                return candidate
+        return None
+
+    def navigates(self, ref, base):
+        target = self.page(ref, base)
+        if target and target != base:
+            self.pages.add(target)
+        return target is not None
 
     def css(self, text, base, depth=0):
         self.spend(len(text.encode()))
@@ -466,10 +577,18 @@ class Site:
                 code = text_of(self.contents[path], path)
                 self.spend(len(self.contents[path]))
                 attrs = [(k, v) for k, v in attrs if k != "src"]
-                suffix = re.sub(r"</script", r"<\\/script", code, flags=re.I)
-                changed = True
+                suffix = script_text(code)
+                changed = self.inlined_script = True
             else:
                 self.missing.add(values["src"][:200])
+        if tag == "base" and values.get("href") is not None:
+            href = values["href"].strip()
+            if not is_local(href) or resolve(href.rstrip("/") + "/x", base) != posixpath.normpath(posixpath.join(posixpath.dirname(base), "x")):
+                reject("La página usa <base href=\"" + href[:120] + "\">, que cambia cómo se resuelven sus enlaces. Quítalo antes de subir el ZIP.")
+        if tag == "meta" and (values.get("http-equiv") or "").lower() == "refresh":
+            target = re.search(r"url\s*=\s*['\"]?([^'\";]+)", values.get("content") or "", re.I)
+            if target:
+                self.navigates(target[1], base)
         for i, (key, value) in enumerate(attrs):
             if value is None:
                 continue
@@ -480,12 +599,12 @@ class Site:
                 new = self.srcset(value, base)
             elif key == "href" and tag == "link" and set(rel) & {"icon", "apple-touch-icon", "shortcut"}:
                 new = self.asset(value, base)
-            elif key == "href" and tag in ("a", "area") and is_local(value):
+            elif (key in ("src", "data", "action", "formaction") and tag in NAVIGATING.get(key, ())) \
+                    or (key == "href" and tag == "link" and set(rel) & {"next", "prev", "alternate"}):
+                self.navigates(value, base)
+            elif key in ("href", "xlink:href") and tag in ("a", "area") and is_local(value) and not self.navigates(value, base):
                 path = resolve(value, base)
-                if path in self.contents and PurePosixPath(path).suffix.lower() in (".html", ".htm"):
-                    if path != base:
-                        self.pages.add(path)
-                elif path in self.contents:
+                if path in self.contents:
                     new = self.data_uri(path)
                 elif path:
                     self.missing.add(value.strip()[:200])
@@ -511,14 +630,20 @@ class Site:
         starts = [0] + [m.end() for m in re.finditer("\n", content)]
         offset = lambda pos: starts[pos[0] - 1] + pos[1]
         edits = []
-        for pos, raw, tag, attrs in parser.tags:
+        for index, (pos, raw, tag, attrs) in enumerate(parser.tags):
             if raw is None:
                 continue
+            self.inlined_script = False
             new = self.tag(raw, tag, list(attrs), self.entry)
             if new != raw:
                 start = offset(pos)
                 if content[start:start + len(raw)] == raw:
                     edits.append((start, start + len(raw), new))
+            if self.inlined_script and index in parser.scripts:
+                body_pos, body = parser.scripts[index]
+                start = offset(body_pos)
+                if content[start:start + len(body)] == body:
+                    edits.append((start, start + len(body), ""))
         for pos, data in parser.styles:
             new = self.css(data, self.entry)
             if new != data:
@@ -567,7 +692,7 @@ def zip_site(name, raw, requested):
     content = site.render()
     linked = sorted(site.pages - {entry})
     if linked:
-        reject("La página " + entry + " enlaza otras páginas del ZIP (" + ", ".join(linked[:5])
+        reject("La página " + entry + " enlaza, incrusta o redirige a otras páginas del ZIP (" + ", ".join(linked[:5])
                + "). Margen publica una página por documento: combina el sitio en una sola página o sube cada página por separado.")
     if len(content.encode()) > LIMITS["output_bytes"]:
         reject("El sitio con sus recursos incrustados supera 20 MB.")
@@ -600,13 +725,13 @@ def inspect(name, raw, entry):
     if kind == "zip":
         site = zip_site(name, raw, entry)
         report.update(kind="zip", title=site["title"], entry=site["entry"], files=site["files"], warnings=site["warnings"])
-        found = DOCUMENT_ID.search(site["content"])
+        found = declared_id(site["content"])
     else:
         content = text_of(raw, "El HTML")
         report.update(kind="html", title=title_of(content, PurePosixPath(name).stem), warnings=warnings_for(content),
                       files=[{"path": name, "size": len(raw), "type": "text/html", "role": "entry"}])
-        found = DOCUMENT_ID.search(content)
-    report["document_id"] = found[1] if found else None
+        found = declared_id(content)
+    report["document_id"] = found
     return report
 
 

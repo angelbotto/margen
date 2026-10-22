@@ -1,11 +1,19 @@
 import base64
 import io
+import re
 import stat
+import sys
+import tempfile
+import time
 import unittest
 import warnings
 import zipfile
+from pathlib import Path
+from unittest import mock
+from fastapi import HTTPException
 from fastapi.testclient import TestClient
 from portal import test_app as fixtures
+from portal import uploads
 from portal.uploads import poppler
 
 PLAIN = '<!doctype html><html><head><title>Sitio propio</title><style>body{font-family:"Comic Sans MS";color:#c0ffee}</style></head><body><h1 class="x">Hola</h1><script>document.body.dataset.ok=1</script></body></html>'
@@ -232,6 +240,126 @@ class UploadTests(unittest.TestCase):
         self.assertEqual(self.owner.get(path + "/attachments/" + html["version"] + "/original.pdf").status_code, 404)
         self.assertEqual(self.upload("largo.pdf", pdf(81)).status_code, 422)
         self.assertEqual(self.upload("informe.pdf", pdf(1), attachments=[]).status_code, 422)
+
+
+class StructureTests(unittest.TestCase):
+    def rejected(self, call, *args):
+        with self.assertRaises(HTTPException) as caught:
+            call(*args)
+        self.assertEqual(caught.exception.status_code, 422)
+        return caught.exception.detail
+
+    def site(self, markup, *extra):
+        return archive([("index.html", "<html><head><title>T</title></head><body>" + markup + "</body></html>"), *extra])
+
+    def test_directory_embedded_and_redirect_navigation_is_rejected(self):
+        about = ("about/index.html", "<h1>About</h1>")
+        for markup in ('<a href="about/">x</a>', '<a href="/about/">x</a>', '<a href="about">x</a>', '<a href="contact">x</a>',
+                       '<iframe src="about/index.html"></iframe>', '<frame src="about/">', '<object data="about/"></object>',
+                       '<embed src="about/index.html">', '<meta http-equiv="refresh" content="0; URL=\'about/\'">',
+                       '<form action="about/"></form>', '<button formaction="/contact.html">x</button>',
+                       '<link rel="next" href="about/">', '<svg><a xlink:href="about/">x</a></svg>'):
+            with self.subTest(markup=markup):
+                detail = self.rejected(uploads.zip_site, "s.zip", self.site(markup, about, ("contact.html", "<h1>C</h1>")), None)
+                self.assertRegex(detail, r"about/index\.html|contact\.html")
+
+    def test_links_to_self_assets_and_missing_pages_still_publish(self):
+        site = uploads.zip_site("s.zip", self.site('<a href="/">Inicio</a><a href="./">Inicio</a><a href="index.html#x">x</a>'
+                                                   '<a href="docs/">faltante</a><a href="notes.txt">Notas</a><form action="/api"></form>',
+                                                   ("notes.txt", b"hola")), None)
+        self.assertIn('href="data:text/plain;base64,aG9sYQ=="', site["content"])
+        self.assertTrue(any("docs/" in w for w in site["warnings"]))
+
+    def test_base_href_that_changes_resolution_is_rejected(self):
+        self.assertIn("base href", self.rejected(uploads.zip_site, "s.zip", self.site('<base href="https://cdn.example/">'), None))
+        self.assertIn("base href", self.rejected(uploads.zip_site, "s.zip", self.site('<base href="sub/">'), None))
+        self.assertEqual(uploads.zip_site("s.zip", self.site('<base href="./" target="_blank">'), None)["entry"], "index.html")
+
+    def test_inlined_script_cannot_swallow_the_page_and_drops_fallback_body(self):
+        raw = archive([("index.html", '<script src="a.js">fallback()</script><p id="after">after</p>'),
+                       ("a.js", "var s='<!--<script>'; var e='</SCRIPT>'")])
+        content = uploads.zip_site("s.zip", raw, None)["content"]
+        script = content.split("<script>", 1)[1].split("</script>", 1)[0]
+        self.assertEqual(script, "var s='<\\!--<script>'; var e='<\\/SCRIPT>'")
+        self.assertNotIn("fallback", content)
+        self.assertIn('<p id="after">after</p>', content)
+
+    def test_identity_and_title_come_from_parsed_head_only(self):
+        html = ('<!-- <head><meta name="nota-documento" content="comentario"> --><html><head data-x="1">'
+                '<script>const a = "<title>falso</title><meta name=\\"nota-documento\\" content=\\"script\\">"</script>'
+                '<template><title>plantilla</title><meta name="nota-documento" content="plantilla"></template>'
+                '<title>Real</title></head><body><h1>H</h1></body></html>')
+        self.assertEqual(uploads.metadata(html)["title"], "Real")
+        self.assertIsNone(uploads.declared_id(html))
+        # A textual copy before the real <head> would win in publish(): refuse instead of publishing another identity.
+        self.assertIn("comentario o script", self.rejected(uploads.with_document_id, html, "upload-x"))
+        clean = html.split("-->", 1)[1]
+        out = uploads.with_document_id(clean, "upload-x")
+        self.assertIn('<head data-x="1"><meta name="nota-documento" content="upload-x">', out)
+        self.assertEqual(uploads.DOCUMENT_ID.search(out)[1], "upload-x")
+        # The template copy precedes the declared meta, so publish() would read "plantilla".
+        late = clean.replace("<title>Real", '<meta name="nota-documento" content="propio"><title>Real')
+        self.assertIn("comentario o script", self.rejected(uploads.with_document_id, late, "upload-x"))
+        declared = clean.replace('<head data-x="1">', '<head data-x="1"><meta name="nota-documento" content="propio">')
+        self.assertEqual(uploads.with_document_id(declared, "upload-x"), declared)
+        report = uploads.inspect("a.html", declared.encode(), None)
+        self.assertEqual((report["document_id"], report["title"]), ("propio", "Real"))
+        self.assertEqual(uploads.title_of("<p>sin título</p><h1>Encabezado</h1>", "f"), "Encabezado")
+
+    def test_metadata_stops_at_body_and_handles_unclosed_markup_quickly(self):
+        for content in ("<title>" * 200000, "<head " * 200000, "<html><head><title>T</title></head><body>" + "<p>x</p>" * 2000000,
+                        "<!--" + "x" * 5000000):
+            started = time.monotonic()
+            uploads.with_document_id(content, "upload-x")
+            self.assertLess(time.monotonic() - started, 1.5, content[:20])
+
+    def test_upload_ui_body_limit_matches_portal(self):
+        from portal.app import MAX_BODY
+        js = (Path(__file__).parent / "static/upload.js").read_text()
+        self.assertEqual(eval(re.search(r"MAX_BODY = (\d+) \* MiB", js)[1]) * 1024 * 1024, MAX_BODY)
+
+
+class PdfLimitTests(unittest.TestCase):
+    def run_tool(self, script, seconds=5):
+        with tempfile.TemporaryDirectory() as folder:
+            with self.assertRaises(HTTPException) as caught:
+                uploads.bounded_run(["/bin/sh", "-c", script], folder, time.monotonic() + seconds)
+        return caught.exception.detail
+
+    def test_limit_failures_are_reported_as_too_heavy_not_damaged(self):
+        self.assertEqual(self.run_tool("kill -XCPU $$"), uploads.PDF_HEAVY)
+        self.assertEqual(self.run_tool("kill -ABRT $$"), uploads.PDF_HEAVY)
+        self.assertEqual(self.run_tool("echo 'Out of memory' >&2; exit 99"), uploads.PDF_HEAVY)
+        self.assertEqual(self.run_tool("echo 'MemoryError' >&2; exit 1"), uploads.PDF_HEAVY)
+        self.assertIn("dañado o protegido", self.run_tool("exit 1"))
+        started = time.monotonic()
+        self.assertEqual(self.run_tool("sleep 5", 0.5), uploads.PDF_SLOW)
+        self.assertLess(time.monotonic() - started, 2)
+
+    def test_child_limits_fit_the_production_container(self):
+        captured = []
+        real = uploads.subprocess.Popen
+        def spy(argv, **kwargs):
+            captured.append(argv[2])
+            return real(["/bin/sh", "-c", "exit 0"], **kwargs)
+        with tempfile.TemporaryDirectory() as folder, mock.patch.object(uploads.subprocess, "Popen", spy):
+            uploads.bounded_run(["true"], folder, time.monotonic() + 20)
+        self.assertIn("ulimit -v " + str(384 * 1024), captured[0])
+        self.assertRegex(captured[0], r"ulimit -t (20|21);")
+        self.assertLessEqual(uploads.PDF_CHILD_MEMORY, 384 * 1024 * 1024)
+
+    @unittest.skipUnless(sys.platform.startswith("linux"), "macOS ignora ulimit -v")
+    def test_child_needing_900_mib_fails_safely(self):
+        # Stand-in for a Poppler child: the production cap stops it before the 768 MiB container OOM killer.
+        self.assertEqual(self.run_tool(sys.executable + " -c \"b = b'x' * (900 << 20)\"", 30), uploads.PDF_HEAVY)
+
+    @unittest.skipUnless(poppler(), "Poppler no está instalado")
+    def test_one_deadline_covers_metadata_and_pages(self):
+        with mock.patch.object(uploads, "PDF_TIMEOUT", 0):
+            with self.assertRaises(HTTPException) as caught:
+                uploads.build("x.pdf", pdf(1), None, "upload-x", "t")
+        self.assertEqual(caught.exception.detail, uploads.PDF_SLOW)
+        self.assertEqual(uploads.PDF_SLOTS._value, 1)
 
 
 if __name__ == "__main__":

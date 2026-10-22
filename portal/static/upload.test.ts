@@ -52,3 +52,15 @@ it('closing clears an in-flight inspection and keyboard selection remains availa
   expect(document.querySelector('[data-upload-report]')!.hasAttribute('hidden')).toBe(true);
   expect(document.querySelector('input[type=file]')!.getAttribute('aria-label')).toContain('HTML');
 });
+it('rejects a file and original whose encoded body exceeds the portal limit before sending',async () => {
+  const {api}=setup(); select();
+  await vi.waitFor(() => expect((document.querySelector('[type=submit]') as HTMLButtonElement).disabled).toBe(false));
+  const original = document.querySelector('input[name=original]')!, big = new File(['%PDF-'],'original.pdf');
+  Object.defineProperty(big,'size',{value:11.5 * 1024 * 1024});
+  const file = document.querySelector('input[name=file]') as HTMLInputElement;
+  Object.defineProperty(file.files![0],'size',{value:10 * 1024 * 1024});
+  Object.defineProperty(original,'files',{value:[big],configurable:true}); original.dispatchEvent(new Event('change'));
+  expect(document.querySelector('.form-error')!.textContent).toMatch(/juntos ocupan 21\.5 MB.*hasta 16\.5 MB.*Quita el original/);
+  submit(); await new Promise(resolve => setTimeout(resolve,20));
+  expect(api).toHaveBeenCalledOnce(); expect(document.querySelector('.form-error')!.textContent).toContain('Quita el original');
+});
