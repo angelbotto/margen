@@ -50,3 +50,12 @@ Capturas de cmrg.me solo como evidencia privada; no redistribuir sus fotografía
 Los tres workers de la primera fase y el revisor de identidad se liberaron tras entregar. Sus cuatro worktrees se retiraron después de integrar entregables, guardar bundles y conservar evidencia privada; archivo `~/.local/share/margen/worktree-archive/20261022-atlas-first-wave/`. Los worktrees activos cuelgan de `margen-atlas-main`. Se conservan los worktrees de voz y el checkout original.
 
 Capacidad comprobada antes del tercer escritor: 12 CPU, carga 3.89/3.32/3.27, 55 % memoria libre, 87 GiB disponibles. Root asume solo la subsanación de identidad en main, sin pisar archivos editoriales ni de gráficas. El worker de embeds es de investigación, sin escritura de producto.
+
+## Actualización — 06:02 UTC
+
+- Identidad: subsanación `1cab2ed`, generados `51f5b9a`; 22 tests del cliente y cinco de identidad del servidor pasan. Falta revisión independiente de este delta y revisión integrada.
+- Atlas offline: Chromium pasa los 128 checks. WebKit 26 encontró un desbordamiento de 22 px a 320 px y siete avisos de ResizeObserver. No son evidencia suficiente para atribuir el destello blanco observado por Ángel.
+- Desbordamiento: el contenido interno del select de imagen anotada amplía el área desplazable en WebKit aunque su rectángulo externo quepa. `overflow:hidden` solo en ese control lo resuelve; asignado al writer editorial para incluirlo en las reglas que refrescan históricos.
+- ResizeObserver: cuatro avisos corresponden al visor de prototipos al aparecer. Root difiere sus escrituras al siguiente frame y cancela el trabajo al destruirlo. `test_prototype_resize.py` falla con el código anterior en WebKit y pasa con el cambio en ambos motores; conserva orientación, ajuste y limpieza. Los otros avisos corresponden a barras al redibujar; asignados al writer de gráficas. Evidencia privada en `~/.local/share/margen-review/atlas-root-20261022/webkit-RO-diagnosis/`.
+- Embeds: investigación `b31bb83`, integrada en `c3c4451`; el worker terminó y fue liberado. YouTube reproduce realmente en un diálogo montado por el portal, conservando el artefacto opaco. Ver `atlas-embed-compatibility.md`; aún falta implementación. La siguiente tarea sustituye la escritura de root por el writer de embeds, manteniendo tres propietarios de producto con archivos separados. Root queda en revisión/integración.
+- No hay nuevos cambios desplegados ni atlas publicado todavía.
