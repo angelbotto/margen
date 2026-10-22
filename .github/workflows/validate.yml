@@ -103,6 +103,8 @@ jobs:
           python scripts/test_code_syntax.py
           MARGEN_BROWSER=webkit python scripts/test_code_syntax.py
           python scripts/test_prototype_resize.py
+          python scripts/test_deferred_runtime.py
+          MARGEN_BROWSER=webkit python scripts/test_deferred_runtime.py
       - name: Check complete atlas offline in Chromium and WebKit
         run: |
           python scripts/build_atlas.py --output-dir /tmp/margen-atlas-ci --render
