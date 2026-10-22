@@ -408,15 +408,17 @@
       const top = 34, height = top + cellH * data.length + 8;
       const x = i => rowLabel + i * cell, y = j => top + j * cellH;
       const idx = heads.slice(1).map((_, i) => i);
-      const shown = G.spacedTicks(idx, i => x(i) + cell / 2, i => G.fit(heads[i + 1], 80, this.font, 2) || heads[i + 1].slice(0, 2), this.font, 6);
+      const shown = G.spacedTicks(idx, i => x(i) + cell / 2, i => G.fit(heads[i + 1], 80, this.font, 2) || heads[i + 1].slice(0, 2), this.font, 6, this.width);
       const span = shown.length > 1 ? (shown[1] - shown[0]) * cell : cell;
-      shown.forEach(i => this.text(x(i) + cell / 2, top - 8, G.fit(heads[i + 1], span - 4, this.font, 1) || heads[i + 1].slice(0, 1), {'text-anchor': 'middle'}));
+      shown.forEach(i => svg.append(G.edgeText(svg, x(i) + cell / 2, top - 8, G.fit(heads[i + 1], span - 4, this.font, 1) || heads[i + 1].slice(0, 1), {}, this.font)));
+      // Filas bajas: un rótulo cada k filas para que no se pisen; el tip y la tabla nombran todas.
+      const every = Math.ceil(16 / cellH);
       const hatch = G.uid('mg-aus'), defs = G.svg('defs'), pattern = G.svg('pattern', {id: hatch, patternUnits: 'userSpaceOnUse', width: 6, height: 6});
       pattern.append(G.svg('rect', {width: 6, height: 6, style: 'fill:var(--calor-ausente)'}), G.svg('path', {d: 'M-1 1l2-2M0 6l6-6M5 7l2-2', style: 'stroke:var(--grafica-tinta);stroke-width:.8;stroke-opacity:.6'}));
       defs.append(pattern); svg.append(defs);
       const items = [], info = [];
       data.forEach((r, j) => {
-        this.text(rowLabel - 8, y(j) + cellH / 2, G.fit(r.label, rowLabel - 10, this.font, 1), {'text-anchor': 'end', 'dominant-baseline': 'middle', class: 'mg-texto-fuerte'});
+        if (j % every === 0) this.text(rowLabel - 8, y(j) + cellH / 2, G.fit(r.label, rowLabel - 10, this.font, 1), {'text-anchor': 'end', 'dominant-baseline': 'middle', class: 'mg-texto-fuerte'});
         r.values.forEach((v, i) => {
           const g = G.svg('g', {'data-value': v ?? '', 'data-fila': j, 'data-columna': i});
           g.append(G.svg('rect', {x: x(i), y: y(j), width: cell, height: cellH, class: 'mg-calor-celda', style: 'fill:' + (v === null ? 'url(#' + hatch + ')' : heat.fill(heat.level(v)))}));

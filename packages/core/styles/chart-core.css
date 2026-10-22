@@ -83,7 +83,6 @@
 
 /* Heatmap con ejes */
 .mg-calor-celda { stroke: var(--grafica-papel); stroke-width: 1; }
-.mg-calor-ausente { fill: url(#mg-ausente); }
 .mg-escala { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; margin-block: 8px; font: 12px/1.5 var(--mono); color: var(--tinta-2); }
 .mg-escala-rampa { display: inline-flex; height: 12px; border: 1px solid var(--linea); }
 .mg-escala-rampa span { width: 28px; }

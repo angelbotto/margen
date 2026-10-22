@@ -85,8 +85,10 @@ TREEMAP = r"""(spec) => {
   const others = tiles.find(t => t.i === -1);
   const membersInTip = others ? map.describe(map.tiles.find(t => t.members)).length - 2 : 0;
   const buttons = fig.querySelectorAll('.atencion-leyenda button').length;
-  const minSide = Math.min(...tiles.map(t => Math.min(t.w, t.h)));
-  const result = {W, H, tiles: tiles.length, areaError: Math.abs(area - W * H), proportional, paintedTotal: painted, total, others: !!others, membersInTip, buttons, minSide: +minSide.toFixed(1), zeroPainted: tiles.some(t => t.v === 0)};
+  const minSide = Math.min(...tiles.filter(t => t.i !== -1).map(t => Math.min(t.w, t.h)));
+  // Ninguna categoría con al menos 1 % del total puede quedar escondida dentro de «Otros».
+  const hidden = spec.values.map((v, i) => [v, i]).filter(([v, i]) => v / total >= .01 && !tiles.some(t => t.i === i)).length;
+  const result = {W, H, tiles: tiles.length, areaError: Math.abs(area - W * H), proportional, paintedTotal: painted, total, others: !!others, membersInTip, buttons, minSide: +minSide.toFixed(1), hidden, zeroPainted: tiles.some(t => t.v === 0)};
   map.destroy(); fig.remove();
   return result;
 }"""
@@ -280,8 +282,24 @@ def run(src, out):
                 r = page.evaluate(TREEMAP, {'title': title, 'names': names, 'values': values, 'formato': 'duration_min'})
                 r.update({'width': width, 'case': title})
                 report['treemap'].append(r)
-                ok = r['areaError'] < 1 and r['proportional'] and r['paintedTotal'] == r['total'] and r['buttons'] == 26 and not r['zeroPainted'] and r['minSide'] >= 9.9 and (not r['others'] or r['membersInTip'] >= 2)
+                ok = r['areaError'] < 1 and r['proportional'] and r['paintedTotal'] == r['total'] and r['buttons'] == 26 and not r['zeroPainted'] and r['minSide'] >= 9.9 and not r['hidden'] and (not r['others'] or r['membersInTip'] >= 2)
                 if not ok: failures.append(f'treemap {width} {title}: {r}')
+            # Mapa de calor 31 × 31 sin umbrales (cuantiles), con huecos: sin desplazamiento ni solapes.
+            heat = page.evaluate("""(sel) => {
+              const f = document.createElement('figure'); f.className = 'ancho'; f.dataset.grafica = 'calor'; f.dataset.unidad = 'eventos';
+              const head = '<tr><th>Día</th>' + Array.from({length: 31}, (_, i) => `<th>H${i + 1}</th>`).join('') + '</tr>';
+              const body = Array.from({length: 31}, (_, r) => `<tr><th>Fila ${r + 1}</th>` + Array.from({length: 31}, (_, c) => (r * c) % 17 === 5 ? '<td data-valor="">Sin dato</td>' : `<td data-valor="${(r * 7 + c * 3) % 50}">x</td>`).join('') + '</tr>').join('');
+              f.innerHTML = `<details><summary>Datos</summary><div class="tabla-caja"><table><caption>Calor 31 × 31</caption><thead>${head}</thead><tbody>${body}</tbody></table></div></details>`;
+              (document.querySelector('article.pagina:not([hidden])') || document.body).append(f);
+              NotaGraficas.init(f);
+              const svg = f.querySelector('svg.mg-svg'), box = f.querySelector('.grafica-caja'), texts = [...svg.querySelectorAll('text')].map(t => t.getBoundingClientRect()), sr = svg.getBoundingClientRect();
+              let overlaps = 0; for (let i = 0; i < texts.length; i++) for (let j = i + 1; j < texts.length; j++) { const a = texts[i], b = texts[j]; if (Math.min(a.right, b.right) - Math.max(a.left, b.left) > 1.5 && Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 1.5) overlaps++; }
+              const outside = texts.filter(r => r.left < sr.left - 1 || r.right > sr.right + 1).length;
+              const r = {cells: svg.querySelectorAll('[data-mg-i]').length, scroll: box.scrollWidth > box.clientWidth + 1, overlaps, outside, legend: f.querySelector('.calor-leyenda').getAttribute('aria-label')};
+              NotaGraficas.get(f).destroy(); f.remove(); return r;
+            }""", SEL)
+            heat.update({'width': width}); report['heatmap'] = report.get('heatmap', []) + [heat]
+            if heat['cells'] != 961 or heat['scroll'] or heat['overlaps'] or heat['outside'] or 'cuantiles' not in heat['legend']: failures.append(f'calor 31×31 {width}: {heat}')
             ctx.close()
         browser.close()
     report['errors'] and failures.extend(report['errors'])

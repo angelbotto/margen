@@ -105,8 +105,8 @@
     let text;
     if (p.kind === 'date') text = p.spec === 'iso' ? new Date(value).toISOString().slice(0, 10) : df(locale, DATES[p.spec]).format(value);
     else if (p.kind === 'duration') text = duration(value * (p.base === 'h' ? 3600 : p.base === 'min' ? 60 : 1), locale, p.level);
-    else if (p.kind === 'pct') text = nf(locale, {style: 'percent', maximumFractionDigits: p.digits ?? 1, minimumFractionDigits: p.digits ?? 0}).format(value);
-    else if (p.kind === 'pts') text = nf(locale, {style: 'percent', maximumFractionDigits: p.digits ?? 1, minimumFractionDigits: p.digits ?? 0}).format(value / 100);
+    else if (p.kind === 'pct') text = nf(locale, {style: 'percent', maximumFractionDigits: p.digits ?? 1}).format(value);
+    else if (p.kind === 'pts') text = nf(locale, {style: 'percent', maximumFractionDigits: p.digits ?? 1}).format(value / 100);
     else if (CURRENCIES[p.kind]) text = nf(locale, {style: 'currency', currency: CURRENCIES[p.kind], currencyDisplay: 'narrowSymbol', ...(p.compact ? {notation: 'compact', maximumFractionDigits: p.digits ?? 1} : {maximumFractionDigits: p.digits ?? 0, minimumFractionDigits: p.digits ?? 0})}).format(value);
     else if (p.kind === 'num') text = nf(locale, p.compact ? {notation: 'compact', maximumFractionDigits: p.digits ?? 1} : {maximumFractionDigits: p.digits ?? 0, minimumFractionDigits: p.digits ?? 0}).format(value);
     else {

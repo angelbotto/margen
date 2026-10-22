@@ -67,7 +67,7 @@
       this.selected = i; this.select.value = i === null ? '' : String(i);
       this.status.textContent = i === null ? 'Todos los registros.' : this.describe(i).join(' · ');
       this.chart?.querySelectorAll('[data-registro]').forEach(n => n.classList.toggle('analitica-atenuada', i !== null && Number(n.dataset.registro) !== i));
-      if (fromSelect && i !== null) { const k = this.items.findIndex(n => +n.dataset.registro === i); if (k >= 0) this.marks?.select(k); }
+      if (fromSelect && i !== null && this.items) { const k = this.items.findIndex(n => +n.dataset.registro === i); if (k >= 0) this.marks?.select(k); }
     }
     swatch(text, i, fill) {
       const li = el('li'), s = G.svg('svg', {width: 14, height: 14, class: 'analitica-muestra', 'aria-hidden': 'true'});
@@ -171,7 +171,7 @@
       const n = G.nice(min, max, Math.max(2, Math.floor((right - left) / 70))), f = G.tickFormat(n.ticks, this.model.spec, {lang: this.lang}), x = G.linear([n.min, n.max], [left, right]);
       this.domain = [n.min, n.max];
       const top = 44, height = top + rows.length * rowH + 30;
-      G.spacedTicks(n.ticks, x, f, this.font, 12, this.width).forEach(v => { this.chart.append(G.edgeText(this.chart, x(v), 34, f(v), {}, this.font)); this.line(x(v), 40, x(v), height - 30); });
+      G.spacedTicks(n.ticks, x, f, this.font, 12, this.width).forEach(v => { this.chart.append(G.edgeText(this.chart, x(v), 34, f(v), {}, this.font)); this.line(x(v), 40, x(v), height - 30).dataset.tickX = v; });
       rows.forEach((r, i) => {
         const [lo, q1, med, q3, hi] = r.values, y = top + i * rowH + (narrow ? 38 : 22), g = this.add('g', {}); this.mark(g, i);
         g.append(G.svg('line', {x1: x(lo), y1: y, x2: x(hi), y2: y, stroke: this.color(i), 'stroke-width': 2}), G.svg('rect', {x: x(q1), y: y - 12, width: Math.max(1, x(q3) - x(q1)), height: 24, style: 'fill:' + this.fill(i), 'fill-opacity': .35, stroke: this.color(i)}));

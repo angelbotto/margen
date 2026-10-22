@@ -44,10 +44,14 @@
    const place=items=>this.element.dataset.atencionModo==='particion'?partition(items,0,0,rect.w,rect.h):G.squarify(items,rect);
    let grouped=[],tiles=place(positive);
    const tooSmall=t=>Math.min(t.w,t.h)<MIN_SIDE||t.w*t.h<MIN_AREA;
-   for(let k=2;k<=positive.length&&tiles.some(tooSmall);k++){
-    grouped=positive.slice(-k);const sum=grouped.reduce((a,r)=>a+r.value,0);
+   // Solo se agrupa la cola que no se vería; «Otros» conserva su suma exacta aunque quede pequeño
+   // (no se le inventa área) y una categoría visible nunca entra en él.
+   if(tiles.filter(tooSmall).length>=2)for(let k=2;k<=positive.length;k++){
+    const tail=positive.slice(-k),sum=tail.reduce((a,r)=>a+r.value,0);
     const name=this.rows.some(r=>r.name===this.words.others)?this.words.others+' agrupados':this.words.others;
-    tiles=place([...positive.slice(0,-k),{name:name+' ('+k+')',value:sum,index:-1,members:grouped,context:''}]);
+    const next=place([...positive.slice(0,-k),{name:name+' ('+k+')',value:sum,index:-1,members:tail,context:''}]);
+    if(next.filter(t=>!t.members).some(tooSmall))continue;
+    grouped=tail;tiles=next;break;
    }
    if(narrow)tiles=tiles.map(t=>({...t,x:t.y,y:t.x,w:t.h,h:t.w}));
    this.grouped=new Set(grouped.map(r=>r.index));
@@ -70,7 +74,7 @@
      const name=G.fit(t.name,room,nameFont,3);
      if(name){
       g.append(G.svg('text',{x:t.x+pad,y:t.y+pad+16,class:'atencion-nombre'},name));
-      const value=t.h>=pad+40?this.levels(t.value).find(v=>G.textWidth(v,valueFont)<=room):null;
+      const value=t.h>=pad+37?this.levels(t.value).find(v=>G.textWidth(v,valueFont)<=room):null;
       if(value)g.append(G.svg('text',{x:t.x+pad,y:t.y+pad+34,class:'atencion-valor'},value));
      }
     }
