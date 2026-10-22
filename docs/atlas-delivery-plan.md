@@ -78,3 +78,13 @@ Gráficas entregó `ffa532f..1792dd5`; worker liberado. Fuente pendiente de inte
 - Código: fuente `37a88b1`, generado `357b8bc`; Prism 1.30.0 con procedencia/licencia y generación Python sin red, montaje diferido de bloques. Runtime `ctx_9abbeba78a6a` termina wiring conjunto, Three diferido y refresco de módulos históricos.
 - Revisión UI/gráficas/runtime: `ctx_d0066062ca25`, task `task_6f01971f0bb2`, worktree `margen-atlas-review-ui-runtime`. Revisión identidad/medios: task `task_98e8270420fb`, worktree `margen-atlas-review-identidad-medios`. Ambos son checkers de contexto nuevo y no escriben producto.
 - Nueva secuencia preparada: `2026.10.22-library.1` / `2026102201`. Todavía no firmada, desplegada ni publicada. Producción continúa en PR #47 / `d61743a`; el PR #41 de voz queda separado como borrador y se preservan sus worktrees.
+
+
+### Verificación integrada — 06:55 UTC
+
+- PR #48 abierto como borrador; fuente integrada `7c59dc6`, corrección Windows `2e95fd9`.
+- Atlas: 98 recetas, diez páginas, 406 comprobaciones pasan en cada motor (Chromium y WebKit), incluyendo cinco anchos, tres familias y ambos modos. Flujo editorial: cinco tests pasan; no se debilitaron sus umbrales. Capturas privadas representativas en `atlas-root-20261022/final-visual/`.
+- Portal: 209 pruebas; React/componentes: 141 pruebas, typecheck y build pasan. El fallo Windows era conversión CRLF de la licencia de Prism: reproducción local con autocrlf, preservación de bytes con gitattributes y CI Windows verde tras `2e95fd9`.
+- Identidad: `280ab18` oculta edición ajena, muestra última edición humana/agente y conserva autor original, tanto en lector como export. Las seis regresiones independientes D1/D4/D6 pasan; navegador real con cuentas sintéticas confirma autoría, respuestas y recarga en ambos motores. Permanecen observaciones de severidad baja sobre nombres de cuenta coincidentes y etiquetas libres; las insignias de invitado/agente sí se distinguen.
+- Revisor de identidad/medios entregó `546a844`, integrado como `eb87698`; liberado y worktree retirado con bundle verificado. D2 de medios se asignó a `ctx_77e8d86474a0`: exigir acción en un control del portal antes de abrir URL/proveedor, conservando el aislamiento. Revisión independiente final sigue en curso.
+- Respaldo previo con restauración aislada: `/backups/snapshot-20261022-065232-cac2c4`. Todavía no hay despliegue nuevo, firma ni publicación del atlas.

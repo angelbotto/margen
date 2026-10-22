@@ -237,7 +237,11 @@ class EditorialReference(unittest.TestCase):
       page,errors=self.page(width,html=html,scheme=mode);page.emulate_media(media=media)
       self.assertLessEqual(page.evaluate('document.documentElement.scrollWidth'),width)
       for id,source,total in (('mil',big,1000),('envuelto',mid,120),('corto',short,3)):
-       code=page.locator(f'#{id} code');self.assertEqual(code.text_content(),source)
+       # Code outside the viewport is intentionally deferred; exercise it as a reader would.
+       if media=='screen':page.locator(f'#{id}').scroll_into_view_if_needed()
+       code=page.locator(f'#{id} code')
+       code.locator('.codigo-linea').nth(total-1).wait_for(state='attached')
+       self.assertEqual(code.text_content(),source)
        self.assertEqual(code.locator('.codigo-linea').count(),total)
        for line in code.evaluate(check):
         self.assertEqual(line['number'],str(line['n']))
@@ -267,6 +271,8 @@ class EditorialReference(unittest.TestCase):
   old=re.sub(r'(<script data-nota-modulo="packages/core/components/code.js">).*?</script>',r'\1/* stale code runtime */</script>',old,flags=re.S)
   css=(ROOT/'packages/core/styles/editorial-reference.css').read_text();runtime=(ROOT/'packages/core/components/code.js').read_text()
   page,errors=self.page(390,html=refresh_editorial_reference(old,css,runtime))
+  page.locator('#envuelto').scroll_into_view_if_needed()
+  page.locator('#envuelto .codigo-linea').nth(119).wait_for(state='attached')
   for line in page.locator('#envuelto code').evaluate(check):
    self.assertAlmostEqual(line['height'],line['row'],delta=.5,msg=line);self.assertLessEqual(line['text'],line['width']+.5,line)
   self.assertEqual(errors,[])
