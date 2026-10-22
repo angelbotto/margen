@@ -176,6 +176,14 @@ class EditorialReference(unittest.TestCase):
      self.assertEqual(errors,[]);page.close()
   page,_=self.page(html=html);page.evaluate('document.documentElement.setAttribute("data-lectura-comoda","")')
   self.assertEqual(page.locator('#first p').evaluate('e=>getComputedStyle(e).fontSize'),'18px')
+  # Reader-selected styles stay independent of the measured body type.
+  body='e=>[getComputedStyle(e).fontSize,getComputedStyle(e).lineHeight]'
+  for comfortable in (False,True):
+   for style,expected in (('editorial',['15.5px','24.025px']),('sobrio',['15.5px','24.025px']),('tecnico',['15.5px','24.025px']),('libro',['16px','28.8px']),('revista',['16px','28.8px']),('bitacora',['16px','28.8px'])):
+    with self.subTest(style=style,comfortable=comfortable):
+     page.evaluate('([s,c])=>{const r=document.documentElement;r.dataset.estilo=s;r.toggleAttribute("data-lectura-comoda",c)}',[style,comfortable])
+     want=(['18px','32.4px'] if style in ('libro','revista','bitacora') else ['18px','30.6px']) if comfortable else expected
+     self.assertEqual(page.locator('#first p').evaluate(body),want)
  def test_code_blur_is_rendered_over_index(self):
   # Computed blur is not enough: the index must contribute blurred pixels behind code.
   html=self.html.replace('Leer con atención','Leer con atención: ejemplos y decisiones con suficiente contexto')

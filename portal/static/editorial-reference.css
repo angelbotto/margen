@@ -5,8 +5,9 @@
 @media screen {
  .hoja:not([data-presentation]) { --texto:33rem; --ancho:64rem; --gutter:24px; }
  /* Scoped selectors without :scope are implicitly descendants of it, so :root
-    never matched here and body kept 16px/1.65. :scope is the document element. */
- :scope:not([data-lectura-comoda]) .hoja:not([data-presentation]) { font-size:15.5px; line-height:1.55; }
+    never matched here and body kept 16px/1.65. :scope is the document element.
+    Reader-chosen serif styles keep their own 1.8 rhythm. */
+ :scope:not([data-lectura-comoda],[data-estilo=libro],[data-estilo=revista],[data-estilo=bitacora]) .hoja:not([data-presentation]) { font-size:15.5px; line-height:1.55; }
  .hoja:not([data-presentation]) h1:not([data-ritmo=propio] *) { font-size:44.5px; line-height:49.4444px; }
  .hoja:not([data-presentation]) h2:not([data-ritmo=propio] *) { font-size:36.4px; line-height:43.68px; }
  @media(max-width:639px) { .hoja:not([data-presentation]) h1:not([data-ritmo=propio] *) { font-size:36.4px; line-height:43.68px; } }
