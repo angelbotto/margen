@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Live Chromium checks of measured editorial geometry and interactions; offline."""
-import json,sys,unittest
+import base64,json,sys,unittest
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[1]
@@ -196,7 +196,14 @@ class EditorialReference(unittest.TestCase):
   page.locator('#snippet pre').evaluate('e=>e.style.backdropFilter="none"');sharp=page.screenshot(clip=clip)
   page.locator('#snippet pre').evaluate('e=>e.style.backdropFilter=""');page.locator('.indice').evaluate('e=>e.style.visibility="hidden"')
   hidden=page.screenshot(clip=clip)
-  self.assertNotEqual(blurred,hidden);self.assertNotEqual(blurred,sharp);self.assertEqual(errors,[])
+  # PNG bytes differ from capture noise alone; decode and require real pixel change.
+  changed='''async([a,b])=>{const px=async s=>{const i=await createImageBitmap(await (await fetch('data:image/png;base64,'+s)).blob()),c=new OffscreenCanvas(i.width,i.height),x=c.getContext('2d');x.drawImage(i,0,0);return x.getImageData(0,0,i.width,i.height).data};
+   const [p,q]=await Promise.all([px(a),px(b)]);let n=0;for(let i=0;i<p.length;i+=4)if(Math.max(Math.abs(p[i]-q[i]),Math.abs(p[i+1]-q[i+1]),Math.abs(p[i+2]-q[i+2]))>8)n++;return n/(p.length/4)}'''
+  encode=lambda png:base64.b64encode(png).decode()
+  self.assertGreaterEqual(page.evaluate(changed,[encode(blurred),encode(sharp)]),.05)
+  self.assertGreaterEqual(page.evaluate(changed,[encode(blurred),encode(hidden)]),.05)
+  page.locator('.indice').evaluate('e=>e.style.visibility=""');self.assertLess(page.evaluate(changed,[encode(blurred),encode(page.screenshot(clip=clip))]),.01)
+  self.assertEqual(errors,[])
  def test_line_numbers_stay_one_per_line(self):
   # Regression seen on 2026-10-21: inside a reading section (overflow-wrap:anywhere)
   # an author pre with inline white-space:pre-wrap let the 16px number gutter wrap,
