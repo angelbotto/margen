@@ -24,3 +24,12 @@ it('only the owner can invoke editor or history through the artifact bridge',asy
  const reader=setup();await expect(reader.instance.handle('action',{name:'edit'})).rejects.toThrow('Sólo el creador');await expect(reader.instance.handle('action',{name:'history'})).rejects.toThrow('Sólo el creador');
  const edit=vi.fn(),history=vi.fn();const instance=(window as any).BottifactReaderWorkspace.create({api:vi.fn(),current:()=>({id:'a',owner:'owner'}),user:()=>({id:'owner'}),edit,history});await instance.handle('action',{name:'edit'});await instance.handle('action',{name:'history'});expect(edit).toHaveBeenCalledOnce();expect(history).toHaveBeenCalledOnce();
 });
+
+it('does not project a legacy foreign edit as the original author in fallback review',async()=>{
+ const events=[{id:'c',thread:'c',kind:'create',actor:'a',author:'Ana',verified:true,text:'Original de Ana',anchor:{quote:'Cita'}},
+  {id:'e',thread:'c',kind:'edit',actor:'b',author:'Luis',verified:true,text:'Palabras ajenas'}];
+ const instance=(window as any).BottifactReaderWorkspace.create({api:vi.fn(),current:()=>({id:'a',owner:'owner'}),user:()=>({id:'owner'}),refresh:async()=>({snapshot:{events},permissions:{comment:false},verified:true})});
+ await instance.handle('action',{name:'review'});
+ expect(document.querySelector('.workbench-body')!.textContent).toContain('Original de Ana');
+ expect(document.querySelector('.workbench-body')!.textContent).not.toContain('Palabras ajenas');
+});

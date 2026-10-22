@@ -305,7 +305,7 @@ window.BottifactReaderWorkspace = {
           threads.set(e.thread, { ...e, replies: [] });
         const t = threads.get(e.thread);
         if (!t) continue;
-        if (e.kind === "edit") t.text = e.text;
+        if (e.kind === "edit" && (!e.actor || !t.actor || e.actor === t.actor)) t.text = e.text;
         if (e.kind === "reply") t.replies.push(e);
         if (e.kind === "resolve") t.resolved = e.resolved;
         if (e.kind === "delete") t.deleted = true;
