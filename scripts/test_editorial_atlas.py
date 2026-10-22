@@ -38,7 +38,9 @@ HIT='''sel=>{const idx=[...document.querySelectorAll('.indice')].find(e=>e.offse
 class EditorialAtlas(unittest.TestCase):
  @classmethod
  def setUpClass(cls):
-  cls.pw=sync_playwright().start();cls.browser=cls.pw.chromium.launch()
+  # Linux changes LCD text rasterization when hiding a composited sibling.
+  # Keep antialiasing fixed so the pixel comparison measures index bleed-through.
+  cls.pw=sync_playwright().start();cls.browser=cls.pw.chromium.launch(args=['--disable-lcd-text'])
   cls.html=build('La forma de leer',[{'id':'content','titulo':'La forma de leer','html':CONTENT}],theme='editorial',mode='dark',date={'published':'2026-10-01','updated':'2026-10-22'},
    footer={'author':'Ana Autora','note':'Notas de campo.','links':[{'label':'Sitio','href':'https://ana.example/','detail':'proyectos y notas'},{'label':'Correo','href':'mailto:ana@ana.example'}]},reactions=True)
   cls.html=cls.html.replace('id="datos"','id="datos" data-presentation="auto"')
