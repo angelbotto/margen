@@ -154,7 +154,9 @@
       if (intended(event, start) && session.spec && !session.player) play(session.spec, session);
     });
     // El enlace del portal navega por sí mismo (pestaña nueva sin opener ni referrer, o mailto/tel); luego el diálogo sobra.
-    link.addEventListener('click', event => { if (intended(event, link)) setTimeout(() => dialog.close()); });
+    const follow = event => { if (intended(event, link)) setTimeout(() => dialog.close()); };
+    link.addEventListener('click', follow);
+    link.addEventListener('auxclick', follow);
 
     function begin(provider, intent) {
       if (dialog.open) dialog.close();
