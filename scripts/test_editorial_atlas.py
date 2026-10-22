@@ -61,7 +61,7 @@ class EditorialAtlas(unittest.TestCase):
   return page.evaluate(DIFF,[base64.b64encode(shown).decode(),base64.b64encode(hidden).decode()])
 
  def test_wide_surfaces_cover_the_index(self):
-  for width in (1440,1280):
+  for width in (1440,1328):
    for scheme,family in (('dark','editorial'),('light','editorial'),('dark','catabum'),('light','kaira')):
     page,errors=self.page(width,scheme=scheme);page.evaluate('([f,m])=>NotaTemas.set({family:f,mode:m})',[family,scheme])
     page.locator('#detalle summary').focus();page.keyboard.press('Enter');page.locator('#detalle summary').blur()
@@ -121,14 +121,46 @@ class EditorialAtlas(unittest.TestCase):
   for html,cls in ((None,'visto'),(self.chapters,'aqui-visto')):
    with self.subTest(item=cls):
     page,_=self.page(html=html);self.bring(page,'#s4',100)
-    seen=page.locator('.indice li.'+cls+' a').first
-    self.assertGreater(page.locator('.indice li.'+cls).count(),2)
-    style=seen.evaluate('a=>{const s=getComputedStyle(a);return [s.textDecorationLine,s.textDecorationThickness,s.color,s.textDecorationColor]}')
-    self.assertEqual(style[:2],['line-through','2px'])
-    self.assertNotIn('rgba(0, 0, 0, 0)',style[3]);self.assertRegex(style[2],r'oklab|color-mix|rgba|/ 0\.5')
-    unread=page.locator('.indice li:not(.'+cls+') a').last.evaluate('a=>getComputedStyle(a).textDecorationColor')
-    self.assertEqual(unread,'rgba(0, 0, 0, 0)')
+    index=page.locator('.indice:visible').first
+    seen=index.locator('li.'+cls+' a').first
+    self.assertGreater(index.locator('li.'+cls).count(),2)
+    self.assertEqual(seen.evaluate('a=>getComputedStyle(a).textDecorationLine'),'none')
+    stroke=seen.locator('.indice-tachado path').first
+    self.assertRegex(stroke.get_attribute('d'),r' C')
+    self.assertEqual(stroke.evaluate('p=>getComputedStyle(p).strokeDashoffset'),'0px')
+    self.assertEqual(stroke.evaluate('p=>getComputedStyle(p).strokeWidth'),'2px')
+    unread=index.locator('li:not(.'+cls+') a').last.locator('.indice-tachado path').first
+    self.assertEqual(unread.evaluate('p=>getComputedStyle(p).strokeDashoffset'),'1px')
   page,_=self.page(motion='reduce');self.assertEqual(page.locator('.indice a').first.evaluate('a=>getComputedStyle(a).transitionDuration'),'0s')
+
+ def test_index_breakpoint_and_article_mask(self):
+  for width,fixed in ((1280,False),(1327,False),(1328,True),(1440,True)):
+   with self.subTest(width=width):
+    page,errors=self.page(width,motion='reduce')
+    index=page.locator('.indice');page.wait_for_timeout(60)
+    self.assertEqual(index.evaluate('e=>getComputedStyle(e).position'), 'fixed' if fixed else 'static')
+    self.assertEqual(index.get_attribute('data-indice-mascara') is not None,fixed)
+    if fixed:
+     start=index.evaluate('e=>parseFloat(e.style.getPropertyValue("--indice-fade-y"))')
+     page.evaluate('scrollBy(0,500)');page.wait_for_timeout(60)
+     end=index.evaluate('e=>parseFloat(e.style.getPropertyValue("--indice-fade-y"))')
+     self.assertAlmostEqual(end,start-500,delta=1)
+     index.focus();self.assertEqual(index.evaluate('e=>getComputedStyle(e).maskImage'),'none')
+    self.assertEqual(errors,[]);page.close()
+  short=build('Breve',[{'id':'a','titulo':'Breve','html':'<section id="uno"><h2>Una idea</h2><p>Una nota corta.</p></section>'}])
+  page,_=self.page(html=short);page.wait_for_timeout(60)
+  self.assertIsNone(page.locator('.indice').get_attribute('data-indice-mascara'))
+
+ def test_mobile_title_metrics_and_footer_columns(self):
+  page,_=self.page(390)
+  self.assertEqual(page.locator('#s0 h2').evaluate('e=>[getComputedStyle(e).fontSize,getComputedStyle(e).lineHeight,getComputedStyle(e).letterSpacing]'),['28.5px','38px','-0.7125px'])
+  self.assertEqual(page.locator('.cabecera-fecha time').first.evaluate('e=>getComputedStyle(e).whiteSpace'),'nowrap')
+  page,_=self.page()
+  footer=page.locator('.pie-documento')
+  self.assertEqual(footer.evaluate('e=>getComputedStyle(e).borderTopWidth'),'1px')
+  author=footer.locator('.pie-autor').bounding_box();note=footer.locator('.pie-nota').bounding_box()
+  self.assertGreater(note['x'],author['x']+author['width'])
+  self.assertLessEqual(page.evaluate('document.documentElement.scrollWidth'),1440)
 
  def test_reading_edges_are_decorative(self):
   page,_=self.page()

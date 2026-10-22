@@ -1,11 +1,46 @@
 /* Actividad, avisos, galería y reacciones: mejoras locales, sin red ni reproducción automática. */
 (()=>{'use strict';
- const instances=new WeakMap(),selector='[data-actividad],[data-aviso-animado],[data-galeria],[data-editorial-web],[data-reacciones]';
+ const instances=new WeakMap(),selector='[data-actividad],[data-aviso-animado],[data-galeria],[data-editorial-web],[data-reacciones],.lectura-guiada:not([data-presentation]) .indice';
+ const indexJobs=new Map();let indexFrame=0,indexRedraw=false;
+ const indexUpdate=()=>{indexFrame=0;const redraw=indexRedraw;indexRedraw=false;
+  for(const [el,job] of indexJobs){if(!el.isConnected){instances.get(el)?.destroy();continue;}if(!el.getClientRects().length)continue;job.mask();if(redraw)job.draw();}
+ };
+ const scheduleIndex=(redraw=false)=>{indexRedraw=indexRedraw||redraw;if(!indexFrame)indexFrame=requestAnimationFrame(indexUpdate);};
+ addEventListener('scroll',()=>scheduleIndex(),{passive:true});
+ addEventListener('resize',()=>scheduleIndex(true),{passive:true});
+ document.addEventListener('nota:pagina',()=>scheduleIndex(true));
+ document.addEventListener('nota:tema',()=>scheduleIndex(true));
+ document.fonts?.ready.then(()=>scheduleIndex(true));
  function mount(el){
   if(instances.has(el))return;
   const clean=[],motion=matchMedia('(prefers-reduced-motion: reduce)');
   const on=(node,type,fn,opts)=>{node.addEventListener(type,fn,opts);clean.push(()=>node.removeEventListener(type,fn,opts));};
   let api={motion,destroy(){clean.splice(0).forEach(fn=>fn());instances.delete(el);}};
+  if(el.classList.contains('indice')){
+   const links=[...el.querySelectorAll('a')],NS='http://www.w3.org/2000/svg';
+   const decorated=links.map(a=>{
+    const label=document.createElement('span');label.className='indice-rotulo';label.append(...a.childNodes);a.append(label);
+    const svg=document.createElementNS(NS,'svg');svg.classList.add('indice-tachado');svg.setAttribute('aria-hidden','true');svg.setAttribute('focusable','false');a.append(svg);
+    return {a,label,svg};
+   });
+   const draw=()=>{if(getComputedStyle(el).position!=='fixed')return;
+    for(const {a,label,svg} of decorated){const box=a.getBoundingClientRect();if(!box.width)continue;
+     svg.setAttribute('viewBox',`0 0 ${box.width} ${box.height}`);
+     const range=document.createRange();range.selectNodeContents(label);const paths=[];
+     [...range.getClientRects()].filter(r=>r.width>0).forEach((r,i)=>{
+      const x=i?Math.max(0,r.left-box.left):0,end=Math.min(box.width,r.right-box.left+2),y=r.top-box.top+r.height*.57,w=end-x;
+      const path=document.createElementNS(NS,'path');path.setAttribute('d',`M${x} ${y+.6} C${x+w*.28} ${y-1.1} ${x+w*.65} ${y+1.3} ${end} ${y-.5}`);path.setAttribute('pathLength','1');paths.push(path);
+     });svg.replaceChildren(...paths);
+    }
+   };
+   const mask=()=>{const chapter=el.closest('.pagina')||el.closest('.hoja'),fixed=getComputedStyle(el).position==='fixed';
+    const enabled=fixed&&chapter&&chapter.offsetHeight>innerHeight+768;el.toggleAttribute('data-indice-mascara',!!enabled);
+    if(enabled){const y=Math.round(chapter.getBoundingClientRect().top-el.getBoundingClientRect().top);el.style.setProperty('--indice-fade-y',y+'px');}
+   };
+   el.setAttribute('data-indice-trazo','');indexJobs.set(el,{draw,mask});
+   const observer=new ResizeObserver(()=>scheduleIndex(true));observer.observe(el);scheduleIndex(true);
+   clean.push(()=>{observer.disconnect();indexJobs.delete(el);el.removeAttribute('data-indice-trazo');el.removeAttribute('data-indice-mascara');el.style.removeProperty('--indice-fade-y');for(const {label,svg} of decorated){svg.remove();label.replaceWith(...label.childNodes);}});
+  }
   if(el.hasAttribute('data-editorial-web')){
    const navigation=el.querySelector(':scope > .web-navegacion'),footer=el.querySelector(':scope > .web-pie');if(!navigation||!footer)return;
    const full=el===document.body,scrollNode=full?window:el,position=()=>full?scrollY:el.scrollTop;
@@ -75,10 +110,11 @@
   if(el.hasAttribute('data-reacciones')){
    // Solo este navegador: sin conteos compartidos ni red. Sin almacenamiento, siguen funcionando en la sesión.
    const buttons=[...el.querySelectorAll('[data-reaccion]')];if(!buttons.length)return;
-   const key='margen-reacciones:'+(el.dataset.reacciones||document.querySelector('meta[name="nota-documento"]')?.content||location.pathname);
-   let chosen=new Set();try{const saved=JSON.parse(localStorage.getItem(key)||'[]');if(Array.isArray(saved))chosen=new Set(saved.filter(v=>buttons.some(b=>b.dataset.reaccion===v)));}catch{}
+   const key='margen-reacciones:'+(document.querySelector('meta[name="nota-documento"]')?.content||location.pathname)+':'+(el.dataset.reacciones||'documento');
+   let chosen=new Set();const temporary=()=>{const note=el.querySelector('.reacciones-nota');if(note)note.textContent='La selección se conserva mientras esta página siga abierta. No hay conteos compartidos.';};
+   try{const saved=JSON.parse(localStorage.getItem(key)||'[]');if(Array.isArray(saved))chosen=new Set(saved.filter(v=>buttons.some(b=>b.dataset.reaccion===v)));}catch{temporary();}
    const paint=()=>buttons.forEach(b=>b.setAttribute('aria-pressed',String(chosen.has(b.dataset.reaccion))));
-   buttons.forEach(b=>on(b,'click',()=>{const v=b.dataset.reaccion;chosen.has(v)?chosen.delete(v):chosen.add(v);paint();try{localStorage.setItem(key,JSON.stringify([...chosen]));}catch{}}));
+   buttons.forEach(b=>on(b,'click',()=>{const v=b.dataset.reaccion;chosen.has(v)?chosen.delete(v):chosen.add(v);paint();try{localStorage.setItem(key,JSON.stringify([...chosen]));}catch{temporary();}}));
    paint();clean.push(()=>buttons.forEach(b=>b.setAttribute('aria-pressed','false')));
   }
   instances.set(el,api);

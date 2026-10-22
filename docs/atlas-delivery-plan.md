@@ -59,3 +59,13 @@ Capacidad comprobada antes del tercer escritor: 12 CPU, carga 3.89/3.32/3.27, 55
 - ResizeObserver: cuatro avisos corresponden al visor de prototipos al aparecer. Root difiere sus escrituras al siguiente frame y cancela el trabajo al destruirlo. `test_prototype_resize.py` falla con el código anterior en WebKit y pasa con el cambio en ambos motores; conserva orientación, ajuste y limpieza. Los otros avisos corresponden a barras al redibujar; asignados al writer de gráficas. Evidencia privada en `~/.local/share/margen-review/atlas-root-20261022/webkit-RO-diagnosis/`.
 - Embeds: investigación `b31bb83`, integrada en `c3c4451`; el worker terminó y fue liberado. YouTube reproduce realmente en un diálogo montado por el portal, conservando el artefacto opaco. Ver `atlas-embed-compatibility.md`; aún falta implementación. La siguiente tarea sustituye la escritura de root por el writer de embeds, manteniendo tres propietarios de producto con archivos separados. Root queda en revisión/integración.
 - No hay nuevos cambios desplegados ni atlas publicado todavía.
+
+### Segunda convergencia — 06:12 UTC
+
+UI integrada en `7b4e2db` y generados en `7e238af`; worker y worktree cerrados con bundle y evidencia preservados. Se aceptan capas/metadatos, pero sus diferencias deliberadas no satisfacen toda la fidelidad solicitada. Root conserva `editorial-reference.css`, `editorial-pieces.js`, recetas editoriales y atlas para completar el corte del índice, máscara progresiva, trazo irregular, títulos móviles y distribución del pie. Runtime `ctx_9abbeba78a6a` posee gramáticas, capítulos y wiring; embeds `ctx_ddf25c132218` posee piezas de medios y portal; gráficas conserva su propiedad. Capacidad para la corrección acotada adicional de root: 12 CPU, carga 4.00/4.06/3.83, sin nuevos procesos de agentes. Se escalonan las pruebas pesadas.
+
+### Integración — 06:23 UTC
+
+Root completó geometría del índice a partir de 1328 px, máscara ligada al artículo, tachado SVG por renglón, h2 móvil 28,5/38, pie en dos columnas y recorte específico del select en WebKit. Reacciones locales distinguen almacenamiento temporal en el iframe. Las 27 pruebas editoriales/de referencia pasan; sonometría visual adicional en Chromium/WebKit a 390/1440 sin errores, con evidencia privada `atlas-root-20261022/ui-fidelity/`. Las recetas de fecha y reacciones quedan listas, pendientes de alta conjunta en el registro.
+
+Gráficas entregó `ffa532f..1792dd5`; worker liberado. Fuente pendiente de integración, wiring asignado al worker runtime. No aceptar los clics programáticos como verificación de los botones de exportación: repetir interacción real tras integrar capas. Coste y límites en `REPORT-CHARTS-ATLAS.md`.

@@ -163,16 +163,17 @@ class EditorialReference(unittest.TestCase):
    return Math.min(...rects.map(q=>Math.min(q.top-top,bottom-q.bottom,q.left-left,right-q.right)))}'''
   for mode,scheme in (('dark','dark'),('light','light'),('light','dark')):
    html=build('La forma de leer',[{'id':'content','titulo':'La forma de leer','html':CONTENT.replace('<section class="ancho" id="cards">',frame+'<section class="ancho" id="cards">')}],theme='editorial',mode=mode)
-   for width in (320,390,1280,1440):
+   for width in (320,390,1280,1328,1440):
     with self.subTest(mode=mode,scheme=scheme,width=width):
      page,errors=self.page(width,html=html,scheme=scheme)
      self.assertLessEqual(page.evaluate('document.documentElement.scrollWidth'),width)
      self.assertEqual(page.locator('#first p').evaluate('e=>[getComputedStyle(e).fontSize,getComputedStyle(e).lineHeight]'),['15.5px','24.025px'])
      self.assertGreaterEqual(page.locator('#marco-texto').evaluate(text_gap),15.5)
      self.assertEqual(page.locator('#marco-texto').bounding_box()['width'],min(1024,width-48))
-     if width>=1280:
-      index=page.locator('.indice').bounding_box();self.assertEqual(index['width'],360 if width==1440 else 328)
+     if width>=1328:
+      index=page.locator('.indice').bounding_box();self.assertEqual(index['width'],360 if width==1440 else 352)
       self.assertLessEqual(index['x']+index['width'],page.locator('#first').bounding_box()['x']-24)
+     else:self.assertEqual(page.locator('.indice').evaluate('e=>getComputedStyle(e).position'),'static')
      self.assertEqual(errors,[]);page.close()
   page,_=self.page(html=html);page.evaluate('document.documentElement.setAttribute("data-lectura-comoda","")')
   self.assertEqual(page.locator('#first p').evaluate('e=>getComputedStyle(e).fontSize'),'18px')
@@ -187,6 +188,9 @@ class EditorialReference(unittest.TestCase):
  def test_code_blur_is_rendered_over_index(self):
   # Computed blur is not enough: the index must contribute blurred pixels behind code.
   html=self.html.replace('Leer con atención','Leer con atención: ejemplos y decisiones con suficiente contexto')
+  # Put the code later in the article so the article-anchored entrance mask has
+  # finished fading in. This test measures code blur, not the index entrance.
+  html=html.replace('<figure class="codigo ancho" id="snippet">','<div style="height:800px" aria-hidden="true"></div><figure class="codigo ancho" id="snippet">')
   page,errors=self.page(html=html);offset=page.locator('#snippet pre').bounding_box()['y']-150
   # Read/active index items change colour over 320 ms (measured reference easing);
   # compare the settled frame, not one captured mid-transition.
