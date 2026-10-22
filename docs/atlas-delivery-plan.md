@@ -35,3 +35,16 @@ Se asignarán las implementaciones posteriores según los hallazgos, con propied
 Nuevo documento: `margen-atlas-componentes-20261022`. Audiencia privada. La muestra anterior `margen-mejoras-visuales-cmrg-20261021` conserva su identidad y comentarios.
 
 Capturas de cmrg.me solo como evidencia privada; no redistribuir sus fotografías ni fuentes propietarias. Los datos sintéticos se señalan como demostraciones.
+
+## Estado de integración — 05:25 UTC
+
+- Generador del atlas: `4394481`, diez páginas y cobertura de los 90 IDs actuales. CLI y contrato válidos; recorrido a 320/390/1440 sin desbordamiento horizontal. Prueba local de estrés de 1.000 líneas. Pendiente de incorporar las mejoras siguientes; aún no publicado.
+- Identidad: fuente `294a697`, integrado como `7d2135e`. Harness de navegador: 18/26 antes, 26/26 después. Suite portal del autor: 197 OK. Root verificó `npm run build` y 25/25 tests de React/composer; el conteo 89/90 informado antes del build era un prerrequisito omitido. Revisión independiente en curso, sin despliegue aún.
+- Auditoría visual: `7efc71c`, integrado como `deb3f61`. Las 16 rutas visitadas y medidas; alcance y exclusiones en `atlas-reference-audit.md`. Capturas largas limitadas a ocho tramos por ruta; no afirmar inspección visual completa de todos sus finales.
+- Auditoría de datos: `c69c2dc`, integrado como `3274687`. Corrección del coordinador: su comparación con `/now` no corresponde al treemap de aplicaciones de la portada; usar §3.10 de la auditoría visual. La simulación lazy es provisional, no una mejora implementada.
+- Editorial: Task `task_cfe19fb4cad5`, Dispatch `ctx_ee82c996dde4`, worktree `margen-atlas-editorial`; propietario de CSS editorial, lector/capítulos, generador de metadatos/footer y sus tests.
+- Gráficas: Task `task_b89d6825ae03`, Dispatch `ctx_510fc530d555`, worktree `margen-atlas-graficas`; propietario de runtimes de gráficos, nuevo núcleo/estilo dedicado y recetas. Wiring de generador/build reservado hasta integración con editorial.
+- Revisión de identidad: Task `task_944a4410fdcb`, Dispatch `ctx_1720c891b6c2`, worktree `margen-atlas-review-identidad`; solo lectura de producto, contexto independiente.
+- Próximas tareas necesarias: resaltado por lenguaje, montaje diferido y recursos offline, embeds X/YouTube/Instagram, revisión integrada, despliegue/paquete y publicación privada. No confundir el cierre de una auditoría con haber implementado esas tareas.
+
+Los tres workers de la primera fase se liberaron tras entregar. Los worktrees activos cuelgan de `margen-atlas-main`. Se conservan los worktrees de voz y el checkout original.
