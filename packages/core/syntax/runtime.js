@@ -361,6 +361,7 @@
 
  window.NotaCodigo = { version: VERSION, init, lenguajes: Object.keys(LABEL).filter(id => Prism.languages[id]),
   tokens: (source, lang) => tokens(source, ALIAS[lang] || lang).map(([start, end, kind]) => [source.slice(start, end), kind]),
-  activo: active, pendientes: () => pending.size + queue.length + (running ? 1 : 0) };
+  // pendientes: coloreado en curso; esperando: bloques ocultos que se colorearán al mostrarse.
+  activo: active, pendientes: () => queue.length + (running ? 1 : 0), esperando: () => pending.size };
  init();
 })(MARGEN_PRISM, MARGEN_STYLE);
