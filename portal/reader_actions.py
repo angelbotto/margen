@@ -20,7 +20,7 @@ from fastapi import HTTPException, Request
 HEADER = "x-margen-reader-action"
 SAVED_PATH = "/?view=saved"
 MAX_SAVED = 2000
-MAX_LISTED = 500
+MAX_LISTED = MAX_SAVED
 
 
 def migrate(db):

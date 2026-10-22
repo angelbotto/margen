@@ -78,8 +78,13 @@
     public: "Público",
     external: "Sitio anterior",
   };
-  function toast(text) {
+  function toast(text, action) {
     $("#toast").textContent = text;
+    if (action?.href === '/?view=saved') {
+      const link = document.createElement('a');
+      link.href = action.href; link.textContent = 'Ver guardados';
+      $("#toast").append(document.createTextNode(' '), link);
+    }
     $("#toast").hidden = false;
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => ($("#toast").hidden = true), 6000);
