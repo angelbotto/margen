@@ -1,6 +1,6 @@
 # Auditoría de referencia cmrg.me para el atlas — 22 de octubre de 2026
 
-Auditoría de diseño **en solo lectura**. Contrasta `https://www.cmrg.me` (renderizado en vivo) con Margen en la base `d61743a` (PR #47, `docs/editorial-reference.md` y `packages/core/styles/editorial-reference.css`). No se modificó producto ni build. Datos: [`tests/evidence/atlas-reference-2026-10-22/`](../tests/evidence/atlas-reference-2026-10-22/) (`inventory.json`, `measurements.json`, `margen-runtime-d61743a.json`). Las capturas de la referencia y los scripts de sonda están **solo** en el archivo privado `~/.local/share/margen-review/atlas-reference-20261022/` (346 PNG + `scripts/`); no se suben al repositorio.
+Auditoría de diseño **en solo lectura**. Contrasta `https://www.cmrg.me` (renderizado en vivo) con Margen en la base `d61743a` (PR #47, `docs/editorial-reference.md` y `packages/core/styles/editorial-reference.css`). No se modificó producto ni build. Datos: [`tests/evidence/atlas-reference-2026-10-22/`](../tests/evidence/atlas-reference-2026-10-22/) (`inventory.json`, `measurements.json`, `margen-runtime-d61743a.json`, `tail-coverage.json`). Las capturas de la referencia y los scripts de sonda están **solo** en el archivo privado `~/.local/share/margen-review/atlas-reference-20261022/` (346 PNG iniciales + 41 PNG de continuidad + `scripts/`); no se suben al repositorio.
 
 ## 1. Alcance real
 
@@ -8,7 +8,7 @@ Auditoría de diseño **en solo lectura**. Contrasta `https://www.cmrg.me` (rend
 | --- | --- |
 | Descubrimiento | `sitemap.xml` (16 URL) + recorrido BFS de todos los `<a href>` de cada ruta visitada, normalizando host (`www`/`v2`/apex), query, hash y barra final. **0 rutas internas nuevas** fuera del sitemap. |
 | Identidad del despliegue | `v2.cmrg.me` devolvió la misma lista de chunks `/_next/static` que `www` (diff vacío), Vercel. Se trató como el mismo despliegue; no se sustituyó. `cmrg.me` → 308 a `www`. |
-| Rutas visitadas | Las 16, HTTP 200, a 1440×900 y 390×844 (capturas por viewport de desplazamiento, máximo 8 por ruta: los artículos largos quedan parcialmente cubiertos, ver `screens_covered_*` en `inventory.json`). |
+| Rutas visitadas | Las 16, HTTP 200, a 1440×900 y 390×844. La primera pasada limitó las capturas a ocho tramos (`inventory.json`); el coordinador completó los nueve pares ruta/ancho restantes hasta el pie con 41 capturas adicionales (`tail-coverage.json`, todos `complete_to_footer:true`). Inspección manual de estados representativos y mediciones del DOM; no se afirma comparación manual píxel a píxel de las 387 capturas. |
 | Sonda profunda | `/`, `/blog/react-19-part-2-the-code`, `/blog/programar-e-uma-merda` a **1440×900, 1280×800, 390×844 y 320×640**: estilos computados de ~50 selectores, estados del índice al inicio/medio/final, hit-testing índice↔figuras, hover/focus, cabecera tras scroll, pie. |
 | Sondas específicas | Treemap (4 viewports + hover), galerías horizontales (`/work`, `/about`), medios anchos y video (4 artículos), copia de código con portapapeles, hover de enlaces/permalinks/reacciones, orden de tabulación, `prefers-reduced-motion`, `prefers-color-scheme: light`. |
 | Margen runtime | Fixture sintético local construido con `scripts/contract_artifact.build` (7 secciones, código ancho, `details.ancho` cerrado y abierto con **Enter**, 120 líneas, galería de `docs/components.md`), tema editorial oscuro a 1440/1280/390/320 y claro a 1440/390. La muestra privada `2104ce89…` **no** se abrió. |
@@ -191,3 +191,5 @@ Evidencia directa: cabecera `server: Vercel`; rutas `/_next/static/immutable/chu
 ## 6. Reproducción
 
 Python de Playwright: `/Users/angelbotto/orca/workspaces/margen/margen-lector-voz/.venv/bin/python` (Chromium headless, DPR 1, `color_scheme=dark`). Scripts y JSON crudos en `~/.local/share/margen-review/atlas-reference-20261022/scripts/` (`crawl.py`, `probe.py`, `routes2.py`, `treemap.py`, `gal.py`, `wide.py`, `interact.py`, `margen_fixture.py`, `compile.py`). `margen_fixture.py <repo> <salida.json> <dir capturas>` reproduce el bug de capas contra cualquier commit sin red. La referencia cambia con el tiempo (contadores, «latest commit», attention map): las cifras de contenido no son invariantes, la geometría y las reglas sí lo fueron durante esta sesión.
+
+La continuidad de los artículos largos se guardó en el directorio privado `tail-coverage/`. El recorrido detuvo audio/video y no envió formularios ni reacciones. Los conteos de componentes de `tail-coverage.json` se basan en geometría, no en visibilidad óptica frente a capas superpuestas.
