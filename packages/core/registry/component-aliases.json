@@ -96,5 +96,7 @@
   "instagram": "instagram",
   "columnas": "column-chart",
   "cambio": "dumbbell-chart",
-  "meta": "bullet-chart"
+  "meta": "bullet-chart",
+  "encabezado-fecha": "dated-header",
+  "reacciones": "reading-reactions"
 }

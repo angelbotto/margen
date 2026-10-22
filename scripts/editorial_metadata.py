@@ -13,3 +13,5 @@ ETIQUETAS.update({'marco':'Marco de líneas desvanecidas','estanteria':'Estanter
 ETIQUETAS.update({'actividad-editorial':'Actividad con contexto editorial','codigo-lineas':'Código numerado y destacado','enlaces-icono':'Enlaces con icono','avisos-animados':'Avisos con icono animado','trayectoria':'Cronología vertical','galeria':'Galería deslizable'})
 
 ETIQUETAS.update({'columnas': 'Columnas agrupadas o apiladas', 'cambio': 'Antes y después', 'meta': 'Avance frente a meta'})
+
+ETIQUETAS.update({'encabezado-fecha': 'Encabezado con fecha', 'reacciones': 'Reacciones de lectura'})

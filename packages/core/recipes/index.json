@@ -462,5 +462,13 @@
   {
     "file": "instagram/README.md",
     "example": "instagram/example.html"
+  },
+  {
+    "file": "dated-header/README.md",
+    "example": "dated-header/example.html"
+  },
+  {
+    "file": "reading-reactions/README.md",
+    "example": "reading-reactions/example.html"
   }
 ]
