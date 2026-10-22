@@ -114,10 +114,13 @@ class DevelopersTests(unittest.TestCase):
         self.assertIn("default-src 'none'", policy)
         self.assertIn('data-grafica="lineas"', response.text)
         scripts = re.findall(r'<script>(.*?)</script>', response.text, re.S)
-        self.assertEqual(len(scripts), 1)
-        self.assertIn('window.NotaGraficas', scripts[0])
-        digest = base64.b64encode(hashlib.sha256(scripts[0].encode()).digest()).decode()
-        self.assertIn("'sha256-" + digest + "'", policy)
+        # Charts draw through the shared chart core, which loads first; every script is hash-pinned.
+        self.assertEqual(len(scripts), 2)
+        self.assertIn('window.MargenGraficas', scripts[0])
+        self.assertIn('window.NotaGraficas', scripts[1])
+        for script in scripts:
+            digest = base64.b64encode(hashlib.sha256(script.encode()).digest()).decode()
+            self.assertIn("'sha256-" + digest + "'", policy)
         package = self.package('component')
         package['content'] = bundled()['component-line-chart']['content']
         key = self.submit(package)
@@ -132,12 +135,13 @@ class DevelopersTests(unittest.TestCase):
         for slug in ('route-map', 'bubble-map'):
             with self.subTest(slug=slug):
                 item = bundled()['component-' + slug]
-                self.assertEqual(item['preview_runtime'], ['geography.js', 'analytics.js'])
+                self.assertEqual(item['preview_runtime'], ['geography.js', 'chart-core.js', 'analytics.js'])
                 response = self.guest.get('/api/developers/items/' + item['id'] + '/preview')
                 scripts = re.findall(r'<script>(.*?)</script>', response.text, re.S)
-                self.assertEqual(len(scripts), 2)
+                self.assertEqual(len(scripts), 3)
                 self.assertIn('window.NotaGeografia=', scripts[0])
-                self.assertIn('window.NotaAnalitica=', scripts[1])
+                self.assertIn('window.MargenGraficas', scripts[1])
+                self.assertRegex(scripts[2], r'window\.NotaAnalitica ?=')
                 self.assertNotIn('allow-same-origin', response.headers['content-security-policy'])
         for item in bundled().values():
             if item['kind'] == 'component' and 'geography.js' in item['preview_runtime']:

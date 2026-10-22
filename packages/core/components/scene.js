@@ -2,6 +2,10 @@
    Tabla de datos permanente; una instancia por figura; sin texturas externas. */
 (() => {
   'use strict';
+  // Three.js se pide al acercarse a la vista, una vez por documento; sin red queda el respaldo legible.
+  const tres=window.NotaTres||(window.NotaTres=(()=>{const src='https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js',sri='sha512-vnmn/Qqn6aG0POAc9mIGzjq0IybrvxJXYDafNvp9JSnDGxeF3pbkSqLvf+YGd5ku63pT7sa/jxHn7/d0mU8+tA==';let pending=null;
+   const load=()=>window.THREE?Promise.resolve(window.THREE):pending||(pending=new Promise((ok,fail)=>{const s=document.createElement('script');s.src=src;s.integrity=sri;s.crossOrigin='anonymous';s.async=true;s.onload=()=>window.THREE?ok(window.THREE):fail(new Error('Three.js no disponible'));s.onerror=()=>{pending=null;s.remove();fail(new Error('Three.js no disponible sin conexión'));};(document.head||document.documentElement).append(s);}));
+   return el=>window.THREE?Promise.resolve(window.THREE):new Promise(near=>{if(!('IntersectionObserver' in window))return near();const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){io.disconnect();near();}},{rootMargin:'400px 0px'});io.observe(el);}).then(load);})());
   const instances=new WeakMap();
   const node=(tag,cls,text)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;};
   const format=n=>new Intl.NumberFormat('es-CO',{maximumSignificantDigits:4,notation:Math.abs(n)>=1e6||(n!==0&&Math.abs(n)<.001)?'scientific':'standard'}).format(n);
@@ -43,8 +47,12 @@
       this.listen(document,'visibilitychange',()=>{this.stop();if(!document.hidden){this.draw();this.start();}});
       this.mutation=new MutationObserver(()=>this.theme());this.mutation.observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
       this.intersection=new IntersectionObserver(entries=>{this.visible=entries[0].isIntersecting;this.stop();if(this.visible){this.fit();this.start();}});this.intersection.observe(element);
-      try {this.init();}
-      catch(error){this.error.textContent='La vista 3D no está disponible. La tabla conserva todos los datos.';this.error.hidden=false;this.stage.hidden=true;this.controls.hidden=true;this.releaseRenderer();}
+      const unavailable=()=>{this.error.textContent='La vista 3D no está disponible. La tabla conserva todos los datos.';this.error.hidden=false;this.stage.hidden=true;this.controls.hidden=true;this.releaseRenderer();};
+      if(window.THREE){try {this.init();} catch(error){unavailable();}}
+      else {
+        element.dataset.tres='cargando';
+        tres(element).then(()=>{if(this.dead)return;delete element.dataset.tres;try{this.init();this.sync();this.draw();this.start();}catch(error){unavailable();}},()=>{if(!this.dead){delete element.dataset.tres;unavailable();}});
+      }
       this.sync();instances.set(element,this);
       document.fonts?.ready.then(()=>{if(!this.dead)this.theme();});
     }

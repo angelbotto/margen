@@ -23,6 +23,8 @@ blocks = [
     ("REVIEW COMPOSER", review_css),
     ("PRESENTATION", (ROOT/'packages/core/styles/presentation.css').read_text()),
     ("TABLE CONTENT", (ROOT/'packages/core/styles/table-content.css').read_text()),
+    ("CHART CORE", (ROOT/'packages/core/styles/chart-core.css').read_text()),
+    ("EMBEDS", (ROOT/'packages/core/styles/embeds.css').read_text()),
 ]
 for name, content in blocks:
     css = re.sub(r'\n*'+re.escape('/* '+name+' START */')+r'.*?'+re.escape('/* '+name+' END */')+r'\n*', '\n\n', css, flags=re.S)
@@ -35,6 +37,16 @@ if (ROOT/'portal/static').is_dir():
     (ROOT/'portal/static/editorial-reference.css').write_text((ROOT/'packages/core/styles/editorial-reference.css').read_text())
     (ROOT/'portal/static/editorial-code.js').write_text((ROOT/'packages/core/components/code.js').read_text())
     (ROOT/'portal/static/editorial-pieces.js').write_text((ROOT/'packages/core/components/editorial-pieces.js').read_text())
+    # Hosted refresh of other marked modules in older documents (portal/reader_style.py).
+    component = lambda name: 'packages/core/components/' + name
+    refreshed = [component(name) for name in ('chapters.js', 'prototype.js', 'chart-core.js', 'charts.js', 'analytics.js', 'reports.js',
+                                              'evidence.js', 'attention-map.js', 'geography.js', 'globe.js', 'scene.js', 'fleet.js')]
+    # Chart runtimes now draw through the shared core, which older documents never carried.
+    requires = {component(name): [component('chart-core.js')] for name in ('charts.js', 'analytics.js', 'reports.js', 'evidence.js', 'attention-map.js')}
+    (ROOT/'portal/static/runtime-refresh.json').write_text(json.dumps({
+        'modules': {name: (ROOT/name).read_text() for name in refreshed},
+        'requires': requires,
+        'css': '\n/* CHART CORE (refresh) */\n' + (ROOT/'packages/core/styles/chart-core.css').read_text()}, ensure_ascii=False) + '\n')
 from recipes import assemble as assemble_recipes
 assemble_recipes()
 from themes import generate as generate_theme_registry
@@ -177,14 +189,14 @@ catalog=catalog.replace('NAV_COMPONENTES','<div data-buscador-recetas><div class
 body=body.replace('<footer class="pie">',catalog+'<footer class="pie">')
 body=body.replace('<li><a href="#guardado">Lo que vale guardar</a></li>','<li><a href="#guardado">Lo que vale guardar</a></li><li><a href="#libreria">Librería de evidencia</a></li><li><a href="#segunda-tanda">Artículos y prototipos</a></li>')
 body=re.sub(r'(<p class="bajada">.*?</p>)',r'\1<p class="enlace-edicion"><a href="examples/generated/report.html">Explorar el informe con capítulos →</a> · <a href="examples/generated/library.html">Abrir la biblioteca completa →</a></p>',body,count=1)
-(ROOT/'examples/generated/template.html').write_text(start('Margen — la forma también explica')+body+script('packages/core/components/reader.js')+globe_scripts()+script('packages/core/components/invitation.js')+script('packages/core/components/handwriting.js')+script('packages/core/components/attention-map.js')+script('packages/core/components/geography.js')+script('packages/core/components/fleet.js')+script('packages/core/components/analytics.js')+script('packages/core/components/charts.js')+script('packages/core/components/tables.js')+script('packages/core/components/sound.js')+script('packages/core/components/writing.js')+script('packages/core/components/scene.js')+script('packages/core/components/reports.js')+script('packages/core/components/prototype.js')+script('packages/core/components/tabs.js')+script('packages/core/components/catalog.js')+script('packages/core/components/editorial.js')+script('packages/core/components/code.js')+script('packages/core/components/table-model.js')+script('packages/core/components/data-explorer.js')+script('packages/core/components/evidence.js')+script('packages/core/components/review.js'))
+(ROOT/'examples/generated/template.html').write_text(start('Margen — la forma también explica')+body+script('packages/core/components/reader.js')+globe_scripts()+script('packages/core/components/invitation.js')+script('packages/core/components/handwriting.js')+script('packages/core/components/chart-core.js')+script('packages/core/components/attention-map.js')+script('packages/core/components/geography.js')+script('packages/core/components/fleet.js')+script('packages/core/components/analytics.js')+script('packages/core/components/charts.js')+script('packages/core/components/tables.js')+script('packages/core/components/sound.js')+script('packages/core/components/writing.js')+script('packages/core/components/scene.js')+script('packages/core/components/reports.js')+script('packages/core/components/prototype.js')+script('packages/core/components/tabs.js')+script('packages/core/components/catalog.js')+script('packages/core/components/editorial.js')+script('packages/core/components/code.js')+script('packages/core/components/table-model.js')+script('packages/core/components/data-explorer.js')+script('packages/core/components/evidence.js')+script('packages/core/components/review.js'))
 globe_body='<main class="hoja" id="inicio" lang="es">'+tools()+'''<header class="cabecera"><p class="ceja">Nota / geografía</p><h1>Planes, puntos<br>y lugares.</h1><p class="bajada">Un globo de puntos para explorar conexiones. Elige una ruta, gira la Tierra o pausa la vista.</p></header>'''+globe()+'''<footer class="pie">Ejemplo reutilizable · Three.js desde cdnjs · máscara geográfica incrustada · ambos temas y movimiento reducido.</footer></main>'''
 (ROOT/'examples/generated/globe.html').write_text(start('Margen — globo de rutas')+globe_body+script('packages/core/components/reader.js')+globe_scripts())
 (ROOT/'examples/generated/chapters.html').write_text(start('Margen — capítulos')+dict(recipes())['multipagina']+script('packages/core/components/reader.js')+script('packages/core/components/chapters.js'))
 informe=dict(recipes())['informe'].replace('<div class="edicion-acciones"><span>Edición 02</span></div>','<div class="edicion-acciones"><span>Edición 02</span>'+appearance()+'</div>')
 informe=re.sub(r'<figure class="pieza amplio" id="visor-ejemplo"[\s\S]*?</figure>',lambda _:dict(recipes())['visor'],informe,count=1)
 from contract_artifact import revision, build as build_estandar
-(ROOT/'examples/generated/report.html').write_text(start('Margen · Una revisión antes de confirmar')+informe+revision()+''.join(script(file) for file in ['packages/core/components/reader.js','packages/core/components/chapters.js','packages/core/components/charts.js','packages/core/components/reports.js','packages/core/components/prototype.js','packages/core/components/tabs.js','packages/core/components/review.js']))
+(ROOT/'examples/generated/report.html').write_text(start('Margen · Una revisión antes de confirmar')+informe+revision()+''.join(script(file) for file in ['packages/core/components/reader.js','packages/core/components/chapters.js','packages/core/components/chart-core.js','packages/core/components/charts.js','packages/core/components/reports.js','packages/core/components/prototype.js','packages/core/components/tabs.js','packages/core/components/review.js']))
 from library import build as build_biblioteca
 build_biblioteca(ROOT,start,script,appearance,recipes,labels,THREE)
 from fixture_regression import build

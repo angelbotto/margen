@@ -58,16 +58,25 @@ def without_embedded_flow(content):
 REFERENCE = re.compile(r'/\* EDITORIAL REFERENCE START \*/.*?/\* EDITORIAL REFERENCE END \*/', re.S)
 
 
-def refresh_editorial_reference(content, css, code, pieces=None):
+def refresh_editorial_reference(content, css, code, pieces=None, runtime=None):
     """Refresh a rendered Margen copy; do not interpret arbitrary HTML as a theme.
 
-    Only real style elements and the explicitly marked core code module change.
+    Only real style elements and explicitly marked core modules change.
     Script strings, examples, custom modules and stored revisions remain verbatim.
     The late stylesheet upgrades old generated geometry without replacing themes.
+
+    runtime (portal/static/runtime-refresh.json) adds more marked modules, the
+    modules each one requires and their CSS. A required module missing from the
+    document is inserted once, directly before the first refreshed module that
+    needs it; nothing is added to documents that do not carry that module.
     """
+    runtime = runtime or {}
     runtimes = {'packages/core/components/code.js': code}
     if pieces is not None:
         runtimes['packages/core/components/editorial-pieces.js'] = pieces
+    runtimes.update(runtime.get('modules', {}))
+    requires = runtime.get('requires', {})
+    css = css + runtime.get('css', '')
     offsets = [0] + [match.end() for match in re.finditer('\n', content)]
 
     class Reference(HTMLParser):
@@ -82,6 +91,7 @@ def refresh_editorial_reference(content, css, code, pieces=None):
             self.doctype_end = None
             self.last_style = None
             self.inert_depth = 0
+            self.modules = {}
 
         def pos(self):
             line, column = self.getpos()
@@ -108,6 +118,8 @@ def refresh_editorial_reference(content, css, code, pieces=None):
                 self.margen = True
             if tag in {'script', 'style'}:
                 self.literal = tag
+                if tag == 'script' and attrs.get('data-nota-modulo') and not attrs.get('src') and attrs.get('type', '') in {'', 'text/javascript'}:
+                    self.modules.setdefault(attrs['data-nota-modulo'], self.pos())
                 self.block = (self.pos() + len(self.get_starttag_text()), attrs)
             elif tag in {'textarea', 'title', 'xmp', 'iframe', 'noembed', 'noframes', 'plaintext'}:
                 self.literal = tag
@@ -149,6 +161,15 @@ def refresh_editorial_reference(content, css, code, pieces=None):
     parser.close()
     if not parser.margen:
         return content
+    added = set()
+    for name, at in sorted(parser.modules.items(), key=lambda item: item[1]):
+        if name not in runtimes:
+            continue
+        for dependency in requires.get(name, []):
+            if dependency in parser.modules or dependency in added or dependency not in runtimes:
+                continue
+            added.add(dependency)
+            parser.edits.append((at, at, '<script data-nota-modulo="' + dependency + '">\n' + runtimes[dependency] + '\n</script>\n'))
     if not parser.injected:
         # Last stylesheet wins over the embedded library, including late body
         # styles. Inline component overrides and opt-out layouts remain intact.

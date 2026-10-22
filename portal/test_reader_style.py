@@ -40,6 +40,29 @@ class EditorialReferenceRefreshTest(unittest.TestCase):
         from portal.reader_style import refresh_editorial_reference
         return refresh_editorial_reference(html, '.hoja{color:blue}', 'window.currentCode = true;')
 
+    def test_runtime_refresh_updates_marked_modules_and_inserts_requirements_once(self):
+        from portal.reader_style import refresh_editorial_reference
+        core, charts, proto = ('packages/core/components/' + n for n in ('chart-core.js', 'charts.js', 'prototype.js'))
+        runtime = {'modules': {core: 'core();', charts: 'charts();', proto: 'proto();'}, 'requires': {charts: [core]}, 'css': '.chart{}'}
+        mark = lambda name, body: '<script data-nota-modulo="' + name + '">' + body + '</script>'
+        source = ('<main class="hoja"></main>' + mark(proto, 'oldProto();') + mark(charts, 'oldCharts();') + mark(charts, 'again();') +
+                  '<template>' + mark(charts, 'inert();') + '</template><script data-nota-modulo="mine/charts.js">mine();</script>')
+        result = refresh_editorial_reference(source, '.hoja{}', 'code();', runtime=runtime)
+        self.assertEqual(result.count('core();'), 1)
+        self.assertLess(result.index(mark(core, '\ncore();\n')), result.index(mark(charts, '\ncharts();\n')))
+        self.assertIn(mark(proto, '\nproto();\n'), result)
+        self.assertNotIn('oldCharts();', result)
+        self.assertIn('<template>' + mark(charts, 'inert();') + '</template>', result)
+        self.assertIn('mine();', result)
+        self.assertIn('.hoja{}.chart{}', result)
+        self.assertEqual(refresh_editorial_reference(result, '.hoja{}', 'code();', runtime=runtime).count('core();'), 1)
+        present = '<main class="hoja"></main>' + mark(core, 'oldCore();') + mark(charts, 'oldCharts();')
+        self.assertEqual(refresh_editorial_reference(present, '', '', runtime=runtime).count('core();'), 1)
+        for untouched in ('<main class="hoja"></main>' + mark(proto, 'x();'),          # no dependent, nothing added
+                          '<p>ajeno</p>' + mark(charts, 'x();')):                       # not a Margen document
+            with self.subTest(html=untouched[:40]):
+                self.assertNotIn('core();', refresh_editorial_reference(untouched, '', '', runtime=runtime))
+
     def test_refreshes_only_marked_styles_and_module(self):
         old = '/* EDITORIAL REFERENCE START */.old{}/* EDITORIAL REFERENCE END */'
         source = ('<html><head><style>p{color:red}'+old+'</style></head><body><main class="hoja"></main>'
