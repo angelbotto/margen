@@ -41,6 +41,14 @@ TRIALS = {
     "pestanas": "Recorre las pestañas con las flechas del teclado. Solo el panel seleccionado debe quedar visible y accesible.",
     "metodologia": "Abre y cierra el detalle usando Enter. La explicación debe mantener su separación y legibilidad al pasar por el índice.",
     "pie-editorial": "Recorre los enlaces con Tab. La identidad y las redes pertenecen al autor de cada documento, mientras la atribución de Margen es independiente.",
+    "encabezado-fecha": "La fecha viene de los metadatos del documento. Reduce el ancho: el día, el mes y el año deben mantenerse juntos.",
+    "reacciones": "Selecciona una reacción y vuelve a pulsarla. El estado es local; la nota explica si se conserva en el navegador o solo mientras la página siga abierta.",
+    "columnas": "Compara los grupos con la tabla, aísla una serie desde su leyenda y exporta los datos. Las alturas deben conservar la misma escala.",
+    "cambio": "Compara el antes y el después. Recorre cada punto con el teclado para consultar el valor completo.",
+    "meta": "Distingue el valor observado de la meta. Consulta los datos con el teclado y comprueba que la escala empieza en cero.",
+    "x-post": "La tarjeta conserva texto, autor, fecha y medios sin cargar scripts de X. Esta publicación es una demostración inventada y está identificada como tal.",
+    "youtube": "Pulsa Cargar video para abrir el reproductor. Si el proveedor no permite reproducirlo aquí, usa el enlace al video original.",
+    "instagram": "Carga la publicación de forma explícita. Instagram puede pedir acceso o limitar el contenido; el enlace original sigue disponible.",
     "sonido": "Activa el sonido solo si quieres probarlo y usa el control de volumen. El texto conserva toda la información con el sonido apagado.",
     "evidencia-ampliable": "Abre la evidencia, recórrela con teclado y ciérrala con Escape. El foco debe volver al control que la abrió.",
 }
@@ -120,6 +128,15 @@ def prepare(output: Path, render: bool = False) -> dict:
              '<p>Empieza por <a href="#receta-galeria">la galería</a>, '
              '<a href="#receta-atencion">el mapa de atención</a> o '
              '<a href="#atlas-pruebas">las pruebas de lectura</a>.</p></section>'
+             '<section class="seccion" id="atlas-novedades"><h2>Qué cambió en la lectura.</h2>'
+             '<p>El índice acompaña el recorrido con un trazo sobre las secciones leídas. Las figuras anchas lo cubren; '
+             'el fondo de los bloques de código lo difumina. Los títulos, las fechas y el pie comparten un ritmo de lectura.</p>'
+             '<p>Prueba los <a href="#receta-codigo-poliglota">lenguajes de código</a>, '
+             '<a href="#receta-columnas">las gráficas nuevas</a>, <a href="#receta-youtube">los medios</a> y '
+             '<a href="#receta-pie-editorial">el pie del autor</a>. El HTML de cada muestra se puede copiar.</p>'
+             '<p class="secundario">La referencia visual es <a href="https://www.cmrg.me">cmrg.me</a>. '
+             'Esta adaptación usa Instrument Serif, una fuente abierta distinta de la original. '
+             'Los colores y los ajustes de lectura siguen el tema que elijas.</p></section>'
              f'<nav class="biblioteca-rutas ancho" aria-label="Explorar familias">{cards}</nav>'
              '<section class="seccion" id="atlas-busqueda"><h2>Encuentra un componente.</h2>'
              '<div data-buscador-recetas><div class="buscador-recetas"><label for="atlas-buscar">Buscar por nombre</label>'
@@ -167,13 +184,18 @@ def prepare(output: Path, render: bool = False) -> dict:
     (output / "pruebas.html").write_text(stress)
     pages.append({"id": "atlas-pruebas", "title": "Pruebas de lectura", "content": "pruebas.html"})
     config = {"title": "Margen · Atlas de componentes", "description": "Una biblioteca que puedes recorrer, probar y comentar.",
-              "document_id": DOCUMENT_ID, "format": "chapters", "theme": "editorial", "mode": "dark", "pages": pages}
+              "document_id": DOCUMENT_ID, "format": "chapters", "theme": "editorial", "mode": "dark", "pages": pages,
+              "date": "2026-10-22", "reactions": True,
+              "footer": {"author": "Una biblioteca compartida", "note": "Las mejores piezas empiezan con una observación. Prueba, comenta y comparte lo que debería cambiar.",
+                         "links": [{"label": "Proyecto", "href": "https://github.com/angelbotto/margen", "detail": "Código abierto y contribuciones"},
+                                   {"label": "Plataforma", "href": "https://artifacts.botto.is", "detail": "Leer, publicar y conversar"}], "platform": True}}
     (output / "atlas.json").write_text(json.dumps(config, ensure_ascii=False, indent=2) + '\n')
     (output / "coverage.json").write_text(json.dumps({"registry_count": len(ids), "components": coverage,
             "layouts": [{"id": "chapter-layout", "mode": "atlas-shell"}, {"id": "report-layout", "page": "atlas-reportes"}]}, ensure_ascii=False, indent=2) + '\n')
     if render:
         html = build(config["title"], [{"id": p["id"], "titulo": p["title"], "html": (output / p["content"]).read_text()} for p in pages],
-                     description=config["description"], document_id=DOCUMENT_ID, format="chapters", theme="editorial", mode="dark")
+                     description=config["description"], document_id=DOCUMENT_ID, format="chapters", theme="editorial", mode="dark",
+                     date=config["date"], footer=config["footer"], reactions=config["reactions"])
         (output / "atlas.html").write_text(html)
     return {"directory": str(output), "pages": len(pages), "components": len(coverage), "rendered": render}
 
