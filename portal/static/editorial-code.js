@@ -360,7 +360,16 @@
  document.addEventListener('scroll', e => { if (e.target instanceof Element && e.target.matches('.codigo pre')) overflow(e.target); }, { capture: true, passive: true });
  let resized = 0;
  addEventListener('resize', () => { if (!resized) resized = requestAnimationFrame(() => { resized = 0; for (const code of document.querySelectorAll('.codigo pre > [data-codigo-estado]')) overflow(code.parentElement); }); }, { passive: true });
- addEventListener('beforeprint', () => { for (const el of [...pending]) init(el, { inmediato: true }); while (queue.length) { const el = queue.shift(); if (!done.has(el)) { done.add(el); finish(el); } } if (running) { try { while (!running.next().done); } catch { } running = null; } });
+ // Print includes blocks still waiting for IntersectionObserver, not only hidden or queued ones.
+ function printReady() {
+  if (running) { try { while (!running.next().done); } catch (error) { console.error(error); } running = null; }
+  queue.length = 0;
+  init(document, { inmediato: true });
+ }
+ addEventListener('beforeprint', printReady);
+ const printMedia = matchMedia('print');
+ printMedia.addEventListener('change', event => { if (event.matches) printReady(); });
+ if (printMedia.matches) printReady();
 
  window.NotaCodigo = { version: VERSION, init, lenguajes: Object.keys(LABEL).filter(id => Prism.languages[id]),
   tokens: (source, lang) => tokens(source, ALIAS[lang] || lang).map(([start, end, kind]) => [source.slice(start, end), kind]),

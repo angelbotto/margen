@@ -45,7 +45,7 @@ TRIALS = {
     "reacciones": "Selecciona una reacción y vuelve a pulsarla. El estado es local; la nota explica si se conserva en el navegador o solo mientras la página siga abierta.",
     "columnas": "Compara los grupos con la tabla, aísla una serie desde su leyenda y exporta los datos. Las alturas deben conservar la misma escala.",
     "cambio": "Compara el antes y el después. Recorre cada punto con el teclado para consultar el valor completo.",
-    "meta": "Distingue el valor observado de la meta. Consulta los datos con el teclado y comprueba que la escala empieza en cero.",
+    "meta": "Distingue el valor observado de la meta. Consulta los datos con el teclado y comprueba que la escala incluye el cero y los valores negativos.",
     "x-post": "La tarjeta conserva texto, autor, fecha y medios sin cargar scripts de X. Esta publicación es una demostración inventada y está identificada como tal.",
     "youtube": "Pulsa Cargar video para abrir el reproductor. Si el proveedor no permite reproducirlo aquí, usa el enlace al video original.",
     "instagram": "Carga la publicación de forma explícita. Instagram puede pedir acceso o limitar el contenido; el enlace original sigue disponible.",

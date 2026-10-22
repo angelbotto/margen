@@ -105,6 +105,11 @@ jobs:
           python scripts/test_prototype_resize.py
           python scripts/test_deferred_runtime.py
           MARGEN_BROWSER=webkit python scripts/test_deferred_runtime.py
+      - name: Check independently reported reader and chart regressions
+        run: |
+          python scripts/test_chart_edges.py
+          python review/atlas-ui-runtime/test_defects.py
+          MARGEN_BROWSER=webkit python review/atlas-ui-runtime/test_defects.py
       - name: Check portal-owned media intent with real browser clicks
         run: |
           python tests/evidence/atlas-media-intent-2026-10-22/media_intent_browser.py . /tmp/media-intent-ci /tmp/media-intent-shots chromium

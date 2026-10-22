@@ -85,6 +85,26 @@ class CodeSyntax(unittest.TestCase):
  def kinds(self, page, id):
   return page.evaluate('(id)=>[...document.getElementById(id).querySelectorAll("span[class]:not(.codigo-linea)")].map(s=>[s.className,s.textContent])', id)
 
+ def test_print_finishes_code_waiting_below_viewport(self):
+  content = '<div style="height:4000px">Antes del código</div>' + box('para-imprimir', 'javascript', LONG)
+  html = build('Impresión', [{'id': 'impresion', 'titulo': 'Impresión', 'html': content}])
+  for trigger in ('beforeprint', 'media'):
+   with self.subTest(trigger=trigger):
+    page = self.page()
+    page.route('https://margen.test/impresion', lambda r: r.fulfill(status=200, content_type='text/html', body=html))
+    page.goto('https://margen.test/impresion')
+    page.wait_for_timeout(100)
+    lines = page.locator('#para-imprimir .codigo-linea[data-numero]')
+    self.assertEqual(lines.count(), 0, 'fixture must begin deferred below the viewport')
+    if trigger == 'beforeprint': page.evaluate("dispatchEvent(new Event('beforeprint'))")
+    else: page.emulate_media(media='print')
+    lines.nth(999).wait_for(state='attached')
+    self.assertEqual(lines.count(), 1000)
+    self.assertEqual(page.locator('#para-imprimir').text_content(), LONG)
+    page.locator('#para-imprimir').scroll_into_view_if_needed()
+    page.wait_for_timeout(100)
+    self.assertEqual(lines.count(), 1000, 'deferred callback must not duplicate printed lines')
+
  def test_grammars_by_language(self):
   page = self.page()
   js = self.kinds(page, 'c-javascript')
