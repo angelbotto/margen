@@ -47,6 +47,10 @@ Portal-installed library: `margen update` uses the configured server. To deliber
 
 Local ZIP installation: update the source checkout, rebuild the package and repeat `scripts/update.py --package ...`. This installation remains independent rather than silently switching to botto.is. The installer keeps a backup of the previous managed library. Review failures before retrying; never bypass checksum validation to make an update succeed.
 
+## Design and imported documents
+
+The portable package carries the same recipes, registry, theme tokens, fonts and component runtime used by the generator. [The design contract](design-contract.md) explains what an update changes, which format-specific behaviors it preserves, and how to upload your own HTML without applying the library design.
+
 ## Common problems
 
 | Problem | Action |

@@ -14,8 +14,6 @@
     items = [],
     current = null,
     grants = [],
-    uploadVersion = false,
-    uploadBase = null,
     poll = null,
     noticePoll = null,
     toastTimer = null,
@@ -1364,19 +1362,9 @@
           matchMedia("(prefers-color-scheme:dark)").matches),
     );
   } catch {}
-  function upload(revision = false) {
-    uploadVersion = revision;
-    uploadBase = revision ? current.current_version : null;
-    $("#upload-heading").textContent = revision
-      ? "Subir una revisión"
-      : "Publicar artefacto";
-    const form = $("#upload-form");
-    form.reset();
-    form.elements.title.value = revision ? current.title : "";
-    form.elements.space.value = revision ? current.space : "Personal";
-    form.querySelector(".form-error").textContent = "";
-    $("#upload-dialog").showModal();
-  }
+  const uploader = window.MargenUpload.create({api});
+  function upload(revision = false) { uploader.open(revision ? current : null); }
+
   function rename(a) {
     editing = a;
     const form = $("#rename-form");
@@ -1419,64 +1407,6 @@
   });
   $("#publish").addEventListener("click", () => upload());
   $("#new-version").addEventListener("click", () => upload(true));
-  $("#upload-form").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const form = e.currentTarget,
-      button = form.querySelector("[type=submit]");
-    button.disabled = true;
-    form.querySelector(".form-error").textContent = "";
-    try {
-      const file = form.elements.file.files[0];
-      if (!file || file.size > 20 * 1024 * 1024)
-        throw Error("Selecciona un HTML de hasta 20 MB.");
-      const original = form.elements.original?.files[0];
-      let attachments = [];
-      if (original) {
-        if (original.size > 12 * 1024 * 1024)
-          throw Error("El original debe ocupar menos de 12 MB.");
-        const data = await new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(String(reader.result).split(",")[1]);
-          reader.onerror = reject;
-          reader.readAsDataURL(original);
-        });
-        attachments = [
-          {
-            name: "original." + original.name.split(".").pop().toLowerCase(),
-            data,
-          },
-        ];
-      }
-      const payload = {
-          attachments,
-          title: form.elements.title.value,
-          space: form.elements.space.value,
-          html: await file.text(),
-          mode: uploadVersion ? "draft" : "published",
-          ...(uploadVersion ? {expected_current: uploadBase} : {}),
-          source: {
-            agent: form.elements.agent.value,
-            session: form.elements.session.value,
-            device: form.elements.device.value,
-          },
-        },
-        result = await api(
-          uploadVersion
-            ? "/api/artifacts/" + current.id + "/versions"
-            : "/api/artifacts",
-          { method: "POST", body: JSON.stringify(payload) },
-        );
-      location.assign(
-        "/a/" +
-          result.id +
-          (result.state === "draft" ? "?version=" + result.version : ""),
-      );
-    } catch (error) {
-      form.querySelector(".form-error").textContent = error.message;
-    } finally {
-      button.disabled = false;
-    }
-  });
   function shareSummary() {
     const form = $("#share-form"),
       mode = form.elements.visibility.value;
