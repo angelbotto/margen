@@ -102,14 +102,18 @@
       // Cuantiles: cada nivel agrupa una parte similar de los datos; no se inventan valores.
       const sorted = [...values].sort((a, b) => a - b), q = p => sorted[Math.min(sorted.length - 1, Math.floor(p * (sorted.length - 1) + 1e-9))];
       limits = [...new Set([0, .2, .4, .6, .8, 1].map(q))];
-      if (limits.length < 2) limits = [limits[0], limits[0] + 1];
+      // Dos cortes: el máximo forma su propio nivel para que el resto no se pinte como máximo.
+      if (limits.length === 2) limits = [limits[0], limits[1], limits[1]];
     }
-    const levels = limits.length - 1, diverging = centre !== undefined;
+    // Todos los valores iguales: un solo nivel neutro, sin rango inventado ni intensidad máxima.
+    const constant = limits.length === 1;
+    const levels = constant ? 1 : limits.length - 1, diverging = centre !== undefined;
     const level = v => { const k = limits.slice(1).findIndex(l => v < l); return k === -1 ? levels - 1 : k; };
+    const index = k => constant ? (limits[0] === 0 ? 0 : 2) : Math.round(k * 4 / Math.max(1, levels - 1));
     const fill = k => diverging
       ? (k === (levels - 1) / 2 ? 'var(--panel)' : 'color-mix(in oklab, ' + (k < levels / 2 ? 'var(--grafica-2)' : 'var(--grafica-1)') + ' ' + Math.round(20 + 50 * Math.abs(k - (levels - 1) / 2) / ((levels - 1) / 2)) + '%, var(--grafica-papel))')
-      : 'var(--calor-' + (levels === 1 ? 4 : Math.round(k * 4 / (levels - 1))) + ')';
-    return {limits, levels, level, fill, diverging, quantile: !raw && !diverging};
+      : 'var(--calor-' + index(k) + ')';
+    return {limits, levels, level, fill, index, constant, diverging, quantile: !raw && !diverging && !constant};
   }
 
   class NotaGrafica {
@@ -146,7 +150,7 @@
       if (type === 'calor') data.forEach((r, j) => [...r.row.cells].slice(1).forEach((cell, i) => {
         const v = r.values[i];
         this.original.push([cell, null, cell.getAttribute('data-nivel')]);
-        cell.dataset.nivel = v === null ? 'ausente' : Math.round(this.model.heat.level(v) * 4 / Math.max(1, this.model.heat.levels - 1));
+        cell.dataset.nivel = v === null ? 'ausente' : this.model.heat.index(this.model.heat.level(v));
       }));
       if (type === 'calor') { this.tableClass = this.model.table.getAttribute('class'); this.model.table.classList.add('tabla-calor'); }
       // La figura es la vista principal: la tabla queda a un clic. El estado que elija el lector se respeta.
@@ -164,7 +168,7 @@
       this.fill = G.patterns(svg, G.patternsEnabled(this.figure));
       const result = this[type === 'distribucion' ? 'histogram' : type === 'dispersion' ? 'scatter' : type === 'lineas' || type === 'temporal' ? 'lines' : type === 'calor' ? 'heatmap' : type === 'columnas' ? 'columns' : type === 'cambio' ? 'dumbbell' : type === 'meta' ? 'bullet' : 'bars'](svg, width);
       svg.setAttribute('height', result.height);
-      svg.setAttribute('viewBox', `0 0 ${width} ${result.height}`);
+      svg.setAttribute('viewBox', `0 0 ${result.width || width} ${result.height}`);
       this.marks = G.marks(this.figure, svg, {items: result.items, describe: result.describe, status: this.status, label: title, columns: result.columns});
       this.legend?.repaint();
     }
@@ -270,8 +274,9 @@
     lines(svg, width) {
       const {data, heads, type} = this.model, series = heads.length - 1;
       const height = Math.round(Math.max(240, Math.min(360, width * .55)));
-      const all = data.flatMap(r => r.values).filter(v => v !== null);
-      const frame = this.yFrame(svg, width, height, [Math.min(...all), Math.max(...all)], {title: this.unit(), xTitle: heads[0], pad: .05});
+      const all = data.flatMap(r => r.values).filter(v => v !== null), lo = Math.min(...all), hi = Math.max(...all);
+      const range = lo === hi && lo >= 0 ? [0, hi || 1] : [lo, hi];
+      const frame = this.yFrame(svg, width, height, range, {title: this.unit(), xTitle: heads[0], pad: lo === hi ? 0 : .05});
       const pad = type === 'temporal' ? 6 : Math.min(40, (frame.right - frame.left) / Math.max(2, data.length) / 2);
       let x, labelAt;
       if (type === 'temporal') {
@@ -378,7 +383,8 @@
       const labels = data.map(r => G.wrap(r.label + (narrow ? ' · ' + summary(r) : ''), (narrow ? width : labelWidth) - 12, this.font, 2));
       const rowHeight = labels.map(l => narrow ? l.length * 15 + bar + 18 : Math.max(bar + 18, l.length * 15 + 10));
       const height = top + rowHeight.reduce((a, b) => a + b, 0) + 34;
-      const x = this.xNumeric(svg, [0, Math.max(...data.flatMap(r => r.values))], {left, right, top: top - 8, bottom: height - 30, spec: columns[0].spec});
+      const all = data.flatMap(r => r.values);
+      const x = this.xNumeric(svg, [Math.min(0, ...all), Math.max(0, ...all)], {left, right, top: top - 8, bottom: height - 30, spec: columns[0].spec});
       this.text(0, 14, G.fit(this.unit(), width, this.font, 1), {class: 'grafica-unidad'});
       const items = [], info = [];
       let y0 = top;
@@ -390,7 +396,7 @@
         let from = 0;
         bands.forEach((b, k) => { svg.append(G.svg('rect', {x: x(from), y, width: Math.max(0, x(b) - x(from)), height: bar, class: 'mg-bullet-banda mg-b' + k})); from = b; });
         const g = G.svg('g', {'data-value': value});
-        g.append(G.svg('rect', {x: x(0), y: y + bar * .3, width: Math.max(.5, x(value) - x(0)), height: bar * .4, class: 'grafica-barra serie-0'}));
+        g.append(G.svg('rect', {x: Math.min(x(0), x(value)), y: y + bar * .3, width: Math.max(.5, Math.abs(x(value) - x(0))), height: bar * .4, class: 'grafica-barra serie-0'}));
         g.append(G.svg('line', {x1: x(goal), x2: x(goal), y1: y + 2, y2: y + bar - 2, class: 'mg-bullet-meta'}));
         svg.append(g); items.push(g);
         if (!narrow) this.text(width, y + 15, summary(r), {'text-anchor': 'end', class: 'mg-texto-fuerte'});
@@ -403,12 +409,14 @@
     // ---------- Mapa de calor con ejes ----------
     heatmap(svg, width) {
       const {data, heads, columns, heat} = this.model, cols = heads.length - 1;
-      const rowLabel = Math.min(Math.round(width * .3), Math.ceil(Math.max(...data.map(r => G.textWidth(r.label, this.font)))) + 12);
+      const natural = Math.min(Math.round(width * .3), Math.ceil(Math.max(...data.map(r => G.textWidth(r.label, this.font)))) + 12);
+      const rowLabel = natural + cols * 8 + 4 <= width ? natural : Math.max(Math.min(40, natural), width - cols * 8 - 4);
       const cell = Math.max(8, Math.min(64, (width - rowLabel - 4) / cols)), cellH = Math.max(14, Math.min(40, cell * .75));
-      const top = 34, height = top + cellH * data.length + 8;
+      const top = 34, height = top + cellH * data.length + 8, full = Math.max(width, Math.ceil(rowLabel + cols * cell + 4));
+      this.scrollable(svg, full > width, full);
       const x = i => rowLabel + i * cell, y = j => top + j * cellH;
       const idx = heads.slice(1).map((_, i) => i);
-      const shown = G.spacedTicks(idx, i => x(i) + cell / 2, i => G.fit(heads[i + 1], 80, this.font, 2) || heads[i + 1].slice(0, 2), this.font, 6, this.width);
+      const shown = G.spacedTicks(idx, i => x(i) + cell / 2, i => G.fit(heads[i + 1], 80, this.font, 2) || heads[i + 1].slice(0, 2), this.font, 6, full);
       const span = shown.length > 1 ? (shown[1] - shown[0]) * cell : cell;
       shown.forEach(i => svg.append(G.edgeText(svg, x(i) + cell / 2, top - 8, G.fit(heads[i + 1], span - 4, this.font, 1) || heads[i + 1].slice(0, 1), {}, this.font)));
       // Filas bajas: un rótulo cada k filas para que no se pisen; el tip y la tabla nombran todas.
@@ -425,17 +433,26 @@
           const label = v === null ? '—' : this.fmt(v, i);
           if (cell - 6 >= G.textWidth(label, this.font) && cellH >= 16) g.append(G.svg('text', {x: x(i) + cell / 2, y: y(j) + cellH / 2, 'text-anchor': 'middle', 'dominant-baseline': 'middle', class: 'ev-calor-texto'}, label));
           svg.append(g); items.push(g);
-          info.push([r.label + ' · ' + heads[i + 1], this.fmtUnit(v, i) + (v === null ? ' (≠ 0)' : ''), v === null ? '' : 'Nivel ' + (heat.level(v) + 1) + ' de ' + heat.levels]);
+          info.push([r.label + ' · ' + heads[i + 1], this.fmtUnit(v, i) + (v === null ? ' (≠ 0)' : ''), v === null ? '' : heat.constant ? 'Sin variación: todas las celdas valen lo mismo' : 'Nivel ' + (heat.level(v) + 1) + ' de ' + heat.levels]);
         });
       });
-      return {height, items, describe: i => info[i].filter(Boolean), columns: cols};
+      return {height, width: full, items, describe: i => info[i].filter(Boolean), columns: cols};
+    }
+    // Mínimo legible que no cabe: el SVG conserva su ancho y la caja se desplaza, declarada y etiquetada.
+    scrollable(svg, on, full) {
+      svg.classList.toggle('mg-desplazable', on);
+      if (on) {
+        svg.setAttribute('width', full);
+        this.region.tabIndex = 0; this.region.setAttribute('role', 'region'); this.region.setAttribute('aria-label', this.model.title + ', desplazable horizontalmente');
+      } else ['tabindex', 'role', 'aria-label'].forEach(a => this.region.removeAttribute(a));
     }
     heatLegend() {
       const {heat, columns} = this.model, f = v => G.format(v, columns[0].spec, {lang: this.lang});
       const legend = element('ul', 'calor-leyenda');
       legend.setAttribute('aria-label', 'Escala de intensidad: ' + (this.figure.dataset.unidad || this.model.heads[0]) + (heat.quantile ? ' · cortes por cuantiles de los datos' : heat.diverging ? ' · divergente desde ' + f(+this.figure.dataset.centro) : ''));
       for (let i = 0; i < heat.levels; i++) {
-        const li = element('li', '', `${f(heat.limits[i])} ${i === heat.levels - 1 ? 'a' : 'a menos de'} ${f(heat.limits[i + 1])}`);
+        const lo = heat.limits[i], hi = heat.limits[i + 1];
+        const li = element('li', '', heat.constant ? `Todas las celdas: ${f(lo)} · sin variación` : lo === hi ? f(lo) : `${f(lo)} ${i === heat.levels - 1 ? 'a' : 'a menos de'} ${f(hi)}`);
         const swatch = element('span'); swatch.style.background = heat.fill(i); swatch.className = 'mg-calor-muestra'; swatch.setAttribute('aria-hidden', 'true');
         li.prepend(swatch); legend.append(li);
       }

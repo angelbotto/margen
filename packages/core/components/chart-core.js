@@ -456,7 +456,26 @@
     copy.setAttribute('height', Math.round(box.height) || +svg.getAttribute('height') || 400);
     return copy;
   }
-  function standaloneSvg(input, {title, source, unit}) {
+  // Leyenda dibujada dentro del archivo: fuera de la página, el SVG debe nombrar sus series y niveles.
+  // legend: [{name, color}]; color vacío o transparente → muestra con trazo (p. ej. «Sin dato»).
+  function appendLegend(copy, legend, font, ink) {
+    const width = +copy.getAttribute('width'), size = parseFloat(font.match(/([\d.]+)px/)?.[1]) || 12, line = Math.round(size * 1.6);
+    let x = 8, y = +copy.getAttribute('height') + 8;
+    const g = svgNode('g', {'aria-label': 'Leyenda'});
+    legend.forEach(({name, color}) => {
+      const w = 16 + textWidth(name, font);
+      if (x > 8 && x + w > width - 8) { x = 8; y += line; }
+      const plain = !color || /transparent|rgba\([^)]*,\s*0\)/.test(color);
+      g.append(svgNode('rect', {x, y: y + (line - 10) / 2, width: 10, height: 10, style: plain ? `fill:none;stroke:${ink};stroke-dasharray:2 1` : 'fill:' + color}),
+        svgNode('text', {x: x + 15, y: y + line / 2, style: `fill:${ink};font:${font};dominant-baseline:middle`}, name));
+      x += w + 14;
+    });
+    copy.append(g);
+    const height = y + line + 6;
+    copy.setAttribute('height', height);
+    copy.setAttribute('viewBox', `0 0 ${width} ${height}`);
+  }
+  function standaloneSvg(input, {title, source, unit, legend = []}) {
     const list = Array.isArray(input) ? input : [input], svg = list[0];
     let copy;
     if (list.length === 1) copy = inlineCopy(svg);
@@ -470,10 +489,18 @@
     }
     copy.setAttribute('xmlns', NS);
     copy.querySelectorAll(':scope > title, :scope > desc').forEach(n => n.remove());
+    // El archivo no es interactivo: sin instrucciones de teclado en su nombre accesible.
+    copy.setAttribute('role', 'img');
+    copy.setAttribute('aria-label', title);
+    if (legend.length) {
+      const text = svg.querySelector('text') || svg;
+      const s = getComputedStyle(text);
+      appendLegend(copy, legend, `${s.fontWeight || 400} ${s.fontSize || '12px'} ${s.fontFamily || 'monospace'}`, s.fill && s.fill !== 'none' ? s.fill : getComputedStyle(svg).color);
+    }
     const bg = svgNode('rect', {width: '100%', height: '100%', style: 'fill:' + getComputedStyle(svg.closest('figure,section,div') || svg).getPropertyValue('--grafica-papel')});
     const defs = copy.querySelector(':scope > defs');
     if (defs) defs.after(bg); else copy.prepend(bg);
-    copy.prepend(svgNode('title', {}, title), svgNode('desc', {}, [unit && 'Unidad: ' + unit, source && 'Fuente: ' + source].filter(Boolean).join('. ')));
+    copy.prepend(svgNode('title', {}, title), svgNode('desc', {}, [unit && 'Unidad: ' + unit, legend.length && 'Leyenda: ' + legend.map(l => l.name).join(', '), source && 'Fuente: ' + source].filter(Boolean).join('. ')));
     return '<?xml version="1.0" encoding="UTF-8"?>\n' + new XMLSerializer().serializeToString(copy);
   }
   function download(name, type, text) {
@@ -484,6 +511,17 @@
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
   const slug = s => (s || 'grafica').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60) || 'grafica';
+  // Series (leyenda común) y niveles de calor tal como se ven en la figura.
+  function legendOf(figure) {
+    const swatch = node => {
+      if (!node) return '';
+      if (node.tagName.toLowerCase() === 'svg') return getComputedStyle(node.querySelector('path') || node).fill;
+      return getComputedStyle(node).backgroundColor;
+    };
+    return [...figure.querySelectorAll('.mg-leyenda button, .calor-leyenda li')].map(el => ({
+      name: el.textContent.trim().replace(/\s+/g, ' '), color: swatch(el.querySelector('[aria-hidden="true"]'))
+    })).filter(l => l.name);
+  }
   // getSvg se llama al exportar: siempre la versión vigente tras un redibujo.
   function exporter(figure, {table, getSvg, title}) {
     const w = words(lang(figure)), box = document.createElement('div');
@@ -492,7 +530,7 @@
     const unit = figure.getAttribute('data-unidad') || '';
     const make = (text, fn) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = text; b.addEventListener('click', fn); box.append(b); return b; };
     if (table) make(w.csv, () => download(slug(title) + '.csv', 'text/csv;charset=utf-8', '﻿' + tableCsv(table)));
-    make(w.svg, () => { const svg = getSvg(); if (svg && (!Array.isArray(svg) || svg.length)) download(slug(title) + '.svg', 'image/svg+xml', standaloneSvg(svg, {title, source, unit})); });
+    make(w.svg, () => { const svg = getSvg(); if (svg && (!Array.isArray(svg) || svg.length)) download(slug(title) + '.svg', 'image/svg+xml', standaloneSvg(svg, {title, source, unit, legend: legendOf(figure)})); });
     return box;
   }
 
@@ -565,6 +603,6 @@
   window.MargenGraficas = {
     version: '1', NS, uid, nice, niceZero, linear, timeTicks, lang, words, parse, format, tickFormat, duration, specOf, unitOf,
     color, dash, shape, patterns, patternsEnabled, svg: svgNode, textWidth, fontOf, fit, wrap,
-    contentWidth, responsive, marks, edgeText, showTip, hideTip, legend, tableCsv, standaloneSvg, exporter, squarify, axis, spacedTicks
+    contentWidth, responsive, marks, edgeText, showTip, hideTip, legend, tableCsv, standaloneSvg, legendOf, exporter, squarify, axis, spacedTicks
   };
 })();
