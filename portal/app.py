@@ -716,6 +716,8 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
     mount_creator(app,store,origin,account,payload,clean,artifact_for,permissions,threads,snapshot)
     from portal.editor import mount as mount_editor
     mount_editor(app,store,origin,account,payload,artifact_for,permissions)
+    from portal.uploads import mount as mount_uploads
+    mount_uploads(app,store,account,payload,clean,artifact_for,publish)
 
     @lru_cache(maxsize=32)
     def static_preview(sha,title):

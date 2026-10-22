@@ -8,6 +8,8 @@ ARG APP_UID=1000
 ARG APP_GID=1000
 WORKDIR /app
 COPY portal/requirements.lock /app/requirements.lock
+# Poppler genera la vista previa de los PDF subidos (portal/uploads.py).
+RUN apk add --no-cache poppler-utils
 RUN pip install --no-cache-dir --require-hashes -r requirements.lock
 COPY portal /app/portal
 COPY scripts/update.py /app/portal/install.py
