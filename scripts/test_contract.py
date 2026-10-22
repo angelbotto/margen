@@ -60,6 +60,20 @@ class ContractTests(unittest.TestCase):
   for attrs in ['data-ritmo="propio"','style="display:block"']:
    with self.assertRaises(ValueError):render('<article '+attrs+'><figure class="ancho"><p>Trapped.</p></figure></article>')
   self.assertEqual(validate(render('<article><section id="summary"><h2>Summary</h2><p>Evidence.</p></section><figure class="ancho"><p>Wide evidence.</p></figure></article>')),[])
+ def test_narrative_tables_need_room_without_imposing_controls_on_small_tables(self):
+  text='A measurement definition with its source, eligible population and limitations. '*4
+  table='<table><caption>Measurement definitions</caption><tr><th>Indicator</th><th>Definition</th></tr><tr><td>Coverage</td><td>'+text+'</td></tr></table>'
+  render=lambda source:build('Report',[{'id':'start','titulo':'Start','html':source}])
+  warnings=composition_warnings(render('<div class="tabla-caja densa" tabindex="0" role="region" aria-label="Measurements">'+table+'</div>'))
+  self.assertEqual(len(warnings),2)
+  self.assertTrue(any('dense spacing' in w for w in warnings))
+  self.assertTrue(any('wide evidence' in w for w in warnings))
+  self.assertEqual(composition_warnings(render('<figure class="ancho"><div class="tabla-caja" tabindex="0" role="region" aria-label="Measurements">'+table+'</div></figure>')),[])
+  self.assertEqual(composition_warnings(render('<div data-ritmo="propio">'+table+'</div>')),[])
+  self.assertEqual(composition_warnings(render(table.replace('<table>','<table data-ritmo="propio">'))),[])
+  self.assertEqual(composition_warnings('<main class="hoja"><section data-explorador>'+table+'</section></main>'),[])
+  self.assertEqual(composition_warnings(render('<div class="tabla-caja densa" tabindex="0" role="region" aria-label="Measurements">'+table.replace(text,'42 orders')+'</div>')),[])
+  self.assertEqual(composition_warnings('<html><body>'+table+'</body></html>'),[])
  def test_brand_identity_is_independent_of_palette(self):
   from brands import BRANDS
   import base64,hashlib,xml.etree.ElementTree as ET

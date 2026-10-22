@@ -52,7 +52,7 @@ describe('frontera de confianza', () => {
   it('un mensaje forjado sólo mueve el ancla y nunca muta', async () => {
     const {actions, calls, posted} = host();
     await actions.load({id: 'a1', title: 'Informe'});
-    expect(posted.at(-1)).toEqual({bottifact: 1, op: 'reader-actions-slot', height: 44});
+    expect(posted.at(-1)).toEqual({bottifact: 1, op: 'reader-actions-slot', height: 52});
     for (const forged of [{op: 'save'}, {saved: true}, {...anchor, liked: true}, {visible: true}])
       expect(actions.anchor(forged)).toEqual({ok: false});
     expect(actions.anchor(anchor)).toEqual({ok: true});

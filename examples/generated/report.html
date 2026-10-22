@@ -1745,7 +1745,6 @@ body:has(.revision-barra) { padding-bottom:0; }
 [data-explorador] .tabla-caja { border:1px solid var(--pieza-linea); border-radius:8px; }
 [data-explorador] table { min-width:620px; font:14px/1.5 var(--sans); }
 [data-explorador] th,[data-explorador] td { padding:12px 16px; }
-[data-explorador] td:last-child { font:13px var(--mono); text-align:right; }
 [data-explorador] thead th { background:var(--pieza-suave); }
 [data-explorador-estado] { font:12px/1.5 var(--sans); color:var(--pieza-secundaria); }
 .visor-herramientas { padding:10px; border:1px solid var(--pieza-linea); border-radius:9px; background:var(--pieza-papel); }
@@ -3744,6 +3743,9 @@ main.hoja[data-presentation]{margin-top:22px}
 .bf-inline-detail{margin-top:8px;white-space:normal;font:12px/1.5 var(--sans,system-ui)}.bf-inline-detail>summary{width:fit-content;cursor:pointer;color:var(--tinta-2,#666);padding:5px 0}.bf-inline-detail[open]>.bf-detail-grid{margin-top:10px;min-width:min(420px,100%)}
 @media(max-width:640px){.bf-inline-detail>summary{min-height:44px;display:flex;align-items:center}.bf-person,.bf-media{overflow-wrap:anywhere}.bf-detail-card{padding:12px}}
 .bf-record-subtitle{display:block;font:11px/1.5 var(--sans,system-ui);color:var(--tinta-2);margin-top:3px}
+/* Type, not column position, controls alignment. Narrative fields get a full record row. */
+.explorer-ready :is(td,th)[data-value-type=texto]{text-align:left;font-family:var(--sans);line-height:1.5}
+.explorer-ready:is([data-layout=cards],[data-layout=list],[data-layout=board]) tbody :is(td,th)[data-narrative=true]{grid-column:1/-1}
 /* TABLE CONTENT END */
 
 /* CHART CORE START */
@@ -6178,19 +6180,19 @@ main.hoja[data-presentation]{margin-top:22px}
   let slot=null,last='',frame=0;
   const index=()=>[...document.querySelectorAll('.lectura-guiada:not([data-presentation]) .indice')].find(n=>n.getClientRects().length&&n.querySelector(':scope > .ceja'));
   const post=data=>parent.postMessage({bottifact:1,id:'acciones-'+Math.random().toString(36).slice(2),op:'reader-actions-anchor',data},'*');
-  const report=()=>{frame=0;const target=index();if(target&&slot.parentElement!==target)target.querySelector(':scope > .ceja').after(slot);
+  const report=()=>{frame=0;const target=index();if(target&&slot.parentElement!==target)target.append(slot);
    const r=slot.getBoundingClientRect();
    // A host overlay cannot inherit the iframe stacking context. Report a slot only
    // when its entire button area is uncovered by wide figures or the sticky header.
    const visible=!!target&&r.width>=40&&r.top>=0&&r.bottom<=innerHeight&&
-    [4,Math.min(r.width-4,100),Math.min(r.width-4,210)].every(x=>[8,r.height/2,r.height-8].every(y=>slot.contains(document.elementFromPoint(r.left+x,r.top+y))));
-   const data=visible?{visible:true,x:Math.max(0,Math.round(r.left)),y:Math.round(r.top),width:Math.min(Math.round(r.width),640,innerWidth-Math.max(0,Math.round(r.left))),height:Math.round(r.height),vw:innerWidth,vh:innerHeight}:{visible:false};
+    [.5,r.width/4,r.width/2,r.width*3/4,r.width-.5].every(x=>[.5,r.height/4,r.height/2,r.height*3/4,r.height-.5].every(y=>slot.contains(document.elementFromPoint(r.left+x,r.top+y))));
+   const data=visible?{visible:true,x:Math.max(0,r.left),y:r.top,width:Math.min(r.width,640,innerWidth-Math.max(0,r.left)),height:r.height,vw:innerWidth,vh:innerHeight}:{visible:false};
    const key=JSON.stringify(data);if(key!==last){last=key;post(data);}};
   const schedule=()=>{if(slot&&!frame)frame=requestAnimationFrame(report);};
   addEventListener('message',e=>{const d=e.data;if(e.source!==parent||d?.bottifact!==1||d.op!=='reader-actions-slot'||slot)return;
    const h=Number(d.height),target=index();if(!(h>=24&&h<=96)||!target)return;
-   slot=document.createElement('div');slot.className='acciones-lector';slot.setAttribute('data-acciones-lector','');slot.setAttribute('aria-hidden','true');slot.style.blockSize=h+'px';
-   target.querySelector(':scope > .ceja').after(slot);
+   slot=document.createElement('div');slot.className='acciones-lector';slot.setAttribute('data-acciones-lector','');slot.setAttribute('aria-hidden','true');slot.style.blockSize=h+'px';slot.style.marginBlockStart='16px';
+   target.append(slot);
    // Las reacciones locales del pie no se duplican con el «Me gusta» de la cuenta.
    document.querySelectorAll('[data-reacciones]').forEach(n=>{n.hidden=true;});
    addEventListener('scroll',schedule,{passive:true,capture:true});addEventListener('resize',schedule,{passive:true});

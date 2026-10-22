@@ -1174,7 +1174,6 @@ body:has(.revision-barra) { padding-bottom:0; }
 [data-explorador] .tabla-caja { border:1px solid var(--pieza-linea); border-radius:8px; }
 [data-explorador] table { min-width:620px; font:14px/1.5 var(--sans); }
 [data-explorador] th,[data-explorador] td { padding:12px 16px; }
-[data-explorador] td:last-child { font:13px var(--mono); text-align:right; }
 [data-explorador] thead th { background:var(--pieza-suave); }
 [data-explorador-estado] { font:12px/1.5 var(--sans); color:var(--pieza-secundaria); }
 .visor-herramientas { padding:10px; border:1px solid var(--pieza-linea); border-radius:9px; background:var(--pieza-papel); }
@@ -3173,6 +3172,9 @@ main.hoja[data-presentation]{margin-top:22px}
 .bf-inline-detail{margin-top:8px;white-space:normal;font:12px/1.5 var(--sans,system-ui)}.bf-inline-detail>summary{width:fit-content;cursor:pointer;color:var(--tinta-2,#666);padding:5px 0}.bf-inline-detail[open]>.bf-detail-grid{margin-top:10px;min-width:min(420px,100%)}
 @media(max-width:640px){.bf-inline-detail>summary{min-height:44px;display:flex;align-items:center}.bf-person,.bf-media{overflow-wrap:anywhere}.bf-detail-card{padding:12px}}
 .bf-record-subtitle{display:block;font:11px/1.5 var(--sans,system-ui);color:var(--tinta-2);margin-top:3px}
+/* Type, not column position, controls alignment. Narrative fields get a full record row. */
+.explorer-ready :is(td,th)[data-value-type=texto]{text-align:left;font-family:var(--sans);line-height:1.5}
+.explorer-ready:is([data-layout=cards],[data-layout=list],[data-layout=board]) tbody :is(td,th)[data-narrative=true]{grid-column:1/-1}
 /* TABLE CONTENT END */
 
 /* CHART CORE START */

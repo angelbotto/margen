@@ -1,3 +1,10 @@
+# 2026.10.22-library.3
+
+- Place reader bookmark and like icons after all contents links, with accessible labels, saved state and count. Preserve account storage and iframe action boundaries.
+- Strengthen report composition guidance and warn about dense narrative tables or missing wide evidence wrappers in authored documents. Respect custom layouts, presentations and imported HTML.
+- Correct narrative table typography and mobile record width; refresh shared table modules for existing hosted Margen documents.
+- Align composition widths with the shared 528/768/1024px contract.
+
 # Changelog
 
 ## 2026.10.22-library.2 — Reader actions and file publishing
