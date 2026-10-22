@@ -104,7 +104,7 @@
 /* Header dates come only from explicit document metadata. */
 .cabecera-fecha { margin:0; color:var(--tinta-3); font:13.7px/19.5714px var(--mono); letter-spacing:.05px; }
 .cabecera-fecha time { display:inline-block; white-space:nowrap; font-variant-numeric:tabular-nums; }
-.hoja:not([data-presentation]) .cabecera:has(> .cabecera-fecha) { row-gap:0; }
+.hoja:not([data-presentation]) .cabecera:has(> h1 + .cabecera-fecha) { row-gap:0; }
 .cabecera-fecha + .bajada { margin-top:16px; }
 /* Author footer: identity and optional links belong to the document; the
    platform line is separate and can be omitted. */
