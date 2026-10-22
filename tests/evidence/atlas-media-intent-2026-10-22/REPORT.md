@@ -54,7 +54,14 @@ Lo que cubre el probe nuevo:
 
 Resultados en `media-{chromium,webkit}.json`. Las capturas son privadas, fuera del repo.
 
-HTTPS local real (`scripts/check_media_embeds.py`: portal en `https://localhost` con uvicorn, YouTube e Instagram reales y modo offline): ver `real-https.json` y la sección siguiente.
+HTTPS local real (`scripts/check_media_embeds.py`, con el portal en `https://localhost` sobre uvicorn) en Chromium 145 y WebKit 26: dueña y lectora contra proveedores reales, más lectora offline (`real-https.json`). Todo pasa en los 6 recorridos:
+- Sin red de proveedor antes del clic. Los mensajes sin activación se ignoran.
+- Vista previa sin proveedor y con el foco en el botón del portal.
+- Escape, foco de vuelta, reapertura y navegación por hash.
+- YouTube real: un `<video>` que avanza (≈3,7 s), silenciado y sin error 153. Instagram real muestra el medio.
+- Fuente de X, fuente de YouTube y pie: 0 pestañas antes del clic en el portal, después 1 pestaña con `opener === null`, y el diálogo se cierra.
+- Offline: «YouTube no respondió». Las pestañas de proveedor fallan porque la red está bloqueada a propósito; el pie sí abre.
+- HTML portátil por https, `file://` y sin JS: sin cambios, y reproduce en https.
 
 ## Reproducir
 
