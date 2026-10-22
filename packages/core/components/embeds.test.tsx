@@ -17,7 +17,7 @@ afterEach(() => {
 const youtube = (extra = '') => `<figure class="embed embed-video embed-youtube" data-embed="youtube" data-embed-id="M7lc1UVf-VE" ${extra}>
   <div class="embed-lienzo" data-embed-stage></div>
   <figcaption><p class="embed-acciones"><button type="button" data-embed-load hidden>Cargar video</button>
-  <a data-embed-source href="https://evil.example/phish">Abrir en YouTube</a></p><p class="embed-aviso" data-embed-status role="status"></p></figcaption></figure>`;
+  <a data-embed-source href="https://evil.example/phish">Abrir en YouTube</a></p><p class="embed-aviso" data-embed-notice hidden>Al cargarlo…</p><p class="embed-aviso" data-embed-status role="status"></p></figcaption></figure>`;
 
 describe('validación', () => {
   it('acepta sólo proveedores e IDs con forma exacta', () => {
@@ -72,6 +72,7 @@ describe('tarjetas', () => {
     expect([...document.querySelectorAll('img')].map(i => i.getAttribute('src'))).toEqual(['data:image/png;base64,AAAA']);
     expect(document.querySelector('iframe')).toBeNull();
     expect(document.querySelector<HTMLButtonElement>('[data-embed-load]')!.hidden).toBe(false);
+    expect(document.querySelector<HTMLElement>('[data-embed-notice]')!.hidden).toBe(false);
   });
 
   it('una tarjeta sintética no enlaza a una cuenta real', () => {
@@ -85,6 +86,7 @@ describe('tarjetas', () => {
     document.body.innerHTML = youtube().replace('M7lc1UVf-VE', 'nope');
     E().init();
     expect(document.querySelector<HTMLButtonElement>('[data-embed-load]')!.hidden).toBe(true);
+    expect(document.querySelector<HTMLElement>('[data-embed-notice]')!.hidden).toBe(true);
     expect(document.querySelector('a')).toBeNull();
     expect(document.querySelector('[data-embed-status]')!.textContent).toMatch(/identificador válido/);
   });

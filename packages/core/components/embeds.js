@@ -114,6 +114,7 @@
         this.say(location.protocol === 'file:' ? SOURCE_ONLY.file : SOURCE_ONLY.sandbox);
       } else {
         this.button.hidden = false;
+        el.querySelectorAll('[data-embed-notice]').forEach(n => { n.hidden = false; });
         this.button.addEventListener('click', event => this.load(event), {signal: this.abort.signal});
       }
       document.addEventListener('margen:embed-closed', () => { if (this.requested) { this.requested = false; this.button.focus(); } }, {signal: this.abort.signal});
@@ -159,6 +160,7 @@
         if (event.source !== frame.contentWindow || event.origin !== ORIGINS[this.provider]) return;
         const s = signal(this.provider, event.data);
         if (!s) return;
+        if (!alive && s.type !== 'error' && s.type !== 'playing') this.say('');
         alive = true; clearInterval(poke);
         if (s.type === 'measure') frame.style.height = Math.min(s.height, 1200) + 'px';
         else if (s.type === 'error') this.say(errorText(this.provider, s.code) + ' El enlace abre la fuente original.');

@@ -135,6 +135,7 @@
         if (session !== s || event.source !== player.contentWindow || event.origin !== ORIGINS[spec.provider]) return;
         const sig = signal(spec.provider, event.data);
         if (!sig) return;
+        if (!s.alive && sig.type !== 'error' && sig.type !== 'playing') say('');
         s.alive = true; clearInterval(s.poke);
         if (sig.type === 'measure') player.style.height = Math.min(Math.max(sig.height, 200), 3000) + 'px';
         else if (sig.type === 'error') say(((spec.provider === 'youtube' && YT_ERRORS[sig.code]) || NAMES[spec.provider] + ' no pudo mostrar la publicación.') + ' El enlace abre la fuente original.');

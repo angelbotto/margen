@@ -1,6 +1,8 @@
 # Compatibilidad real de embeds en el atlas: X, YouTube e Instagram
 
-Sonda del 22 de octubre de 2026 sobre `b382ad0`. Esto es evidencia de laboratorio, no una funcionalidad implementada: el código de producto no cambió. Complementa la sección «Proveedores de medios» de [atlas-runtime-decisions.md](atlas-runtime-decisions.md) y el punto 3.7 de [atlas-reference-audit.md](atlas-reference-audit.md).
+Sonda del 22 de octubre de 2026 sobre `b382ad0`. Esto es evidencia de laboratorio, no una funcionalidad implementada: el código de producto no cambió.
+
+**Implementación (22 de octubre, rama `margen-atlas-embeds`):** `packages/core/components/embeds.js`, `packages/core/styles/embeds.css`, recetas `x-post`, `youtube` e `instagram`, y el host `portal/static/media-embeds.js`. Difiere de esta propuesta en dos puntos: el host exige activación real del lector (`navigator.userActivation`) para montar o abrir, y la fuente se abre con `window.open` + `opener = null` o, si se bloquea, con un enlace en un diálogo del portal. Comprobaciones, matriz en Chromium y WebKit y wiring pendiente en [REPORT-EMBEDS-ATLAS.md](../REPORT-EMBEDS-ATLAS.md). Complementa la sección «Proveedores de medios» de [atlas-runtime-decisions.md](atlas-runtime-decisions.md) y el punto 3.7 de [atlas-reference-audit.md](atlas-reference-audit.md).
 
 ## Decisión
 
