@@ -1,0 +1,132 @@
+[
+ {
+  "check": "owner sees Alice as author",
+  "ok": true,
+  "detail": "Alice Ruiz · correo verificado · 31/12/1969 · Abierto"
+ },
+ {
+  "check": "reply shows Bob",
+  "ok": true,
+  "detail": "Bob Pérez: Bob reply"
+ },
+ {
+  "check": "agent label rendered as text with account + agent marker",
+  "ok": false,
+  "detail": "Ángel Botto · correo verificado · 31/12/1969 · Abierto"
+ },
+ {
+  "check": "historic token entry without agent shown as human (by design)",
+  "ok": true,
+  "detail": "Ángel Botto · correo verificado · 31/12/1969 · Abierto"
+ },
+ {
+  "check": "no XSS",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "check": "owner clicking foreign pin opens thread, not composer",
+  "ok": false,
+  "detail": ""
+ },
+ {
+  "check": "owner explicit edit shows original author in composer",
+  "ok": false,
+  "detail": "Ángel Botto"
+ },
+ {
+  "check": "composer closed after save",
+  "ok": true,
+  "detail": {
+   "open": false,
+   "err": "ÁBÁngel BottoComentario 1Ajuste que proponesCompartidoPrivado · solo yo…Contexto del puntoDoc · #claim · ThreeSesión o encargo (opcional)",
+   "commits": [
+    {
+     "kind": "edit",
+     "thread": "a1",
+     "text": "Alice point (fixed by owner)"
+    }
+   ]
+  }
+ },
+ {
+  "check": "edit commit carries no author field",
+  "ok": true,
+  "detail": {
+   "kind": "edit",
+   "thread": "a1",
+   "text": "Alice point (fixed by owner)"
+  }
+ },
+ {
+  "check": "after edit, thread still by Alice; activity names editor",
+  "ok": true,
+  "detail": {
+   "thread": "a1",
+   "meta": "Alice Ruiz · correo verificado · 31/12/1969 · Abierto",
+   "replies": "Bob Pérez: Bob reply",
+   "buttons": [
+    "Editar",
+    "Resolver",
+    "Archivar"
+   ],
+   "history": [
+    "Alice Ruiz · create · Alice point",
+    "Bob Pérez · reply · Bob reply",
+    "Ángel Botto · edit · Alice point (fixed by owner)"
+   ]
+  }
+ },
+ {
+  "check": "new entry after foreign edit shows viewer",
+  "ok": true,
+  "detail": "Ángel Botto"
+ },
+ {
+  "check": "copied context names recorded authors",
+  "ok": false,
+  "detail": "Revisión de «Doc»\nDocumento: Doc@/doc.html\nhttp://localhost:8799/doc.html\nConserva el documento-id y verifica el contexto antes de editar.\n\nTipo: comentario\nAutor: Alice Ruiz\nVersión: v\nSesión: no registrada\nSección: Doc / #claim\nContexto completo: Three deliveries need review.\nCita: Three\nAjuste: A"
+ },
+ {
+  "check": "reload deterministic for authorship",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "check": "commenter sees no Editar on foreign thread",
+  "ok": true,
+  "detail": []
+ },
+ {
+  "check": "commenter sees Editar on own thread only",
+  "ok": true,
+  "detail": [
+   "Editar"
+  ]
+ },
+ {
+  "check": "commenter clicking foreign pin opens thread",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "check": "commenter own pin opens composer as self",
+  "ok": true,
+  "detail": "Bob Pérez"
+ },
+ {
+  "check": "read-only viewer has no actions",
+  "ok": true,
+  "detail": [
+   [],
+   [],
+   [],
+   []
+  ]
+ },
+ {
+  "check": "local mode loads",
+  "ok": true,
+  "detail": ""
+ }
+]
