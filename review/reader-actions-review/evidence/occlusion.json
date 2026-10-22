@@ -1,0 +1,828 @@
+{
+ "sweeps": [
+  {
+   "engine": "chromium",
+   "doc": "gallery",
+   "width": 1200,
+   "occluded_positions": 0,
+   "examples": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "gallery",
+   "width": 1280,
+   "occluded_positions": 0,
+   "examples": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "gallery",
+   "width": 1440,
+   "occluded_positions": 0,
+   "examples": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "gallery",
+   "width": 1600,
+   "occluded_positions": 0,
+   "examples": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "gallery",
+   "width": 1920,
+   "occluded_positions": 0,
+   "examples": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "code",
+   "width": 1200,
+   "occluded_positions": 0,
+   "examples": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "code",
+   "width": 1280,
+   "occluded_positions": 0,
+   "examples": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "code",
+   "width": 1440,
+   "occluded_positions": 0,
+   "examples": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "code",
+   "width": 1600,
+   "occluded_positions": 0,
+   "examples": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "code",
+   "width": 1920,
+   "occluded_positions": 0,
+   "examples": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "table",
+   "width": 1200,
+   "occluded_positions": 1,
+   "examples": [
+    {
+     "scrollY": 231,
+     "hits": [
+      "header#nota-inicio.barra.capitulos",
+      "header#nota-inicio.barra.capitulos"
+     ]
+    }
+   ]
+  },
+  {
+   "engine": "chromium",
+   "doc": "table",
+   "width": 1280,
+   "occluded_positions": 1,
+   "examples": [
+    {
+     "scrollY": 230,
+     "hits": [
+      "header#nota-inicio.barra.capitulos",
+      "header#nota-inicio.barra.capitulos"
+     ]
+    }
+   ]
+  },
+  {
+   "engine": "chromium",
+   "doc": "table",
+   "width": 1440,
+   "occluded_positions": 13,
+   "examples": [
+    {
+     "scrollY": 2652,
+     "hits": [
+      "slot",
+      "td"
+     ]
+    },
+    {
+     "scrollY": 2873,
+     "hits": [
+      "slot",
+      "td"
+     ]
+    },
+    {
+     "scrollY": 3097,
+     "hits": [
+      "slot",
+      "td"
+     ]
+    },
+    {
+     "scrollY": 3318,
+     "hits": [
+      "slot",
+      "td"
+     ]
+    }
+   ]
+  },
+  {
+   "engine": "chromium",
+   "doc": "table",
+   "width": 1600,
+   "occluded_positions": 13,
+   "examples": [
+    {
+     "scrollY": 2652,
+     "hits": [
+      "slot",
+      "td"
+     ]
+    },
+    {
+     "scrollY": 2875,
+     "hits": [
+      "slot",
+      "td"
+     ]
+    },
+    {
+     "scrollY": 3095,
+     "hits": [
+      "slot",
+      "td"
+     ]
+    },
+    {
+     "scrollY": 3318,
+     "hits": [
+      "slot",
+      "td"
+     ]
+    }
+   ]
+  },
+  {
+   "engine": "chromium",
+   "doc": "table",
+   "width": 1920,
+   "occluded_positions": 13,
+   "examples": [
+    {
+     "scrollY": 2651,
+     "hits": [
+      "slot",
+      "td"
+     ]
+    },
+    {
+     "scrollY": 2870,
+     "hits": [
+      "slot",
+      "td"
+     ]
+    },
+    {
+     "scrollY": 3094,
+     "hits": [
+      "slot",
+      "td"
+     ]
+    },
+    {
+     "scrollY": 3316,
+     "hits": [
+      "slot",
+      "td"
+     ]
+    }
+   ]
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:priorities",
+   "width": 1200,
+   "occluded_positions": 0,
+   "examples": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:priorities",
+   "width": 1280,
+   "occluded_positions": 0,
+   "examples": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:priorities",
+   "width": 1440,
+   "occluded_positions": 13,
+   "examples": [
+    {
+     "scrollY": 1116,
+     "hits": [
+      "slot",
+      "figure.amplio"
+     ]
+    },
+    {
+     "scrollY": 1209,
+     "hits": [
+      "slot",
+      "th"
+     ]
+    },
+    {
+     "scrollY": 1302,
+     "hits": [
+      "slot",
+      "th"
+     ]
+    },
+    {
+     "scrollY": 1333,
+     "hits": [
+      "slot",
+      "th"
+     ]
+    }
+   ]
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:priorities",
+   "width": 1600,
+   "occluded_positions": 13,
+   "examples": [
+    {
+     "scrollY": 1116,
+     "hits": [
+      "slot",
+      "figure.amplio"
+     ]
+    },
+    {
+     "scrollY": 1209,
+     "hits": [
+      "slot",
+      "th"
+     ]
+    },
+    {
+     "scrollY": 1302,
+     "hits": [
+      "slot",
+      "th"
+     ]
+    },
+    {
+     "scrollY": 1333,
+     "hits": [
+      "slot",
+      "th"
+     ]
+    }
+   ]
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:priorities",
+   "width": 1920,
+   "occluded_positions": 13,
+   "examples": [
+    {
+     "scrollY": 1116,
+     "hits": [
+      "slot",
+      "figure.amplio"
+     ]
+    },
+    {
+     "scrollY": 1209,
+     "hits": [
+      "slot",
+      "th"
+     ]
+    },
+    {
+     "scrollY": 1302,
+     "hits": [
+      "slot",
+      "th"
+     ]
+    },
+    {
+     "scrollY": 1333,
+     "hits": [
+      "slot",
+      "th"
+     ]
+    }
+   ]
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:guide",
+   "width": 1200,
+   "occluded_positions": 1,
+   "examples": [
+    {
+     "scrollY": 264,
+     "hits": [
+      "header#nota-inicio.barra.capitulos",
+      "header#nota-inicio.barra.capitulos"
+     ]
+    }
+   ]
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:guide",
+   "width": 1280,
+   "occluded_positions": 1,
+   "examples": [
+    {
+     "scrollY": 264,
+     "hits": [
+      "header#nota-inicio.barra.capitulos",
+      "header#nota-inicio.barra.capitulos"
+     ]
+    }
+   ]
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:guide",
+   "width": 1440,
+   "occluded_positions": 0,
+   "examples": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:guide",
+   "width": 1600,
+   "occluded_positions": 0,
+   "examples": []
+  },
+  {
+   "engine": "chromium",
+   "doc": "ex:guide",
+   "width": 1920,
+   "occluded_positions": 0,
+   "examples": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "gallery",
+   "width": 1200,
+   "occluded_positions": 0,
+   "examples": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "gallery",
+   "width": 1280,
+   "occluded_positions": 0,
+   "examples": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "gallery",
+   "width": 1440,
+   "occluded_positions": 0,
+   "examples": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "gallery",
+   "width": 1600,
+   "occluded_positions": 0,
+   "examples": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "gallery",
+   "width": 1920,
+   "occluded_positions": 0,
+   "examples": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "code",
+   "width": 1200,
+   "occluded_positions": 0,
+   "examples": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "code",
+   "width": 1280,
+   "occluded_positions": 0,
+   "examples": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "code",
+   "width": 1440,
+   "occluded_positions": 0,
+   "examples": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "code",
+   "width": 1600,
+   "occluded_positions": 0,
+   "examples": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "code",
+   "width": 1920,
+   "occluded_positions": 0,
+   "examples": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "table",
+   "width": 1200,
+   "occluded_positions": 1,
+   "examples": [
+    {
+     "scrollY": 231,
+     "hits": [
+      "header#nota-inicio.barra.capitulos",
+      "header#nota-inicio.barra.capitulos"
+     ]
+    }
+   ]
+  },
+  {
+   "engine": "webkit",
+   "doc": "table",
+   "width": 1280,
+   "occluded_positions": 1,
+   "examples": [
+    {
+     "scrollY": 231,
+     "hits": [
+      "header#nota-inicio.barra.capitulos",
+      "header#nota-inicio.barra.capitulos"
+     ]
+    }
+   ]
+  },
+  {
+   "engine": "webkit",
+   "doc": "table",
+   "width": 1440,
+   "occluded_positions": 13,
+   "examples": [
+    {
+     "scrollY": 2653,
+     "hits": [
+      "slot",
+      "td"
+     ]
+    },
+    {
+     "scrollY": 2874,
+     "hits": [
+      "slot",
+      "td"
+     ]
+    },
+    {
+     "scrollY": 3095,
+     "hits": [
+      "slot",
+      "td"
+     ]
+    },
+    {
+     "scrollY": 3316,
+     "hits": [
+      "slot",
+      "td"
+     ]
+    }
+   ]
+  },
+  {
+   "engine": "webkit",
+   "doc": "table",
+   "width": 1600,
+   "occluded_positions": 13,
+   "examples": [
+    {
+     "scrollY": 2653,
+     "hits": [
+      "slot",
+      "td"
+     ]
+    },
+    {
+     "scrollY": 2874,
+     "hits": [
+      "slot",
+      "td"
+     ]
+    },
+    {
+     "scrollY": 3095,
+     "hits": [
+      "slot",
+      "td"
+     ]
+    },
+    {
+     "scrollY": 3316,
+     "hits": [
+      "slot",
+      "td"
+     ]
+    }
+   ]
+  },
+  {
+   "engine": "webkit",
+   "doc": "table",
+   "width": 1920,
+   "occluded_positions": 13,
+   "examples": [
+    {
+     "scrollY": 2653,
+     "hits": [
+      "slot",
+      "td"
+     ]
+    },
+    {
+     "scrollY": 2874,
+     "hits": [
+      "slot",
+      "td"
+     ]
+    },
+    {
+     "scrollY": 3095,
+     "hits": [
+      "slot",
+      "td"
+     ]
+    },
+    {
+     "scrollY": 3316,
+     "hits": [
+      "slot",
+      "td"
+     ]
+    }
+   ]
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:priorities",
+   "width": 1200,
+   "occluded_positions": 0,
+   "examples": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:priorities",
+   "width": 1280,
+   "occluded_positions": 0,
+   "examples": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:priorities",
+   "width": 1440,
+   "occluded_positions": 13,
+   "examples": [
+    {
+     "scrollY": 1115,
+     "hits": [
+      "slot",
+      "figure.amplio"
+     ]
+    },
+    {
+     "scrollY": 1207,
+     "hits": [
+      "slot",
+      "th"
+     ]
+    },
+    {
+     "scrollY": 1300,
+     "hits": [
+      "slot",
+      "th"
+     ]
+    },
+    {
+     "scrollY": 1330,
+     "hits": [
+      "slot",
+      "th"
+     ]
+    }
+   ]
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:priorities",
+   "width": 1600,
+   "occluded_positions": 13,
+   "examples": [
+    {
+     "scrollY": 1115,
+     "hits": [
+      "slot",
+      "figure.amplio"
+     ]
+    },
+    {
+     "scrollY": 1207,
+     "hits": [
+      "slot",
+      "th"
+     ]
+    },
+    {
+     "scrollY": 1300,
+     "hits": [
+      "slot",
+      "th"
+     ]
+    },
+    {
+     "scrollY": 1330,
+     "hits": [
+      "slot",
+      "th"
+     ]
+    }
+   ]
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:priorities",
+   "width": 1920,
+   "occluded_positions": 13,
+   "examples": [
+    {
+     "scrollY": 1115,
+     "hits": [
+      "slot",
+      "figure.amplio"
+     ]
+    },
+    {
+     "scrollY": 1207,
+     "hits": [
+      "slot",
+      "th"
+     ]
+    },
+    {
+     "scrollY": 1300,
+     "hits": [
+      "slot",
+      "th"
+     ]
+    },
+    {
+     "scrollY": 1330,
+     "hits": [
+      "slot",
+      "th"
+     ]
+    }
+   ]
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:guide",
+   "width": 1200,
+   "occluded_positions": 1,
+   "examples": [
+    {
+     "scrollY": 266,
+     "hits": [
+      "header#nota-inicio.barra.capitulos",
+      "header#nota-inicio.barra.capitulos"
+     ]
+    }
+   ]
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:guide",
+   "width": 1280,
+   "occluded_positions": 1,
+   "examples": [
+    {
+     "scrollY": 266,
+     "hits": [
+      "header#nota-inicio.barra.capitulos",
+      "header#nota-inicio.barra.capitulos"
+     ]
+    }
+   ]
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:guide",
+   "width": 1440,
+   "occluded_positions": 0,
+   "examples": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:guide",
+   "width": 1600,
+   "occluded_positions": 0,
+   "examples": []
+  },
+  {
+   "engine": "webkit",
+   "doc": "ex:guide",
+   "width": 1920,
+   "occluded_positions": 0,
+   "examples": []
+  }
+ ],
+ "themes": {
+  "chromium": [
+   {
+    "doc": "linear-dark",
+    "overlay": true,
+    "doc_bg": "rgb(16, 17, 20)",
+    "button_bg": "oklch(0.98 0.004 80)",
+    "button_color": "oklch(0.25 0.008 70)"
+   },
+   {
+    "doc": "hacker",
+    "overlay": true,
+    "doc_bg": "rgb(8, 15, 12)",
+    "button_bg": "oklch(0.98 0.004 80)",
+    "button_color": "oklch(0.25 0.008 70)"
+   },
+   {
+    "doc": "linear-light",
+    "overlay": true,
+    "doc_bg": "rgb(255, 255, 255)",
+    "button_bg": "oklch(0.98 0.004 80)",
+    "button_color": "oklch(0.25 0.008 70)"
+   },
+   {
+    "doc": "tikin",
+    "overlay": true,
+    "doc_bg": "rgb(255, 255, 255)",
+    "button_bg": "oklch(0.98 0.004 80)",
+    "button_color": "oklch(0.25 0.008 70)"
+   }
+  ],
+  "webkit": [
+   {
+    "doc": "linear-dark",
+    "overlay": true,
+    "doc_bg": "rgb(16, 17, 20)",
+    "button_bg": "oklch(0.98 0.004 80)",
+    "button_color": "oklch(0.25 0.008 70)"
+   },
+   {
+    "doc": "hacker",
+    "overlay": true,
+    "doc_bg": "rgb(8, 15, 12)",
+    "button_bg": "oklch(0.98 0.004 80)",
+    "button_color": "oklch(0.25 0.008 70)"
+   },
+   {
+    "doc": "linear-light",
+    "overlay": true,
+    "doc_bg": "rgb(255, 255, 255)",
+    "button_bg": "oklch(0.98 0.004 80)",
+    "button_color": "oklch(0.25 0.008 70)"
+   },
+   {
+    "doc": "tikin",
+    "overlay": true,
+    "doc_bg": "rgb(255, 255, 255)",
+    "button_bg": "oklch(0.98 0.004 80)",
+    "button_color": "oklch(0.25 0.008 70)"
+   }
+  ]
+ }
+}
