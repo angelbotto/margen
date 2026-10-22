@@ -367,7 +367,7 @@ window.MargenCreator = {
               badge(
                 i.thread.entry_type === "note"
                   ? "Privado · sólo tú"
-                  : i.thread.author,
+                  : (i.thread.agent ? i.thread.agent + " (agente de " + i.thread.author + ")" : i.thread.author),
               ),
               link(i.title, i.context.url),
               el("blockquote", an.quote || an.text || "Punto del artefacto"),

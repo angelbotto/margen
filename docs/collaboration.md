@@ -13,6 +13,8 @@ Keep the document ID across revisions. Anchors include section/block identity, n
 ## Connected review
 Inside the portal, an isolated bridge records identity, version, context and checked permissions. The library aggregates authorized feedback across documents. Readers may comment with permitted verified or declared guest identities. Private notes belong only to their author. Polling is approximately every 12 seconds; this is not live presence or cursor synchronization. Downloaded HTML remains standalone. Importing local JSON into shared server history is not implemented.
 
+Authorship comes from the server: every event stores the account that wrote it at that moment, and client-supplied author fields are ignored. The reader shows that recorded author for every viewer; the viewer's own name appears only on a new entry they are writing. Opening someone else's pin shows their thread; an owner or editor who explicitly edits it still sees the original author in the composer, and the edit itself is recorded under the editor in the activity. An agent connected with a token is recorded with the token label and shown as "label (agente de Name)", in the reader, inbox and copied context. The token keeps its account's permissions: labelling it changes attribution, not what it may do. Entries written by agents before this distinction remain attributed to the account; they are not reclassified by inference.
+
 The compact composer shows author, text, privacy and send. Context, type and optional session are secondary. Existing entry types cannot be changed while editing. Ctrl/Command+Enter submits; errors keep the draft. The review list retains replies, history and resolution.
 
 ## Return context to an agent

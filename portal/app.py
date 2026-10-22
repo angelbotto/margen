@@ -264,7 +264,7 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
         auth = request.headers.get('authorization', '')
         with store.db() as db:
             if auth.startswith('Bearer '):
-                row = db.execute('SELECT u.* FROM tokens t JOIN users u ON u.id=t.user_id WHERE t.hash=?', (digest(auth[7:]),)).fetchone()
+                row = db.execute('SELECT u.*,t.label AS agent_label FROM tokens t JOIN users u ON u.id=t.user_id WHERE t.hash=?', (digest(auth[7:]),)).fetchone()
                 if not row: raise HTTPException(401, 'Conexión del agente inválida o revocada.')
                 return {**dict(row), 'agent': True}
             session = request.cookies.get(COOKIE, '')
@@ -677,6 +677,7 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
                 if kind=='edit' and not (p['edit'] or original['actor']==u['id']): raise HTTPException(403,'Sólo puedes editar tus comentarios.')
             e = {'id':event_id,'thread':thread,'kind':kind,'author':u['name'],'time':max(int(time.time()*1000),max([x['time'] for x in entries],default=0)+1),
                  'version':version,'actor':u['id'],'verified':bool(u['verified'])}
+            if u.get('agent'): e['agent']=clean(u.get('agent_label') or 'Agente',80)
             if kind in ['create','reply','edit']: e['text'] = clean(body.get('text'),4000)
             if kind=='resolve':
                 if not isinstance(body.get('resolved'),bool): raise HTTPException(422,'Estado inválido.')

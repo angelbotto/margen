@@ -757,7 +757,7 @@
     body.append(
       make(
         "p",
-        n.author + " · " + (n.resolved ? "Resuelto" : "Pendiente"),
+        (n.agent ? n.agent + " (agente de " + n.author + ")" : n.author) + " · " + (n.resolved ? "Resuelto" : "Pendiente"),
         "meta",
       ),
       make("p", n.text),
@@ -778,7 +778,7 @@
       );
     if (n.session) body.append(make("p", "Sesión: " + n.session, "meta"));
     for (const r of n.replies)
-      body.append(make("p", r.author + ": " + r.text, "muted"));
+      body.append(make("p", (r.agent ? r.agent + " (agente de " + r.author + ")" : r.author) + ": " + r.text, "muted"));
     const ownNote = n.entry_type === "note",
       canReply = item.permissions.comment || ownNote;
     if (canReply) {

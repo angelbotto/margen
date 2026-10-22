@@ -172,7 +172,7 @@ window.BottifactReaderWorkspace = {
                 ? "Nota personal"
                 : "Comentario") +
                 " · " +
-                item.thread.author,
+                (item.thread.agent ? item.thread.agent + " (agente de " + item.thread.author + ")" : item.thread.author),
             ),
             el("p", item.thread.text),
             el("blockquote", item.thread.anchor.quote),
@@ -325,13 +325,13 @@ window.BottifactReaderWorkspace = {
             "small",
             (t.entry_type === "note" ? "Nota personal" : "Comentario") +
               " · " +
-              t.author,
+              (t.agent ? t.agent + " (agente de " + t.author + ")" : t.author),
           ),
           el("p", t.text),
           el("blockquote", t.anchor.quote),
         );
         for (const r of t.replies)
-          row.append(el("p", r.author + ": " + r.text));
+          row.append(el("p", (r.agent ? r.agent + " (agente de " + r.author + ")" : r.author) + ": " + r.text));
         body.append(row);
       }
       if (!body.children.length)

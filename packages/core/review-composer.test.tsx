@@ -113,3 +113,25 @@ it('supports the keyboard context menu and restores focus on Escape',()=>{
  document.activeElement!.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true}));
  expect((document.querySelector('.review-context-menu') as HTMLElement).hidden).toBe(true);expect(document.activeElement).toBe(target);
 });
+it('names the recorded author, not the viewer, on shared threads and agent entries',()=>{
+  const doc=document.title+'@'+location.pathname,anchor={reference:'claim',tag:'P',text:'Three deliveries need review.',quote:'Three',page:'Doc',x:.5,y:.5};
+  const events=[{id:'a1',thread:'a1',kind:'create',author:'Alice Ruiz',actor:'alice',verified:true,time:1,version:'v',text:'Alice point',entry_type:'comment',anchor},
+    {id:'b1',thread:'a1',kind:'reply',author:'Bob Pérez',actor:'bob',verified:true,time:2,version:'v',text:'Bob reply'},
+    {id:'g1',thread:'g1',kind:'create',author:'Ángel Botto',actor:'owner',verified:true,agent:'Codex',time:3,version:'v',text:'Agent point',entry_type:'comment',anchor:{...anchor,x:.9}}];
+  (window as any).BottifactReviewBridge={commit:vi.fn(),subscribe:(fn:any)=>{fn({author:'Ángel Botto',actor:'owner',verified:true,permissions:{comment:true,edit:true},snapshot:{format:'nota-revision',version:2,document:doc,events}});return ()=>{};}};
+  mount();
+  const editor=document.querySelector('[data-revision-editor]') as HTMLDialogElement,panel=document.querySelector('[data-revision-panel]') as HTMLDialogElement;
+  (document.querySelector('.revision-marca') as HTMLElement).click();
+  expect(editor.open).toBe(false);expect(panel.open).toBe(true);
+  const rows=[...document.querySelectorAll('[data-revision-notas] > li')];
+  const alice=rows.find(li=>li.textContent!.includes('Alice point'))!,agent=rows.find(li=>li.textContent!.includes('Agent point'))!;
+  expect(alice.querySelector('.revision-meta')!.textContent).toMatch(/^Alice Ruiz · correo verificado/);
+  expect(alice.querySelector('.revision-respuestas')!.textContent).toBe('Bob Pérez: Bob reply');
+  expect(agent.querySelector('.revision-meta')!.textContent).toMatch(/^Codex \(agente de Ángel Botto\) · conexión de agente/);
+  ([...alice.querySelectorAll('button')].find(b=>b.textContent==='Editar') as HTMLElement).click();
+  expect(editor.open).toBe(true);
+  expect(document.querySelector('.review-composer-name')!.textContent).toBe('Alice Ruiz');
+  editor.close();open();
+  expect(document.querySelector('.review-composer-name')!.textContent).toBe('Ángel Botto');
+  expect(document.querySelector('[data-revision-prompt]')!.textContent).toContain('Autor: Codex (agente de Ángel Botto)');
+});
