@@ -240,3 +240,5 @@ with sync_playwright() as p:
 (OUT / f'media-{ENGINE}.json').write_text(json.dumps(results, indent=1, ensure_ascii=False, default=str))
 print(sum(c['ok'] for c in results['checks']), '/', len(results['checks']))
 tmp.cleanup()
+
+raise SystemExit(0 if all(c["ok"] for c in results["checks"]) else 1)

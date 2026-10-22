@@ -110,9 +110,10 @@
     });
     var links = Array.prototype.slice.call(pg.querySelectorAll('.indice a[href^="#"]'));
     var act = -1;
+    var padding = parseFloat(getComputedStyle(document.scrollingElement || document.documentElement).scrollPaddingTop) || 0;
     links.forEach(function (a, i) {
       var s = document.getElementById(a.hash.slice(1));
-      if (s && s.getBoundingClientRect().top <= 120) act = i;
+      if (s && s.getBoundingClientRect().top <= padding + (parseFloat(getComputedStyle(s).scrollMarginTop) || 0) + 2) act = i;
     });
     if(hoja.hasAttribute('data-progreso-pagina')&&pg.getBoundingClientRect().bottom<=innerHeight)act=links.length-1;
     links.forEach(function (a, i) {
