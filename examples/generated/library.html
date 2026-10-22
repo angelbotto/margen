@@ -8722,6 +8722,8 @@ ERROR  ejemplo rechazado      1 recurso externo&lt;/code&gt;&lt;/pre&gt;&lt;/div
       }
       if (!url) this.links = [];
       el.dataset.embedListo = '';
+      // El portal cerró su diálogo: la tarjeta deja de decir que algo está abierto y el foco vuelve a quien lo pidió.
+      document.addEventListener('margen:embed-closed', () => { if (this.requested) { const back = this.requested; this.requested = null; this.say(''); back.focus(); } }, {signal: this.abort.signal});
       if (this.provider === 'x' || !this.button) { instances.set(el, this); return; }
       if (!this.spec) { this.say('Esta publicación no tiene un identificador válido.'); instances.set(el, this); return; }
       const where = context(this.provider);
@@ -8732,7 +8734,6 @@ ERROR  ejemplo rechazado      1 recurso externo&lt;/code&gt;&lt;/pre&gt;&lt;/div
         el.querySelectorAll('[data-embed-notice]').forEach(n => { n.hidden = false; });
         this.button.addEventListener('click', event => this.load(event), {signal: this.abort.signal});
       }
-      document.addEventListener('margen:embed-closed', () => { if (this.requested) { this.requested = false; this.button.focus(); } }, {signal: this.abort.signal});
       addEventListener('pagehide', () => this.unload(), {signal: this.abort.signal});
       instances.set(el, this);
     }
@@ -8741,17 +8742,18 @@ ERROR  ejemplo rechazado      1 recurso externo&lt;/code&gt;&lt;/pre&gt;&lt;/div
       const bridge = host();
       if (!bridge || typeof bridge.openSource !== 'function') return;
       event.preventDefault();
-      try { await bridge.openSource(this.spec); } catch { this.say('No se pudo abrir la fuente. Copia el enlace: ' + sourceURL(this.spec)); }
+      this.requested = event.currentTarget;
+      try { await bridge.openSource(this.spec); } catch { this.requested = null; this.say('No se pudo abrir la fuente. Copia el enlace: ' + sourceURL(this.spec)); }
     }
     async load(event) {
       if (this.dead || !event.isTrusted) return;
       if (navigator.onLine === false) { this.say('Sin conexión. El enlace abre la publicación cuando vuelva la red.'); return; }
       const bridge = host();
       if (bridge) {
-        this.requested = true;
-        this.say('Abriendo el reproductor…');
-        try { await bridge.embed(this.spec); this.say('El reproductor está abierto en una ventana del portal.'); }
-        catch { this.requested = false; this.say(NAMES[this.provider] + ' no está disponible aquí. El enlace abre la publicación.'); }
+        // El portal muestra la vista previa y sólo conecta con el proveedor cuando el lector lo confirma allí.
+        this.requested = this.button;
+        try { await bridge.embed(this.spec); this.say('Abierto en el portal. Confirma ahí para reproducir.'); }
+        catch { this.requested = null; this.say(NAMES[this.provider] + ' no está disponible aquí. El enlace abre la publicación.'); }
         return;
       }
       this.mount();
