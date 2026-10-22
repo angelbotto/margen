@@ -6,6 +6,7 @@
 - Build static cards, steps and flow diagrams visually; retain source, license and credits when making a variant. Browse bundled themes/recipes, save favorites and moderate submissions in the portal.
 - Create private artifacts and prepare theme revisions while preserving existing links and permissions. Isolate previews and reconstruct supported static HTML/SVG; downloaded packages can be uploaded again.
 - Verify real browser creation, sharing, typography, reader controls and mobile layouts alongside API access and revision tests.
+- Apply the measured 15.5/24.025 px body type; a scoped selector had left editorial documents at 16/26.4 px. Keep 16 px between text and open frame strokes without narrowing the frame, and widen the desktop index to the measured 360 px rail.
 
 ## 2026.10.20-library.3 — Shared reading rhythm
 

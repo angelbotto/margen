@@ -3205,7 +3205,9 @@ body:has(.revision-barra) { padding-bottom:0; }
    reader-selected typography remain independent. See docs/editorial-reference.md. */
 @media screen {
  .hoja:not([data-presentation]) { --texto:33rem; --ancho:64rem; --gutter:24px; }
- :root:not([data-lectura-comoda]) .hoja:not([data-presentation]) { font-size:15.5px; line-height:1.55; }
+ /* Scoped selectors without :scope are implicitly descendants of it, so :root
+    never matched here and body kept 16px/1.65. :scope is the document element. */
+ :scope:not([data-lectura-comoda]) .hoja:not([data-presentation]) { font-size:15.5px; line-height:1.55; }
  .hoja:not([data-presentation]) h1:not([data-ritmo=propio] *) { font-size:44.5px; line-height:49.4444px; }
  .hoja:not([data-presentation]) h2:not([data-ritmo=propio] *) { font-size:36.4px; line-height:43.68px; }
  @media(max-width:639px) { .hoja:not([data-presentation]) h1:not([data-ritmo=propio] *) { font-size:36.4px; line-height:43.68px; } }
@@ -3246,7 +3248,7 @@ body:has(.revision-barra) { padding-bottom:0; }
  .hoja:not([data-presentation]) > .pagina > .codigo.codigo-editorial { grid-column:1/-1; width:48rem; margin-inline:auto; }
  .hoja:not([data-presentation]) :is(.seccion,.prosa) > .codigo.codigo-editorial:not([data-ritmo=propio] *) { width:48rem; max-width:none; margin-inline:calc((100% - 48rem)/2); }
  .hoja.lectura-guiada:not([data-presentation]) > .indice,
- .hoja.lectura-guiada:not([data-presentation]) > .pagina > .indice { left:max(24px,calc(50vw - 648px)); width:min(344px,calc(50vw - 304px)); top:max(128px,var(--lectura-cabecera,128px)); max-height:calc(100dvh - max(128px,var(--lectura-cabecera,128px)) - 48px); padding:0; background:transparent; border:0; font:13.7px/24px var(--sans); }
+ .hoja.lectura-guiada:not([data-presentation]) > .pagina > .indice { left:max(24px,calc(50vw - 648px)); width:min(360px,calc(50vw - 312px)); top:max(128px,var(--lectura-cabecera,128px)); max-height:calc(100dvh - max(128px,var(--lectura-cabecera,128px)) - 48px); padding:0; background:transparent; border:0; font:13.7px/24px var(--sans); }
  .lectura-guiada:not([data-presentation]) .indice ol { margin:0; padding:0; list-style:none; counter-reset:contenido; }
  .lectura-guiada:not([data-presentation]) .indice li { counter-increment:contenido; margin:0; }
  .lectura-guiada:not([data-presentation]) .indice li::before { content:none; }
@@ -3272,10 +3274,13 @@ body:has(.revision-barra) { padding-bottom:0; }
  .codigo-editorial .codigo-linea { white-space:pre-wrap; overflow-wrap:anywhere; }
 }
 /* Open editorial frames extend beyond a component; they do not consume its
-   content width. Only the decorative strokes fade. */
+   content width. Only the decorative strokes fade. Content keeps 16px from the
+   strokes: block padding inside, side strokes 16px outside the content box. */
 .marcos-editoriales :is(.ancho,.amplio):not(.pieza):not(.aviso),.marco-difuso,.marco-punteado { padding:0; }
+.marcos-editoriales :is(.ancho,.amplio):not(.pieza):not(.aviso):not(.codigo),.marco-difuso:not(.codigo),.marco-punteado:not(.codigo) { padding:16px 0; }
+.marcos-editoriales :is(.ancho,.amplio,.marco-punteado,.marco-difuso) :is(.ancho,.amplio,.marco-punteado,.marco-difuso):not(.pieza):not(.aviso) { padding:0; }
 .marco-lineas::before,.marco-difuso::before { inset:0 max(-24px,calc(50% - 50vw)); border-block:1px dashed color-mix(in srgb,var(--linea) 80%,transparent); mask-image:linear-gradient(90deg,transparent,#000 15%,#000 85%,transparent); }
-.marco-lineas::after,.marco-difuso::after { inset:-16px 0; border-inline:1px dashed color-mix(in srgb,var(--linea) 80%,transparent); mask-image:linear-gradient(transparent,#000 1rem,#000 calc(100% - 1rem),transparent); }
+.marco-lineas::after,.marco-difuso::after { inset:-16px max(-16px,calc(50% - 50vw)); border-inline:1px dashed color-mix(in srgb,var(--linea) 80%,transparent); mask-image:linear-gradient(transparent,#000 1rem,#000 calc(100% - 1rem),transparent); }
 .marcos-editoriales .marco-difuso::before { border-block-style:dashed; }
 .marcos-editoriales .marco-difuso::after { border-inline-style:dashed; }
 @media(min-width:640px) {

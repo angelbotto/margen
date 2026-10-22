@@ -19,8 +19,8 @@ class EditorialReference(unittest.TestCase):
   cls.html=build('La forma de leer',[{'id':'content','titulo':'La forma de leer','html':CONTENT}],theme='editorial',mode='dark')
  @classmethod
  def tearDownClass(cls):cls.browser.close();cls.pw.stop()
- def page(self,width=1440,motion='no-preference',js=True,html=None):
-  context=self.browser.new_context(viewport={'width':width,'height':1000},reduced_motion=motion,java_script_enabled=js,permissions=['clipboard-read','clipboard-write'])
+ def page(self,width=1440,motion='no-preference',js=True,html=None,scheme='light'):
+  context=self.browser.new_context(viewport={'width':width,'height':1000},reduced_motion=motion,color_scheme=scheme,java_script_enabled=js,permissions=['clipboard-read','clipboard-write'])
   self.addCleanup(context.close);page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
   context.route('https://margen.test/**',lambda r:r.fulfill(status=200,content_type='text/html',body=html or self.html))
   page.goto('https://margen.test/reference');page.evaluate('document.fonts.ready') if js else None
@@ -153,6 +153,42 @@ class EditorialReference(unittest.TestCase):
   page.locator('.indice a').first.focus()
   self.assertTrue(page.evaluate('([x,y])=>!!document.elementFromPoint(x,y)?.closest(".indice")',point))
   self.assertEqual(errors,[])
+ def test_reading_type_frame_air_and_index_width(self):
+  # Regressions seen on 2026-10-21: body type stayed 16px/1.65 because a scoped
+  # :root selector never matched, and text in open frames touched the strokes.
+  frame='<section class="ancho" id="marco-texto"><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:24px">'+'<div><p class="ceja">Comparación</p><h3>Una idea necesita espacio.</h3><p>El título y el párrafo compiten cuando no hay separación entre bloques de texto.</p></div>'*2+'</div></section>'
+  text_gap='''e=>{const l=e.querySelector(':scope > .marco-lineas'),r=l.getBoundingClientRect(),b=getComputedStyle(l,'::before'),a=getComputedStyle(l,'::after');
+   const top=r.top+parseFloat(b.top),bottom=r.bottom-parseFloat(b.bottom),left=r.left+parseFloat(a.left),right=r.right-parseFloat(a.right);
+   const walk=document.createTreeWalker(e,NodeFilter.SHOW_TEXT),rects=[];for(let n;n=walk.nextNode();){if(!n.data.trim())continue;const range=document.createRange();range.selectNodeContents(n);rects.push(...[...range.getClientRects()].filter(q=>q.width&&q.height));}
+   return Math.min(...rects.map(q=>Math.min(q.top-top,bottom-q.bottom,q.left-left,right-q.right)))}'''
+  for mode,scheme in (('dark','dark'),('light','light'),('light','dark')):
+   html=build('La forma de leer',[{'id':'content','titulo':'La forma de leer','html':CONTENT.replace('<section class="ancho" id="cards">',frame+'<section class="ancho" id="cards">')}],theme='editorial',mode=mode)
+   for width in (320,390,1280,1440):
+    with self.subTest(mode=mode,scheme=scheme,width=width):
+     page,errors=self.page(width,html=html,scheme=scheme)
+     self.assertLessEqual(page.evaluate('document.documentElement.scrollWidth'),width)
+     self.assertEqual(page.locator('#first p').evaluate('e=>[getComputedStyle(e).fontSize,getComputedStyle(e).lineHeight]'),['15.5px','24.025px'])
+     self.assertGreaterEqual(page.locator('#marco-texto').evaluate(text_gap),15.5)
+     self.assertEqual(page.locator('#marco-texto').bounding_box()['width'],min(1024,width-48))
+     if width>=1280:
+      index=page.locator('.indice').bounding_box();self.assertEqual(index['width'],360 if width==1440 else 328)
+      self.assertLessEqual(index['x']+index['width'],page.locator('#first').bounding_box()['x']-24)
+     self.assertEqual(errors,[]);page.close()
+  page,_=self.page(html=html);page.evaluate('document.documentElement.setAttribute("data-lectura-comoda","")')
+  self.assertEqual(page.locator('#first p').evaluate('e=>getComputedStyle(e).fontSize'),'18px')
+ def test_code_blur_is_rendered_over_index(self):
+  # Computed blur is not enough: the index must contribute blurred pixels behind code.
+  html=self.html.replace('Leer con atención','Leer con atención: ejemplos y decisiones con suficiente contexto')
+  page,errors=self.page(html=html);offset=page.locator('#snippet pre').bounding_box()['y']-150
+  page.evaluate('top=>scrollTo({top,behavior:"instant"})',offset);page.wait_for_timeout(80);page.mouse.move(1300,980)
+  index=page.locator('.indice').bounding_box();code=page.locator('#snippet pre').bounding_box()
+  clip={'x':code['x']+1,'y':code['y']+1,'width':index['x']+index['width']-code['x']-2,'height':code['height']-2}
+  self.assertGreater(clip['width'],40)
+  blurred=page.screenshot(clip=clip)
+  page.locator('#snippet pre').evaluate('e=>e.style.backdropFilter="none"');sharp=page.screenshot(clip=clip)
+  page.locator('#snippet pre').evaluate('e=>e.style.backdropFilter=""');page.locator('.indice').evaluate('e=>e.style.visibility="hidden"')
+  hidden=page.screenshot(clip=clip)
+  self.assertNotEqual(blurred,hidden);self.assertNotEqual(blurred,sharp);self.assertEqual(errors,[])
  def test_no_script(self):
   page,_=self.page(js=False);self.assertEqual(page.locator('#source').text_content(),SOURCE);self.assertTrue(page.locator('#snippet .cab > span').first.is_visible())
 if __name__=='__main__':unittest.main()
