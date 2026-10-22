@@ -235,12 +235,13 @@ def run(src, out):
             if not r['same'] or r['leftovers']: failures.append(f"tabla/restos tras destroy: {r}")
 
         # 5. Exportes exactos: el contenido se genera con las mismas funciones que usan los botones;
-        #    además se comprueba una descarga real por tipo de botón.
+        #    además se comprueba una descarga con clic real, respetando las capas y el hit testing.
         go(page, 'atlas-graficas')
         bar = page.locator('[data-grafica="barras"] .mg-exportar button')
         for k, ext in [(0, '.csv'), (1, '.svg')]:
             try:
-                with page.expect_download(timeout=8000) as d: bar.nth(k).evaluate('b => b.click()')
+                bar.nth(k).scroll_into_view_if_needed()
+                with page.expect_download(timeout=8000) as d: bar.nth(k).click(timeout=8000)
                 if not d.value.suggested_filename.endswith(ext): failures.append('descarga con extensión inesperada: ' + d.value.suggested_filename)
             except Exception as e:  # noqa: BLE001
                 failures.append(f'descarga real {ext} falló: {str(e)[:80]}')
