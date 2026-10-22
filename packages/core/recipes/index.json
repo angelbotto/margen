@@ -438,5 +438,17 @@
   {
     "file": "web-shell/README.md",
     "example": "web-shell/example.html"
+  },
+  {
+    "file": "x-post/README.md",
+    "example": "x-post/example.html"
+  },
+  {
+    "file": "youtube/README.md",
+    "example": "youtube/example.html"
+  },
+  {
+    "file": "instagram/README.md",
+    "example": "instagram/example.html"
   }
 ]

@@ -36,6 +36,9 @@ COOKIE = '__Host-bottifact'
 MAX_BODY = 22 * 1024 * 1024
 EMAIL = re.compile(r'^[^\s@]{1,64}@[^\s@.]+(?:\.[^\s@.]+)+$')
 ID = re.compile(r'^[a-zA-Z0-9_-]{1,120}$')
+PORTAL_CSP = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'"
+# Prefijos exactos de los reproductores que el lector puede montar; ver docs/atlas-embed-compatibility.md.
+MEDIA_FRAMES = ('https://www.youtube-nocookie.com/embed/', 'https://www.instagram.com/p/', 'https://www.instagram.com/reel/')
 
 
 def admin_emails():
@@ -324,7 +327,7 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
         response.headers['Referrer-Policy'] = 'no-referrer'
         response.headers['X-Robots-Tag'] = 'noindex, nofollow'
         if 'Content-Security-Policy' not in response.headers:
-            response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'"
+            response.headers['Content-Security-Policy'] = PORTAL_CSP
         analytics = analytics_configuration()
         if analytics and "sandbox" not in response.headers.get('Content-Security-Policy',''):
             policy = response.headers.get('Content-Security-Policy','')
@@ -795,8 +798,11 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
     def page(request: Request, aid: str=''):
         if not aid and request.query_params.get('view') not in {'themes', 'components', 'developers'} and not (who(request) or {}).get('verified'): return RedirectResponse('/login', status_code=303)
         content=(ROOT/'static/index.html').read_text()
-        if aid:content=content.replace('<body class="portal-app">','<body class="portal-app reading">').replace('<section id="library">','<section id="library" hidden>')
-        return HTMLResponse(content)
+        if not aid:return HTMLResponse(content)
+        content=content.replace('<body class="portal-app">','<body class="portal-app reading">').replace('<section id="library">','<section id="library" hidden>')
+        # Sólo el lector monta reproductores (portal/static/media-embeds.js), y sólo en estas rutas exactas.
+        # El render del artefacto conserva su propia CSP y su sandbox opaco.
+        return HTMLResponse(content,headers={'Content-Security-Policy':PORTAL_CSP.replace("frame-src 'self';","frame-src 'self' "+' '.join(MEDIA_FRAMES)+';')})
 
     app.mount('/static',StaticFiles(directory=ROOT/'static'),name='static')
     return app

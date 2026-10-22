@@ -1,0 +1,16 @@
+/* Diálogo del portal para reproductores de YouTube e Instagram y para abrir fuentes. */
+.media-dialog { width: min(880px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); padding: 18px 20px 16px; overflow: auto; }
+.media-dialog .dialog-head { margin-bottom: 6px; }
+.media-dialog .dialog-head h2 { font: 600 17px/1.35 var(--sans); }
+.media-dialog .media-notice, .media-dialog .media-status { margin: 0 0 10px; font-size: 12px; line-height: 1.5; color: var(--muted); }
+.media-dialog .media-status:empty { display: none; }
+.media-stage:empty { display: none; }
+.media-stage { margin: 0 0 12px; }
+.media-player { display: block; width: 100%; min-width: 200px; min-height: 200px; border: 1px solid var(--line); border-radius: 10px; background: var(--wash); }
+.media-dialog[data-provider=youtube] .media-player { aspect-ratio: 16 / 9; height: auto; }
+.media-dialog[data-provider=instagram] { width: min(580px, calc(100vw - 24px)); }
+.media-dialog[data-provider=instagram] .media-player { height: 640px; max-height: calc(100dvh - 190px); }
+.media-source { display: inline-block; font-size: 14px; overflow-wrap: anywhere; }
+@media (max-width: 420px) { .media-dialog { padding: 14px 12px 12px; } }
+@media (prefers-reduced-motion: reduce) { .media-dialog, .media-dialog::backdrop { transition: none; animation: none; } }
+@media (prefers-reduced-transparency: reduce) { .media-dialog::backdrop { backdrop-filter: none; } }

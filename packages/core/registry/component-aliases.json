@@ -90,5 +90,8 @@
   "review-queue": "review-queue",
   "version-comparison": "version-comparison",
   "sketch-diagram": "sketch-diagram",
-  "sitio-editorial": "web-shell"
+  "sitio-editorial": "web-shell",
+  "x-post": "x-post",
+  "youtube": "youtube",
+  "instagram": "instagram"
 }

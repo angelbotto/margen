@@ -1778,6 +1778,12 @@
     },
     refresh: () => { activityChecked = 0; return refreshReview(); },
   });
+  // Reproductores de YouTube/Instagram: el portal los monta en su propio diálogo, ligados al documento montado.
+  const media = window.MargenMediaEmbeds.create({
+    frame: () => $("#artifact-frame"),
+    mounted: () => (current && mounted?.artifact === current.id ? mounted : null),
+    origin: location.origin,
+  });
   addEventListener("message", async (event) => {
     if (
       !current ||
@@ -1801,6 +1807,9 @@
         "preferences",
         "controls-ready",
         "surface",
+        "embed",
+        "open-source",
+        "external",
       ].includes(op)
     )
       return;
@@ -1809,6 +1818,8 @@
       let result;
       if (["action", "preferences", "controls-ready"].includes(op)) {
         result = await readerWorkspace.handle(op, data);
+      } else if (op === "embed" || op === "open-source" || op === "external") {
+        result = media.handle(op, data);
       } else if (op === "export") {
         const exported = await api(
           "/api/review/export?artifact=" +
@@ -2047,6 +2058,7 @@
       contextRequested = false;
       const version = current.versions.find((v) => v.id === select.value);
       backVersion(current.id, select.value, version?.appearance ?? null);
+      media.reset();
       mounted = { artifact: current.id, version: select.value, first: true };
       $("#artifact-frame").src =
         "/api/artifacts/" +
