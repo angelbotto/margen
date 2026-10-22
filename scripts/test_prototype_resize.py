@@ -8,7 +8,7 @@ from playwright.sync_api import sync_playwright
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = (ROOT / 'packages/core/components/prototype.js').read_text()
 RECIPE = (ROOT / 'packages/core/recipes/prototype/example.html').read_text()
-CSS = """+:root { --sans: sans-serif; --serif: serif; }
+CSS = """:root { --sans: sans-serif; --serif: serif; }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 body { margin: 24px; }
