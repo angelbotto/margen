@@ -1,0 +1,25 @@
+{
+ "engine": "chromium",
+ "checks": [
+  {
+   "name": "1440: cold deep link #receta-glosario is current",
+   "ok": true,
+   "detail": "#receta-glosario"
+  },
+  {
+   "name": "1440: physical click on each of 14 Lectura TOC links marks it current (unless page bottom)",
+   "ok": true,
+   "detail": []
+  },
+  {
+   "name": "1328: cold deep link #receta-glosario is current",
+   "ok": true,
+   "detail": "#receta-glosario"
+  },
+  {
+   "name": "1328: physical click on each of 14 Lectura TOC links marks it current (unless page bottom)",
+   "ok": true,
+   "detail": []
+  }
+ ]
+}

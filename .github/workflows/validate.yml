@@ -114,6 +114,8 @@ jobs:
         run: |
           python tests/evidence/atlas-media-intent-2026-10-22/media_intent_browser.py . /tmp/media-intent-ci /tmp/media-intent-shots chromium
           python tests/evidence/atlas-media-intent-2026-10-22/media_intent_browser.py . /tmp/media-intent-ci /tmp/media-intent-shots webkit
+          python tests/evidence/atlas-final-delta-20261022/media_doubleclick_browser.py . /tmp/media-repeat-ci chromium
+          python tests/evidence/atlas-final-delta-20261022/media_doubleclick_browser.py . /tmp/media-repeat-ci webkit
       - name: Check complete atlas offline in Chromium and WebKit
         run: |
           python scripts/build_atlas.py --output-dir /tmp/margen-atlas-ci --render

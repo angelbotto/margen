@@ -148,3 +148,7 @@ python3 scripts/build_atlas.py --output-dir /tmp/a --render
 $PY $E/toc_probe.py chromium /tmp/a/atlas.html $E/out; $PY $E/toc_cover_probe.py chromium /tmp/a/atlas.html 1440
 (cd review/atlas-ui-runtime && MARGEN_BROWSER=webkit $PY test_defects.py)
 ```
+
+## Coordinator disposition · index occlusion
+
+The independent centre-point finding is retained above. Wide surfaces intentionally cover the fixed index, matching the reference and preventing index text from painting through content; moving the whole index above them would restore the original visual defect. The visible left edge remains available and keyboard focus raises the index onto opaque paper. A separate real-click probe (`toc_visible_edge_probe.py`) verified all 14 links at 1440 and 1328 px in Chromium and WebKit, including the cold deep link. Results are in `toc-visible-edge-{chromium,webkit}.json`. This partial occlusion is accepted as reference behavior, not described as an unobstructed index. No product code changed after the reviewed `ddbdb5a`.
