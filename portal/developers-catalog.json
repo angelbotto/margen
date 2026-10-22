@@ -920,7 +920,9 @@
         "packages/core/components/embeds.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/x-post",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "embeds.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -946,7 +948,9 @@
         "packages/core/components/embeds.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/youtube",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "embeds.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -972,7 +976,9 @@
         "packages/core/components/embeds.js"
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/instagram",
-      "preview_runtime": [],
+      "preview_runtime": [
+        "embeds.js"
+      ],
       "origin": "bundled",
       "author": "Contribuidores de Margen",
       "license": "MIT",
@@ -1333,6 +1339,7 @@
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/visual-story",
       "preview_runtime": [
+        "chart-core.js",
         "evidence.js"
       ],
       "origin": "bundled",
@@ -1437,6 +1444,7 @@
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/reconciliation",
       "preview_runtime": [
+        "chart-core.js",
         "reports.js"
       ],
       "origin": "bundled",
@@ -1466,6 +1474,7 @@
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/scenario",
       "preview_runtime": [
+        "chart-core.js",
         "reports.js"
       ],
       "origin": "bundled",
@@ -1620,6 +1629,7 @@
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/sensitivity",
       "preview_runtime": [
+        "chart-core.js",
         "evidence.js"
       ],
       "origin": "bundled",
@@ -1649,6 +1659,7 @@
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/gantt",
       "preview_runtime": [
+        "chart-core.js",
         "evidence.js"
       ],
       "origin": "bundled",
@@ -1782,6 +1793,7 @@
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/bar-chart",
       "preview_runtime": [
+        "chart-core.js",
         "charts.js"
       ],
       "origin": "bundled",
@@ -1811,6 +1823,7 @@
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/column-chart",
       "preview_runtime": [
+        "chart-core.js",
         "charts.js"
       ],
       "origin": "bundled",
@@ -1840,6 +1853,7 @@
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/dumbbell-chart",
       "preview_runtime": [
+        "chart-core.js",
         "charts.js"
       ],
       "origin": "bundled",
@@ -1869,6 +1883,7 @@
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/bullet-chart",
       "preview_runtime": [
+        "chart-core.js",
         "charts.js"
       ],
       "origin": "bundled",
@@ -1898,6 +1913,7 @@
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/line-chart",
       "preview_runtime": [
+        "chart-core.js",
         "charts.js"
       ],
       "origin": "bundled",
@@ -1927,6 +1943,7 @@
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/time-series",
       "preview_runtime": [
+        "chart-core.js",
         "charts.js"
       ],
       "origin": "bundled",
@@ -1956,6 +1973,7 @@
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/scatter-plot",
       "preview_runtime": [
+        "chart-core.js",
         "charts.js"
       ],
       "origin": "bundled",
@@ -1985,6 +2003,7 @@
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/distribution",
       "preview_runtime": [
+        "chart-core.js",
         "charts.js"
       ],
       "origin": "bundled",
@@ -2014,6 +2033,7 @@
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/heatmap",
       "preview_runtime": [
+        "chart-core.js",
         "charts.js"
       ],
       "origin": "bundled",
@@ -2043,6 +2063,7 @@
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/waterfall",
       "preview_runtime": [
+        "chart-core.js",
         "reports.js"
       ],
       "origin": "bundled",
@@ -2072,6 +2093,7 @@
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/small-multiples",
       "preview_runtime": [
+        "chart-core.js",
         "reports.js"
       ],
       "origin": "bundled",
@@ -2102,6 +2124,7 @@
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/contribution-calendar",
       "preview_runtime": [
         "geography.js",
+        "chart-core.js",
         "analytics.js"
       ],
       "origin": "bundled",
@@ -2132,6 +2155,7 @@
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/pie-chart",
       "preview_runtime": [
         "geography.js",
+        "chart-core.js",
         "analytics.js"
       ],
       "origin": "bundled",
@@ -2162,6 +2186,7 @@
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/area-chart",
       "preview_runtime": [
         "geography.js",
+        "chart-core.js",
         "analytics.js"
       ],
       "origin": "bundled",
@@ -2192,6 +2217,7 @@
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/box-plot",
       "preview_runtime": [
         "geography.js",
+        "chart-core.js",
         "analytics.js"
       ],
       "origin": "bundled",
@@ -2222,6 +2248,7 @@
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/candlestick",
       "preview_runtime": [
         "geography.js",
+        "chart-core.js",
         "analytics.js"
       ],
       "origin": "bundled",
@@ -2253,6 +2280,7 @@
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/route-map",
       "preview_runtime": [
         "geography.js",
+        "chart-core.js",
         "analytics.js"
       ],
       "origin": "bundled",
@@ -2284,6 +2312,7 @@
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/bubble-map",
       "preview_runtime": [
         "geography.js",
+        "chart-core.js",
         "analytics.js"
       ],
       "origin": "bundled",
@@ -2313,6 +2342,7 @@
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/attention-map",
       "preview_runtime": [
+        "chart-core.js",
         "attention-map.js"
       ],
       "origin": "bundled",
@@ -2342,6 +2372,7 @@
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/sankey",
       "preview_runtime": [
+        "chart-core.js",
         "evidence.js"
       ],
       "origin": "bundled",
@@ -2371,6 +2402,7 @@
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/cohorts",
       "preview_runtime": [
+        "chart-core.js",
         "evidence.js"
       ],
       "origin": "bundled",
@@ -2400,6 +2432,7 @@
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/funnel",
       "preview_runtime": [
+        "chart-core.js",
         "evidence.js"
       ],
       "origin": "bundled",
@@ -2429,6 +2462,7 @@
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/uncertainty",
       "preview_runtime": [
+        "chart-core.js",
         "evidence.js"
       ],
       "origin": "bundled",
@@ -2811,6 +2845,7 @@
       ],
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/zoomable-evidence",
       "preview_runtime": [
+        "chart-core.js",
         "evidence.js"
       ],
       "origin": "bundled",
@@ -2932,6 +2967,7 @@
       "source_url": "https://github.com/angelbotto/margen/tree/main/packages/core/recipes/journey",
       "preview_runtime": [
         "globe.js",
+        "chart-core.js",
         "reports.js"
       ],
       "origin": "bundled",
