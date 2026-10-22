@@ -33,3 +33,6 @@ body[data-view="admin"] .heading,body[data-view="notifications"] .heading{paddin
 
 /* The mark inherits the account theme; the dotted silhouette stays crisp at small sizes. */
 .brand .margen-mark{width:30px;height:30px;flex:none;vertical-align:-3px;margin-right:10px;color:var(--ink)}
+
+/* Trust marker is separate from the freely chosen display name. */
+.review-identity-kind{display:inline-block;border:1px solid currentColor;border-radius:3px;padding:0 .3em;font-size:.85em;white-space:nowrap;unicode-bidi:isolate}

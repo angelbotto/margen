@@ -755,11 +755,7 @@
     );
     const body = make("div");
     body.append(
-      make(
-        "p",
-        (n.agent ? n.agent + " (agente de " + n.author + ")" : n.author) + " · " + (n.resolved ? "Resuelto" : "Pendiente"),
-        "meta",
-      ),
+      window.MargenReviewIdentity.element("p", n, "", " · " + (n.resolved ? "Resuelto" : "Pendiente"), "meta"),
       make("p", n.text),
       make("blockquote", n.anchor.quote),
       make(
@@ -778,7 +774,7 @@
       );
     if (n.session) body.append(make("p", "Sesión: " + n.session, "meta"));
     for (const r of n.replies)
-      body.append(make("p", (r.agent ? r.agent + " (agente de " + r.author + ")" : r.author) + ": " + r.text, "muted"));
+      body.append(window.MargenReviewIdentity.element("p", r, "", ": " + r.text, "muted"));
     const ownNote = n.entry_type === "note",
       canReply = item.permissions.comment || ownNote;
     if (canReply) {
@@ -790,7 +786,7 @@
       input.placeholder = ownNote
         ? "Añadir seguimiento…"
         : "Responder · @correo@empresa.com";
-      input.setAttribute("aria-label", "Respuesta a " + n.author);
+      input.setAttribute("aria-label", "Respuesta a " + window.MargenReviewIdentity.label(n));
       response.append(input, send);
       response.addEventListener(
         "submit",
@@ -2133,7 +2129,7 @@
       } catch (error) { create.disabled = false; throw error; }
     }));
     connectRow.append(connectCommand, copyConnect);
-    form.append(nameLabel, row, output,
+    form.append(nameLabel, row, make("p", "Esta etiqueta identifica al agente en tus comentarios. La verán quienes puedan leerlos y quedará en el historial aunque revoques el token.", "install-help"), output,
       make("p", "Ejecuta este comando y pega el token cuando te lo pida. La entrada es oculta; Margen verificará que corresponde a " + user.email + ".", "install-help"),
       connectRow, connectStatus,
       make("p", "Abre una conversación nueva y pide «Usa el skill margen». Puedes comprobar la cuenta con margen status y revocar su acceso aquí cuando quieras.", "install-help"),

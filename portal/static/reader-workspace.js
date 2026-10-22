@@ -166,14 +166,7 @@ window.BottifactReaderWorkspace = {
           };
           text.append(
             el("strong", item.title),
-            el(
-              "small",
-              (item.thread.entry_type === "note"
-                ? "Nota personal"
-                : "Comentario") +
-                " · " +
-                (item.thread.agent ? item.thread.agent + " (agente de " + item.thread.author + ")" : item.thread.author),
-            ),
+            window.MargenReviewIdentity.element("small", item.thread, (item.thread.entry_type === "note" ? "Nota personal" : "Comentario") + " · "),
             el("p", item.thread.text),
             el("blockquote", item.thread.anchor.quote),
           );
@@ -321,17 +314,12 @@ window.BottifactReaderWorkspace = {
         if (t.deleted) continue;
         const row = el("article");
         row.append(
-          el(
-            "small",
-            (t.entry_type === "note" ? "Nota personal" : "Comentario") +
-              " · " +
-              (t.agent ? t.agent + " (agente de " + t.author + ")" : t.author),
-          ),
+          window.MargenReviewIdentity.element("small", t, (t.entry_type === "note" ? "Nota personal" : "Comentario") + " · "),
           el("p", t.text),
           el("blockquote", t.anchor.quote),
         );
         for (const r of t.replies)
-          row.append(el("p", (r.agent ? r.agent + " (agente de " + r.author + ")" : r.author) + ": " + r.text));
+          row.append(window.MargenReviewIdentity.element("p", r, "", ": " + r.text));
         body.append(row);
       }
       if (!body.children.length)

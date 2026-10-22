@@ -21,6 +21,7 @@ import jwt
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse, Response, FileResponse
 from portal.workflows import migrate, metadata, version_state, visible_events, provenance, enqueue
+from portal.review_identity import identity_text
 from portal.workspace import mount_workspace
 from portal.knowledge import enrich, connections, knowledge_network
 from portal.context_graph import network as context_network, mount as mount_context, cited_version_readable
@@ -396,7 +397,7 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
     @app.post('/api/tokens')
     async def new_token(request: Request):
         u = account(request, True);body = await payload(request)
-        return {'token':store.token(u['id'], clean(body.get('label','Agente'),80))}
+        return {'token':store.token(u['id'], identity_text(clean(body.get('label','Agente'),80), 'Agente'))}
 
     @app.get('/api/tokens')
     def tokens(request: Request):
@@ -677,7 +678,7 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
                 if kind=='edit' and not (p['edit'] or original['actor']==u['id']): raise HTTPException(403,'Sólo puedes editar tus comentarios.')
             e = {'id':event_id,'thread':thread,'kind':kind,'author':u['name'],'time':max(int(time.time()*1000),max([x['time'] for x in entries],default=0)+1),
                  'version':version,'actor':u['id'],'verified':bool(u['verified'])}
-            if u.get('agent'): e['agent']=clean(u.get('agent_label') or 'Agente',80)
+            if u.get('agent'): e['agent']=identity_text(clean(u.get('agent_label') or 'Agente',80), 'Agente')
             if kind in ['create','reply','edit']: e['text'] = clean(body.get('text'),4000)
             if kind=='resolve':
                 if not isinstance(body.get('resolved'),bool): raise HTTPException(422,'Estado inválido.')

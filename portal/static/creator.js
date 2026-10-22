@@ -364,11 +364,7 @@ window.MargenCreator = {
             const row = el("article", undefined, "creator-row"),
               an = i.thread.anchor;
             row.append(
-              badge(
-                i.thread.entry_type === "note"
-                  ? "Privado · sólo tú"
-                  : (i.thread.agent ? i.thread.agent + " (agente de " + i.thread.author + ")" : i.thread.author),
-              ),
+              window.MargenReviewIdentity.element("small", i.thread, i.thread.entry_type === "note" ? "Privado · sólo tú · " : ""),
               link(i.title, i.context.url),
               el("blockquote", an.quote || an.text || "Punto del artefacto"),
               el("p", i.thread.text),

@@ -126,7 +126,7 @@ it('names the recorded author, not the viewer, on shared threads and agent entri
   const rows=[...document.querySelectorAll('[data-revision-notas] > li')];
   const alice=rows.find(li=>li.textContent!.includes('Alice point'))!,agent=rows.find(li=>li.textContent!.includes('Agent point'))!;
   expect(alice.querySelector('.revision-meta')!.textContent).toMatch(/^Alice Ruiz · correo verificado/);
-  expect(alice.querySelector('.revision-respuestas')!.textContent).toBe('Bob Pérez: Bob reply');
+  expect(alice.querySelector('.revision-respuestas')!.textContent).toBe('Bob Pérez · correo verificado: Bob reply');
   expect(agent.querySelector('.revision-meta')!.textContent).toMatch(/^Codex \(agente de Ángel Botto\) · conexión de agente/);
   ([...alice.querySelectorAll('button')].find(b=>b.textContent==='Editar') as HTMLElement).click();
   expect(editor.open).toBe(true);
@@ -134,4 +134,13 @@ it('names the recorded author, not the viewer, on shared threads and agent entri
   editor.close();open();
   expect(document.querySelector('.review-composer-name')!.textContent).toBe('Ángel Botto');
   expect(document.querySelector('[data-revision-prompt]')!.textContent).toContain('Autor: Codex (agente de Ángel Botto)');
+});
+
+it('validates imported agent labels and keeps local identity explicitly declared',()=>{
+ mount();open();
+ const input=document.querySelector('[data-revision-texto]') as HTMLTextAreaElement;input.value='Local note';
+ input.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',ctrlKey:true,bubbles:true}));
+ const original=instance.exportData().events[0],validate=(window as any).NotaRevisionStore.validate;
+ for(const agent of [4,{},'','x'.repeat(81)])expect(()=>validate({...original,agent})).toThrow('Identidad de agente inválida');
+ expect(validate({...original,agent:'Analista ñ'}).agent).toBe('Analista ñ');
 });

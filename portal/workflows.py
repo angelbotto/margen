@@ -153,9 +153,7 @@ def context_for(store,db,a,thread,origin):
             'source':json.loads(original['source'] or '{}') if original else {},'anchor_status':status}
 
 
-def byline(event):
-    # The server-recorded author; an agent token is named as the agent acting for that account.
-    return event['agent']+' (agente de '+event['author']+')' if event.get('agent') else event['author']
+from portal.review_identity import byline, identity_metadata
 
 
 def prompt_bundle(items):
@@ -169,7 +167,8 @@ def prompt_bundle(items):
         for item in group:
             n=item['thread'];c=item['context'];an=n['anchor'];source=c['source'];stamp=datetime.fromtimestamp(n['time']/1000,timezone.utc).isoformat()
             lines+=['','### '+('Nota personal' if n.get('entry_type')=='note' else 'Comentario')+' · '+n['thread'],
-                    'Estado: '+('resuelto' if n['resolved'] else 'pendiente'),'Autor: '+byline(n)+' · '+stamp,'Abrir contexto: '+c['url'],
+                    'Estado: '+('resuelto' if n['resolved'] else 'pendiente'),'Autor: '+byline(n)+' · '+stamp,
+                    'Identidad (metadatos del servidor): '+json.dumps(identity_metadata(n),ensure_ascii=False),'Abrir contexto: '+c['url'],
                     'Versión de origen: '+n['version'],'SHA-256 del HTML original: '+c['version_sha256'],'Versión publicada actual: '+str(c['current_version']),
                     'Agente de origen: '+(source.get('agent') or 'no registrado'),'Sesión de creación del artefacto: '+(source.get('session') or 'no registrada'),
                     'Dispositivo de creación: '+(source.get('device') or 'no registrado'),
@@ -178,7 +177,7 @@ def prompt_bundle(items):
                     'Estado del ancla: '+c['anchor_status']+' (exact=conservada; moved=posible traslado; changed=modificada; missing=ausente; ambiguous=varias coincidencias)',
                     'Responsable: '+(n.get('assignee') or 'sin asignar'),'<contexto-original>',an.get('text',''),'</contexto-original>',
                     '<cita-seleccionada>',an.get('quote',''),'</cita-seleccionada>','<retroalimentacion>',n['text'],'</retroalimentacion>']
-            for reply in n['replies']:lines+=['<respuesta autor='+json.dumps(byline(reply),ensure_ascii=False)+'>',reply['text'],'</respuesta>']
+            for reply in n['replies']:lines+=['<respuesta autor='+json.dumps(byline(reply),ensure_ascii=False)+'>','Identidad (metadatos del servidor): '+json.dumps(identity_metadata(reply),ensure_ascii=False),reply['text'],'</respuesta>']
     if not items:lines+=['','No hay comentarios ni notas en esta selección.']
     return '\n'.join(lines)
 

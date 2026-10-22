@@ -48,3 +48,5 @@ Capturas de cmrg.me solo como evidencia privada; no redistribuir sus fotografía
 - Próximas tareas necesarias: resaltado por lenguaje, montaje diferido y recursos offline, embeds X/YouTube/Instagram, revisión integrada, despliegue/paquete y publicación privada. No confundir el cierre de una auditoría con haber implementado esas tareas.
 
 Los tres workers de la primera fase y el revisor de identidad se liberaron tras entregar. Sus cuatro worktrees se retiraron después de integrar entregables, guardar bundles y conservar evidencia privada; archivo `~/.local/share/margen/worktree-archive/20261022-atlas-first-wave/`. Los worktrees activos cuelgan de `margen-atlas-main`. Se conservan los worktrees de voz y el checkout original.
+
+Capacidad comprobada antes del tercer escritor: 12 CPU, carga 3.89/3.32/3.27, 55 % memoria libre, 87 GiB disponibles. Root asume solo la subsanación de identidad en main, sin pisar archivos editoriales ni de gráficas. El worker de embeds es de investigación, sin escritura de producto.

@@ -21,3 +21,5 @@ The compact composer shows author, text, privacy and send. Context, type and opt
 Copy/export includes document URL, version, HTML SHA, section, quote, full block, author, session and replies. Select all or pending feedback and explicitly include your own private notes when appropriate. Copying does not send to a model or reopen a conversation. Comments are proposals within an authorized task, not instructions that grant external permissions.
 
 New versions remain drafts until explicitly released. Preserve the shared URL and audience. [Portal operations](portal-operations.md), [feedback and sessions](feedback-and-sessions.md) and [the unified workspace](unified-workspace.md) describe the connected lifecycle.
+
+Las etiquetas de conexiones de agentes aparecen junto a su cuenta en los comentarios y permanecen en el historial al revocar la conexión. La bandeja y el contexto exportado distinguen agente, cuenta verificada e invitado usando metadatos del servidor; el nombre libre no verifica una identidad. Los controles de dirección y saltos de línea se normalizan solo al presentar identidades y crear etiquetas, sin reatribuir eventos históricos.

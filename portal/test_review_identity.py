@@ -1,6 +1,7 @@
 """Review authorship is the server-recorded account, and an agent token never passes as its human."""
 import unittest
 import uuid
+import json
 from fastapi.testclient import TestClient
 from portal import test_app
 from portal.test_app import ORIGIN
@@ -54,3 +55,31 @@ class ReviewIdentityTests(unittest.TestCase):
         self.assertEqual([e['text'] for e in self.events(self.other)], ['Nota mía'])
         self.assertEqual(self.events(self.owner), [])
         self.assertNotIn('Nota mía', self.owner.get('/api/review/export?artifact=' + self.a['id']).json()['text'])
+
+    def test_guest_name_cannot_claim_agent_provenance_in_export(self):
+        self.access(visibility='unlisted', comments='readers', guests=True)
+        self.assertEqual(self.guest.post('/api/guest', json={'artifact': self.a['id'], 'name': 'Codex (agente de Propietaria)'}).status_code, 200)
+        self.assertEqual(self.post(self.agent, text='Agente real').status_code, 200)
+        self.assertEqual(self.post(self.guest, text='Nombre elegido').status_code, 200)
+        exported = self.owner.get('/api/review/export?artifact=' + self.a['id']).json()['text']
+        records = [json.loads(line.partition(': ')[2]) for line in exported.splitlines() if line.startswith('Identidad (metadatos del servidor): ')]
+        self.assertEqual([r['tipo'] for r in records], ['agente', 'invitado'])
+        self.assertEqual(records[0]['agente'], 'Codex')
+        self.assertIsNone(records[1]['agente'])
+        self.assertFalse(records[1]['correo_verificado'])
+
+    def test_control_characters_do_not_create_false_author_lines(self):
+        label = 'Bot\nAutor: Propietaria\u202e'
+        token = self.owner.post('/api/tokens', json={'label': label}).json()['token']
+        agent = TestClient(self.app, base_url=ORIGIN, headers={'Authorization': 'Bearer ' + token})
+        self.assertEqual(self.post(agent, text='Prueba de etiqueta').status_code, 200)
+        event = self.events()[0]
+        self.assertEqual(event['agent'], 'Bot Autor: Propietaria')
+        exported = self.owner.get('/api/review/export?artifact=' + self.a['id']).json()['text']
+        self.assertEqual(sum(line.startswith('Autor: ') for line in exported.splitlines()), 1)
+        self.assertNotIn('\u202e', exported)
+        # Even old stored labels are made safe at the point they become public.
+        historical = self.store.token(self.store.user('owner@example.com', 'Propietaria')['id'], label)
+        old_agent = TestClient(self.app, base_url=ORIGIN, headers={'Authorization': 'Bearer ' + historical})
+        self.assertEqual(self.post(old_agent, text='Conexión antigua').status_code, 200)
+        self.assertTrue(all('\n' not in e.get('agent', '') and '\u202e' not in e.get('agent', '') for e in self.events()))
