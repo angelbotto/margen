@@ -238,7 +238,8 @@ def threads(events):
             continue
         t['updated']=e['time']
         if e['kind'] == 'reply': t['replies'].append(e)
-        if e['kind'] == 'edit': t['text'] = e['text']
+        # Una edición de otro actor nunca se muestra con el nombre del autor original.
+        if e['kind'] == 'edit' and (not e.get('actor') or not t.get('actor') or e['actor'] == t['actor']): t['text'] = e['text']
         if e['kind'] == 'resolve': t['resolved'] = e['resolved']
         if e['kind'] == 'assign': t['assignee'] = e['assignee']
         if e['kind'] == 'delete': t['deleted'] = True
@@ -678,7 +679,8 @@ def create_app(data=None, origin=None, issuer=None, audience=None):
                 original = db.execute('SELECT actor,event FROM events WHERE artifact=? AND id=?',(aid,thread)).fetchone()
                 if not original or json.loads(original['event'])['kind']!='create': raise HTTPException(404,'Hilo no disponible.')
                 if kind in ['resolve','assign','delete'] and not (p['edit'] or personal): raise HTTPException(403,'Sólo el autor del documento y sus editores pueden gestionar hilos.')
-                if kind=='edit' and not (p['edit'] or original['actor']==u['id']): raise HTTPException(403,'Sólo puedes editar tus comentarios.')
+                # Editar reescribe la voz del autor: ni el dueño ni sus editores pueden hacerlo por otra persona.
+                if kind=='edit' and original['actor']!=u['id']: raise HTTPException(403,'Sólo puedes editar tus comentarios.')
             e = {'id':event_id,'thread':thread,'kind':kind,'author':u['name'],'time':max(int(time.time()*1000),max([x['time'] for x in entries],default=0)+1),
                  'version':version,'actor':u['id'],'verified':bool(u['verified'])}
             if u.get('agent'): e['agent']=identity_text(clean(u.get('agent_label') or 'Agente',80), 'Agente')
