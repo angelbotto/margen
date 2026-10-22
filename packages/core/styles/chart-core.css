@@ -29,6 +29,7 @@
 .mg-svg text { font-size: 12px; }
 .mg-svg .mg-texto-fuerte { fill: var(--tinta); }
 .mg-svg .mg-texto-suave { fill: var(--tinta-3); }
+.mg-svg .mg-halo { paint-order: stroke; stroke: var(--grafica-papel); stroke-width: 4px; stroke-linejoin: round; }
 .mg-svg .grafica-trazo { stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
 .mg-svg .mg-forma { fill: var(--grafica-papel); stroke: var(--serie); stroke-width: 2; stroke-dasharray: none; }
 .mg-svg .grafica-barra, .mg-svg .grafica-serie { stroke-dasharray: none; }

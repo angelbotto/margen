@@ -219,7 +219,7 @@
       const items = [], info = [];
       let rowTop = top;
       data.forEach((r, j) => {
-        const t = this.text(narrow ? 4 : 0, rowTop + 12, '', {class: 'mg-texto-fuerte'});
+        const t = this.text(narrow ? 4 : 0, rowTop + 12, '', {class: 'mg-texto-fuerte' + (narrow ? ' mg-halo' : '')});
         labels[j].forEach((line, k) => t.append(G.svg('tspan', {x: narrow ? 4 : 0, dy: k ? 15 : 0}, line)));
         let y = rowTop + (narrow ? labels[j].length * 15 + 2 : 0);
         r.values.forEach((v, i) => {
@@ -276,7 +276,7 @@
       if (type === 'temporal') {
         const lo = data[0].x, hi = data.at(-1).x === lo ? lo + 86400000 : data.at(-1).x;
         x = G.linear([lo, hi], [frame.left + pad, frame.right - pad]);
-        const t = G.timeTicks(lo, hi, Math.max(2, Math.floor((frame.right - frame.left) / 90))), f = v => G.format(v, t.spec, {lang: this.lang});
+        const t = G.timeTicks(lo, hi, Math.max(2, Math.min(8, Math.floor((frame.right - frame.left) / 100)))), f = v => G.format(v, t.spec, {lang: this.lang});
         G.spacedTicks(t.ticks, x, f, this.font).forEach(v => {
           svg.append(G.svg('line', {x1: x(v), x2: x(v), y1: frame.bottom, y2: frame.bottom + 4, class: 'grafica-eje', 'data-tick-x': v}));
           svg.append(G.edgeText(svg, x(v), frame.bottom + 18, f(v), {}, this.font));
@@ -349,7 +349,7 @@
       const items = [], info = [];
       let y0 = top;
       data.forEach((r, j) => {
-        const t = this.text(narrow ? 4 : 0, y0 + 12, '', {class: 'mg-texto-fuerte'});
+        const t = this.text(narrow ? 4 : 0, y0 + 12, '', {class: 'mg-texto-fuerte' + (narrow ? ' mg-halo' : '')});
         labels[j].forEach((line, k) => t.append(G.svg('tspan', {x: narrow ? 4 : 0, dy: k ? 15 : 0}, line)));
         const cy = narrow ? y0 + labels[j].length * 15 + 8 : y0 + 10;
         const [a, b] = r.values;
@@ -381,7 +381,7 @@
       const items = [], info = [];
       let y0 = top;
       data.forEach((r, j) => {
-        const t = this.text(narrow ? 4 : 0, y0 + 12, '', {class: 'mg-texto-fuerte'});
+        const t = this.text(narrow ? 4 : 0, y0 + 12, '', {class: 'mg-texto-fuerte' + (narrow ? ' mg-halo' : '')});
         labels[j].forEach((line, k) => t.append(G.svg('tspan', {x: narrow ? 4 : 0, dy: k ? 15 : 0}, line)));
         const y = narrow ? y0 + labels[j].length * 15 + 2 : y0;
         const [value, goal, ...bands] = r.values;

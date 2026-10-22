@@ -1,10 +1,10 @@
-/* Bottifact · piezas de reportes. Tablas como fuente, sin red ni animaciones.
-   Incluir tras packages/core/components/globe.js si se usa recorrido. init/get/destroy por contenedor. */
+/* Margen · piezas de reportes. Tablas como fuente, sin red ni animaciones. Cascada y múltiples
+   requieren chart-core.js; incluir tras packages/core/components/globe.js si se usa recorrido. */
 (() => {
   'use strict';
+  const G = window.MargenGraficas;
   const instances = new WeakMap();
-  const fmt = n => new Intl.NumberFormat('es-CO', {maximumSignificantDigits: 12, notation: n !== 0 && Math.abs(n) < .001 ? 'scientific' : 'standard'}).format(n);
-  const tickFmt = n => new Intl.NumberFormat('es-CO', {maximumSignificantDigits: 4, notation: Math.abs(n) >= 10000 || (n !== 0 && Math.abs(n) < .01) ? 'scientific' : 'standard'}).format(n);
+  const fmt = n => G ? G.format(n, 'auto', {lang: G.lang(document.documentElement)}) : new Intl.NumberFormat('es-CO', {maximumSignificantDigits: 12}).format(n);
   const el = (tag, cls, text) => {
     const node = document.createElement(tag); if(cls) node.className = cls;
     if(text !== undefined) node.textContent = text; return node;
@@ -20,11 +20,6 @@
     if(!Number.isFinite(n) || Math.abs(n) > 1e9) throw new TypeError('Se admiten valores finitos de hasta mil millones en magnitud.');
     return n;
   }
-  function domain(values) {
-    const lo = Math.min(0,...values), hi = Math.max(0,...values);
-    return lo === hi ? [0,1] : [lo,hi];
-  }
-  const scale = (d,a,b) => v => a + (v-d[0])/(d[1]-d[0])*(b-a);
   function tableData(root, min, max) {
     const table = root.querySelector('table');
     const heads = [...(table?.tHead?.rows[0]?.cells || [])].map(c => c.textContent.trim());
@@ -33,19 +28,16 @@
     if(rows.some(r => r.cells.length !== heads.length)) throw new TypeError('Las filas deben tener las mismas columnas.');
     return {table, heads, rows};
   }
-  function region(title, width, height) {
-    const box = el('div','grafica-caja'); box.tabIndex = 0; box.setAttribute('role','region');
-    box.setAttribute('aria-label',title+'. Dibujo desplazable; tabla completa a continuación.');
-    const drawing = svg('svg',{viewBox:`0 0 ${width} ${height}`,width,height,role:'img','aria-label':title});
-    drawing.append(svg('title',{},title)); box.append(drawing); return [box,drawing];
+  // Caja de la figura: el SVG se dibuja al ancho medido y sin desplazamiento.
+  function region(title) {
+    const box = el('div','grafica-caja');
+    return box;
+  }
+  function drawing(box, title, width) {
+    const s = svg('svg',{class:'mg-svg',width,height:10,viewBox:`0 0 ${width} 10`,'aria-label':title});
+    s.append(svg('title',{},title)); box.replaceChildren(s); return s;
   }
   function text(root,x,y,value,attrs={}) { const t = svg('text',{x,y,...attrs},value); root.append(t); return t; }
-  const linesOf = (value,size) => value.match(new RegExp('.{1,'+size+'}(?:\\s|$)|.{1,'+size+'}', 'g')) || [''];
-  function wrapped(root,x,y,value,size=22) {
-    const lines = linesOf(value,size);
-    const t = text(root,x,y,''); lines.forEach((line,i)=>t.append(svg('tspan',{x,dy:i?18:0},line.trim())));
-    return lines.length;
-  }
   class Reporte {
     constructor(root) {
       this.root=root; this.parts=[]; this.restore=[]; this.abort=new AbortController(); this.dead=false;
@@ -64,8 +56,11 @@
     add(node,before=this.root.querySelector('.tabla-caja')) {this.root.insertBefore(node,before);this.parts.push(node);return node;}
     change(node,value) {if(!node)throw new TypeError('Falta una celda de resultado.');const children=[...node.childNodes];this.restore.push(()=>node.replaceChildren(...children));node.textContent=value;}
     on(node,type,fn) {node.addEventListener(type,fn,{signal:this.abort.signal});}
+    // Cascada: cada tramo empieza donde termina el anterior. El acumulado se calcula, no se suma a mano.
     waterfall() {
-      const {table,rows}=tableData(this.root,3,3);
+      if(!G)throw new TypeError('Incluye packages/core/components/chart-core.js.');
+      const {table,rows,heads}=tableData(this.root,3,3);
+      const head=table.tHead.rows[0].cells[1],spec=G.specOf(head,this.root),lang=G.lang(this.root),f=v=>G.format(v,spec,{lang});
       let total=0;
       const data=rows.map(r=>{
         const value=finite(r.cells[1].getAttribute('data-valor'));
@@ -73,60 +68,84 @@
         if(Math.abs(total)>1e9)throw new TypeError('El acumulado excede mil millones.');
         return {row:r,label:r.cells[0].textContent.trim(),value,from,to:total};
       });
-      const d=domain(data.flatMap(r=>[r.from,r.to]));
-      const layout=data.map(r=>Math.max(64,linesOf(r.label,20).length*18+22));
-      const width=860,height=layout.reduce((a,b)=>a+b,0)+160;
-      const [box,s]=region(table.caption?.textContent||'Cascada',width,height);
-      s.dataset.xMin=d[0];s.dataset.xMax=d[1];const x=scale(d,300,680),bottom=height-52;
-      for(let i=0;i<=4;i++) {
-        const tick=d[0]+(d[1]-d[0])*i/4;
-        s.append(svg('line',{x1:x(tick),x2:x(tick),y1:40,y2:bottom,class:'grafica-rejilla','data-tick-x':tick}));
-        text(s,x(tick),bottom+30,tickFmt(tick),{'text-anchor':'middle'});
-      }
-      s.append(svg('line',{x1:x(0),x2:x(0),y1:40,y2:bottom,class:'grafica-eje'}));
-      let y=56;
-      data.forEach((r,i)=>{
-        wrapped(s,12,y+17,r.label,20);
-        const bar=svg('rect',{x:Math.min(x(r.from),x(r.to)),y,width:Math.abs(x(r.to)-x(r.from)),height:28,
-          class:r.value<0?'cascada-baja':'cascada-sube','data-from':r.from,'data-to':r.to});
-        bar.append(svg('title',{},r.label+': '+fmt(r.value)+'; acumulado '+fmt(r.to)));s.append(bar);
-        text(s,700,y+18,(r.value>0?'+':'')+fmt(r.value));
-        if(i<data.length-1)s.append(svg('path',{d:`M${x(r.to)} ${y+28}V${y+layout[i]}`,class:'cascada-enlace'}));
-        y+=layout[i];
-      });
-      text(s,12,y+18,'Resultado');text(s,700,y+18,fmt(total));
-      s.append(svg('rect',{x:Math.min(x(0),x(total)),y,width:Math.abs(x(total)-x(0)),height:28,class:'cascada-total','data-total':total}));
-      this.add(box);
-      data.forEach(r=>this.change(r.row.cells[2],fmt(r.to)));
-      if(table.tFoot)this.change(table.tFoot.rows[0].cells[2],fmt(total));
+      const title=table.caption?.textContent||'Cascada',unit=this.root.dataset.unidad||heads[1];
+      const box=region(title),status=el('p','grafica-estado');status.setAttribute('role','status');
+      this.add(box);this.add(status);this.add(G.exporter(this.root,{table,title,getSvg:()=>this.svg}));
+      const draw=width=>{
+        this.marks?.destroy();
+        const s=this.svg=drawing(box,title,width),font=G.fontOf(s),narrow=width<480,sign=v=>(v>0?'+':'')+f(v);
+        const valueWidth=Math.ceil(Math.max(...data.map(r=>G.textWidth(sign(r.value),font)),G.textWidth(f(total),font)))+14;
+        const labelWidth=narrow?width:Math.min(Math.round(width*.32),Math.ceil(Math.max(...data.map(r=>G.textWidth(r.label,font)),G.textWidth('Resultado',font)))+16);
+        const left=narrow?4:labelWidth,right=width-valueWidth,bar=24;
+        const labels=[...data.map(r=>G.wrap(r.label,(narrow?width:labelWidth)-12,font,2)),['Resultado']];
+        const layout=labels.map(l=>narrow?l.length*15+bar+16:Math.max(bar+18,l.length*15+10));
+        const top=34,height=top+layout.reduce((a,b)=>a+b,0)+34;
+        const n=G.niceZero(data.flatMap(r=>[r.from,r.to]),Math.max(2,Math.floor((right-left)/70))),tf=G.tickFormat(n.ticks,spec,{lang}),x=G.linear([n.min,n.max],[left,right]);
+        s.dataset.xMin=n.min;s.dataset.xMax=n.max;
+        G.axis(s,{orient:'bottom',scale:x,ticks:G.spacedTicks(n.ticks,x,tf,font),format:tf,from:top-8,to:height-30,at:height-12,font});
+        text(s,0,14,G.fit(unit,width,font,1),{class:'grafica-unidad'});
+        const items=[],info=[];let y=top;
+        data.forEach((r,i)=>{
+          const t=text(s,narrow?4:0,y+12,'',{class:'mg-texto-fuerte'+(narrow?' mg-halo':'')});labels[i].forEach((line,k)=>t.append(svg('tspan',{x:narrow?4:0,dy:k?15:0},line)));
+          const by=narrow?y+labels[i].length*15+2:y;
+          const g=svg('g',{});g.append(svg('rect',{x:Math.min(x(r.from),x(r.to)),y:by,width:Math.max(.5,Math.abs(x(r.to)-x(r.from))),height:bar,class:r.value<0?'cascada-baja':'cascada-sube','data-from':r.from,'data-to':r.to}));
+          s.append(g);items.push(g);info.push([r.label,heads[1]+': '+sign(r.value),'Acumulado: '+f(r.to)]);
+          text(s,width,by+16,sign(r.value),{'text-anchor':'end',class:'mg-texto-fuerte'});
+          if(i<data.length-1)s.append(svg('path',{d:`M${x(r.to)} ${by+bar}V${by+layout[i]+(narrow?labels[i+1].length*15+2:0)}`,class:'cascada-enlace'}));
+          y+=layout[i];
+        });
+        text(s,narrow?4:0,y+12,'Resultado',{class:'mg-texto-fuerte'+(narrow?' mg-halo':'')});
+        const ty=narrow?y+17:y,g=svg('g',{});g.append(svg('rect',{x:Math.min(x(0),x(total)),y:ty,width:Math.max(.5,Math.abs(x(total)-x(0))),height:bar,class:'cascada-total','data-total':total}));
+        s.append(g);items.push(g);info.push(['Resultado',f(total)]);text(s,width,ty+16,f(total),{'text-anchor':'end',class:'mg-texto-fuerte'});
+        s.setAttribute('height',height);s.setAttribute('viewBox',`0 0 ${width} ${height}`);
+        this.marks=G.marks(this.root,s,{items,describe:i=>info[i],status,label:title});
+      };
+      this.watch=G.responsive(box,draw);
+      data.forEach(r=>this.change(r.row.cells[2],f(r.to)));
+      if(table.tFoot)this.change(table.tFoot.rows[0].cells[2],f(total));
     }
+    // Múltiplos pequeños: mismo eje Y para todos los paneles; el eje X es el orden de la tabla.
     multiples() {
+      if(!G)throw new TypeError('Incluye packages/core/components/chart-core.js.');
       const {table,rows,heads}=tableData(this.root,2,5);
       if(rows.length<2)throw new TypeError('Los múltiples necesitan al menos dos períodos.');
-      const labels=rows.map(r=>r.cells[0].textContent.trim());
+      const lang=G.lang(this.root),labels=rows.map(r=>r.cells[0].textContent.trim());
+      const specs=[...table.tHead.rows[0].cells].slice(1).map(th=>G.specOf(th,this.root));
       const values=rows.map(r=>[...r.cells].slice(1).map(c=>finite(c.getAttribute('data-valor'),true)));
-      const d=domain(values.flat().filter(v=>v!==null));
-      const group=el('div','multiples-rejilla');
+      const n=G.niceZero(values.flat().filter(v=>v!==null),4);
+      const group=el('div','multiples-rejilla'),status=el('p','grafica-estado');status.setAttribute('role','status');
+      this.panels=[];
       heads.slice(1).forEach((head,index)=>{
         const panel=el('div');panel.append(el('h4','',head));
-        const [box,s]=region(head+' · '+(table.caption?.textContent||'Serie'),360,290);
-        s.dataset.yMin=d[0];s.dataset.yMax=d[1];const x=scale([0,rows.length-1],80,290),y=scale(d,185,25);
-        [0,.5,1].forEach(f=>{const tick=d[0]+(d[1]-d[0])*f;
-          text(s,68,y(tick)+4,tickFmt(tick),{'text-anchor':'end'});
-          s.append(svg('line',{x1:80,x2:290,y1:y(tick),y2:y(tick),class:'grafica-rejilla','data-tick-y':tick}));});
-        let path='',pen=false;
-        values.forEach((row,i)=>{
-          const v=row[index];if(v===null){pen=false;return;}
-          path+=(pen?'L':'M')+x(i)+' '+y(v);pen=true;
-          const p=svg('circle',{cx:x(i),cy:y(v),r:4,class:'grafica-punto serie-0','data-value':v});p.append(svg('title',{},labels[i]+': '+fmt(v)));s.append(p);
+        const title=head+' · '+(table.caption?.textContent||'Serie'),box=region(title);panel.append(box);group.append(panel);
+        const state={};this.panels.push(state);
+        const f=v=>G.format(v,specs[index],{lang}),tf=G.tickFormat(n.ticks,specs[index],{lang});
+        state.watch=G.responsive(box,width=>{
+          state.marks?.destroy();
+          const s=drawing(box,title,width),font=G.fontOf(s);
+          const left=Math.ceil(Math.max(...n.ticks.map(v=>G.textWidth(tf(v),font))))+10,right=width-12,top=12,bottom=170,height=212;
+          s.dataset.yMin=n.min;s.dataset.yMax=n.max;
+          const x=G.linear([0,rows.length-1],[left+8,right-8]),y=G.linear([n.min,n.max],[bottom,top]);
+          G.axis(s,{orient:'left',scale:y,ticks:n.ticks,format:tf,from:left,to:right,at:left-6});
+          let path='',pen=false;const items=[],info=[];
+          values.forEach((row,i)=>{
+            const v=row[index];
+            const g=svg('g',{'data-value':v??''});
+            if(v===null){pen=false;g.append(svg('path',{d:`M${x(i)-4} ${bottom-4}l8 8M${x(i)+4} ${bottom-4}l-8 8`,class:'grafica-eje'}));}
+            else{path+=(pen?'L':'M')+x(i)+' '+y(v);pen=true;g.append(svg('circle',{cx:x(i),cy:y(v),r:4,class:'grafica-punto serie-0','data-value':v}));}
+            s.append(g);items.push(g);info.push([labels[i],head+': '+(v===null?G.words(lang).missing:f(v))]);
+          });
+          s.prepend(svg('path',{d:path,class:'grafica-trazo serie-0'}));
+          // Extremos con su nombre de período (abreviado si no cabe); la tabla nombra todos.
+          const room=(right-left)/2-8;
+          text(s,left+8,bottom+18,G.fit(labels[0],room,font,1),{'text-anchor':'start'});
+          text(s,right-8,bottom+18,G.fit(labels.at(-1),room,font,1),{'text-anchor':'end'});
+          text(s,(left+right)/2,bottom+36,G.fit(heads[0]+' · orden de la tabla',right-left,font,1),{'text-anchor':'middle',class:'mg-texto-suave'});
+          s.setAttribute('height',height);s.setAttribute('viewBox',`0 0 ${width} ${height}`);
+          state.marks=G.marks(this.root,s,{items,describe:i=>info[i],status,label:title});
         });
-        s.prepend(svg('path',{d:path,class:'grafica-trazo serie-0'}));
-        // Los extremos se identifican por índice; la tabla nombra todos los períodos.
-        text(s,80,220,'1',{'text-anchor':'middle'});text(s,290,220,String(rows.length),{'text-anchor':'middle'});
-        text(s,185,258,'Período de la tabla',{'text-anchor':'middle'});
-        panel.append(box);group.append(panel);
       });
-      this.add(group);
+      this.add(group);this.add(status);
     }
     reconcile() {
       const {table,rows}=tableData(this.root,5,5);
@@ -199,6 +218,7 @@
     }
     destroy() {
       if(this.dead)return;this.dead=true;this.abort.abort();this.globe?.destroy();
+      this.watch?.disconnect();this.marks?.destroy();this.panels?.forEach(p=>{p.watch?.disconnect();p.marks?.destroy();});
       this.parts.forEach(p=>p.remove());this.restore.reverse().forEach(fn=>fn());instances.delete(this.root);
     }
   }

@@ -23,7 +23,7 @@ PROBE = r"""(sel) => {
       const texts = [...svg.querySelectorAll('text')].filter(t => t.textContent.trim() && t.getBBox().width > 0 && !t.closest('defs'));
       const rects = texts.map(t => { const r = t.getBoundingClientRect(); return {t: t.textContent.trim().slice(0, 30), x: r.x, y: r.y, w: r.width, h: r.height, fs: parseFloat(getComputedStyle(t).fontSize) * (sr.width / (svg.viewBox.baseVal?.width || sr.width))}; });
       rects.forEach(r => sizes.push(r.fs));
-      texts.forEach(t => { if (/^[XY]$/.test(t.textContent.trim())) literal.push(t.textContent.trim()); });
+      texts.forEach(t => { if (/^[XY]$/.test(t.textContent.trim()) && !t.classList.contains('mg-dia')) literal.push(t.textContent.trim()); });
       // Rótulos que salen del recuadro visible del SVG (recorte o desborde).
       const box = svg.closest('.grafica-caja,.evidencia-visor,.analitica-caja,.atencion-caja')?.getBoundingClientRect() || sr;
       rects.forEach(r => { if (r.x < Math.min(sr.x, box.x) - 1 || r.x + r.w > Math.max(sr.right, box.right) + 1) outside.push(r.t); });
