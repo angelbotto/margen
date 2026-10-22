@@ -52,7 +52,7 @@ The file is decoded and validated again on publish; an inspect result is never t
 
 ### PDF processing
 
-Poppler (`pdfinfo`, `pdftoppm`, `pdftotext`) runs as a child process: a temporary folder, an empty environment, its own process group killed on timeout (30 s for metadata, 120 s for rendering), `ulimit` CPU 60 s, file size, 64 descriptors and 1 GiB address space, at most two conversions at a time. Generated output is capped at 200 MiB on disk and 20 MiB of HTML. No code from the PDF is executed. The portal image installs `poppler-utils`.
+Poppler (`pdfinfo`, `pdftoppm`, `pdftotext`) runs as a child process: a temporary folder, an empty environment, its own process group killed on timeout (30 s for metadata, 120 s for rendering), `ulimit` CPU 60 s, file size, 64 descriptors and 1 GiB address space, one conversion at a time. Each page is rendered, charged against the 20 MiB HTML output budget, and deleted before the next one. Child output files (including stdout) are limited to 4096 shell file-size blocks; at most 64 KiB of extracted text is retained per page. The total rendering deadline is 120 seconds. This keeps temporary files within the production 32 MiB tmpfs. No code from the PDF is executed. The portal image installs `poppler-utils`.
 
 Two upload jobs may run concurrently; additional jobs receive 503 and can be retried. Metadata title/head extraction uses a bounded window.
 

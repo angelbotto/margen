@@ -19,6 +19,7 @@ import stat
 import subprocess
 import tempfile
 import threading
+import time
 import unicodedata
 import uuid
 import zipfile
@@ -44,7 +45,6 @@ LIMITS = {
     "zip_ratio": 100,
 }
 PDF_TIMEOUT = 120
-PDF_OUTPUT_BYTES = 200 * MiB
 DOCUMENT_ID = re.compile(r'<meta\s+name=["\']nota-documento["\']\s+content=["\']([a-zA-Z0-9_-]{1,120})["\']')
 ASSET_TYPES = {
     ".html": "text/html", ".htm": "text/html", ".css": "text/css", ".js": "text/javascript",
@@ -58,7 +58,7 @@ ASSET_TYPES = {
 DENIED_NAMES = {"package.json", "package-lock.json", "yarn.lock", "pnpm-lock.yaml", "netlify.toml",
                 "_redirects", "_headers", ".htaccess", "vercel.json", "dockerfile", "makefile"}
 SKIPPED = re.compile(r"(^|/)(__MACOSX/|\.DS_Store$|Thumbs\.db$)")
-PDF_SLOTS = threading.BoundedSemaphore(2)
+PDF_SLOTS = threading.BoundedSemaphore(1)
 UPLOAD_SLOTS = threading.BoundedSemaphore(2)
 
 
@@ -174,18 +174,21 @@ def poppler():
 def bounded_run(command, folder, timeout):
     """Ejecuta Poppler con límites del sistema, entorno vacío y grupo de procesos propio."""
     # ulimit en un sh intermedio evita preexec_fn dentro del servidor multihilo.
-    limits = "ulimit -t 60; ulimit -f 131072; ulimit -n 64; ulimit -v 1048576 2>/dev/null; exec \"$@\""
-    process = subprocess.Popen(["/bin/sh", "-c", limits, "sh", *command], cwd=folder, env={"PATH": "/usr/bin:/bin", "LANG": "C.UTF-8"},
-                               stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, start_new_session=True)
-    try:
-        output, _ = process.communicate(timeout=timeout)
-    except subprocess.TimeoutExpired:
-        os.killpg(process.pid, signal.SIGKILL)
-        process.wait()
-        reject("El PDF tardó demasiado en procesarse.")
-    if process.returncode != 0:
-        reject("No se pudo leer el PDF; puede estar dañado o protegido con contraseña.")
-    return output[:65536].decode("utf-8", "replace")
+    limits = "ulimit -t 60; ulimit -f 4096; ulimit -n 64; ulimit -v 1048576 2>/dev/null; exec \"$@\""
+    # stdout is a bounded file too, never an unbounded PIPE allocation.
+    with tempfile.TemporaryFile(dir=folder) as output:
+        process = subprocess.Popen(["/bin/sh", "-c", limits, "sh", *command], cwd=folder, env={"PATH": "/usr/bin:/bin", "LANG": "C.UTF-8"},
+                                   stdin=subprocess.DEVNULL, stdout=output, stderr=subprocess.DEVNULL, start_new_session=True)
+        try:
+            process.wait(timeout=timeout)
+        except subprocess.TimeoutExpired:
+            os.killpg(process.pid, signal.SIGKILL)
+            process.wait()
+            reject("El PDF tardó demasiado en procesarse.")
+        if process.returncode != 0:
+            reject("No se pudo leer el PDF; puede estar dañado, protegido o superar los límites de procesamiento.")
+        output.seek(0)
+        return output.read(65536).decode("utf-8", "replace")
 
 
 def pdf_info(raw, folder, tools):
@@ -231,19 +234,26 @@ def build_pdf(name, raw, document_id, title):
             root = Path(folder)
             source, count, _ = pdf_info(raw, folder, tools)
             scale = "1400" if count <= 20 else "1000"
-            bounded_run([tools["pdftoppm"], "-jpeg", "-scale-to", scale, "-jpegopt", "quality=72", str(source), str(root / "page")], folder, PDF_TIMEOUT)
-            bounded_run([tools["pdftotext"], "-enc", "UTF-8", str(source), str(root / "text.txt")], folder, 60)
-            images = sorted(root.glob("page-*.jpg"), key=lambda p: int(p.stem.split("-")[-1]))
-            if not images or len(images) > count or sum(p.stat().st_size for p in root.iterdir()) > PDF_OUTPUT_BYTES:
-                reject("No se pudo generar la vista previa del PDF.")
-            text_file = root / "text.txt"
-            texts = text_file.read_bytes()[: 4 * MiB].decode("utf-8", "replace").split("\f") if text_file.exists() else []
-            pages = []
-            for i, path in enumerate(images, 1):
-                text = texts[i - 1].strip()[:100000] if i <= len(texts) else ""
+            deadline = time.monotonic() + PDF_TIMEOUT
+            def remaining():
+                seconds = deadline - time.monotonic()
+                if seconds <= 0: reject("El PDF tardó demasiado en procesarse.")
+                return min(30, seconds)
+            pages, used = [], 8192
+            # One page on disk at a time fits the production 32 MiB tmpfs,
+            # including a 12 MiB original. Reserve output before base64 encoding.
+            for i in range(1, count + 1):
+                path = root / "page.jpg"
+                bounded_run([tools["pdftoppm"], "-f", str(i), "-l", str(i), "-singlefile", "-jpeg", "-scale-to", scale,
+                             "-jpegopt", "quality=72", str(source), str(root / "page")], folder, remaining())
+                if not path.is_file(): reject("No se pudo generar la vista previa del PDF.")
+                text = bounded_run([tools["pdftotext"], "-f", str(i), "-l", str(i), "-enc", "UTF-8", str(source), "-"], folder, remaining()).strip()
+                used += ((path.stat().st_size + 2) // 3) * 4 + len(html_module.escape(text).encode()) + 512
+                if used > LIMITS["output_bytes"]: reject("La vista previa del PDF supera 20 MB.")
                 pages.append('<figure id="page-' + str(i) + '"><img alt="Página ' + str(i) + '" src="data:image/jpeg;base64,'
                              + base64.b64encode(path.read_bytes()).decode() + '"><figcaption>Página ' + str(i) + "</figcaption></figure>"
                              + ("<details><summary>Texto de la página</summary><p>" + html_module.escape(text) + "</p></details>" if text else ""))
+                path.unlink()
     finally:
         PDF_SLOTS.release()
     escaped = html_module.escape(title)
@@ -409,6 +419,8 @@ class Site:
 
     def css(self, text, base, depth=0):
         self.spend(len(text.encode()))
+        if text.lower().count("@import") > 128:
+            reject("El sitio contiene demasiadas importaciones CSS (máximo 128).")
         def imported(match):
             self.css_imports += 1
             if self.css_imports > 128:
@@ -421,8 +433,8 @@ class Site:
             if is_local(ref):
                 self.missing.add(ref[:200])
             return match[0]
-        text = re.sub(r"""@import\s+(?:url\(\s*["']?([^"')]+)["']?\s*\)|["']([^"']+)["'])[^;]*;""", imported, text, flags=re.I)
-        return re.sub(r"""url\(\s*(["']?)([^"')]+)\1\s*\)""", lambda m: 'url("' + self.asset(m[2], base) + '")' if is_local(m[2]) else m[0], text, flags=re.I)
+        text = re.sub(r"""@import\s+(?:url\(\s*["']?([^"'()]+)["']?\s*\)|["']([^"']+)["'])[^;]*;""", imported, text, flags=re.I)
+        return re.sub(r"""url\(\s*(["']?)([^"'()]+)\1\s*\)""", lambda m: 'url("' + self.asset(m[2], base) + '")' if is_local(m[2]) else m[0], text, flags=re.I)
 
     def srcset(self, value, base):
         out = []
